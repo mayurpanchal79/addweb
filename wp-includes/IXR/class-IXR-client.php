@@ -4,8 +4,7 @@
  * IXR_Client
  *
  * @package IXR
- * @since 1.5.0
- *
+ * @since   1.5.0
  */
 class IXR_Client
 {
@@ -22,9 +21,9 @@ class IXR_Client
     // Storage place for an error message
     var $error = false;
 
-	/**
-	 * PHP5 constructor.
-	 */
+    /**
+     * PHP5 constructor.
+     */
     function __construct( $server, $path = false, $port = 80, $timeout = 15 )
     {
         if (!$path) {
@@ -39,7 +38,7 @@ class IXR_Client
                 $this->path = '/';
             }
 
-            if ( ! empty( $bits['query'] ) ) {
+            if (! empty($bits['query']) ) {
                 $this->path .= '?' . $bits['query'];
             }
         } else {
@@ -51,12 +50,13 @@ class IXR_Client
         $this->timeout = $timeout;
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Client( $server, $path = false, $port = 80, $timeout = 15 ) {
-		self::__construct( $server, $path, $port, $timeout );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Client( $server, $path = false, $port = 80, $timeout = 15 )
+    {
+        self::__construct($server, $path, $port, $timeout);
+    }
 
     function query()
     {
@@ -114,11 +114,11 @@ class IXR_Client
                 $gettingHeaders = false;
             }
             if (!$gettingHeaders) {
-            	// merged from WP #12559 - remove trim
+                // merged from WP #12559 - remove trim
                 $contents .= $line;
             }
             if ($this->debug) {
-            	$debugContents .= $line;
+                $debugContents .= $line;
             }
         }
         if ($this->debug) {

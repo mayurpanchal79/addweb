@@ -553,12 +553,12 @@ body.admin-color-light .edit-post-layout__toogle-publish-panel-button, body.admi
 .edit-post-meta-boxes-area {
   position: relative;
   /**
-	 * The wordpress default for most meta-box elements is content-box. Some
-	 * elements such as textarea and input are set to border-box in forms.css.
-	 * These elements therefore specifically set back to border-box here, while
-	 * other elements (such as .button) are unaffected by Gutenberg's style
-	 * because of their higher specificity.
-	 */
+     * The wordpress default for most meta-box elements is content-box. Some
+     * elements such as textarea and input are set to border-box in forms.css.
+     * These elements therefore specifically set back to border-box here, while
+     * other elements (such as .button) are unaffected by Gutenberg's style
+     * because of their higher specificity.
+     */
   /* Match width and positioning of the meta boxes. Override default styles. */
   /* Override Default meta box stylings */ }
   .edit-post-meta-boxes-area__container,
@@ -1110,7 +1110,7 @@ html.wp-toolbar {
 body.block-editor-page {
   background: #fff;
   /* We hide legacy notices in Gutenberg Based Pages, because they were not designed in a way that scaled well.
-	   Plugins can use Gutenberg notices if they need to pass on information to the user when they are editing. */ }
+       Plugins can use Gutenberg notices if they need to pass on information to the user when they are editing. */ }
   body.block-editor-page #wpcontent {
     padding-right: 0; }
   body.block-editor-page #wpbody-content {

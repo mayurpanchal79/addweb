@@ -4,16 +4,16 @@
  * IXR_IntrospectionServer
  *
  * @package IXR
- * @since 1.5.0
+ * @since   1.5.0
  */
 class IXR_IntrospectionServer extends IXR_Server
 {
     var $signatures;
     var $help;
 
-	/**
-	 * PHP5 constructor.
-	 */
+    /**
+     * PHP5 constructor.
+     */
     function __construct()
     {
         $this->setCallbacks();
@@ -48,12 +48,13 @@ class IXR_IntrospectionServer extends IXR_Server
         );
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_IntrospectionServer() {
-		self::__construct();
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_IntrospectionServer()
+    {
+        self::__construct();
+    }
 
     function addCallback($method, $callback, $args, $help)
     {
@@ -89,35 +90,35 @@ class IXR_IntrospectionServer extends IXR_Server
             $arg = array_shift($args);
             $type = array_shift($signature);
             switch ($type) {
-                case 'int':
-                case 'i4':
-                    if (is_array($arg) || !is_int($arg)) {
-                        $ok = false;
-                    }
-                    break;
-                case 'base64':
-                case 'string':
-                    if (!is_string($arg)) {
-                        $ok = false;
-                    }
-                    break;
-                case 'boolean':
-                    if ($arg !== false && $arg !== true) {
-                        $ok = false;
-                    }
-                    break;
-                case 'float':
-                case 'double':
-                    if (!is_float($arg)) {
-                        $ok = false;
-                    }
-                    break;
-                case 'date':
-                case 'dateTime.iso8601':
-                    if (!is_a($arg, 'IXR_Date')) {
-                        $ok = false;
-                    }
-                    break;
+            case 'int':
+            case 'i4':
+                if (is_array($arg) || !is_int($arg)) {
+                    $ok = false;
+                }
+                break;
+            case 'base64':
+            case 'string':
+                if (!is_string($arg)) {
+                    $ok = false;
+                }
+                break;
+            case 'boolean':
+                if ($arg !== false && $arg !== true) {
+                    $ok = false;
+                }
+                break;
+            case 'float':
+            case 'double':
+                if (!is_float($arg)) {
+                    $ok = false;
+                }
+                break;
+            case 'date':
+            case 'dateTime.iso8601':
+                if (!is_a($arg, 'IXR_Date')) {
+                    $ok = false;
+                }
+                break;
             }
             if (!$ok) {
                 return new IXR_Error(-32602, 'server error. invalid method parameters');
@@ -137,31 +138,31 @@ class IXR_IntrospectionServer extends IXR_Server
         $return = array();
         foreach ($types as $type) {
             switch ($type) {
-                case 'string':
-                    $return[] = 'string';
-                    break;
-                case 'int':
-                case 'i4':
-                    $return[] = 42;
-                    break;
-                case 'double':
-                    $return[] = 3.1415;
-                    break;
-                case 'dateTime.iso8601':
-                    $return[] = new IXR_Date(time());
-                    break;
-                case 'boolean':
-                    $return[] = true;
-                    break;
-                case 'base64':
-                    $return[] = new IXR_Base64('base64');
-                    break;
-                case 'array':
-                    $return[] = array('array');
-                    break;
-                case 'struct':
-                    $return[] = array('struct' => 'struct');
-                    break;
+            case 'string':
+                $return[] = 'string';
+                break;
+            case 'int':
+            case 'i4':
+                $return[] = 42;
+                break;
+            case 'double':
+                $return[] = 3.1415;
+                break;
+            case 'dateTime.iso8601':
+                $return[] = new IXR_Date(time());
+                break;
+            case 'boolean':
+                $return[] = true;
+                break;
+            case 'base64':
+                $return[] = new IXR_Base64('base64');
+                break;
+            case 'array':
+                $return[] = array('array');
+                break;
+            case 'struct':
+                $return[] = array('struct' => 'struct');
+                break;
             }
         }
         return $return;

@@ -4,9 +4,10 @@
  * IXR_Date
  *
  * @package IXR
- * @since 1.5.0
+ * @since   1.5.0
  */
-class IXR_Date {
+class IXR_Date
+{
     var $year;
     var $month;
     var $day;
@@ -15,9 +16,9 @@ class IXR_Date {
     var $second;
     var $timezone;
 
-	/**
-	 * PHP5 constructor.
-	 */
+    /**
+     * PHP5 constructor.
+     */
     function __construct( $time )
     {
         // $time can be a PHP timestamp or an ISO one
@@ -28,12 +29,13 @@ class IXR_Date {
         }
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Date( $time ) {
-		self::__construct( $time );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Date( $time )
+    {
+        self::__construct($time);
+    }
 
     function parseTimestamp($timestamp)
     {

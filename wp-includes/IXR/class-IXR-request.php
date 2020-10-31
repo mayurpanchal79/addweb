@@ -4,7 +4,7 @@
  * IXR_Request
  *
  * @package IXR
- * @since 1.5.0
+ * @since   1.5.0
  */
 class IXR_Request
 {
@@ -12,9 +12,9 @@ class IXR_Request
     var $args;
     var $xml;
 
-	/**
-	 * PHP5 constructor.
-	 */
+    /**
+     * PHP5 constructor.
+     */
     function __construct($method, $args)
     {
         $this->method = $method;
@@ -35,12 +35,13 @@ EOD;
         $this->xml .= '</params></methodCall>';
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Request( $method, $args ) {
-		self::__construct( $method, $args );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Request( $method, $args )
+    {
+        self::__construct($method, $args);
+    }
 
     function getLength()
     {

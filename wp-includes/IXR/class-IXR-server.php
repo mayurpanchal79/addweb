@@ -4,7 +4,7 @@
  * IXR_Server
  *
  * @package IXR
- * @since 1.5.0
+ * @since   1.5.0
  */
 class IXR_Server
 {
@@ -13,9 +13,9 @@ class IXR_Server
     var $message;
     var $capabilities;
 
-	/**
-	 * PHP5 constructor.
-	 */
+    /**
+     * PHP5 constructor.
+     */
     function __construct( $callbacks = false, $data = false, $wait = false )
     {
         $this->setCapabilities();
@@ -28,20 +28,21 @@ class IXR_Server
         }
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Server( $callbacks = false, $data = false, $wait = false ) {
-		self::__construct( $callbacks, $data, $wait );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Server( $callbacks = false, $data = false, $wait = false )
+    {
+        self::__construct($callbacks, $data, $wait);
+    }
 
     function serve($data = false)
     {
         if (!$data) {
             if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] !== 'POST') {
-                if ( function_exists( 'status_header' ) ) {
-                    status_header( 405 ); // WP #20986
-                    header( 'Allow: POST' );
+                if (function_exists('status_header') ) {
+                    status_header(405); // WP #20986
+                    header('Allow: POST');
                 }
                 header('Content-Type: text/plain'); // merged from WP #9093
                 die('XML-RPC server accepts POST requests only.');
@@ -86,8 +87,8 @@ class IXR_Server
 </methodResponse>
 
 EOD;
-      // Send it
-      $this->output($xml);
+        // Send it
+        $this->output($xml);
     }
 
     function call($methodname, $args)
@@ -141,16 +142,18 @@ EOD;
     function output($xml)
     {
         $charset = function_exists('get_option') ? get_option('blog_charset') : '';
-        if ($charset)
+        if ($charset) {
             $xml = '<?xml version="1.0" encoding="'.$charset.'"?>'."\n".$xml;
-        else
+        } else {
             $xml = '<?xml version="1.0"?>'."\n".$xml;
+        }
         $length = strlen($xml);
         header('Connection: close');
-        if ($charset)
+        if ($charset) {
             header('Content-Type: text/xml; charset='.$charset);
-        else
+        } else {
             header('Content-Type: text/xml');
+        }
         header('Date: '.gmdate('r'));
         echo $xml;
         exit;

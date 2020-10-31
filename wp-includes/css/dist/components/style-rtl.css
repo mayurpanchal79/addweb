@@ -3424,11 +3424,11 @@ body.is-dragging-components-draggable {
   -webkit-appearance: none;
   background: transparent;
   /**
- 	 * Thumb
- 	 */
+      * Thumb
+      */
   /**
- 	 * Track
- 	 */ }
+      * Track
+      */ }
   .components-range-control__slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 18px;

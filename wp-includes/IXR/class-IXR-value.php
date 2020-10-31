@@ -3,16 +3,17 @@
  * IXR_Value
  *
  * @package IXR
- * @since 1.5.0
+ * @since   1.5.0
  */
-class IXR_Value {
+class IXR_Value
+{
     var $data;
     var $type;
 
-	/**
-	 * PHP5 constructor.
-	 */
-	function __construct( $data, $type = false )
+    /**
+     * PHP5 constructor.
+     */
+    function __construct( $data, $type = false )
     {
         $this->data = $data;
         if (!$type) {
@@ -32,12 +33,13 @@ class IXR_Value {
         }
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function IXR_Value( $data, $type = false ) {
-		self::__construct( $data, $type );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function IXR_Value( $data, $type = false )
+    {
+        self::__construct($data, $type);
+    }
 
     function calculateType()
     {
@@ -80,39 +82,39 @@ class IXR_Value {
     {
         // Return XML for this value
         switch ($this->type) {
-            case 'boolean':
-                return '<boolean>'.(($this->data) ? '1' : '0').'</boolean>';
+        case 'boolean':
+            return '<boolean>'.(($this->data) ? '1' : '0').'</boolean>';
                 break;
-            case 'int':
-                return '<int>'.$this->data.'</int>';
+        case 'int':
+            return '<int>'.$this->data.'</int>';
                 break;
-            case 'double':
-                return '<double>'.$this->data.'</double>';
+        case 'double':
+            return '<double>'.$this->data.'</double>';
                 break;
-            case 'string':
-                return '<string>'.htmlspecialchars($this->data).'</string>';
+        case 'string':
+            return '<string>'.htmlspecialchars($this->data).'</string>';
                 break;
-            case 'array':
-                $return = '<array><data>'."\n";
-                foreach ($this->data as $item) {
-                    $return .= '  <value>'.$item->getXml()."</value>\n";
-                }
-                $return .= '</data></array>';
-                return $return;
+        case 'array':
+            $return = '<array><data>'."\n";
+            foreach ($this->data as $item) {
+                $return .= '  <value>'.$item->getXml()."</value>\n";
+            }
+            $return .= '</data></array>';
+            return $return;
                 break;
-            case 'struct':
-                $return = '<struct>'."\n";
-                foreach ($this->data as $name => $value) {
-					$name = htmlspecialchars($name);
-                    $return .= "  <member><name>$name</name><value>";
-                    $return .= $value->getXml()."</value></member>\n";
-                }
-                $return .= '</struct>';
-                return $return;
+        case 'struct':
+            $return = '<struct>'."\n";
+            foreach ($this->data as $name => $value) {
+                $name = htmlspecialchars($name);
+                $return .= "  <member><name>$name</name><value>";
+                $return .= $value->getXml()."</value></member>\n";
+            }
+            $return .= '</struct>';
+            return $return;
                 break;
-            case 'date':
-            case 'base64':
-                return $this->data->getXml();
+        case 'date':
+        case 'base64':
+            return $this->data->getXml();
                 break;
         }
         return false;
@@ -121,7 +123,7 @@ class IXR_Value {
     /**
      * Checks whether or not the supplied array is a struct or not
      *
-     * @param array $array
+     * @param  array $array
      * @return bool
      */
     function isStruct($array)
