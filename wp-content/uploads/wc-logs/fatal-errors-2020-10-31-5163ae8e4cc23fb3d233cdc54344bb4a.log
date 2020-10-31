@@ -1,0 +1,119 @@
+2020-10-31T06:09:46+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on null in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php:137
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(289): misha_order_items_column_cnt('order_products')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1265): do_action('manage_product_...', 'order_products', 10)
+#4 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-list-table.php(1361): WP_Posts_List_Table->column_default(Object(WP_Post), 'order_products')
+#5 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1298): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(741): WP_Posts_List_Table->single_row(Object(WP_Post), 0)
+#7 C:\xampp\htdocs\addweb\wp-admin\includes\c in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 137
+
+2020-10-31T06:10:46+00:00 CRITICAL Uncaught Error: Call to a member function get_items() on null in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php:137
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(289): misha_order_items_column_cnt('count_orders')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1265): do_action('manage_product_...', 'count_orders', 10)
+#4 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-list-table.php(1361): WP_Posts_List_Table->column_default(Object(WP_Post), 'count_orders')
+#5 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1298): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(741): WP_Posts_List_Table->single_row(Object(WP_Post), 0)
+#7 C:\xampp\htdocs\addweb\wp-admin\includes\class-w in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 137
+
+2020-10-31T08:40:47+00:00 CRITICAL Uncaught Error: Call to undefined function get_orders_ids_by_product_id() in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php:150
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(289): misha_order_items_column_cnt('thumb')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1265): do_action('manage_product_...', 'thumb', 10)
+#4 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-list-table.php(1361): WP_Posts_List_Table->column_default(Object(WP_Post), 'thumb')
+#5 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1298): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(741): WP_Posts_List_Table->single_row(Object(WP_Post), 0)
+#7 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-l in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 150
+
+2020-10-31T09:01:27+00:00 CRITICAL Uncaught ArgumentCountError: Too few arguments to function misha_order_items_column_cnt(), 1 passed in C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php on line 289 and exactly 2 expected in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php:131
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(289): misha_order_items_column_cnt('thumb')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1265): do_action('manage_product_...', 'thumb', 10)
+#4 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-list-table.php(1361): WP_Posts_List_Table->column_default(Object(WP_Post), 'thumb')
+#5 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(1298): WP_List_Table->single_row_columns(Object(WP_Post))
+#6 C:\xampp\htdocs\addweb\wp-admin\includes\class-wp-posts-list-table.php(7 in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 131
+
+2020-10-31T10:10:32+00:00 CRITICAL syntax error, unexpected 'if' (T_IF), expecting ';' or ',' in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 171
+
+2020-10-31T10:12:18+00:00 CRITICAL syntax error, unexpected '}' in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 173
+
+2020-10-31T11:43:45+00:00 CRITICAL Uncaught Error: Call to undefined function get_plugin_data() in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php:82
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): prefix_enqueue_scripts('')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-includes\script-loader.php(2294): do_action('wp_enqueue_scri...')
+#4 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): wp_enqueue_scripts('')
+#5 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#6 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#7 C:\xampp\htdocs\addweb\wp-includes\general-template.php(2884): do_action('wp_head')
+#8 C:\xampp\htdocs\addweb\wp-content\themes\storefront\header.php(18): wp_head()
+#9 C:\xampp\htdocs\addweb\wp-includes\template.php(723): require_once('C:\\xampp\\ht in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php on line 82
+
+2020-10-31T11:44:01+00:00 CRITICAL Uncaught Error: Call to undefined function get_plugin_data() in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php:82
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): prefix_enqueue_scripts('')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-includes\script-loader.php(2294): do_action('wp_enqueue_scri...')
+#4 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): wp_enqueue_scripts('')
+#5 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#6 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#7 C:\xampp\htdocs\addweb\wp-includes\general-template.php(2884): do_action('wp_head')
+#8 C:\xampp\htdocs\addweb\wp-content\themes\storefront\header.php(18): wp_head()
+#9 C:\xampp\htdocs\addweb\wp-includes\template.php(723): require_once('C:\\xampp\\ht in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php on line 82
+
+2020-10-31T11:44:17+00:00 CRITICAL Uncaught Error: Call to undefined function get_plugin_data() in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php:82
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): prefix_enqueue_scripts('')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-includes\script-loader.php(2294): do_action('wp_enqueue_scri...')
+#4 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): wp_enqueue_scripts('')
+#5 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters(NULL, Array)
+#6 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#7 C:\xampp\htdocs\addweb\wp-includes\general-template.php(2884): do_action('wp_head')
+#8 C:\xampp\htdocs\addweb\wp-content\themes\storefront\header.php(18): wp_head()
+#9 C:\xampp\htdocs\addweb\wp-includes\template.php(723): require_once('C:\\xampp\\ht in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php on line 82
+
+2020-10-31T13:22:10+00:00 CRITICAL Uncaught Error: Object of class WP_User could not be converted to string in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php:134
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-settings.php(508): include()
+#1 C:\xampp\htdocs\addweb\wp-config.php(90): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\addweb\wp-load.php(37): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\addweb\wp-admin\admin-ajax.php(22): require_once('C:\\xampp\\htdocs...')
+#4 {main}
+  thrown in C:\xampp\htdocs\addweb\wp-content\themes\storefront\functions.php on line 134
+
+cs\addweb\wp-content\themes\storefront\functions.php on line 134
+
+2020-10-31T13:23:15+00:00 CRITICAL Uncaught Error: Object of class WP_User could not be converted to string in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php:65
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): prefix_after_cart_item_name(Array, 'd67d8ab4f4c10bf...')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\templates\cart\cart.php(85): do_action('woocommerce_aft...', Array, 'd67d8ab4f4c10bf...')
+#4 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\wc-core-functions.php(344): include('C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#6 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#7 C:\xampp\htdocs\addweb\w in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php on line 65
+
+2020-10-31T13:23:40+00:00 CRITICAL Uncaught Error: Object of class WP_User could not be converted to string in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php:64
+Stack trace:
+#0 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(287): prefix_after_cart_item_name(Array, 'd67d8ab4f4c10bf...')
+#1 C:\xampp\htdocs\addweb\wp-includes\class-wp-hook.php(311): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\addweb\wp-includes\plugin.php(478): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\templates\cart\cart.php(85): do_action('woocommerce_aft...', Array, 'd67d8ab4f4c10bf...')
+#4 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\wc-core-functions.php(344): include('C:\\xampp\\htdocs...')
+#5 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\shortcodes\class-wc-shortcode-cart.php(99): wc_get_template('cart/cart.php')
+#6 C:\xampp\htdocs\addweb\wp-content\plugins\woocommerce\includes\class-wc-shortcodes.php(72): WC_Shortcode_Cart::output(Array)
+#7 C:\xampp\htdocs\addweb\w in C:\xampp\htdocs\addweb\wp-content\plugins\custom\test-plugin.php on line 64
+
