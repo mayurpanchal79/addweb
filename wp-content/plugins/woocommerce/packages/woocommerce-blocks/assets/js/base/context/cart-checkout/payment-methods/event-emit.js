@@ -2,14 +2,14 @@
  * Internal dependencies
  */
 import {
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
-	emitterCallback,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
+    emitterCallback,
 } from '../../shared/event-emit';
 
 const EMIT_TYPES = {
-	PAYMENT_PROCESSING: 'payment_processing',
+    PAYMENT_PROCESSING: 'payment_processing',
 };
 
 /**
@@ -26,16 +26,16 @@ const EMIT_TYPES = {
  *                  registration functions
  */
 const emitterSubscribers = ( dispatcher ) => ( {
-	onPaymentProcessing: emitterCallback(
-		EMIT_TYPES.PAYMENT_PROCESSING,
-		dispatcher
-	),
+    onPaymentProcessing: emitterCallback(
+        EMIT_TYPES.PAYMENT_PROCESSING,
+        dispatcher
+    ),
 } );
 
 export {
-	EMIT_TYPES,
-	emitterSubscribers,
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
+    EMIT_TYPES,
+    emitterSubscribers,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
 };

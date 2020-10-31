@@ -30,11 +30,11 @@ class Google_Service_Gmail_Resource_UsersMessagesAttachments extends \WPMailSMTP
     /**
      * Gets the specified message attachment. (attachments.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $messageId The ID of the message containing the attachment.
-     * @param string $id The ID of the attachment.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $messageId The ID of the message containing the attachment.
+     * @param  string $id        The ID of the attachment.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_MessagePartBody
      */
     public function get($userId, $messageId, $id, $optParams = array())

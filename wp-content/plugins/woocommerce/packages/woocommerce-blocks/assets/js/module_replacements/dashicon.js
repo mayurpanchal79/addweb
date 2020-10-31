@@ -2,8 +2,8 @@
  * External dependencies
  */
 import {
-	arrowDownAlt2 as ArrowDownIcon,
-	noAlt as DismissIcon,
+    arrowDownAlt2 as ArrowDownIcon,
+    noAlt as DismissIcon,
 } from '@woocommerce/icons';
 import { cloneElement } from '@wordpress/element';
 
@@ -13,22 +13,24 @@ import { cloneElement } from '@wordpress/element';
 // the Webpack NormalModuleReplacementPlugin plugin.
 
 export default function ( props ) {
-	let Icon;
-	switch ( props.icon ) {
-		case 'arrow-down-alt2':
-			Icon = ArrowDownIcon;
-			break;
-		case 'no-alt':
-			Icon = DismissIcon;
-			break;
-	}
+    let Icon;
+    switch ( props.icon ) {
+    case 'arrow-down-alt2':
+        Icon = ArrowDownIcon;
+      break;
+    case 'no-alt':
+        Icon = DismissIcon;
+      break;
+    }
 
-	if ( ! Icon ) {
-		return null;
-	}
+    if (! Icon ) {
+        return null;
+    }
 
-	return cloneElement( Icon, {
-		size: props.size || 20,
-		className: props.className,
-	} );
+    return cloneElement(
+        Icon, {
+            size: props.size || 20,
+            className: props.className,
+        } 
+    );
 }

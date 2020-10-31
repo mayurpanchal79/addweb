@@ -40,6 +40,7 @@ class FirePHPHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessi
     protected static $initialized = \false;
     /**
      * Shared static message index between potentially multiple handlers
+     *
      * @var int
      */
     protected static $messageIndex = 1;
@@ -59,8 +60,8 @@ class FirePHPHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessi
     /**
      * Creates message header from record
      *
-     * @see createHeader()
-     * @param  array  $record
+     * @see    createHeader()
+     * @param  array $record
      * @return string
      */
     protected function createRecordHeader(array $record)
@@ -79,8 +80,8 @@ class FirePHPHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessi
     /**
      * Wildfire initialization headers to enable message parsing
      *
-     * @see createHeader()
-     * @see sendHeader()
+     * @see    createHeader()
+     * @see    sendHeader()
      * @return array
      */
     protected function getInitHeaders()
@@ -103,8 +104,8 @@ class FirePHPHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessi
     /**
      * Creates & sends header for a record, ensuring init headers have been sent prior
      *
-     * @see sendHeader()
-     * @see sendInitHeaders()
+     * @see   sendHeader()
+     * @see   sendInitHeaders()
      * @param array $record
      */
     protected function write(array $record)

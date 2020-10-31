@@ -81,9 +81,9 @@ class AttributesApi
      *
      * Create contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the attribute (required)
-     * @param  \SendinBlue\Client\Model\CreateAttribute $createAttribute Values to create an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the attribute (required)
+     * @param \SendinBlue\Client\Model\CreateAttribute $createAttribute   Values to create an attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -98,9 +98,9 @@ class AttributesApi
      *
      * Create contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the attribute (required)
-     * @param  \SendinBlue\Client\Model\CreateAttribute $createAttribute Values to create an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the attribute (required)
+     * @param \SendinBlue\Client\Model\CreateAttribute $createAttribute   Values to create an attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -124,10 +124,10 @@ class AttributesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -137,27 +137,29 @@ class AttributesApi
      *
      * Create contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the attribute (required)
-     * @param  \SendinBlue\Client\Model\CreateAttribute $createAttribute Values to create an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the attribute (required)
+     * @param \SendinBlue\Client\Model\CreateAttribute $createAttribute   Values to create an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createAttributeAsync($attributeCategory, $attributeName, $createAttribute)
     {
-        return $this->createAttributeAsyncWithHttpInfo($attributeCategory, $attributeName, $createAttribute)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createAttributeAsyncWithHttpInfo($attributeCategory, $attributeName, $createAttribute)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createAttributeAsyncWithHttpInfo
      *
      * Create contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the attribute (required)
-     * @param  \SendinBlue\Client\Model\CreateAttribute $createAttribute Values to create an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the attribute (required)
+     * @param \SendinBlue\Client\Model\CreateAttribute $createAttribute   Values to create an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -166,20 +168,22 @@ class AttributesApi
     {
         $returnType = '';
         $request = $this->createAttributeRequest($attributeCategory, $attributeName, $createAttribute);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'createAttribute'
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the attribute (required)
-     * @param  \SendinBlue\Client\Model\CreateAttribute $createAttribute Values to create an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the attribute (required)
+     * @param \SendinBlue\Client\Model\CreateAttribute $createAttribute   Values to create an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -274,8 +278,8 @@ class AttributesApi
      *
      * Delete an attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
+     * @param string $attributeCategory Category of the attribute (required)
+     * @param string $attributeName     Name of the existing attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -290,8 +294,8 @@ class AttributesApi
      *
      * Delete an attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
+     * @param string $attributeCategory Category of the attribute (required)
+     * @param string $attributeName     Name of the existing attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -315,14 +319,14 @@ class AttributesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -332,25 +336,27 @@ class AttributesApi
      *
      * Delete an attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
+     * @param string $attributeCategory Category of the attribute (required)
+     * @param string $attributeName     Name of the existing attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteAttributeAsync($attributeCategory, $attributeName)
     {
-        return $this->deleteAttributeAsyncWithHttpInfo($attributeCategory, $attributeName)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteAttributeAsyncWithHttpInfo($attributeCategory, $attributeName)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteAttributeAsyncWithHttpInfo
      *
      * Delete an attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
+     * @param string $attributeCategory Category of the attribute (required)
+     * @param string $attributeName     Name of the existing attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -359,19 +365,21 @@ class AttributesApi
     {
         $returnType = '';
         $request = $this->deleteAttributeRequest($attributeCategory, $attributeName);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteAttribute'
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
+     * @param string $attributeCategory Category of the attribute (required)
+     * @param string $attributeName     Name of the existing attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -459,7 +467,6 @@ class AttributesApi
      *
      * List all attributes
      *
-     *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \SendinBlue\Client\Model\GetAttributes
@@ -473,7 +480,6 @@ class AttributesApi
      * Operation getAttributesWithHttpInfo
      *
      * List all attributes
-     *
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -507,10 +513,10 @@ class AttributesApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAttributes', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAttributes', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -520,21 +526,21 @@ class AttributesApi
      *
      * List all attributes
      *
-     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getAttributesAsync()
     {
-        return $this->getAttributesAsyncWithHttpInfo()->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getAttributesAsyncWithHttpInfo()->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getAttributesAsyncWithHttpInfo
      *
      * List all attributes
-     *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -543,27 +549,28 @@ class AttributesApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAttributes';
         $request = $this->getAttributesRequest();
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getAttributes'
-     *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -635,9 +642,9 @@ class AttributesApi
      *
      * Update contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
-     * @param  \SendinBlue\Client\Model\UpdateAttribute $updateAttribute Values to update an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the existing attribute (required)
+     * @param \SendinBlue\Client\Model\UpdateAttribute $updateAttribute   Values to update an attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -652,9 +659,9 @@ class AttributesApi
      *
      * Update contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
-     * @param  \SendinBlue\Client\Model\UpdateAttribute $updateAttribute Values to update an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the existing attribute (required)
+     * @param \SendinBlue\Client\Model\UpdateAttribute $updateAttribute   Values to update an attribute (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -678,14 +685,14 @@ class AttributesApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -695,27 +702,29 @@ class AttributesApi
      *
      * Update contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
-     * @param  \SendinBlue\Client\Model\UpdateAttribute $updateAttribute Values to update an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the existing attribute (required)
+     * @param \SendinBlue\Client\Model\UpdateAttribute $updateAttribute   Values to update an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateAttributeAsync($attributeCategory, $attributeName, $updateAttribute)
     {
-        return $this->updateAttributeAsyncWithHttpInfo($attributeCategory, $attributeName, $updateAttribute)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateAttributeAsyncWithHttpInfo($attributeCategory, $attributeName, $updateAttribute)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateAttributeAsyncWithHttpInfo
      *
      * Update contact attribute
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
-     * @param  \SendinBlue\Client\Model\UpdateAttribute $updateAttribute Values to update an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the existing attribute (required)
+     * @param \SendinBlue\Client\Model\UpdateAttribute $updateAttribute   Values to update an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -724,20 +733,22 @@ class AttributesApi
     {
         $returnType = '';
         $request = $this->updateAttributeRequest($attributeCategory, $attributeName, $updateAttribute);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateAttribute'
      *
-     * @param  string $attributeCategory Category of the attribute (required)
-     * @param  string $attributeName Name of the existing attribute (required)
-     * @param  \SendinBlue\Client\Model\UpdateAttribute $updateAttribute Values to update an attribute (required)
+     * @param string                                   $attributeCategory Category of the attribute (required)
+     * @param string                                   $attributeName     Name of the existing attribute (required)
+     * @param \SendinBlue\Client\Model\UpdateAttribute $updateAttribute   Values to update an attribute (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

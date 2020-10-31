@@ -23,7 +23,7 @@ use WPMailSMTP\Vendor\Symfony\Component\Finder\Finder;
 class Google_Task_Composer
 {
     /**
-     * @param Event $event Composer event passed in for any script method
+     * @param Event               $event      Composer event passed in for any script method
      * @param FilesystemInterface $filesystem Optional. Used for testing.
      */
     public static function cleanup(\WPMailSMTP\Vendor\Composer\Script\Event $event, \WPMailSMTP\Vendor\Symfony\Component\Filesystem\Filesystem $filesystem = null)

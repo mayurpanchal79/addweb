@@ -17,9 +17,9 @@ import isShallowEqual from '@wordpress/is-shallow-equal';
  *                 shallow equality with it.
  */
 export const useShallowEqual = ( value ) => {
-	const ref = useRef();
-	if ( ! isShallowEqual( value, ref.current ) ) {
-		ref.current = value;
-	}
-	return ref.current;
+    const ref = useRef();
+    if (! isShallowEqual(value, ref.current) ) {
+        ref.current = value;
+    }
+    return ref.current;
 };

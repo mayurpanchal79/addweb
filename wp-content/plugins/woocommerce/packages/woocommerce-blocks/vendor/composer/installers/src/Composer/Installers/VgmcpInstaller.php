@@ -14,7 +14,6 @@ class VgmcpInstaller extends BaseInstaller
      * For package type vgmcp-bundle, cut off a trailing '-bundle' if present.
      *
      * For package type vgmcp-theme, cut off a trailing '-theme' if present.
-     *
      */
     public function inflectPackageVars($vars)
     {

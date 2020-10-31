@@ -4,7 +4,7 @@
  * @param {Array} shippingRates Shipping rates and packages array.
  */
 export const getShippingRatesPackageCount = ( shippingRates ) => {
-	return shippingRates.length;
+    return shippingRates.length;
 };
 
 /**
@@ -13,7 +13,9 @@ export const getShippingRatesPackageCount = ( shippingRates ) => {
  * @param {Array} shippingRates Shipping rates and packages array.
  */
 export const getShippingRatesRateCount = ( shippingRates ) => {
-	return shippingRates.reduce( function ( count, shippingPackage ) {
-		return count + shippingPackage.shipping_rates.length;
-	}, 0 );
+    return shippingRates.reduce(
+        function ( count, shippingPackage ) {
+            return count + shippingPackage.shipping_rates.length;
+        }, 0 
+    );
 };

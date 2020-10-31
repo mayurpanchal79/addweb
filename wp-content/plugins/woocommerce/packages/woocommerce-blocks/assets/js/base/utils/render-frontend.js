@@ -13,10 +13,10 @@ const selectorsToSkipOnLoad = [ '.wp-block-woocommerce-cart' ];
 // Given an element and a list of wrappers, check if the element is inside at
 // least one of the wrappers.
 const isElementInsideWrappers = ( el, wrappers ) => {
-	return Array.prototype.some.call(
-		wrappers,
-		( wrapper ) => wrapper.contains( el ) && ! wrapper.isSameNode( el )
-	);
+    return Array.prototype.some.call(
+        wrappers,
+        ( wrapper ) => wrapper.contains(el) && ! wrapper.isSameNode(el)
+    );
 };
 
 /**
@@ -34,34 +34,35 @@ const isElementInsideWrappers = ( el, wrappers ) => {
  *                                                  boundary.
  */
 const renderBlockInContainers = ( {
-	Block,
-	containers,
-	getProps = () => {},
-	getErrorBoundaryProps = () => {},
+    Block,
+    containers,
+    getProps = () => {},
+    getErrorBoundaryProps = () => {},
 } ) => {
-	if ( containers.length === 0 ) {
-		return;
-	}
+    if (containers.length === 0 ) {
+        return;
+    }
 
-	// Use Array.forEach for IE11 compatibility.
-	Array.prototype.forEach.call( containers, ( el, i ) => {
-		const props = getProps( el, i );
-		const errorBoundaryProps = getErrorBoundaryProps( el, i );
-		const attributes = {
-			...el.dataset,
-			...props.attributes,
-		};
-		el.classList.remove( 'is-loading' );
-
-		render(
-			<BlockErrorBoundary { ...errorBoundaryProps }>
-				<Suspense fallback={ <div className="wc-block-placeholder" /> }>
-					<Block { ...props } attributes={ attributes } />
-				</Suspense>
-			</BlockErrorBoundary>,
-			el
-		);
-	} );
+    // Use Array.forEach for IE11 compatibility.
+    Array.prototype.forEach.call(
+        containers, ( el, i ) => {
+            const props = getProps(el, i);
+            const errorBoundaryProps = getErrorBoundaryProps(el, i);
+            const attributes = {
+                ...el.dataset,
+                ...props.attributes,
+            };
+            el.classList.remove('is-loading');
+            render(
+            <BlockErrorBoundary { ...errorBoundaryProps }>
+                <Suspense fallback={ <div className="wc-block-placeholder" /> }>
+                <Block { ...props } attributes={ attributes } />
+                </Suspense>
+                </BlockErrorBoundary>,
+            el
+        );
+        } 
+    );
 };
 
 /**
@@ -83,25 +84,29 @@ const renderBlockInContainers = ( {
  *                                                  the wrapper will be ignored.
  */
 const renderBlockOutsideWrappers = ( {
-	Block,
-	getProps,
-	getErrorBoundaryProps,
-	selector,
-	wrappers,
+    Block,
+    getProps,
+    getErrorBoundaryProps,
+    selector,
+    wrappers,
 } ) => {
-	const containers = document.body.querySelectorAll( selector );
-	// Filter out blocks inside the wrappers.
-	if ( wrappers.length > 0 ) {
-		Array.prototype.filter.call( containers, ( el ) => {
-			return ! isElementInsideWrappers( el, wrappers );
-		} );
-	}
-	renderBlockInContainers( {
-		Block,
-		containers,
-		getProps,
-		getErrorBoundaryProps,
-	} );
+    const containers = document.body.querySelectorAll(selector);
+    // Filter out blocks inside the wrappers.
+    if (wrappers.length > 0 ) {
+        Array.prototype.filter.call(
+            containers, ( el ) => {
+                return ! isElementInsideWrappers(el, wrappers);
+            } 
+        );
+    }
+    renderBlockInContainers(
+        {
+            Block,
+            containers,
+            getProps,
+            getErrorBoundaryProps,
+        } 
+    );
 };
 
 /**
@@ -122,19 +127,21 @@ const renderBlockOutsideWrappers = ( {
  *                                                  selector inside.
  */
 const renderBlockInsideWrapper = ( {
-	Block,
-	getProps,
-	getErrorBoundaryProps,
-	selector,
-	wrapper,
+    Block,
+    getProps,
+    getErrorBoundaryProps,
+    selector,
+    wrapper,
 } ) => {
-	const containers = wrapper.querySelectorAll( selector );
-	renderBlockInContainers( {
-		Block,
-		containers,
-		getProps,
-		getErrorBoundaryProps,
-	} );
+    const containers = wrapper.querySelectorAll(selector);
+    renderBlockInContainers(
+        {
+            Block,
+            containers,
+            getProps,
+            getErrorBoundaryProps,
+        } 
+    );
 };
 
 /**
@@ -155,20 +162,26 @@ const renderBlockInsideWrapper = ( {
  *                                                  boundary.
  */
 export const renderFrontend = ( props ) => {
-	const wrappersToSkipOnLoad = document.body.querySelectorAll(
-		selectorsToSkipOnLoad.join( ',' )
-	);
-	renderBlockOutsideWrappers( {
-		...props,
-		wrappers: wrappersToSkipOnLoad,
-	} );
-	// For each wrapper, add an event listener to render the inner blocks when
-	// `wc-blocks_render_blocks_frontend` event is triggered.
-	Array.prototype.forEach.call( wrappersToSkipOnLoad, ( wrapper ) => {
-		wrapper.addEventListener( 'wc-blocks_render_blocks_frontend', () => {
-			renderBlockInsideWrapper( { ...props, wrapper } );
-		} );
-	} );
+    const wrappersToSkipOnLoad = document.body.querySelectorAll(
+        selectorsToSkipOnLoad.join(',')
+    );
+    renderBlockOutsideWrappers(
+        {
+            ...props,
+            wrappers: wrappersToSkipOnLoad,
+        } 
+    );
+    // For each wrapper, add an event listener to render the inner blocks when
+    // `wc-blocks_render_blocks_frontend` event is triggered.
+    Array.prototype.forEach.call(
+        wrappersToSkipOnLoad, ( wrapper ) => {
+        wrapper.addEventListener(
+                'wc-blocks_render_blocks_frontend', () => {
+                renderBlockInsideWrapper({ ...props, wrapper });
+                } 
+            );
+        } 
+    );
 };
 
 export default renderFrontend;

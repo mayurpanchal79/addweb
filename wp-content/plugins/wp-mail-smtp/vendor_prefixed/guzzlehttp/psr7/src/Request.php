@@ -12,11 +12,17 @@ use WPMailSMTP\Vendor\Psr\Http\Message\UriInterface;
 class Request implements \WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface
 {
     use MessageTrait;
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $method;
-    /** @var null|string */
+    /**
+     * @var null|string 
+     */
     private $requestTarget;
-    /** @var UriInterface */
+    /**
+     * @var UriInterface 
+     */
     private $uri;
     /**
      * @param string                               $method  HTTP method

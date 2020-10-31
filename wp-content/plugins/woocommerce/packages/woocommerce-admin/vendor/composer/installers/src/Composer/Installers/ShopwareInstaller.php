@@ -3,6 +3,7 @@ namespace Composer\Installers;
 
 /**
  * Plugin/theme installer for shopware
+ *
  * @author Benjamin Boit
  */
 class ShopwareInstaller extends BaseInstaller
@@ -18,6 +19,7 @@ class ShopwareInstaller extends BaseInstaller
 
     /**
      * Transforms the names
+     *
      * @param  array $vars
      * @return array
      */
@@ -32,14 +34,17 @@ class ShopwareInstaller extends BaseInstaller
 
     /**
      * Changes the name to a camelcased combination of vendor and name
+     *
      * @param  array $vars
      * @return array
      */
     private function correctPluginName($vars)
     {
-        $camelCasedName = preg_replace_callback('/(-[a-z])/', function ($matches) {
-            return strtoupper($matches[0][1]);
-        }, $vars['name']);
+        $camelCasedName = preg_replace_callback(
+            '/(-[a-z])/', function ($matches) {
+                return strtoupper($matches[0][1]);
+            }, $vars['name']
+        );
 
         $vars['name'] = ucfirst($vars['vendor']) . ucfirst($camelCasedName);
 
@@ -48,6 +53,7 @@ class ShopwareInstaller extends BaseInstaller
 
     /**
      * Changes the name to a underscore separated name
+     *
      * @param  array $vars
      * @return array
      */

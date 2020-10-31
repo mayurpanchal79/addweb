@@ -49,7 +49,7 @@ class ServiceAccountJwtAccessCredentials extends \WPMailSMTP\Vendor\Google\Auth\
      * Create a new ServiceAccountJwtAccessCredentials.
      *
      * @param string|array $jsonKey JSON credential file path or JSON credentials
-     *   as an associative array
+     *                              as an associative array
      */
     public function __construct($jsonKey)
     {
@@ -77,9 +77,9 @@ class ServiceAccountJwtAccessCredentials extends \WPMailSMTP\Vendor\Google\Auth\
     /**
      * Updates metadata with the authorization token.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $authUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  array    $metadata    metadata hashmap
+     * @param  string   $authUri     optional auth uri
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array updated metadata hashmap
      */
     public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null)
@@ -129,7 +129,7 @@ class ServiceAccountJwtAccessCredentials extends \WPMailSMTP\Vendor\Google\Auth\
      *
      * Returns null if the project ID does not exist in the keyfile.
      *
-     * @param callable $httpHandler Not used by this credentials type.
+     * @param  callable $httpHandler Not used by this credentials type.
      * @return string|null
      */
     public function getProjectId(callable $httpHandler = null)
@@ -141,7 +141,7 @@ class ServiceAccountJwtAccessCredentials extends \WPMailSMTP\Vendor\Google\Auth\
      *
      * In this case, it returns the keyfile's client_email key.
      *
-     * @param callable $httpHandler Not used by this credentials type.
+     * @param  callable $httpHandler Not used by this credentials type.
      * @return string
      */
     public function getClientName(callable $httpHandler = null)

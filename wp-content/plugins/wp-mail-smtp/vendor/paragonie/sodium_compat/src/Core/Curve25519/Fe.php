@@ -24,8 +24,8 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
     /**
      * @internal You should not use this directly from another application
      *
-     * @param array<int, int> $array
-     * @param bool $save_indexes
+     * @param  array<int, int> $array
+     * @param  bool            $save_indexes
      * @return self
      */
     public static function fromArray($array, $save_indexes = null)
@@ -37,7 +37,9 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
             $keys = range(0, $count - 1);
         }
         $array = array_values($array);
-        /** @var array<int, int> $keys */
+        /**
+ * @var array<int, int> $keys 
+*/
 
         $obj = new ParagonIE_Sodium_Core_Curve25519_Fe();
         if ($save_indexes) {
@@ -55,9 +57,9 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int|null $offset
-     * @param int $value
-     * @return void
+     * @param          int|null $offset
+     * @param          int      $value
+     * @return         void
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetSet($offset, $value)
@@ -75,8 +77,8 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @return bool
+     * @param          int $offset
+     * @return         bool
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetExists($offset)
@@ -87,8 +89,8 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @return void
+     * @param          int $offset
+     * @return         void
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetUnset($offset)
@@ -99,8 +101,8 @@ class ParagonIE_Sodium_Core_Curve25519_Fe implements ArrayAccess
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @return int
+     * @param          int $offset
+     * @return         int
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetGet($offset)

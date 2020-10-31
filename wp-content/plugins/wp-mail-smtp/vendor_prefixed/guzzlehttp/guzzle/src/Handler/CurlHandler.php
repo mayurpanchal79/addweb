@@ -13,7 +13,9 @@ use WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface;
  */
 class CurlHandler
 {
-    /** @var CurlFactoryInterface */
+    /**
+     * @var CurlFactoryInterface 
+     */
     private $factory;
     /**
      * Accepts an associative array of options:

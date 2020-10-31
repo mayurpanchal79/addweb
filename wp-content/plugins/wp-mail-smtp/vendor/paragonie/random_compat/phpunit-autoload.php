@@ -9,6 +9,6 @@ require_once __DIR__ . '/psalm-autoload.php';
  */
 if (PHP_VERSION_ID >= 50300) {
     if (!class_exists('PHPUnit_Framework_TestCase')) {
-        require_once __DIR__ . '/other/phpunit-shim.php';
+        include_once __DIR__ . '/other/phpunit-shim.php';
     }
 }

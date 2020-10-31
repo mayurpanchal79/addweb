@@ -134,8 +134,8 @@ class NormalizerFormatter implements \WPMailSMTP\Vendor\Monolog\Formatter\Format
     /**
      * Return the JSON representation of a value
      *
-     * @param  mixed             $data
-     * @param  bool              $ignoreErrors
+     * @param  mixed $data
+     * @param  bool  $ignoreErrors
      * @throws \RuntimeException if encoding fails and errors are not ignored
      * @return string
      */

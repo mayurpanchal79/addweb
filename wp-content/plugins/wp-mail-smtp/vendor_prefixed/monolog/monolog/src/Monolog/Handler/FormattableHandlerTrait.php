@@ -28,6 +28,7 @@ trait FormattableHandlerTrait
     protected $formatter;
     /**
      * {@inheritdoc}
+     *
      * @suppress PhanTypeMismatchReturn
      */
     public function setFormatter(\WPMailSMTP\Vendor\Monolog\Formatter\FormatterInterface $formatter) : \WPMailSMTP\Vendor\Monolog\Handler\HandlerInterface

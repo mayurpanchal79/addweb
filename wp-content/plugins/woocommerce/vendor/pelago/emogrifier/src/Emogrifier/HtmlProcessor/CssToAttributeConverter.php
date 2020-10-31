@@ -54,7 +54,9 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     public function convertCssToVisualAttributes()
     {
-        /** @var \DOMElement $node */
+        /**
+ * @var \DOMElement $node 
+*/
         foreach ($this->getAllNodesWithStyleAttribute() as $node) {
             $inlineStyleDeclarations = $this->parseCssDeclarationsBlock($node->getAttribute('style'));
             $this->mapCssToHtmlAttributes($inlineStyleDeclarations, $node);
@@ -120,8 +122,8 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      * This method maps CSS styles to HTML attributes and adds those to the
      * node.
      *
-     * @param string[] $styles the new CSS styles taken from the global styles to be applied to this node
-     * @param \DOMElement $node node to apply styles to
+     * @param string[]    $styles the new CSS styles taken from the global styles to be applied to this node
+     * @param \DOMElement $node   node to apply styles to
      *
      * @return void
      */
@@ -139,9 +141,9 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      *
      * This method maps a CSS rule to HTML attributes and adds those to the node.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param string      $property the name of the CSS property to map
+     * @param string      $value    the value of the style rule to map
+     * @param \DOMElement $node     node to apply styles to
      *
      * @return void
      */
@@ -155,9 +157,9 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * Looks up the CSS property in the mapping table and maps it if it matches the conditions.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param string      $property the name of the CSS property to map
+     * @param string      $value    the value of the style rule to map
+     * @param \DOMElement $node     node to apply styles to
      *
      * @return bool true if the property can be mapped using the simple mapping table
      */
@@ -181,36 +183,36 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     /**
      * Maps CSS properties that need special transformation to an HTML attribute.
      *
-     * @param string $property the name of the CSS property to map
-     * @param string $value the value of the style rule to map
-     * @param \DOMElement $node node to apply styles to
+     * @param string      $property the name of the CSS property to map
+     * @param string      $value    the value of the style rule to map
+     * @param \DOMElement $node     node to apply styles to
      *
      * @return void
      */
     private function mapComplexCssProperty($property, $value, \DOMElement $node)
     {
         switch ($property) {
-            case 'background':
-                $this->mapBackgroundProperty($node, $value);
-                break;
-            case 'width':
-                // intentional fall-through
-            case 'height':
-                $this->mapWidthOrHeightProperty($node, $value, $property);
-                break;
-            case 'margin':
-                $this->mapMarginProperty($node, $value);
-                break;
-            case 'border':
-                $this->mapBorderProperty($node, $value);
-                break;
-            default:
+        case 'background':
+            $this->mapBackgroundProperty($node, $value);
+            break;
+        case 'width':
+            // intentional fall-through
+        case 'height':
+            $this->mapWidthOrHeightProperty($node, $value, $property);
+            break;
+        case 'margin':
+            $this->mapMarginProperty($node, $value);
+            break;
+        case 'border':
+            $this->mapBorderProperty($node, $value);
+            break;
+        default:
         }
     }
 
     /**
-     * @param \DOMElement $node node to apply styles to
-     * @param string $value the value of the style rule to map
+     * @param \DOMElement $node  node to apply styles to
+     * @param string      $value the value of the style rule to map
      *
      * @return void
      */
@@ -228,9 +230,9 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     }
 
     /**
-     * @param \DOMElement $node node to apply styles to
-     * @param string $value the value of the style rule to map
-     * @param string $property the name of the CSS property to map
+     * @param \DOMElement $node     node to apply styles to
+     * @param string      $value    the value of the style rule to map
+     * @param string      $property the name of the CSS property to map
      *
      * @return void
      */
@@ -246,8 +248,8 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     }
 
     /**
-     * @param \DOMElement $node node to apply styles to
-     * @param string $value the value of the style rule to map
+     * @param \DOMElement $node  node to apply styles to
+     * @param string      $value the value of the style rule to map
      *
      * @return void
      */
@@ -264,8 +266,8 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     }
 
     /**
-     * @param \DOMElement $node node to apply styles to
-     * @param string $value the value of the style rule to map
+     * @param \DOMElement $node  node to apply styles to
+     * @param string      $value the value of the style rule to map
      *
      * @return void
      */
@@ -302,7 +304,9 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     private function parseCssShorthandValue($value)
     {
-        /** @var string[] $values */
+        /**
+ * @var string[] $values 
+*/
         $values = \preg_split('/\\s+/', $value);
 
         $css = [];

@@ -115,15 +115,19 @@ class RotatingFileHandler extends \WPMailSMTP\Vendor\Monolog\Handler\StreamHandl
             return;
         }
         // Sorting the files by name to remove the older ones
-        \usort($logFiles, function ($a, $b) {
-            return \strcmp($b, $a);
-        });
+        \usort(
+            $logFiles, function ($a, $b) {
+                return \strcmp($b, $a);
+            }
+        );
         foreach (\array_slice($logFiles, $this->maxFiles) as $file) {
             if (\is_writable($file)) {
                 // suppress errors here as unlink() might fail if two processes
                 // are cleaning up/rotating at the same time
-                \set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-                });
+                \set_error_handler(
+                    function ($errno, $errstr, $errfile, $errline) {
+                    }
+                );
                 \unlink($file);
                 \restore_error_handler();
             }

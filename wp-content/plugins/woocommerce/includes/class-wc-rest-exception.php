@@ -8,9 +8,11 @@
  * @since   2.6.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * WC_REST_Exception class.
  */
-class WC_REST_Exception extends WC_Data_Exception {}
+class WC_REST_Exception extends WC_Data_Exception
+{
+}

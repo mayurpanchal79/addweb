@@ -26,102 +26,108 @@ use Composer\EventDispatcher\EventSubscriberInterface;
  *
  * @package automattic/jetpack-autoloader
  */
-class CustomAutoloaderPlugin implements PluginInterface, EventSubscriberInterface {
+class CustomAutoloaderPlugin implements PluginInterface, EventSubscriberInterface
+{
 
-	/**
-	 * IO object.
-	 *
-	 * @var IOInterface IO object.
-	 */
-	private $io;
+    /**
+     * IO object.
+     *
+     * @var IOInterface IO object.
+     */
+    private $io;
 
-	/**
-	 * Composer object.
-	 *
-	 * @var Composer Composer object.
-	 */
-	private $composer;
+    /**
+     * Composer object.
+     *
+     * @var Composer Composer object.
+     */
+    private $composer;
 
-	/**
-	 * Do nothing.
-	 *
-	 * @param Composer    $composer Composer object.
-	 * @param IOInterface $io IO object.
-	 */
-	public function activate( Composer $composer, IOInterface $io ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		$this->composer = $composer;
-		$this->io       = $io;
-	}
+    /**
+     * Do nothing.
+     *
+     * @param Composer    $composer Composer object.
+     * @param IOInterface $io       IO object.
+     */
+    public function activate( Composer $composer, IOInterface $io )  // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+    {
+        $this->composer = $composer;
+        $this->io       = $io;
+    }
 
-	/**
-	 * Do nothing.
-	 * phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-	 *
-	 * @param Composer    $composer Composer object.
-	 * @param IOInterface $io IO object.
-	 */
-	public function deactivate( Composer $composer, IOInterface $io ) {
-		/*
-		 * Intentionally left empty. This is a PluginInterface method.
-		 * phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		 */
-	}
+    /**
+     * Do nothing.
+     * phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+     *
+     * @param Composer    $composer Composer object.
+     * @param IOInterface $io       IO object.
+     */
+    public function deactivate( Composer $composer, IOInterface $io )
+    {
+        /*
+        * Intentionally left empty. This is a PluginInterface method.
+      * phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+        */
+    }
 
-	/**
-	 * Do nothing.
-	 * phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-	 *
-	 * @param Composer    $composer Composer object.
-	 * @param IOInterface $io IO object.
-	 */
-	public function uninstall( Composer $composer, IOInterface $io ) {
-		/*
-		 * Intentionally left empty. This is a PluginInterface method.
-		 * phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		 */
-	}
+    /**
+     * Do nothing.
+     * phpcs:disable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+     *
+     * @param Composer    $composer Composer object.
+     * @param IOInterface $io       IO object.
+     */
+    public function uninstall( Composer $composer, IOInterface $io )
+    {
+        /*
+        * Intentionally left empty. This is a PluginInterface method.
+      * phpcs:enable VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+        */
+    }
 
 
-	/**
-	 * Tell composer to listen for events and do something with them.
-	 *
-	 * @return array List of subscribed events.
-	 */
-	public static function getSubscribedEvents() {
-		return array(
-			ScriptEvents::POST_AUTOLOAD_DUMP => 'postAutoloadDump',
-		);
-	}
+    /**
+     * Tell composer to listen for events and do something with them.
+     *
+     * @return array List of subscribed events.
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+        ScriptEvents::POST_AUTOLOAD_DUMP => 'postAutoloadDump',
+        );
+    }
 
-	/**
-	 * Generate the custom autolaoder.
-	 *
-	 * @param Event $event Script event object.
-	 */
-	public function postAutoloadDump( Event $event ) {
+    /**
+     * Generate the custom autolaoder.
+     *
+     * @param Event $event Script event object.
+     */
+    public function postAutoloadDump( Event $event )
+    {
 
-		$config = $this->composer->getConfig();
+        $config = $this->composer->getConfig();
 
-		if ( 'vendor' !== $config->raw()['config']['vendor-dir'] ) {
-			$this->io->writeError( "\n<error>An error occurred while generating the autoloader files:", true );
-			$this->io->writeError( 'The project\'s composer.json or composer environment set a non-default vendor directory.', true );
-			$this->io->writeError( 'The default composer vendor directory must be used.</error>', true );
-			exit();
-		}
+        if ('vendor' !== $config->raw()['config']['vendor-dir'] ) {
+            $this->io->writeError("\n<error>An error occurred while generating the autoloader files:", true);
+            $this->io->writeError('The project\'s composer.json or composer environment set a non-default vendor directory.', true);
+            $this->io->writeError('The default composer vendor directory must be used.</error>', true);
+            exit();
+        }
 
-		$installationManager = $this->composer->getInstallationManager();
-		$repoManager         = $this->composer->getRepositoryManager();
-		$localRepo           = $repoManager->getLocalRepository();
-		$package             = $this->composer->getPackage();
-		$optimize            = true;
-		$suffix              = $config->get( 'autoloader-suffix' )
-			? $config->get( 'autoloader-suffix' )
-			: md5( uniqid( '', true ) );
+        $installationManager = $this->composer->getInstallationManager();
+        $repoManager         = $this->composer->getRepositoryManager();
+        $localRepo           = $repoManager->getLocalRepository();
+        $package             = $this->composer->getPackage();
+        $optimize            = true;
+        $suffix              = $config->get('autoloader-suffix')
+        ? $config->get('autoloader-suffix')
+        : md5(uniqid('', true));
 
-		$generator = new AutoloadGenerator( $this->io );
+        $generator = new AutoloadGenerator($this->io);
 
-		$generator->dump( $config, $localRepo, $package, $installationManager, 'composer', $optimize, $suffix );
-		$this->generated = true;
-	}
+        $generator->dump($config, $localRepo, $package, $installationManager, 'composer', $optimize, $suffix);
+        $this->generated = true;
+    }
 
 }

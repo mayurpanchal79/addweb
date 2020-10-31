@@ -18,24 +18,28 @@ import { renderInnerBlocks } from './render-inner-blocks';
  * @param {Function} [props.getProps]              Function to generate the props object for the block.
  */
 export const renderParentBlock = ( {
-	Block,
-	selector,
-	blockName = '',
-	getProps = () => {},
+    Block,
+    selector,
+    blockName = '',
+    getProps = () => {},
 } ) => {
-	const getPropsWithChildren = ( el, i ) => {
-		const children =
-			el.children && el.children.length
-				? renderInnerBlocks( {
-						blockName,
-						children: el.children,
-				  } )
-				: null;
-		return { ...getProps( el, i ), children };
-	};
-	renderFrontend( {
-		Block,
-		selector,
-		getProps: getPropsWithChildren,
-	} );
+    const getPropsWithChildren = ( el, i ) => {
+        const children =
+        el.children && el.children.length
+        ? renderInnerBlocks(
+            {
+                blockName,
+                children: el.children,
+            } 
+        )
+                : null;
+     return { ...getProps(el, i), children };
+    };
+    renderFrontend(
+        {
+            Block,
+            selector,
+            getProps: getPropsWithChildren,
+        } 
+    );
 };

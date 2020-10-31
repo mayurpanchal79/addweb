@@ -84,8 +84,8 @@ class ChromePHPHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProces
     /**
      * Creates & sends header for a record
      *
-     * @see sendHeader()
-     * @see send()
+     * @see   sendHeader()
+     * @see   send()
      * @param array $record
      */
     protected function write(array $record)

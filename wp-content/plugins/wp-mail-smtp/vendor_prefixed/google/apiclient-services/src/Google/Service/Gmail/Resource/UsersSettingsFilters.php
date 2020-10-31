@@ -31,10 +31,10 @@ class Google_Service_Gmail_Resource_UsersSettingsFilters extends \WPMailSMTP\Ven
      * Creates a filter. Note: you can only create a maximum of 1,000 filters.
      * (filters.create)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Filter $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                      $userId    User's email address. The special value "me" can be
+     *                                                used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Filter $postBody
+     * @param  array                       $optParams Optional parameters.
      * @return Google_Service_Gmail_Filter
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Filter $postBody, $optParams = array())
@@ -46,10 +46,10 @@ class Google_Service_Gmail_Resource_UsersSettingsFilters extends \WPMailSMTP\Ven
     /**
      * Deletes a filter. (filters.delete)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the filter to be deleted.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    User's email address. The special value "me" can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the filter to be deleted.
+     * @param array  $optParams Optional parameters.
      */
     public function delete($userId, $id, $optParams = array())
     {
@@ -60,10 +60,10 @@ class Google_Service_Gmail_Resource_UsersSettingsFilters extends \WPMailSMTP\Ven
     /**
      * Gets a filter. (filters.get)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the filter to be fetched.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the filter to be fetched.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Filter
      */
     public function get($userId, $id, $optParams = array())
@@ -75,9 +75,9 @@ class Google_Service_Gmail_Resource_UsersSettingsFilters extends \WPMailSMTP\Ven
     /**
      * Lists the message filters of a Gmail user. (filters.listUsersSettingsFilters)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ListFiltersResponse
      */
     public function listUsersSettingsFilters($userId, $optParams = array())

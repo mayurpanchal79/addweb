@@ -1,4 +1,6 @@
-/** @typedef { import('@woocommerce/type-defs/hooks').StoreCart } StoreCart */
+/**
+ * @typedef { import('@woocommerce/type-defs/hooks').StoreCart } StoreCart 
+ */
 
 /**
  * External dependencies
@@ -11,34 +13,34 @@ import { mapValues } from 'lodash';
 
 /**
  * @constant
- * @type  {StoreCart} Object containing cart data.
+ * @type     {StoreCart} Object containing cart data.
  */
 export const defaultCartData = {
-	cartCoupons: [],
-	cartItems: [],
-	cartItemsCount: 0,
-	cartItemsWeight: 0,
-	cartNeedsPayment: true,
-	cartNeedsShipping: true,
-	cartItemErrors: [],
-	cartTotals: {},
-	cartIsLoading: true,
-	cartErrors: [],
-	shippingAddress: {
-		first_name: '',
-		last_name: '',
-		company: '',
-		address_1: '',
-		address_2: '',
-		city: '',
-		state: '',
-		postcode: '',
-		country: '',
-	},
-	shippingRates: [],
-	shippingRatesLoading: false,
-	hasShippingAddress: false,
-	receiveCart: () => {},
+    cartCoupons: [],
+    cartItems: [],
+    cartItemsCount: 0,
+    cartItemsWeight: 0,
+    cartNeedsPayment: true,
+    cartNeedsShipping: true,
+    cartItemErrors: [],
+    cartTotals: {},
+    cartIsLoading: true,
+    cartErrors: [],
+    shippingAddress: {
+        first_name: '',
+        last_name: '',
+        company: '',
+        address_1: '',
+        address_2: '',
+        city: '',
+        state: '',
+        postcode: '',
+        country: '',
+    },
+    shippingRates: [],
+    shippingRatesLoading: false,
+    hasShippingAddress: false,
+    receiveCart: () => {},
 };
 
 /**
@@ -54,82 +56,79 @@ export const defaultCartData = {
  * @return {StoreCart} Object containing cart data.
  */
 export const useStoreCart = ( options = { shouldSelect: true } ) => {
-	const { isEditor, previewData } = useEditorContext();
-	const previewCart = previewData?.previewCart || {};
-	const { shouldSelect } = options;
+    const { isEditor, previewData } = useEditorContext();
+    const previewCart = previewData?.previewCart || {};
+    const { shouldSelect } = options;
 
-	const results = useSelect(
-		( select, { dispatch } ) => {
-			if ( ! shouldSelect ) {
-				return defaultCartData;
-			}
-
-			if ( isEditor ) {
-				return {
-					cartCoupons: previewCart.coupons,
-					cartItems: previewCart.items,
-					cartItemsCount: previewCart.items_count,
-					cartItemsWeight: previewCart.items_weight,
-					cartNeedsPayment: previewCart.needs_payment,
-					cartNeedsShipping: previewCart.needs_shipping,
-					cartItemErrors: [],
-					cartTotals: previewCart.totals,
-					cartIsLoading: false,
-					cartErrors: [],
-					shippingAddress: {
-						first_name: '',
-						last_name: '',
-						company: '',
-						address_1: '',
-						address_2: '',
-						city: '',
-						state: '',
-						postcode: '',
-						country: '',
-					},
-					shippingRates: previewCart.shipping_rates,
-					shippingRatesLoading: false,
-					hasShippingAddress: false,
-					receiveCart:
-						typeof previewCart?.receiveCart === 'function'
-							? previewCart.receiveCart
-							: () => {},
-				};
-			}
-
-			const store = select( storeKey );
-			const cartData = store.getCartData();
-			const cartErrors = store.getCartErrors();
-			const cartTotals = store.getCartTotals();
-			const cartIsLoading = ! store.hasFinishedResolution(
-				'getCartData'
-			);
-			const shippingRatesLoading = store.areShippingRatesLoading();
-			const { receiveCart } = dispatch( storeKey );
-			const shippingAddress = mapValues(
-				cartData.shippingAddress,
-				( value ) => decodeEntities( value )
-			);
-
-			return {
-				cartCoupons: cartData.coupons,
-				cartItems: cartData.items || [],
-				cartItemsCount: cartData.itemsCount,
-				cartItemsWeight: cartData.itemsWeight,
-				cartNeedsPayment: cartData.needsPayment,
-				cartNeedsShipping: cartData.needsShipping,
-				cartItemErrors: cartData.errors || [],
-				cartTotals,
-				cartIsLoading,
-				cartErrors,
-				shippingAddress,
-				shippingRates: cartData.shippingRates || [],
-				shippingRatesLoading,
-				hasShippingAddress: !! shippingAddress.country,
-				receiveCart,
-			};
-		},
-		[ shouldSelect ]
-	);
-	return results;
+    const results = useSelect(
+        ( select, { dispatch } ) => {
+        if (! shouldSelect ) {
+            return defaultCartData;
+        }
+            if (isEditor ) {
+                return {
+                    cartCoupons: previewCart.coupons,
+                    cartItems: previewCart.items,
+                    cartItemsCount: previewCart.items_count,
+                    cartItemsWeight: previewCart.items_weight,
+                    cartNeedsPayment: previewCart.needs_payment,
+                    cartNeedsShipping: previewCart.needs_shipping,
+                    cartItemErrors: [],
+                    cartTotals: previewCart.totals,
+                    cartIsLoading: false,
+                    cartErrors: [],
+                    shippingAddress: {
+                        first_name: '',
+                        last_name: '',
+                        company: '',
+                        address_1: '',
+                        address_2: '',
+                        city: '',
+                        state: '',
+                        postcode: '',
+                        country: '',
+                    },
+                    shippingRates: previewCart.shipping_rates,
+                    shippingRatesLoading: false,
+                    hasShippingAddress: false,
+                    receiveCart:
+                       typeof previewCart?.receiveCart === 'function'
+                    ? previewCart.receiveCart
+                    : () => {},
+                };
+            }
+            const store = select(storeKey);
+            const cartData = store.getCartData();
+            const cartErrors = store.getCartErrors();
+            const cartTotals = store.getCartTotals();
+            const cartIsLoading = ! store.hasFinishedResolution(
+            'getCartData'
+        );
+        const shippingRatesLoading = store.areShippingRatesLoading();
+        const { receiveCart } = dispatch(storeKey);
+        const shippingAddress = mapValues(
+            cartData.shippingAddress,
+            ( value ) => decodeEntities(value)
+        );
+        return {
+            cartCoupons: cartData.coupons,
+            cartItems: cartData.items || [],
+            cartItemsCount: cartData.itemsCount,
+            cartItemsWeight: cartData.itemsWeight,
+            cartNeedsPayment: cartData.needsPayment,
+            cartNeedsShipping: cartData.needsShipping,
+            cartItemErrors: cartData.errors || [],
+            cartTotals,
+            cartIsLoading,
+            cartErrors,
+            shippingAddress,
+            shippingRates: cartData.shippingRates || [],
+            shippingRatesLoading,
+            hasShippingAddress: !! shippingAddress.country,
+            receiveCart,
+            };
+        },
+        [ shouldSelect ]
+    );
+    return results;
 };

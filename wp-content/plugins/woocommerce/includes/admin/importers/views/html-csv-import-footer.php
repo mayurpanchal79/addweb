@@ -5,9 +5,9 @@
  * @package WooCommerce\Admin\Importers
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (! defined('ABSPATH') ) {
+    exit;
 }
 ?>
-	</div>
+    </div>
 </div>

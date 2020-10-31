@@ -21,7 +21,9 @@ use Symfony\Component\CssSelector\Parser\TokenStream;
  */
 abstract class AbstractHandlerTest extends TestCase
 {
-    /** @dataProvider getHandleValueTestData */
+    /**
+     * @dataProvider getHandleValueTestData 
+     */
     public function testHandleValue($value, Token $expectedToken, $remainingContent)
     {
         $reader = new Reader($value);
@@ -32,7 +34,9 @@ abstract class AbstractHandlerTest extends TestCase
         $this->assertRemainingContent($reader, $remainingContent);
     }
 
-    /** @dataProvider getDontHandleValueTestData */
+    /**
+     * @dataProvider getDontHandleValueTestData 
+     */
     public function testDontHandleValue($value)
     {
         $reader = new Reader($value);

@@ -2,18 +2,18 @@
  * Internal dependencies
  */
 import {
-	emitterCallback,
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
+    emitterCallback,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
 } from '../../shared/event-emit';
 
 const EMIT_TYPES = {
-	ADD_TO_CART_BEFORE_PROCESSING: 'add_to_cart_before_processing',
-	ADD_TO_CART_AFTER_PROCESSING_WITH_SUCCESS:
-		'add_to_cart_after_processing_with_success',
-	ADD_TO_CART_AFTER_PROCESSING_WITH_ERROR:
-		'add_to_cart_after_processing_with_error',
+    ADD_TO_CART_BEFORE_PROCESSING: 'add_to_cart_before_processing',
+    ADD_TO_CART_AFTER_PROCESSING_WITH_SUCCESS:
+    'add_to_cart_after_processing_with_success',
+    ADD_TO_CART_AFTER_PROCESSING_WITH_ERROR:
+    'add_to_cart_after_processing_with_error',
 };
 
 /**
@@ -29,24 +29,24 @@ const EMIT_TYPES = {
  * @return {Object} An object with the add to cart form emitter registration
  */
 const emitterSubscribers = ( dispatcher ) => ( {
-	onAddToCartAfterProcessingWithSuccess: emitterCallback(
-		EMIT_TYPES.ADD_TO_CART_AFTER_PROCESSING_WITH_SUCCESS,
-		dispatcher
-	),
-	onAddToCartProcessingWithError: emitterCallback(
-		EMIT_TYPES.ADD_TO_CART_AFTER_PROCESSING_WITH_ERROR,
-		dispatcher
-	),
-	onAddToCartBeforeProcessing: emitterCallback(
-		EMIT_TYPES.ADD_TO_CART_BEFORE_PROCESSING,
-		dispatcher
-	),
+    onAddToCartAfterProcessingWithSuccess: emitterCallback(
+        EMIT_TYPES.ADD_TO_CART_AFTER_PROCESSING_WITH_SUCCESS,
+        dispatcher
+    ),
+onAddToCartProcessingWithError: emitterCallback(
+    EMIT_TYPES.ADD_TO_CART_AFTER_PROCESSING_WITH_ERROR,
+    dispatcher
+),
+onAddToCartBeforeProcessing: emitterCallback(
+    EMIT_TYPES.ADD_TO_CART_BEFORE_PROCESSING,
+    dispatcher
+),
 } );
 
 export {
-	EMIT_TYPES,
-	emitterSubscribers,
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
+    EMIT_TYPES,
+    emitterSubscribers,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
 };

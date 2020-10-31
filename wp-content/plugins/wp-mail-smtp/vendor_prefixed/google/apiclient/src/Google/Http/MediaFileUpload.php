@@ -30,39 +30,60 @@ class Google_Http_MediaFileUpload
     const UPLOAD_MEDIA_TYPE = 'media';
     const UPLOAD_MULTIPART_TYPE = 'multipart';
     const UPLOAD_RESUMABLE_TYPE = 'resumable';
-    /** @var string $mimeType */
+    /**
+     * @var string $mimeType 
+     */
     private $mimeType;
-    /** @var string $data */
+    /**
+     * @var string $data 
+     */
     private $data;
-    /** @var bool $resumable */
+    /**
+     * @var bool $resumable 
+     */
     private $resumable;
-    /** @var int $chunkSize */
+    /**
+     * @var int $chunkSize 
+     */
     private $chunkSize;
-    /** @var int $size */
+    /**
+     * @var int $size 
+     */
     private $size;
-    /** @var string $resumeUri */
+    /**
+     * @var string $resumeUri 
+     */
     private $resumeUri;
-    /** @var int $progress */
+    /**
+     * @var int $progress 
+     */
     private $progress;
-    /** @var Google_Client */
+    /**
+     * @var Google_Client 
+     */
     private $client;
-    /** @var Psr\Http\Message\RequestInterface */
+    /**
+     * @var Psr\Http\Message\RequestInterface 
+     */
     private $request;
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $boundary;
     /**
      * Result code from last HTTP call
+     *
      * @var int
      */
     private $httpResultCode;
     /**
-     * @param Google_Client $client
+     * @param Google_Client    $client
      * @param RequestInterface $request
-     * @param string $mimeType
-     * @param string $data The bytes you want to upload.
-     * @param bool $resumable
-     * @param bool $chunkSize File will be uploaded in chunks of this many bytes.
-     * only used if resumable=True
+     * @param string           $mimeType
+     * @param string           $data      The bytes you want to upload.
+     * @param bool             $resumable
+     * @param bool             $chunkSize File will be uploaded in chunks of this many bytes.
+     *                                    only used if resumable=True
      */
     public function __construct(\WPMailSMTP\Vendor\Google_Client $client, \WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, $mimeType, $data, $resumable = \false, $chunkSize = \false)
     {
@@ -77,6 +98,7 @@ class Google_Http_MediaFileUpload
     }
     /**
      * Set the size of the file that is being uploaded.
+     *
      * @param $size - int file size in bytes
      */
     public function setFileSize($size)
@@ -85,6 +107,7 @@ class Google_Http_MediaFileUpload
     }
     /**
      * Return the progress on the upload
+     *
      * @return int progress in bytes uploaded.
      */
     public function getProgress()
@@ -93,8 +116,9 @@ class Google_Http_MediaFileUpload
     }
     /**
      * Send the next part of the file to upload.
+     *
      * @param string|bool $chunk Optional. The next set of bytes to send. If false will
-     * use $data passed at construct time.
+     *                           use $data passed at construct time.
      */
     public function nextChunk($chunk = \false)
     {
@@ -109,6 +133,7 @@ class Google_Http_MediaFileUpload
     }
     /**
      * Return the HTTP result code from the last call made.
+     *
      * @return int code
      */
     public function getHttpResultCode()
@@ -122,7 +147,6 @@ class Google_Http_MediaFileUpload
      * @param Google_Http_Request $httpRequest the Reuqest which will be send
      *
      * @return false|mixed false when the upload is unfinished or the decoded http response
-     *
      */
     private function makePutRequest(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request)
     {
@@ -147,6 +171,7 @@ class Google_Http_MediaFileUpload
     }
     /**
      * Resume a previously unfinished upload
+     *
      * @param $resumeUri the resume-URI of the unfinished, resumable upload.
      */
     public function resume($resumeUri)
@@ -157,7 +182,7 @@ class Google_Http_MediaFileUpload
         return $this->makePutRequest($httpRequest);
     }
     /**
-     * @return Psr\Http\Message\RequestInterface $request
+     * @return  Psr\Http\Message\RequestInterface $request
      * @visible for testing
      */
     private function process()
@@ -207,8 +232,9 @@ class Google_Http_MediaFileUpload
      * - resumable (UPLOAD_RESUMABLE_TYPE)
      * - media (UPLOAD_MEDIA_TYPE)
      * - multipart (UPLOAD_MULTIPART_TYPE)
-     * @param $meta
-     * @return string
+     *
+     * @param   $meta
+     * @return  string
      * @visible for testing
      */
     public function getUploadType($meta)

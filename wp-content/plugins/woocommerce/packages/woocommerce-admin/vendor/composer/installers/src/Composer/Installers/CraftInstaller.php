@@ -16,7 +16,7 @@ class CraftInstaller extends BaseInstaller
     /**
      * Strip `craft-` prefix and/or `-plugin` suffix from package names
      *
-     * @param  array $vars
+     * @param array $vars
      *
      * @return array
      */

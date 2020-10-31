@@ -18,73 +18,74 @@ import './editor.scss';
  * This HOC shows a product selection interface if context is not present in the editor.
  *
  * @param {Object} selectorArgs Options for the selector.
- *
  */
 const withProductSelector = ( selectorArgs ) => ( OriginalComponent ) => {
-	return ( props ) => {
-		const productDataContext = useProductDataContext();
-		const { attributes, setAttributes } = props;
-		const { productId } = attributes;
-		const [ isEditing, setIsEditing ] = useState( ! productId );
+    return ( props ) => {
+        const productDataContext = useProductDataContext();
+        const { attributes, setAttributes } = props;
+        const { productId } = attributes;
+        const [ isEditing, setIsEditing ] = useState(! productId);
 
-		if ( productDataContext.hasContext ) {
-			return <OriginalComponent { ...props } />;
-		}
+        if (productDataContext.hasContext ) {
+            return <OriginalComponent { ...props } />;
+        }
 
-		return (
-			<>
-				{ isEditing ? (
-					<Placeholder
-						icon={ selectorArgs.icon || '' }
-						label={ selectorArgs.label || '' }
-						className="wc-atomic-blocks-product"
-					>
-						{ !! selectorArgs.description && (
-							<div>{ selectorArgs.description }</div>
-						) }
-						<div className="wc-atomic-blocks-product__selection">
-							<ProductControl
-								selected={ productId || 0 }
-								showVariations
-								onChange={ ( value = [] ) => {
-									setAttributes( {
-										productId: value[ 0 ]
-											? value[ 0 ].id
-											: 0,
-									} );
-								} }
-							/>
-							<Button
-								isDefault
-								disabled={ ! productId }
-								onClick={ () => {
-									setIsEditing( false );
-								} }
-							>
-								{ __( 'Done', 'woocommerce' ) }
-							</Button>
-						</div>
-					</Placeholder>
-				) : (
-					<>
-						<BlockControls>
-							<Toolbar>
-								<TextToolbarButton
-									onClick={ () => setIsEditing( true ) }
-								>
-									{ __(
-										'Switch product…',
-										'woocommerce'
-									) }
-								</TextToolbarButton>
-							</Toolbar>
-						</BlockControls>
-						<OriginalComponent { ...props } />
-					</>
-				) }
-			</>
-		);
-	};
+        return (
+        <>
+        { isEditing ? (
+            <Placeholder
+            icon={ selectorArgs.icon || '' }
+            label={ selectorArgs.label || '' }
+            className="wc-atomic-blocks-product"
+            >
+            { !! selectorArgs.description && (
+                <div>{ selectorArgs.description }</div>
+             ) }
+         <div className="wc-atomic-blocks-product__selection">
+          <ProductControl
+                                selected={ productId || 0 }
+                                showVariations
+                                onChange={ ( value = [] ) => {
+                                    setAttributes(
+                                        {
+                                            productId: value[ 0 ]
+                                            ? value[ 0 ].id
+                                            : 0,
+                                        } 
+                                    );
+                                    } }
+          />
+          <Button
+                                isDefault
+                                disabled={ ! productId }
+                                onClick={ () => {
+                                    setIsEditing(false);
+                                    } }
+          >
+                                { __('Done', 'woocommerce') }
+          </Button>
+         </div>
+        </Placeholder>
+        ) : (
+        <>
+         <BlockControls>
+                            <Toolbar>
+                                <TextToolbarButton
+                                    onClick={ () => setIsEditing(true) }
+                                >
+                                    { __(
+                                        'Switch product…',
+                                        'woocommerce'
+                                    ) }
+                                </TextToolbarButton>
+          </Toolbar>
+         </BlockControls>
+         <OriginalComponent { ...props } />
+        </>
+        ) }
+        </>
+     );
+    };
 };
 
 export default withProductSelector;

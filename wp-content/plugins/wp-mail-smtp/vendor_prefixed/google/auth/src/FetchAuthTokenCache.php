@@ -38,9 +38,9 @@ class FetchAuthTokenCache implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
      */
     private $cache;
     /**
-     * @param FetchAuthTokenInterface $fetcher A credentials fetcher
-     * @param array $cacheConfig Configuration for the cache
-     * @param CacheItemPoolInterface $cache
+     * @param FetchAuthTokenInterface $fetcher     A credentials fetcher
+     * @param array                   $cacheConfig Configuration for the cache
+     * @param CacheItemPoolInterface  $cache
      */
     public function __construct(\WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface $fetcher, array $cacheConfig = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache)
     {
@@ -54,7 +54,7 @@ class FetchAuthTokenCache implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
      * Checks the cache for a valid auth token and fetches the auth tokens
      * from the supplied fetcher.
      *
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array the response
      * @throws \Exception
      */
@@ -84,7 +84,7 @@ class FetchAuthTokenCache implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
     /**
      * Get the client name from the fetcher.
      *
-     * @param callable $httpHandler An HTTP handler to deliver PSR7 requests.
+     * @param  callable $httpHandler An HTTP handler to deliver PSR7 requests.
      * @return string
      */
     public function getClientName(callable $httpHandler = null)
@@ -94,10 +94,10 @@ class FetchAuthTokenCache implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
     /**
      * Sign a blob using the fetcher.
      *
-     * @param string $stringToSign The string to sign.
-     * @param bool $forceOpenSsl Require use of OpenSSL for local signing. Does
-     *        not apply to signing done using external services. **Defaults to**
-     *        `false`.
+     * @param  string $stringToSign The string to sign.
+     * @param  bool   $forceOpenSsl Require use of OpenSSL for local signing. Does
+     *                              not apply to signing done using external
+     *                              services. **Defaults to** `false`.
      * @return string The resulting signature.
      * @throws \RuntimeException If the fetcher does not implement
      *     `Google\Auth\SignBlobInterface`.
@@ -139,9 +139,9 @@ class FetchAuthTokenCache implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
     /**
      * Updates metadata with the authorization token.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $authUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  array    $metadata    metadata hashmap
+     * @param  string   $authUri     optional auth uri
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array updated metadata hashmap
      * @throws \RuntimeException If the fetcher does not implement
      *     `Google\Auth\UpdateMetadataInterface`.

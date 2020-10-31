@@ -17,13 +17,13 @@ import { PaymentMethodDataProvider } from '../payment-methods';
  *                                      submit.
  */
 export const CartProvider = ( { children, redirectUrl } ) => {
-	return (
-		<CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ true }>
-			<ShippingDataProvider>
-				<PaymentMethodDataProvider>
-					{ children }
-				</PaymentMethodDataProvider>
-			</ShippingDataProvider>
-		</CheckoutStateProvider>
-	);
+    return (
+    <CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ true }>
+    <ShippingDataProvider>
+                <PaymentMethodDataProvider>
+                    { children }
+                </PaymentMethodDataProvider>
+    </ShippingDataProvider>
+    </CheckoutStateProvider>
+    );
 };

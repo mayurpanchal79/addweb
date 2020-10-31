@@ -31,9 +31,9 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
      * Gets the auto-forwarding setting for the specified account.
      * (settings.getAutoForwarding)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_AutoForwarding
      */
     public function getAutoForwarding($userId, $optParams = array())
@@ -45,9 +45,9 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Gets IMAP settings. (settings.getImap)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ImapSettings
      */
     public function getImap($userId, $optParams = array())
@@ -59,9 +59,9 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Gets language settings. (settings.getLanguage)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_LanguageSettings
      */
     public function getLanguage($userId, $optParams = array())
@@ -73,9 +73,9 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Gets POP settings. (settings.getPop)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_PopSettings
      */
     public function getPop($userId, $optParams = array())
@@ -87,9 +87,9 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Gets vacation responder settings. (settings.getVacation)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_VacationSettings
      */
     public function getVacation($userId, $optParams = array())
@@ -104,10 +104,10 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
      * method is only available to service account clients that have been delegated
      * domain-wide authority. (settings.updateAutoForwarding)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_AutoForwarding $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                              $userId    User's email address. The special value "me" can be
+     *                                                        used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_AutoForwarding $postBody
+     * @param  array                               $optParams Optional parameters.
      * @return Google_Service_Gmail_AutoForwarding
      */
     public function updateAutoForwarding($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_AutoForwarding $postBody, $optParams = array())
@@ -119,10 +119,10 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Updates IMAP settings. (settings.updateImap)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_ImapSettings $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                            $userId    User's email address. The special value "me" can be
+     *                                                      used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_ImapSettings $postBody
+     * @param  array                             $optParams Optional parameters.
      * @return Google_Service_Gmail_ImapSettings
      */
     public function updateImap($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_ImapSettings $postBody, $optParams = array())
@@ -139,10 +139,10 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
      * variant that is, and so the variant may be chosen and saved instead.
      * (settings.updateLanguage)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_LanguageSettings $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                                $userId    User's email address. The special value "me" can be
+     *                                                          used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_LanguageSettings $postBody
+     * @param  array                                 $optParams Optional parameters.
      * @return Google_Service_Gmail_LanguageSettings
      */
     public function updateLanguage($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_LanguageSettings $postBody, $optParams = array())
@@ -154,10 +154,10 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Updates POP settings. (settings.updatePop)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_PopSettings $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                           $userId    User's email address. The special value "me" can be
+     *                                                     used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_PopSettings $postBody
+     * @param  array                            $optParams Optional parameters.
      * @return Google_Service_Gmail_PopSettings
      */
     public function updatePop($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_PopSettings $postBody, $optParams = array())
@@ -169,10 +169,10 @@ class Google_Service_Gmail_Resource_UsersSettings extends \WPMailSMTP\Vendor\Goo
     /**
      * Updates vacation responder settings. (settings.updateVacation)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_VacationSettings $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                                $userId    User's email address. The special value "me" can be
+     *                                                          used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_VacationSettings $postBody
+     * @param  array                                 $optParams Optional parameters.
      * @return Google_Service_Gmail_VacationSettings
      */
     public function updateVacation($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_VacationSettings $postBody, $optParams = array())

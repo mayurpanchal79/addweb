@@ -81,8 +81,8 @@ class ResellerApi
      *
      * Add Email and/or SMS credits to a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddCredits $addCredits Values to post to add credit to a specific child account (required)
+     * @param string                              $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddCredits $addCredits      Values to post to add credit to a specific child account (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -98,8 +98,8 @@ class ResellerApi
      *
      * Add Email and/or SMS credits to a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddCredits $addCredits Values to post to add credit to a specific child account (required)
+     * @param string                              $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddCredits $addCredits      Values to post to add credit to a specific child account (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -133,22 +133,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -158,25 +158,27 @@ class ResellerApi
      *
      * Add Email and/or SMS credits to a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddCredits $addCredits Values to post to add credit to a specific child account (required)
+     * @param string                              $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddCredits $addCredits      Values to post to add credit to a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function addCreditsAsync($childIdentifier, $addCredits)
     {
-        return $this->addCreditsAsyncWithHttpInfo($childIdentifier, $addCredits)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->addCreditsAsyncWithHttpInfo($childIdentifier, $addCredits)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation addCreditsAsyncWithHttpInfo
      *
      * Add Email and/or SMS credits to a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddCredits $addCredits Values to post to add credit to a specific child account (required)
+     * @param string                              $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddCredits $addCredits      Values to post to add credit to a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -185,29 +187,31 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel';
         $request = $this->addCreditsRequest($childIdentifier, $addCredits);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'addCredits'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddCredits $addCredits Values to post to add credit to a specific child account (required)
+     * @param string                              $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddCredits $addCredits      Values to post to add credit to a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -294,8 +298,8 @@ class ResellerApi
      *
      * Associate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to associate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to associate (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -310,8 +314,8 @@ class ResellerApi
      *
      * Associate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to associate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to associate (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -335,14 +339,14 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -352,25 +356,27 @@ class ResellerApi
      *
      * Associate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to associate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to associate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function associateIpToChildAsync($childIdentifier, $ip)
     {
-        return $this->associateIpToChildAsyncWithHttpInfo($childIdentifier, $ip)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->associateIpToChildAsyncWithHttpInfo($childIdentifier, $ip)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation associateIpToChildAsyncWithHttpInfo
      *
      * Associate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to associate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to associate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -379,19 +385,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->associateIpToChildRequest($childIdentifier, $ip);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'associateIpToChild'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to associate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to associate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -478,8 +486,8 @@ class ResellerApi
      *
      * Create a domain for a child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddChildDomain $addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
+     * @param string                                  $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddChildDomain $addChildDomain  Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -494,8 +502,8 @@ class ResellerApi
      *
      * Create a domain for a child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddChildDomain $addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
+     * @param string                                  $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddChildDomain $addChildDomain  Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -519,18 +527,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -540,25 +548,27 @@ class ResellerApi
      *
      * Create a domain for a child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddChildDomain $addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
+     * @param string                                  $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddChildDomain $addChildDomain  Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createChildDomainAsync($childIdentifier, $addChildDomain)
     {
-        return $this->createChildDomainAsyncWithHttpInfo($childIdentifier, $addChildDomain)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createChildDomainAsyncWithHttpInfo($childIdentifier, $addChildDomain)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createChildDomainAsyncWithHttpInfo
      *
      * Create a domain for a child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddChildDomain $addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
+     * @param string                                  $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddChildDomain $addChildDomain  Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -567,19 +577,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->createChildDomainRequest($childIdentifier, $addChildDomain);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'createChildDomain'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\AddChildDomain $addChildDomain Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
+     * @param string                                  $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\AddChildDomain $addChildDomain  Sender domain to add for a specific child account. This will not be displayed to the parent account. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -666,7 +678,7 @@ class ResellerApi
      *
      * Creates a reseller child
      *
-     * @param  \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
+     * @param \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -682,7 +694,7 @@ class ResellerApi
      *
      * Creates a reseller child
      *
-     * @param  \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
+     * @param \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -716,18 +728,18 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateReseller', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateReseller', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -737,23 +749,25 @@ class ResellerApi
      *
      * Creates a reseller child
      *
-     * @param  \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
+     * @param \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createResellerChildAsync($resellerChild = null)
     {
-        return $this->createResellerChildAsyncWithHttpInfo($resellerChild)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createResellerChildAsyncWithHttpInfo($resellerChild)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createResellerChildAsyncWithHttpInfo
      *
      * Creates a reseller child
      *
-     * @param  \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
+     * @param \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -762,28 +776,30 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateReseller';
         $request = $this->createResellerChildRequest($resellerChild);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createResellerChild'
      *
-     * @param  \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
+     * @param \SendinBlue\Client\Model\CreateChild $resellerChild reseller child to add (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -858,8 +874,8 @@ class ResellerApi
      *
      * Delete the sender domain of the reseller child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be deleted (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $domainName      Pass the existing domain that needs to be deleted (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -874,8 +890,8 @@ class ResellerApi
      *
      * Delete the sender domain of the reseller child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be deleted (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $domainName      Pass the existing domain that needs to be deleted (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -899,18 +915,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -920,25 +936,27 @@ class ResellerApi
      *
      * Delete the sender domain of the reseller child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be deleted (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $domainName      Pass the existing domain that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteChildDomainAsync($childIdentifier, $domainName)
     {
-        return $this->deleteChildDomainAsyncWithHttpInfo($childIdentifier, $domainName)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteChildDomainAsyncWithHttpInfo($childIdentifier, $domainName)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteChildDomainAsyncWithHttpInfo
      *
      * Delete the sender domain of the reseller child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be deleted (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $domainName      Pass the existing domain that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -947,19 +965,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->deleteChildDomainRequest($childIdentifier, $domainName);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteChildDomain'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be deleted (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $domainName      Pass the existing domain that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1047,7 +1067,7 @@ class ResellerApi
      *
      * Delete a single reseller child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1062,7 +1082,7 @@ class ResellerApi
      *
      * Delete a single reseller child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1086,18 +1106,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1107,23 +1127,25 @@ class ResellerApi
      *
      * Delete a single reseller child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteResellerChildAsync($childIdentifier)
     {
-        return $this->deleteResellerChildAsyncWithHttpInfo($childIdentifier)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteResellerChildAsyncWithHttpInfo($childIdentifier)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteResellerChildAsyncWithHttpInfo
      *
      * Delete a single reseller child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1132,18 +1154,20 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->deleteResellerChildRequest($childIdentifier);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteResellerChild'
      *
-     * @param  string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or child id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1223,8 +1247,8 @@ class ResellerApi
      *
      * Dissociate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to dissociate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to dissociate (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1239,8 +1263,8 @@ class ResellerApi
      *
      * Dissociate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to dissociate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to dissociate (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1264,14 +1288,14 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1281,25 +1305,27 @@ class ResellerApi
      *
      * Dissociate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to dissociate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to dissociate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function dissociateIpFromChildAsync($childIdentifier, $ip)
     {
-        return $this->dissociateIpFromChildAsyncWithHttpInfo($childIdentifier, $ip)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->dissociateIpFromChildAsyncWithHttpInfo($childIdentifier, $ip)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation dissociateIpFromChildAsyncWithHttpInfo
      *
      * Dissociate a dedicated IP to the child
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to dissociate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to dissociate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1308,19 +1334,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->dissociateIpFromChildRequest($childIdentifier, $ip);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'dissociateIpFromChild'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\ManageIp $ip IP to dissociate (required)
+     * @param string                            $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\ManageIp $ip              IP to dissociate (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1407,7 +1435,7 @@ class ResellerApi
      *
      * Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1423,7 +1451,7 @@ class ResellerApi
      *
      * Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1457,22 +1485,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildAccountCreationStatus', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildAccountCreationStatus', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1482,23 +1510,25 @@ class ResellerApi
      *
      * Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getChildAccountCreationStatusAsync($childIdentifier)
     {
-        return $this->getChildAccountCreationStatusAsyncWithHttpInfo($childIdentifier)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getChildAccountCreationStatusAsyncWithHttpInfo($childIdentifier)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getChildAccountCreationStatusAsyncWithHttpInfo
      *
      * Get the status of a reseller's child account creation, whether it is successfully created (exists) or not based on the identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1507,28 +1537,30 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildAccountCreationStatus';
         $request = $this->getChildAccountCreationStatusRequest($childIdentifier);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getChildAccountCreationStatus'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1608,7 +1640,7 @@ class ResellerApi
      *
      * Get all sender domains for a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1624,7 +1656,7 @@ class ResellerApi
      *
      * Get all sender domains for a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1658,22 +1690,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildDomains', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildDomains', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1683,23 +1715,25 @@ class ResellerApi
      *
      * Get all sender domains for a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getChildDomainsAsync($childIdentifier)
     {
-        return $this->getChildDomainsAsyncWithHttpInfo($childIdentifier)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getChildDomainsAsyncWithHttpInfo($childIdentifier)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getChildDomainsAsyncWithHttpInfo
      *
      * Get all sender domains for a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1708,28 +1742,30 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildDomains';
         $request = $this->getChildDomainsRequest($childIdentifier);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getChildDomains'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1809,7 +1845,7 @@ class ResellerApi
      *
      * Get a child account's details
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1825,7 +1861,7 @@ class ResellerApi
      *
      * Get a child account's details
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1859,22 +1895,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildInfo', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildInfo', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1884,23 +1920,25 @@ class ResellerApi
      *
      * Get a child account's details
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getChildInfoAsync($childIdentifier)
     {
-        return $this->getChildInfoAsyncWithHttpInfo($childIdentifier)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getChildInfoAsyncWithHttpInfo($childIdentifier)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getChildInfoAsyncWithHttpInfo
      *
      * Get a child account's details
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1909,28 +1947,30 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildInfo';
         $request = $this->getChildInfoRequest($childIdentifier);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getChildInfo'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2010,8 +2050,8 @@ class ResellerApi
      *
      * Get the list of all children accounts
      *
-     * @param  int $limit Number of documents for child accounts information per page (optional, default to 10)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param int $limit  Number of documents for child accounts information per page (optional, default to 10)
+     * @param int $offset Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2027,8 +2067,8 @@ class ResellerApi
      *
      * Get the list of all children accounts
      *
-     * @param  int $limit Number of documents for child accounts information per page (optional, default to 10)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param int $limit  Number of documents for child accounts information per page (optional, default to 10)
+     * @param int $offset Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2062,14 +2102,14 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildrenList', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildrenList', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2079,25 +2119,27 @@ class ResellerApi
      *
      * Get the list of all children accounts
      *
-     * @param  int $limit Number of documents for child accounts information per page (optional, default to 10)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param int $limit  Number of documents for child accounts information per page (optional, default to 10)
+     * @param int $offset Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getResellerChildsAsync($limit = '10', $offset = '0')
     {
-        return $this->getResellerChildsAsyncWithHttpInfo($limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getResellerChildsAsyncWithHttpInfo($limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getResellerChildsAsyncWithHttpInfo
      *
      * Get the list of all children accounts
      *
-     * @param  int $limit Number of documents for child accounts information per page (optional, default to 10)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param int $limit  Number of documents for child accounts information per page (optional, default to 10)
+     * @param int $offset Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2106,29 +2148,31 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetChildrenList';
         $request = $this->getResellerChildsRequest($limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getResellerChilds'
      *
-     * @param  int $limit Number of documents for child accounts information per page (optional, default to 10)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param int $limit  Number of documents for child accounts information per page (optional, default to 10)
+     * @param int $offset Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2211,7 +2255,7 @@ class ResellerApi
      *
      * Get session token to access Sendinblue (SSO)
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2227,7 +2271,7 @@ class ResellerApi
      *
      * Get session token to access Sendinblue (SSO)
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2261,22 +2305,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSsoToken', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSsoToken', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2286,23 +2330,25 @@ class ResellerApi
      *
      * Get session token to access Sendinblue (SSO)
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSsoTokenAsync($childIdentifier)
     {
-        return $this->getSsoTokenAsyncWithHttpInfo($childIdentifier)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSsoTokenAsyncWithHttpInfo($childIdentifier)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSsoTokenAsyncWithHttpInfo
      *
      * Get session token to access Sendinblue (SSO)
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2311,28 +2357,30 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSsoToken';
         $request = $this->getSsoTokenRequest($childIdentifier);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSsoToken'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param string $childIdentifier Either auth key or id of reseller&#39;s child (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2412,8 +2460,8 @@ class ResellerApi
      *
      * Remove Email and/or SMS credits from a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\RemoveCredits $removeCredits Values to post to remove email or SMS credits from a specific child account (required)
+     * @param string                                 $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\RemoveCredits $removeCredits   Values to post to remove email or SMS credits from a specific child account (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2429,8 +2477,8 @@ class ResellerApi
      *
      * Remove Email and/or SMS credits from a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\RemoveCredits $removeCredits Values to post to remove email or SMS credits from a specific child account (required)
+     * @param string                                 $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\RemoveCredits $removeCredits   Values to post to remove email or SMS credits from a specific child account (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2464,22 +2512,22 @@ class ResellerApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2489,25 +2537,27 @@ class ResellerApi
      *
      * Remove Email and/or SMS credits from a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\RemoveCredits $removeCredits Values to post to remove email or SMS credits from a specific child account (required)
+     * @param string                                 $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\RemoveCredits $removeCredits   Values to post to remove email or SMS credits from a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function removeCreditsAsync($childIdentifier, $removeCredits)
     {
-        return $this->removeCreditsAsyncWithHttpInfo($childIdentifier, $removeCredits)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->removeCreditsAsyncWithHttpInfo($childIdentifier, $removeCredits)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation removeCreditsAsyncWithHttpInfo
      *
      * Remove Email and/or SMS credits from a specific child account
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\RemoveCredits $removeCredits Values to post to remove email or SMS credits from a specific child account (required)
+     * @param string                                 $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\RemoveCredits $removeCredits   Values to post to remove email or SMS credits from a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2516,29 +2566,31 @@ class ResellerApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\RemainingCreditModel';
         $request = $this->removeCreditsRequest($childIdentifier, $removeCredits);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'removeCredits'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\RemoveCredits $removeCredits Values to post to remove email or SMS credits from a specific child account (required)
+     * @param string                                 $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\RemoveCredits $removeCredits   Values to post to remove email or SMS credits from a specific child account (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2625,8 +2677,8 @@ class ResellerApi
      *
      * Update info of reseller's child account status based on the childIdentifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
+     * @param string                                            $childIdentifier          Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2641,8 +2693,8 @@ class ResellerApi
      *
      * Update info of reseller's child account status based on the childIdentifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
+     * @param string                                            $childIdentifier          Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2666,18 +2718,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2687,25 +2739,27 @@ class ResellerApi
      *
      * Update info of reseller's child account status based on the childIdentifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
+     * @param string                                            $childIdentifier          Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateChildAccountStatusAsync($childIdentifier, $updateChildAccountStatus)
     {
-        return $this->updateChildAccountStatusAsyncWithHttpInfo($childIdentifier, $updateChildAccountStatus)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateChildAccountStatusAsyncWithHttpInfo($childIdentifier, $updateChildAccountStatus)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateChildAccountStatusAsyncWithHttpInfo
      *
      * Update info of reseller's child account status based on the childIdentifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
+     * @param string                                            $childIdentifier          Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2714,19 +2768,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->updateChildAccountStatusRequest($childIdentifier, $updateChildAccountStatus);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateChildAccountStatus'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
+     * @param string                                            $childIdentifier          Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChildAccountStatus $updateChildAccountStatus values to update in child account status (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2813,9 +2869,9 @@ class ResellerApi
      *
      * Update the sender domain of reseller's child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be updated (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
+     * @param string                                     $childIdentifier   Either auth key or id of reseller&#39;s child (required)
+     * @param string                                     $domainName        Pass the existing domain that needs to be updated (required)
+     * @param \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2830,9 +2886,9 @@ class ResellerApi
      *
      * Update the sender domain of reseller's child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be updated (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
+     * @param string                                     $childIdentifier   Either auth key or id of reseller&#39;s child (required)
+     * @param string                                     $domainName        Pass the existing domain that needs to be updated (required)
+     * @param \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2856,18 +2912,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2877,27 +2933,29 @@ class ResellerApi
      *
      * Update the sender domain of reseller's child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be updated (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
+     * @param string                                     $childIdentifier   Either auth key or id of reseller&#39;s child (required)
+     * @param string                                     $domainName        Pass the existing domain that needs to be updated (required)
+     * @param \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateChildDomainAsync($childIdentifier, $domainName, $updateChildDomain)
     {
-        return $this->updateChildDomainAsyncWithHttpInfo($childIdentifier, $domainName, $updateChildDomain)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateChildDomainAsyncWithHttpInfo($childIdentifier, $domainName, $updateChildDomain)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateChildDomainAsyncWithHttpInfo
      *
      * Update the sender domain of reseller's child based on the childIdentifier and domainName passed
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be updated (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
+     * @param string                                     $childIdentifier   Either auth key or id of reseller&#39;s child (required)
+     * @param string                                     $domainName        Pass the existing domain that needs to be updated (required)
+     * @param \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2906,20 +2964,22 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->updateChildDomainRequest($childIdentifier, $domainName, $updateChildDomain);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateChildDomain'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  string $domainName Pass the existing domain that needs to be updated (required)
-     * @param  \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
+     * @param string                                     $childIdentifier   Either auth key or id of reseller&#39;s child (required)
+     * @param string                                     $domainName        Pass the existing domain that needs to be updated (required)
+     * @param \SendinBlue\Client\Model\UpdateChildDomain $updateChildDomain value to update for sender domain (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -3014,8 +3074,8 @@ class ResellerApi
      *
      * Update info of reseller's child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChild $resellerChild values to update in child profile (required)
+     * @param string                               $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChild $resellerChild   values to update in child profile (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3030,8 +3090,8 @@ class ResellerApi
      *
      * Update info of reseller's child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChild $resellerChild values to update in child profile (required)
+     * @param string                               $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChild $resellerChild   values to update in child profile (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3055,18 +3115,18 @@ class ResellerApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 403:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -3076,25 +3136,27 @@ class ResellerApi
      *
      * Update info of reseller's child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChild $resellerChild values to update in child profile (required)
+     * @param string                               $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChild $resellerChild   values to update in child profile (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateResellerChildAsync($childIdentifier, $resellerChild)
     {
-        return $this->updateResellerChildAsyncWithHttpInfo($childIdentifier, $resellerChild)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateResellerChildAsyncWithHttpInfo($childIdentifier, $resellerChild)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateResellerChildAsyncWithHttpInfo
      *
      * Update info of reseller's child based on the child identifier supplied
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChild $resellerChild values to update in child profile (required)
+     * @param string                               $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChild $resellerChild   values to update in child profile (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -3103,19 +3165,21 @@ class ResellerApi
     {
         $returnType = '';
         $request = $this->updateResellerChildRequest($childIdentifier, $resellerChild);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateResellerChild'
      *
-     * @param  string $childIdentifier Either auth key or id of reseller&#39;s child (required)
-     * @param  \SendinBlue\Client\Model\UpdateChild $resellerChild values to update in child profile (required)
+     * @param string                               $childIdentifier Either auth key or id of reseller&#39;s child (required)
+     * @param \SendinBlue\Client\Model\UpdateChild $resellerChild   values to update in child profile (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

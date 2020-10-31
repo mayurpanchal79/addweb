@@ -81,7 +81,7 @@ class EmailCampaignsApi
      *
      * Create an email campaign
      *
-     * @param  \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
+     * @param \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -97,7 +97,7 @@ class EmailCampaignsApi
      *
      * Create an email campaign
      *
-     * @param  \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
+     * @param \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -131,14 +131,14 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -148,23 +148,25 @@ class EmailCampaignsApi
      *
      * Create an email campaign
      *
-     * @param  \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
+     * @param \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createEmailCampaignAsync($emailCampaigns)
     {
-        return $this->createEmailCampaignAsyncWithHttpInfo($emailCampaigns)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createEmailCampaignAsyncWithHttpInfo($emailCampaigns)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createEmailCampaignAsyncWithHttpInfo
      *
      * Create an email campaign
      *
-     * @param  \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
+     * @param \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -173,28 +175,30 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel';
         $request = $this->createEmailCampaignRequest($emailCampaigns);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createEmailCampaign'
      *
-     * @param  \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
+     * @param \SendinBlue\Client\Model\CreateEmailCampaign $emailCampaigns Values to create a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -273,7 +277,7 @@ class EmailCampaignsApi
      *
      * Delete an email campaign
      *
-     * @param  int $campaignId id of the campaign (required)
+     * @param int $campaignId id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -288,7 +292,7 @@ class EmailCampaignsApi
      *
      * Delete an email campaign
      *
-     * @param  int $campaignId id of the campaign (required)
+     * @param int $campaignId id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -312,14 +316,14 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -329,23 +333,25 @@ class EmailCampaignsApi
      *
      * Delete an email campaign
      *
-     * @param  int $campaignId id of the campaign (required)
+     * @param int $campaignId id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteEmailCampaignAsync($campaignId)
     {
-        return $this->deleteEmailCampaignAsyncWithHttpInfo($campaignId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteEmailCampaignAsyncWithHttpInfo($campaignId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteEmailCampaignAsyncWithHttpInfo
      *
      * Delete an email campaign
      *
-     * @param  int $campaignId id of the campaign (required)
+     * @param int $campaignId id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -354,18 +360,20 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->deleteEmailCampaignRequest($campaignId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteEmailCampaign'
      *
-     * @param  int $campaignId id of the campaign (required)
+     * @param int $campaignId id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -445,8 +453,8 @@ class EmailCampaignsApi
      *
      * Export the recipients of an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
+     * @param int                                            $campaignId      Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -462,8 +470,8 @@ class EmailCampaignsApi
      *
      * Export the recipients of an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
+     * @param int                                            $campaignId      Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -497,18 +505,18 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 202:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreatedProcessId', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 202:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreatedProcessId', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -518,25 +526,27 @@ class EmailCampaignsApi
      *
      * Export the recipients of an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
+     * @param int                                            $campaignId      Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function emailExportRecipientsAsync($campaignId, $recipientExport = null)
     {
-        return $this->emailExportRecipientsAsyncWithHttpInfo($campaignId, $recipientExport)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->emailExportRecipientsAsyncWithHttpInfo($campaignId, $recipientExport)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation emailExportRecipientsAsyncWithHttpInfo
      *
      * Export the recipients of an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
+     * @param int                                            $campaignId      Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -545,29 +555,31 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreatedProcessId';
         $request = $this->emailExportRecipientsRequest($campaignId, $recipientExport);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'emailExportRecipients'
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
+     * @param int                                            $campaignId      Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\EmailExportRecipients $recipientExport Values to send for a recipient export request (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -650,7 +662,7 @@ class EmailCampaignsApi
      *
      * Get an A/B test email campaign results
      *
-     * @param  int $campaignId Id of the A/B test campaign (required)
+     * @param int $campaignId Id of the A/B test campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -666,7 +678,7 @@ class EmailCampaignsApi
      *
      * Get an A/B test email campaign results
      *
-     * @param  int $campaignId Id of the A/B test campaign (required)
+     * @param int $campaignId Id of the A/B test campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -700,22 +712,22 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\AbTestCampaignResult', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 405:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\AbTestCampaignResult', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 405:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -725,23 +737,25 @@ class EmailCampaignsApi
      *
      * Get an A/B test email campaign results
      *
-     * @param  int $campaignId Id of the A/B test campaign (required)
+     * @param int $campaignId Id of the A/B test campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getAbTestCampaignResultAsync($campaignId)
     {
-        return $this->getAbTestCampaignResultAsyncWithHttpInfo($campaignId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getAbTestCampaignResultAsyncWithHttpInfo($campaignId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getAbTestCampaignResultAsyncWithHttpInfo
      *
      * Get an A/B test email campaign results
      *
-     * @param  int $campaignId Id of the A/B test campaign (required)
+     * @param int $campaignId Id of the A/B test campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -750,28 +764,30 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\AbTestCampaignResult';
         $request = $this->getAbTestCampaignResultRequest($campaignId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getAbTestCampaignResult'
      *
-     * @param  int $campaignId Id of the A/B test campaign (required)
+     * @param int $campaignId Id of the A/B test campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -851,7 +867,7 @@ class EmailCampaignsApi
      *
      * Get an email campaign report
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -867,7 +883,7 @@ class EmailCampaignsApi
      *
      * Get an email campaign report
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -901,18 +917,18 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaign', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaign', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -922,23 +938,25 @@ class EmailCampaignsApi
      *
      * Get an email campaign report
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getEmailCampaignAsync($campaignId)
     {
-        return $this->getEmailCampaignAsyncWithHttpInfo($campaignId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getEmailCampaignAsyncWithHttpInfo($campaignId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getEmailCampaignAsyncWithHttpInfo
      *
      * Get an email campaign report
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -947,28 +965,30 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaign';
         $request = $this->getEmailCampaignRequest($campaignId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getEmailCampaign'
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1048,12 +1068,12 @@ class EmailCampaignsApi
      *
      * Return all your created email campaigns
      *
-     * @param  string $type Filter on the type of the campaigns (optional)
-     * @param  string $status Filter on the status of the campaign (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  int $limit Number of documents per page (optional, default to 500)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param string    $type      Filter on the type of the campaigns (optional)
+     * @param string    $status    Filter on the status of the campaign (optional)
+     * @param \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param \DateTime $endDate   Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param int       $limit     Number of documents per page (optional, default to 500)
+     * @param int       $offset    Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1069,12 +1089,12 @@ class EmailCampaignsApi
      *
      * Return all your created email campaigns
      *
-     * @param  string $type Filter on the type of the campaigns (optional)
-     * @param  string $status Filter on the status of the campaign (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  int $limit Number of documents per page (optional, default to 500)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param string    $type      Filter on the type of the campaigns (optional)
+     * @param string    $status    Filter on the status of the campaign (optional)
+     * @param \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param \DateTime $endDate   Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param int       $limit     Number of documents per page (optional, default to 500)
+     * @param int       $offset    Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1108,14 +1128,14 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaigns', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaigns', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1125,33 +1145,35 @@ class EmailCampaignsApi
      *
      * Return all your created email campaigns
      *
-     * @param  string $type Filter on the type of the campaigns (optional)
-     * @param  string $status Filter on the status of the campaign (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  int $limit Number of documents per page (optional, default to 500)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param string    $type      Filter on the type of the campaigns (optional)
+     * @param string    $status    Filter on the status of the campaign (optional)
+     * @param \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param \DateTime $endDate   Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param int       $limit     Number of documents per page (optional, default to 500)
+     * @param int       $offset    Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getEmailCampaignsAsync($type = null, $status = null, $startDate = null, $endDate = null, $limit = '500', $offset = '0')
     {
-        return $this->getEmailCampaignsAsyncWithHttpInfo($type, $status, $startDate, $endDate, $limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getEmailCampaignsAsyncWithHttpInfo($type, $status, $startDate, $endDate, $limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getEmailCampaignsAsyncWithHttpInfo
      *
      * Return all your created email campaigns
      *
-     * @param  string $type Filter on the type of the campaigns (optional)
-     * @param  string $status Filter on the status of the campaign (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  int $limit Number of documents per page (optional, default to 500)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param string    $type      Filter on the type of the campaigns (optional)
+     * @param string    $status    Filter on the status of the campaign (optional)
+     * @param \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param \DateTime $endDate   Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param int       $limit     Number of documents per page (optional, default to 500)
+     * @param int       $offset    Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1160,33 +1182,35 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailCampaigns';
         $request = $this->getEmailCampaignsRequest($type, $status, $startDate, $endDate, $limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getEmailCampaigns'
      *
-     * @param  string $type Filter on the type of the campaigns (optional)
-     * @param  string $status Filter on the status of the campaign (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
-     * @param  int $limit Number of documents per page (optional, default to 500)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param string    $type      Filter on the type of the campaigns (optional)
+     * @param string    $status    Filter on the status of the campaign (optional)
+     * @param \DateTime $startDate Mandatory if endDate is used. Starting (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param \DateTime $endDate   Mandatory if startDate is used. Ending (urlencoded) UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ) to filter the sent email campaigns. Prefer to pass your timezone in date-time format for accurate result ( only available if either &#39;status&#39; not passed and if passed is set to &#39;sent&#39; ) (optional)
+     * @param int       $limit     Number of documents per page (optional, default to 500)
+     * @param int       $offset    Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1285,7 +1309,7 @@ class EmailCampaignsApi
      *
      * Get a shared template url
      *
-     * @param  int $campaignId Id of the campaign or template (required)
+     * @param int $campaignId Id of the campaign or template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1301,7 +1325,7 @@ class EmailCampaignsApi
      *
      * Get a shared template url
      *
-     * @param  int $campaignId Id of the campaign or template (required)
+     * @param int $campaignId Id of the campaign or template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1335,18 +1359,18 @@ class EmailCampaignsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSharedTemplateUrl', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSharedTemplateUrl', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1356,23 +1380,25 @@ class EmailCampaignsApi
      *
      * Get a shared template url
      *
-     * @param  int $campaignId Id of the campaign or template (required)
+     * @param int $campaignId Id of the campaign or template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSharedTemplateUrlAsync($campaignId)
     {
-        return $this->getSharedTemplateUrlAsyncWithHttpInfo($campaignId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSharedTemplateUrlAsyncWithHttpInfo($campaignId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSharedTemplateUrlAsyncWithHttpInfo
      *
      * Get a shared template url
      *
-     * @param  int $campaignId Id of the campaign or template (required)
+     * @param int $campaignId Id of the campaign or template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1381,28 +1407,30 @@ class EmailCampaignsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSharedTemplateUrl';
         $request = $this->getSharedTemplateUrlRequest($campaignId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSharedTemplateUrl'
      *
-     * @param  int $campaignId Id of the campaign or template (required)
+     * @param int $campaignId Id of the campaign or template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1482,7 +1510,7 @@ class EmailCampaignsApi
      *
      * Send an email campaign immediately, based on campaignId
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1497,7 +1525,7 @@ class EmailCampaignsApi
      *
      * Send an email campaign immediately, based on campaignId
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1521,18 +1549,18 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 402:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1542,23 +1570,25 @@ class EmailCampaignsApi
      *
      * Send an email campaign immediately, based on campaignId
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendEmailCampaignNowAsync($campaignId)
     {
-        return $this->sendEmailCampaignNowAsyncWithHttpInfo($campaignId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendEmailCampaignNowAsyncWithHttpInfo($campaignId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendEmailCampaignNowAsyncWithHttpInfo
      *
      * Send an email campaign immediately, based on campaignId
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1567,18 +1597,20 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->sendEmailCampaignNowRequest($campaignId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'sendEmailCampaignNow'
      *
-     * @param  int $campaignId Id of the campaign (required)
+     * @param int $campaignId Id of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1658,8 +1690,8 @@ class EmailCampaignsApi
      *
      * Send the report of a campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
+     * @param int                                 $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1674,8 +1706,8 @@ class EmailCampaignsApi
      *
      * Send the report of a campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
+     * @param int                                 $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1699,14 +1731,14 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1716,25 +1748,27 @@ class EmailCampaignsApi
      *
      * Send the report of a campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
+     * @param int                                 $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendReportAsync($campaignId, $sendReport)
     {
-        return $this->sendReportAsyncWithHttpInfo($campaignId, $sendReport)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendReportAsyncWithHttpInfo($campaignId, $sendReport)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendReportAsyncWithHttpInfo
      *
      * Send the report of a campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
+     * @param int                                 $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1743,19 +1777,21 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->sendReportRequest($campaignId, $sendReport);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'sendReport'
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
+     * @param int                                 $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendReport $sendReport Values for send a report (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1842,8 +1878,8 @@ class EmailCampaignsApi
      *
      * Send an email campaign to your test list
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $emailTo emailTo (required)
+     * @param int                                    $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $emailTo    emailTo (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1858,8 +1894,8 @@ class EmailCampaignsApi
      *
      * Send an email campaign to your test list
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $emailTo (required)
+     * @param int                                    $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $emailTo    (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1883,14 +1919,14 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1900,25 +1936,27 @@ class EmailCampaignsApi
      *
      * Send an email campaign to your test list
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $emailTo (required)
+     * @param int                                    $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $emailTo    (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendTestEmailAsync($campaignId, $emailTo)
     {
-        return $this->sendTestEmailAsyncWithHttpInfo($campaignId, $emailTo)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendTestEmailAsyncWithHttpInfo($campaignId, $emailTo)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendTestEmailAsyncWithHttpInfo
      *
      * Send an email campaign to your test list
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $emailTo (required)
+     * @param int                                    $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $emailTo    (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1927,19 +1965,21 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->sendTestEmailRequest($campaignId, $emailTo);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'sendTestEmail'
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $emailTo (required)
+     * @param int                                    $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $emailTo    (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2026,8 +2066,8 @@ class EmailCampaignsApi
      *
      * Update an email campaign status
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateCampaignStatus $status Status of the campaign (required)
+     * @param int                                           $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateCampaignStatus $status     Status of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2042,8 +2082,8 @@ class EmailCampaignsApi
      *
      * Update an email campaign status
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateCampaignStatus $status Status of the campaign (required)
+     * @param int                                           $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateCampaignStatus $status     Status of the campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2067,14 +2107,14 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2084,25 +2124,27 @@ class EmailCampaignsApi
      *
      * Update an email campaign status
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateCampaignStatus $status Status of the campaign (required)
+     * @param int                                           $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateCampaignStatus $status     Status of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateCampaignStatusAsync($campaignId, $status)
     {
-        return $this->updateCampaignStatusAsyncWithHttpInfo($campaignId, $status)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateCampaignStatusAsyncWithHttpInfo($campaignId, $status)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateCampaignStatusAsyncWithHttpInfo
      *
      * Update an email campaign status
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateCampaignStatus $status Status of the campaign (required)
+     * @param int                                           $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateCampaignStatus $status     Status of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2111,19 +2153,21 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->updateCampaignStatusRequest($campaignId, $status);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateCampaignStatus'
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateCampaignStatus $status Status of the campaign (required)
+     * @param int                                           $campaignId Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateCampaignStatus $status     Status of the campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2210,8 +2254,8 @@ class EmailCampaignsApi
      *
      * Update an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
+     * @param int                                          $campaignId    Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2226,8 +2270,8 @@ class EmailCampaignsApi
      *
      * Update an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
+     * @param int                                          $campaignId    Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2251,14 +2295,14 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2268,25 +2312,27 @@ class EmailCampaignsApi
      *
      * Update an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
+     * @param int                                          $campaignId    Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateEmailCampaignAsync($campaignId, $emailCampaign)
     {
-        return $this->updateEmailCampaignAsyncWithHttpInfo($campaignId, $emailCampaign)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateEmailCampaignAsyncWithHttpInfo($campaignId, $emailCampaign)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateEmailCampaignAsyncWithHttpInfo
      *
      * Update an email campaign
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
+     * @param int                                          $campaignId    Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2295,19 +2341,21 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->updateEmailCampaignRequest($campaignId, $emailCampaign);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateEmailCampaign'
      *
-     * @param  int $campaignId Id of the campaign (required)
-     * @param  \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
+     * @param int                                          $campaignId    Id of the campaign (required)
+     * @param \SendinBlue\Client\Model\UpdateEmailCampaign $emailCampaign Values to update a campaign (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2394,7 +2442,7 @@ class EmailCampaignsApi
      *
      * Upload an image to your account's image gallery
      *
-     * @param  \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
+     * @param \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2409,7 +2457,7 @@ class EmailCampaignsApi
      *
      * Upload an image to your account's image gallery
      *
-     * @param  \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
+     * @param \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2433,10 +2481,10 @@ class EmailCampaignsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2446,23 +2494,25 @@ class EmailCampaignsApi
      *
      * Upload an image to your account's image gallery
      *
-     * @param  \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
+     * @param \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function uploadImageToGalleryAsync($uploadImage)
     {
-        return $this->uploadImageToGalleryAsyncWithHttpInfo($uploadImage)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->uploadImageToGalleryAsyncWithHttpInfo($uploadImage)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation uploadImageToGalleryAsyncWithHttpInfo
      *
      * Upload an image to your account's image gallery
      *
-     * @param  \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
+     * @param \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2471,18 +2521,20 @@ class EmailCampaignsApi
     {
         $returnType = '';
         $request = $this->uploadImageToGalleryRequest($uploadImage);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'uploadImageToGallery'
      *
-     * @param  \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
+     * @param \SendinBlue\Client\Model\UploadImageToGallery $uploadImage Parameters to upload an image (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

@@ -41,50 +41,50 @@ import { useShallowEqual } from './use-shallow-equal';
  *                              loading (true) or not.
  */
 export const useCollectionHeader = ( headerKey, options ) => {
-	const {
-		namespace,
-		resourceName,
-		resourceValues = [],
-		query = {},
-	} = options;
-	if ( ! namespace || ! resourceName ) {
-		throw new Error(
-			'The options object must have valid values for the namespace and ' +
-				'the resource name properties.'
-		);
-	}
-	// ensure we feed the previous reference if it's equivalent
-	const currentQuery = useShallowEqual( query );
-	const currentResourceValues = useShallowEqual( resourceValues );
-	const { value, isLoading = true } = useSelect(
-		( select ) => {
-			const store = select( storeKey );
-			// filter out query if it is undefined.
-			const args = [
-				headerKey,
-				namespace,
-				resourceName,
-				currentQuery,
-				currentResourceValues,
-			];
-			return {
-				value: store.getCollectionHeader( ...args ),
-				isLoading: store.hasFinishedResolution(
-					'getCollectionHeader',
-					args
-				),
-			};
-		},
-		[
-			headerKey,
-			namespace,
-			resourceName,
-			currentResourceValues,
-			currentQuery,
-		]
-	);
-	return {
-		value,
-		isLoading,
-	};
+    const {
+        namespace,
+        resourceName,
+        resourceValues = [],
+        query = {},
+    } = options;
+    if (! namespace || ! resourceName ) {
+        throw new Error(
+            'The options object must have valid values for the namespace and ' +
+            'the resource name properties.'
+        );
+    }
+    // ensure we feed the previous reference if it's equivalent
+    const currentQuery = useShallowEqual(query);
+    const currentResourceValues = useShallowEqual(resourceValues);
+    const { value, isLoading = true } = useSelect(
+        ( select ) => {
+        const store = select(storeKey);
+        // filter out query if it is undefined.
+            const args = [
+            headerKey,
+            namespace,
+            resourceName,
+            currentQuery,
+            currentResourceValues,
+            ];
+        return {
+                value: store.getCollectionHeader(...args),
+                isLoading: store.hasFinishedResolution(
+                    'getCollectionHeader',
+                    args
+                ),
+            };
+        },
+        [
+        headerKey,
+        namespace,
+        resourceName,
+        currentResourceValues,
+        currentQuery,
+        ]
+    );
+    return {
+        value,
+        isLoading,
+    };
 };

@@ -21,13 +21,17 @@ use Symfony\Component\CssSelector\XPath\XPathExpr;
 
 class TranslatorTest extends TestCase
 {
-    /** @dataProvider getXpathLiteralTestData */
+    /**
+     * @dataProvider getXpathLiteralTestData 
+     */
     public function testXpathLiteral($value, $literal)
     {
         $this->assertEquals($literal, Translator::getXpathLiteral($value));
     }
 
-    /** @dataProvider getCssToXPathTestData */
+    /**
+     * @dataProvider getCssToXPathTestData 
+     */
     public function testCssToXPath($css, $xpath)
     {
         $translator = new Translator();
@@ -90,7 +94,9 @@ class TranslatorTest extends TestCase
         $translator->addAttributeMatching($xpath, '', '', '');
     }
 
-    /** @dataProvider getXmlLangTestData */
+    /**
+     * @dataProvider getXmlLangTestData 
+     */
     public function testXmlLang($css, array $elementsId)
     {
         $translator = new Translator();
@@ -102,7 +108,9 @@ class TranslatorTest extends TestCase
         }
     }
 
-    /** @dataProvider getHtmlIdsTestData */
+    /**
+     * @dataProvider getHtmlIdsTestData 
+     */
     public function testHtmlIds($css, array $elementsId)
     {
         $translator = new Translator();
@@ -123,7 +131,9 @@ class TranslatorTest extends TestCase
         libxml_use_internal_errors($internalErrors);
     }
 
-    /** @dataProvider getHtmlShakespearTestData */
+    /**
+     * @dataProvider getHtmlShakespearTestData 
+     */
     public function testHtmlShakespear($css, $count)
     {
         $translator = new Translator();
@@ -142,7 +152,8 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
         $translator->registerExtension(new HtmlExtension($translator));
         $document = new \DOMDocument();
-        $document->loadHTML(<<<'HTML'
+        $document->loadHTML(
+            <<<'HTML'
 <html>
   <body>
     <p>
@@ -155,7 +166,7 @@ class TranslatorTest extends TestCase
   </body>
 </html>
 HTML
-);
+        );
 
         $xpath = new \DOMXPath($document);
         $nodeList = $xpath->query($translator->cssToXPath('span:only-of-type'));

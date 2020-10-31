@@ -17,9 +17,11 @@ class Symfony1Installer extends BaseInstaller
      */
     public function inflectPackageVars($vars)
     {
-        $vars['name'] = preg_replace_callback('/(-[a-z])/', function ($matches) {
-            return strtoupper($matches[0][1]);
-        }, $vars['name']);
+        $vars['name'] = preg_replace_callback(
+            '/(-[a-z])/', function ($matches) {
+                return strtoupper($matches[0][1]);
+            }, $vars['name']
+        );
 
         return $vars;
     }

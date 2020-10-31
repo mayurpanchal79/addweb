@@ -38,10 +38,10 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * method is only available to service account clients that have been delegated
      * domain-wide authority. (sendAs.create)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_SendAs $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                      $userId    User's email address. The special value "me" can be
+     *                                                used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_SendAs $postBody
+     * @param  array                       $optParams Optional parameters.
      * @return Google_Service_Gmail_SendAs
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_SendAs $postBody, $optParams = array())
@@ -55,10 +55,10 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * been required for using it. This method is only available to service account
      * clients that have been delegated domain-wide authority. (sendAs.delete)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
+     * @param string $userId      User's email address. The special value "me" can be
+     *                            used to indicate the authenticated user.
      * @param string $sendAsEmail The send-as alias to be deleted.
-     * @param array $optParams Optional parameters.
+     * @param array  $optParams   Optional parameters.
      */
     public function delete($userId, $sendAsEmail, $optParams = array())
     {
@@ -70,10 +70,10 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * Gets the specified send-as alias. Fails with an HTTP 404 error if the
      * specified address is not a member of the collection. (sendAs.get)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The send-as alias to be retrieved.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId      User's email address. The special value "me" can be
+     *                             used to indicate the authenticated user.
+     * @param  string $sendAsEmail The send-as alias to be retrieved.
+     * @param  array  $optParams   Optional parameters.
      * @return Google_Service_Gmail_SendAs
      */
     public function get($userId, $sendAsEmail, $optParams = array())
@@ -87,9 +87,9 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * primary send-as address associated with the account as well as any custom
      * "from" aliases. (sendAs.listUsersSettingsSendAs)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ListSendAsResponse
      */
     public function listUsersSettingsSendAs($userId, $optParams = array())
@@ -101,11 +101,11 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
     /**
      * Patch the specified send-as alias. (sendAs.patch)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The send-as alias to be updated.
-     * @param Google_Service_Gmail_SendAs $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                      $userId      User's email address. The special value "me" can be
+     *                                                  used to indicate the authenticated user.
+     * @param  string                      $sendAsEmail The send-as alias to be updated.
+     * @param  Google_Service_Gmail_SendAs $postBody
+     * @param  array                       $optParams   Optional parameters.
      * @return Google_Service_Gmail_SendAs
      */
     public function patch($userId, $sendAsEmail, \WPMailSMTP\Vendor\Google_Service_Gmail_SendAs $postBody, $optParams = array())
@@ -120,11 +120,11 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * address for the account can only be updated by service account clients that
      * have been delegated domain-wide authority. (sendAs.update)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The send-as alias to be updated.
-     * @param Google_Service_Gmail_SendAs $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                      $userId      User's email address. The special value "me" can be
+     *                                                  used to indicate the authenticated user.
+     * @param  string                      $sendAsEmail The send-as alias to be updated.
+     * @param  Google_Service_Gmail_SendAs $postBody
+     * @param  array                       $optParams   Optional parameters.
      * @return Google_Service_Gmail_SendAs
      */
     public function update($userId, $sendAsEmail, \WPMailSMTP\Vendor\Google_Service_Gmail_SendAs $postBody, $optParams = array())
@@ -139,10 +139,10 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAs extends \WPMailSMTP\Vend
      * service account clients that have been delegated domain-wide authority.
      * (sendAs.verify)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
+     * @param string $userId      User's email address. The special value "me" can be
+     *                            used to indicate the authenticated user.
      * @param string $sendAsEmail The send-as alias to be verified.
-     * @param array $optParams Optional parameters.
+     * @param array  $optParams   Optional parameters.
      */
     public function verify($userId, $sendAsEmail, $optParams = array())
     {

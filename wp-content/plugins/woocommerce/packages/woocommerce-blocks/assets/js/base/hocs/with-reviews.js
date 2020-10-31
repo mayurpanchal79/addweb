@@ -17,195 +17,211 @@ import { formatError } from '../utils/errors.js';
  * @param {Function} OriginalComponent Component being wrapped.
  */
 const withReviews = ( OriginalComponent ) => {
-	class WrappedComponent extends Component {
-		static propTypes = {
-			order: PropTypes.oneOf( [ 'asc', 'desc' ] ).isRequired,
-			orderby: PropTypes.string.isRequired,
-			reviewsToDisplay: PropTypes.number.isRequired,
-			categoryIds: PropTypes.oneOfType( [
-				PropTypes.string,
-				PropTypes.array,
-			] ),
-			delayFunction: PropTypes.func,
-			onReviewsAppended: PropTypes.func,
-			onReviewsLoadError: PropTypes.func,
-			onReviewsReplaced: PropTypes.func,
-			productId: PropTypes.oneOfType( [
-				PropTypes.string,
-				PropTypes.number,
-			] ),
-		};
+    class WrappedComponent extends Component {
+        static propTypes = {
+            order: PropTypes.oneOf([ 'asc', 'desc' ]).isRequired,
+            orderby: PropTypes.string.isRequired,
+            reviewsToDisplay: PropTypes.number.isRequired,
+            categoryIds: PropTypes.oneOfType(
+                [
+                PropTypes.string,
+                PropTypes.array,
+                ] 
+            ),
+        delayFunction: PropTypes.func,
+        onReviewsAppended: PropTypes.func,
+        onReviewsLoadError: PropTypes.func,
+        onReviewsReplaced: PropTypes.func,
+        productId: PropTypes.oneOfType(
+            [
+            PropTypes.string,
+            PropTypes.number,
+            ] 
+        ),
+        };
 
-		static defaultProps = {
-			delayFunction: ( f ) => f,
-			onReviewsAppended: () => {},
-			onReviewsLoadError: () => {},
-			onReviewsReplaced: () => {},
-		};
+        static defaultProps = {
+            delayFunction: ( f ) => f,
+            onReviewsAppended: () => {},
+            onReviewsLoadError: () => {},
+            onReviewsReplaced: () => {},
+        };
 
-		isPreview = !! this.props.attributes.previewReviews;
+        isPreview = !! this.props.attributes.previewReviews;
 
-		delayedAppendReviews = this.props.delayFunction( this.appendReviews );
+        delayedAppendReviews = this.props.delayFunction(this.appendReviews);
 
-		state = {
-			error: null,
-			loading: true,
-			reviews: this.isPreview ? this.props.attributes.previewReviews : [],
-			totalReviews: this.isPreview
-				? this.props.attributes.previewReviews.length
-				: 0,
-		};
+        state = {
+            error: null,
+            loading: true,
+            reviews: this.isPreview ? this.props.attributes.previewReviews : [],
+            totalReviews: this.isPreview
+            ? this.props.attributes.previewReviews.length
+            : 0,
+        };
 
-		componentDidMount() {
-			this.replaceReviews();
-		}
+        componentDidMount()
+        {
+            this.replaceReviews();
+        }
 
-		componentDidUpdate( prevProps ) {
-			if ( prevProps.reviewsToDisplay < this.props.reviewsToDisplay ) {
-				// Since this attribute might be controlled via something with
-				// short intervals between value changes, this allows for optionally
-				// delaying review fetches via the provided delay function.
-				this.delayedAppendReviews();
-			} else if ( this.shouldReplaceReviews( prevProps, this.props ) ) {
-				this.replaceReviews();
-			}
-		}
+        componentDidUpdate( prevProps )
+        {
+            if (prevProps.reviewsToDisplay < this.props.reviewsToDisplay ) {
+                // Since this attribute might be controlled via something with
+                // short intervals between value changes, this allows for optionally
+                // delaying review fetches via the provided delay function.
+                this.delayedAppendReviews();
+            } else if (this.shouldReplaceReviews(prevProps, this.props) ) {
+                this.replaceReviews();
+            }
+        }
 
-		shouldReplaceReviews( prevProps, nextProps ) {
-			return (
-				prevProps.orderby !== nextProps.orderby ||
-				prevProps.order !== nextProps.order ||
-				prevProps.productId !== nextProps.productId ||
-				! isShallowEqual( prevProps.categoryIds, nextProps.categoryIds )
-			);
-		}
+        shouldReplaceReviews( prevProps, nextProps )
+        {
+            return (
+            prevProps.orderby !== nextProps.orderby ||
+            prevProps.order !== nextProps.order ||
+            prevProps.productId !== nextProps.productId ||
+            ! isShallowEqual(prevProps.categoryIds, nextProps.categoryIds)
+            );
+        }
 
-		componentWillUnMount() {
-			if ( this.delayedAppendReviews.cancel ) {
-				this.delayedAppendReviews.cancel();
-			}
-		}
+        componentWillUnMount()
+        {
+            if (this.delayedAppendReviews.cancel ) {
+                this.delayedAppendReviews.cancel();
+            }
+        }
 
-		getArgs( reviewsToSkip ) {
-			const {
-				categoryIds,
-				order,
-				orderby,
-				productId,
-				reviewsToDisplay,
-			} = this.props;
-			const args = {
-				order,
-				orderby,
-				per_page: reviewsToDisplay - reviewsToSkip,
-				offset: reviewsToSkip,
-			};
+        getArgs( reviewsToSkip )
+        {
+            const {
+                categoryIds,
+                order,
+                orderby,
+                productId,
+                reviewsToDisplay,
+            } = this.props;
+            const args = {
+                order,
+                orderby,
+                per_page: reviewsToDisplay - reviewsToSkip,
+                offset: reviewsToSkip,
+            };
 
-			if ( categoryIds && categoryIds.length ) {
-				args.category_id = Array.isArray( categoryIds )
-					? categoryIds.join( ',' )
-					: categoryIds;
-			}
+            if (categoryIds && categoryIds.length ) {
+                args.category_id = Array.isArray(categoryIds)
+                 ? categoryIds.join(',')
+                 : categoryIds;
+            }
 
-			if ( productId ) {
-				args.product_id = productId;
-			}
+            if (productId ) {
+                args.product_id = productId;
+            }
 
-			return args;
-		}
+            return args;
+        }
 
-		replaceReviews() {
-			if ( this.isPreview ) {
-				return;
-			}
+        replaceReviews()
+        {
+            if (this.isPreview ) {
+                return;
+            }
 
-			const { onReviewsReplaced } = this.props;
+            const { onReviewsReplaced } = this.props;
 
-			this.updateListOfReviews().then( onReviewsReplaced );
-		}
+            this.updateListOfReviews().then(onReviewsReplaced);
+        }
 
-		appendReviews() {
-			if ( this.isPreview ) {
-				return;
-			}
+        appendReviews()
+        {
+            if (this.isPreview ) {
+                return;
+            }
 
-			const { onReviewsAppended, reviewsToDisplay } = this.props;
-			const { reviews } = this.state;
+            const { onReviewsAppended, reviewsToDisplay } = this.props;
+            const { reviews } = this.state;
 
-			// Given that this function is delayed, props might have been updated since
-			// it was called so we need to check again if fetching new reviews is necessary.
-			if ( reviewsToDisplay <= reviews.length ) {
-				return;
-			}
+            // Given that this function is delayed, props might have been updated since
+            // it was called so we need to check again if fetching new reviews is necessary.
+            if (reviewsToDisplay <= reviews.length ) {
+                return;
+            }
 
-			this.updateListOfReviews( reviews ).then( onReviewsAppended );
-		}
+            this.updateListOfReviews(reviews).then(onReviewsAppended);
+        }
 
-		updateListOfReviews( oldReviews = [] ) {
-			const { reviewsToDisplay } = this.props;
-			const { totalReviews } = this.state;
-			const reviewsToLoad =
-				Math.min( totalReviews, reviewsToDisplay ) - oldReviews.length;
+        updateListOfReviews( oldReviews = [] )
+        {
+            const { reviewsToDisplay } = this.props;
+            const { totalReviews } = this.state;
+            const reviewsToLoad =
+            Math.min(totalReviews, reviewsToDisplay) - oldReviews.length;
 
-			this.setState( {
-				loading: true,
-				reviews: oldReviews.concat( Array( reviewsToLoad ).fill( {} ) ),
-			} );
+            this.setState(
+                {
+                    loading: true,
+                    reviews: oldReviews.concat(Array(reviewsToLoad).fill({})),
+                } 
+            );
 
-			return getReviews( this.getArgs( oldReviews.length ) )
-				.then(
-					( {
-						reviews: newReviews,
-						totalReviews: newTotalReviews,
-					} ) => {
-						this.setState( {
-							reviews: oldReviews
-								.filter(
-									( review ) => Object.keys( review ).length
-								)
-								.concat( newReviews ),
-							totalReviews: newTotalReviews,
-							loading: false,
-							error: null,
-						} );
+            return getReviews(this.getArgs(oldReviews.length))
+            .then(
+                ( {
+                    reviews: newReviews,
+                    totalReviews: newTotalReviews,
+                } ) => {
+                    this.setState(
+                    {
+                            reviews: oldReviews
+                            .filter(
+                                ( review ) => Object.keys(review).length
+                            )
+                        .concat(newReviews),
+                        totalReviews: newTotalReviews,
+                        loading: false,
+                        error: null,
+                        } 
+                );
+                return { newReviews };
+                }
+            )
+            .catch(this.setError);
+        }
 
-						return { newReviews };
-					}
-				)
-				.catch( this.setError );
-		}
+        setError = async(e) => {
+            const { onReviewsLoadError } = this.props;
+            const error = await formatError(e);
 
-		setError = async ( e ) => {
-			const { onReviewsLoadError } = this.props;
-			const error = await formatError( e );
+            this.setState({ reviews: [], loading: false, error });
 
-			this.setState( { reviews: [], loading: false, error } );
+            onReviewsLoadError(error);
+        };
 
-			onReviewsLoadError( error );
-		};
+        render()
+        {
+            const { reviewsToDisplay } = this.props;
+            const { error, loading, reviews, totalReviews } = this.state;
 
-		render() {
-			const { reviewsToDisplay } = this.props;
-			const { error, loading, reviews, totalReviews } = this.state;
+            return (
+            <OriginalComponent
+            { ...this.props }
+            error={ error }
+            isLoading={ loading }
+            reviews={ reviews.slice(0, reviewsToDisplay) }
+            totalReviews={ totalReviews }
+            />
+            );
+        }
+    }
 
-			return (
-				<OriginalComponent
-					{ ...this.props }
-					error={ error }
-					isLoading={ loading }
-					reviews={ reviews.slice( 0, reviewsToDisplay ) }
-					totalReviews={ totalReviews }
-				/>
-			);
-		}
-	}
+    const {
+        displayName = OriginalComponent.name || 'Component',
+    } = OriginalComponent;
+    WrappedComponent.displayName = `WithReviews(${ displayName })`;
 
-	const {
-		displayName = OriginalComponent.name || 'Component',
-	} = OriginalComponent;
-	WrappedComponent.displayName = `WithReviews( ${ displayName } )`;
-
-	return WrappedComponent;
+    return WrappedComponent;
 };
 
 export default withReviews;

@@ -22,23 +22,34 @@ use WPMailSMTP\Vendor\GuzzleHttp\Psr7\Request;
  * Implements the actual methods/resources of the discovered Google API using magic function
  * calling overloading (__call()), which on call will see if the method name (plus.activities.list)
  * is available in this service, and if so construct an apiHttpRequest representing it.
- *
  */
 class Google_Service_Resource
 {
     // Valid query parameters that work, but don't appear in discovery.
     private $stackParameters = array('alt' => array('type' => 'string', 'location' => 'query'), 'fields' => array('type' => 'string', 'location' => 'query'), 'trace' => array('type' => 'string', 'location' => 'query'), 'userIp' => array('type' => 'string', 'location' => 'query'), 'quotaUser' => array('type' => 'string', 'location' => 'query'), 'data' => array('type' => 'string', 'location' => 'body'), 'mimeType' => array('type' => 'string', 'location' => 'header'), 'uploadType' => array('type' => 'string', 'location' => 'query'), 'mediaUpload' => array('type' => 'complex', 'location' => 'query'), 'prettyPrint' => array('type' => 'string', 'location' => 'query'));
-    /** @var string $rootUrl */
+    /**
+     * @var string $rootUrl 
+     */
     private $rootUrl;
-    /** @var Google_Client $client */
+    /**
+     * @var Google_Client $client 
+     */
     private $client;
-    /** @var string $serviceName */
+    /**
+     * @var string $serviceName 
+     */
     private $serviceName;
-    /** @var string $servicePath */
+    /**
+     * @var string $servicePath 
+     */
     private $servicePath;
-    /** @var string $resourceName */
+    /**
+     * @var string $resourceName 
+     */
     private $resourceName;
-    /** @var array $methods */
+    /**
+     * @var array $methods 
+     */
     private $methods;
     public function __construct($service, $serviceName, $resourceName, $resource)
     {
@@ -51,9 +62,10 @@ class Google_Service_Resource
     }
     /**
      * TODO: This function needs simplifying.
-     * @param $name
-     * @param $arguments
-     * @param $expectedClass - optional, the expected class name
+     *
+     * @param  $name
+     * @param  $arguments
+     * @param  $expectedClass - optional, the expected class name
      * @return Google_Http_Request|expectedClass
      * @throws Google_Exception
      */
@@ -160,9 +172,10 @@ class Google_Service_Resource
     /**
      * Parse/expand request parameters and create a fully qualified
      * request uri.
+     *
      * @static
-     * @param string $restPath
-     * @param array $params
+     * @param  string $restPath
+     * @param  array  $params
      * @return string $requestUrl
      */
     public function createRequestUri($restPath, $params)

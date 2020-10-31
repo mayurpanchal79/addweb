@@ -7,18 +7,19 @@
 
 namespace Automattic\WooCommerce\Admin\API;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Product categories controller.
  *
  * @extends WC_REST_Product_Categories_Controller
  */
-class ProductCategories extends \WC_REST_Product_Categories_Controller {
-	/**
-	 * Endpoint namespace.
-	 *
-	 * @var string
-	 */
-	protected $namespace = 'wc-analytics';
+class ProductCategories extends \WC_REST_Product_Categories_Controller
+{
+    /**
+     * Endpoint namespace.
+     *
+     * @var string
+     */
+    protected $namespace = 'wc-analytics';
 }

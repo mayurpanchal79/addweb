@@ -23,19 +23,33 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
     private static $charUnreserved = 'a-zA-Z0-9_\\-\\.~';
     private static $charSubDelims = '!\\$&\'\\(\\)\\*\\+,;=';
     private static $replaceQuery = ['=' => '%3D', '&' => '%26'];
-    /** @var string Uri scheme. */
+    /**
+     * @var string Uri scheme. 
+     */
     private $scheme = '';
-    /** @var string Uri user info. */
+    /**
+     * @var string Uri user info. 
+     */
     private $userInfo = '';
-    /** @var string Uri host. */
+    /**
+     * @var string Uri host. 
+     */
     private $host = '';
-    /** @var int|null Uri port. */
+    /**
+     * @var int|null Uri port. 
+     */
     private $port;
-    /** @var string Uri path. */
+    /**
+     * @var string Uri path. 
+     */
     private $path = '';
-    /** @var string Uri query string. */
+    /**
+     * @var string Uri query string. 
+     */
     private $query = '';
-    /** @var string Uri fragment. */
+    /**
+     * @var string Uri fragment. 
+     */
     private $fragment = '';
     /**
      * @param string $uri URI to parse
@@ -127,10 +141,10 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param UriInterface $uri
      *
      * @return bool
-     * @see Uri::isNetworkPathReference
-     * @see Uri::isAbsolutePathReference
-     * @see Uri::isRelativePathReference
-     * @link https://tools.ietf.org/html/rfc3986#section-4
+     * @see    Uri::isNetworkPathReference
+     * @see    Uri::isAbsolutePathReference
+     * @see    Uri::isRelativePathReference
+     * @link   https://tools.ietf.org/html/rfc3986#section-4
      */
     public static function isAbsolute(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $uri)
     {
@@ -144,7 +158,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param UriInterface $uri
      *
      * @return bool
-     * @link https://tools.ietf.org/html/rfc3986#section-4.2
+     * @link   https://tools.ietf.org/html/rfc3986#section-4.2
      */
     public static function isNetworkPathReference(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $uri)
     {
@@ -158,7 +172,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param UriInterface $uri
      *
      * @return bool
-     * @link https://tools.ietf.org/html/rfc3986#section-4.2
+     * @link   https://tools.ietf.org/html/rfc3986#section-4.2
      */
     public static function isAbsolutePathReference(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $uri)
     {
@@ -172,7 +186,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param UriInterface $uri
      *
      * @return bool
-     * @link https://tools.ietf.org/html/rfc3986#section-4.2
+     * @link   https://tools.ietf.org/html/rfc3986#section-4.2
      */
     public static function isRelativePathReference(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $uri)
     {
@@ -189,7 +203,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param UriInterface|null $base An optional base URI to compare against
      *
      * @return bool
-     * @link https://tools.ietf.org/html/rfc3986#section-4.4
+     * @link   https://tools.ietf.org/html/rfc3986#section-4.4
      */
     public static function isSameDocumentReference(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $uri, \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $base = null)
     {
@@ -207,7 +221,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @return string
      *
      * @deprecated since version 1.4. Use UriResolver::removeDotSegments instead.
-     * @see UriResolver::removeDotSegments
+     * @see        UriResolver::removeDotSegments
      */
     public static function removeDotSegments($path)
     {
@@ -222,7 +236,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @return UriInterface
      *
      * @deprecated since version 1.4. Use UriResolver::resolve instead.
-     * @see UriResolver::resolve
+     * @see        UriResolver::resolve
      */
     public static function resolve(\WPMailSMTP\Vendor\Psr\Http\Message\UriInterface $base, $rel)
     {
@@ -292,7 +306,7 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
      * @param array $parts
      *
      * @return UriInterface
-     * @link http://php.net/manual/en/function.parse-url.php
+     * @link   http://php.net/manual/en/function.parse-url.php
      *
      * @throws \InvalidArgumentException If the components do not form a valid URI.
      */
@@ -514,9 +528,11 @@ class Uri implements \WPMailSMTP\Vendor\Psr\Http\Message\UriInterface
             return [];
         }
         $decodedKeys = \array_map('rawurldecode', $keys);
-        return \array_filter(\explode('&', $current), function ($part) use($decodedKeys) {
-            return !\in_array(\rawurldecode(\explode('=', $part)[0]), $decodedKeys, \true);
-        });
+        return \array_filter(
+            \explode('&', $current), function ($part) use ($decodedKeys) {
+                return !\in_array(\rawurldecode(\explode('=', $part)[0]), $decodedKeys, \true);
+            }
+        );
     }
     /**
      * @param string      $key

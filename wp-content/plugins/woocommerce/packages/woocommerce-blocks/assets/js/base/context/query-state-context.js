@@ -11,9 +11,9 @@ import { createContext, useContext } from '@wordpress/element';
  * Defaults to 'page' for general global query state shared among all blocks
  * in a view.
  *
- * @member  {Object}  QueryStateContext A react context object
+ * @member {Object}  QueryStateContext A react context object
  */
-const QueryStateContext = createContext( 'page' );
+const QueryStateContext = createContext('page');
 
-export const useQueryStateContext = () => useContext( QueryStateContext );
+export const useQueryStateContext = () => useContext(QueryStateContext);
 export const QueryStateContextProvider = QueryStateContext.Provider;

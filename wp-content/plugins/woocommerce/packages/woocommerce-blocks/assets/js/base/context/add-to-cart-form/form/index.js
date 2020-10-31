@@ -20,19 +20,19 @@ import FormSubmit from './submit';
  * @param {boolean} [props.showFormElements] Should form elements be shown.
  */
 export const AddToCartFormContextProvider = ( {
-	children,
-	product,
-	showFormElements,
+    children,
+    product,
+    showFormElements,
 } ) => {
-	return (
-		<ValidationContextProvider>
-			<AddToCartFormStateContextProvider
-				product={ product }
-				showFormElements={ showFormElements }
-			>
-				{ children }
-				<FormSubmit />
-			</AddToCartFormStateContextProvider>
-		</ValidationContextProvider>
-	);
+    return (
+    <ValidationContextProvider>
+    <AddToCartFormStateContextProvider
+                product={ product }
+                showFormElements={ showFormElements }
+    >
+                { children }
+                <FormSubmit />
+    </AddToCartFormStateContextProvider>
+    </ValidationContextProvider>
+    );
 };

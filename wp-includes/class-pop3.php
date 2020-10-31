@@ -10,13 +10,14 @@
  *
  * POP3 class
  *
- * @copyright 1999-2011 The SquirrelMail Project Team
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @package plugins
+ * @copyright  1999-2011 The SquirrelMail Project Team
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @package    plugins
  * @subpackage mail_fetch
  */
 
-class POP3 {
+class POP3
+{
     var $ERROR      = '';       //  Error string.
 
     var $TIMEOUT    = 60;       //  Default timeout before giving up on a
@@ -33,62 +34,71 @@ class POP3 {
 
     var $MAILSERVER = '';       // Set this to hard code the server name
 
-    var $DEBUG      = FALSE;    // set to true to echo pop3
+    var $DEBUG      = false;    // set to true to echo pop3
                                 // commands and responses to error_log
                                 // this WILL log passwords!
 
     var $BANNER     = '';       //  Holds the banner returned by the
                                 //  pop server - used for apop()
 
-    var $ALLOWAPOP  = FALSE;    //  Allow or disallow apop()
+    var $ALLOWAPOP  = false;    //  Allow or disallow apop()
                                 //  This must be set to true
                                 //  manually
 
-	/**
-	 * PHP5 constructor.
-	 */
-    function __construct ( $server = '', $timeout = '' ) {
-        settype($this->BUFFER,"integer");
-        if( !empty($server) ) {
+    /**
+     * PHP5 constructor.
+     */
+    function __construct( $server = '', $timeout = '' )
+    {
+        settype($this->BUFFER, "integer");
+        if(!empty($server) ) {
             // Do not allow programs to alter MAILSERVER
             // if it is already specified. They can get around
             // this if they -really- want to, so don't count on it.
-            if(empty($this->MAILSERVER))
+            if(empty($this->MAILSERVER)) {
                 $this->MAILSERVER = $server;
+            }
         }
         if(!empty($timeout)) {
-            settype($timeout,"integer");
+            settype($timeout, "integer");
             $this->TIMEOUT = $timeout;
-            if (!ini_get('safe_mode'))
+            if (!ini_get('safe_mode')) {
                 set_time_limit($timeout);
+            }
         }
         return true;
     }
 
-	/**
-	 * PHP4 constructor.
-	 */
-	public function POP3( $server = '', $timeout = '' ) {
-		self::__construct( $server, $timeout );
-	}
+    /**
+     * PHP4 constructor.
+     */
+    public function POP3( $server = '', $timeout = '' )
+    {
+        self::__construct($server, $timeout);
+    }
 
-    function update_timer () {
-        if (!ini_get('safe_mode'))
+    function update_timer()
+    {
+        if (!ini_get('safe_mode')) {
             set_time_limit($this->TIMEOUT);
+        }
         return true;
     }
 
-    function connect ($server, $port = 110)  {
+    function connect($server, $port = 110)
+    {
         //  Opens a socket to the specified server. Unless overridden,
         //  port defaults to 110. Returns true on success, false on fail
 
         // If MAILSERVER is set, override $server with its value.
 
-    if (!isset($port) || !$port) {$port = 110;}
-        if(!empty($this->MAILSERVER))
+        if (!isset($port) || !$port) {$port = 110;
+        }
+        if(!empty($this->MAILSERVER)) {
             $server = $this->MAILSERVER;
+        }
 
-        if(empty($server)){
+        if(empty($server)) {
             $this->ERROR = "POP3 connect: " . _("No server specified");
             unset($this->FP);
             return false;
@@ -102,12 +112,13 @@ class POP3 {
             return false;
         }
 
-        socket_set_blocking($fp,-1);
+        socket_set_blocking($fp, -1);
         $this->update_timer();
-        $reply = fgets($fp,$this->BUFFER);
+        $reply = fgets($fp, $this->BUFFER);
         $reply = $this->strip_clf($reply);
-        if($this->DEBUG)
-            error_log("POP3 SEND [connect: $server] GOT [$reply]",0);
+        if($this->DEBUG) {
+            error_log("POP3 SEND [connect: $server] GOT [$reply]", 0);
+        }
         if(!$this->is_ok($reply)) {
             $this->ERROR = "POP3 connect: " . _("Error ") . "[$reply]";
             unset($this->FP);
@@ -118,10 +129,11 @@ class POP3 {
         return true;
     }
 
-    function user ($user = "") {
+    function user($user = "")
+    {
         // Sends the USER command, returns true or false
 
-        if( empty($user) ) {
+        if(empty($user) ) {
             $this->ERROR = "POP3 user: " . _("no login ID submitted");
             return false;
         } elseif(!isset($this->FP)) {
@@ -132,12 +144,14 @@ class POP3 {
             if(!$this->is_ok($reply)) {
                 $this->ERROR = "POP3 user: " . _("Error ") . "[$reply]";
                 return false;
-            } else
+            } else {
                 return true;
+            }
         }
     }
 
-    function pass ($pass = "")     {
+    function pass($pass = "")
+    {
         // Sends the PASS command, returns # of msgs in mailbox,
         // returns false (undef) on Auth failure
 
@@ -162,7 +176,8 @@ class POP3 {
         }
     }
 
-    function apop ($login,$pass) {
+    function apop($login,$pass)
+    {
         //  Attempts an APOP login. If this fails, it'll
         //  try a standard login. YOUR SERVER MUST SUPPORT
         //  THE USE OF THE APOP COMMAND!
@@ -172,7 +187,7 @@ class POP3 {
             $this->ERROR = "POP3 apop: " . _("No connection to server");
             return false;
         } elseif(!$this->ALLOWAPOP) {
-            $retVal = $this->login($login,$pass);
+            $retVal = $this->login($login, $pass);
             return $retVal;
         } elseif(empty($login)) {
             $this->ERROR = "POP3 apop: " . _("No login ID submitted");
@@ -182,9 +197,9 @@ class POP3 {
             return false;
         } else {
             $banner = $this->BANNER;
-            if( (!$banner) or (empty($banner)) ) {
+            if((!$banner) or (empty($banner)) ) {
                 $this->ERROR = "POP3 apop: " . _("No server banner") . ' - ' . _("abort");
-                $retVal = $this->login($login,$pass);
+                $retVal = $this->login($login, $pass);
                 return $retVal;
             } else {
                 $AuthString = $banner;
@@ -194,7 +209,7 @@ class POP3 {
                 $reply = $this->send_cmd($cmd);
                 if(!$this->is_ok($reply)) {
                     $this->ERROR = "POP3 apop: " . _("apop authentication failed") . ' - ' . _("abort");
-                    $retVal = $this->login($login,$pass);
+                    $retVal = $this->login($login, $pass);
                     return $retVal;
                 } else {
                     //  Auth successful.
@@ -206,31 +221,34 @@ class POP3 {
         }
     }
 
-    function login ($login = "", $pass = "") {
+    function login($login = "", $pass = "")
+    {
         // Sends both user and pass. Returns # of msgs in mailbox or
         // false on failure (or -1, if the error occurs while getting
         // the number of messages.)
 
-        if( !isset($this->FP) ) {
+        if(!isset($this->FP) ) {
             $this->ERROR = "POP3 login: " . _("No connection to server");
             return false;
         } else {
             $fp = $this->FP;
-            if( !$this->user( $login ) ) {
+            if(!$this->user($login) ) {
                 //  Preserve the error generated by user()
                 return false;
             } else {
                 $count = $this->pass($pass);
-                if( (!$count) || ($count == -1) ) {
+                if((!$count) || ($count == -1) ) {
                     //  Preserve the error generated by last() and pass()
                     return false;
-                } else
+                } else {
                     return $count;
+                }
             }
         }
     }
 
-    function top ($msgNum, $numLines = "0") {
+    function top($msgNum, $numLines = "0")
+    {
         //  Gets the header and first $numLines of the msg body
         //  returns data in an array with each returned line being
         //  an array element. If $numLines is empty, returns
@@ -249,10 +267,9 @@ class POP3 {
         $reply = fgets($fp, $buffer);
         $reply = $this->strip_clf($reply);
         if($this->DEBUG) {
-            @error_log("POP3 SEND [$cmd] GOT [$reply]",0);
+            @error_log("POP3 SEND [$cmd] GOT [$reply]", 0);
         }
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             $this->ERROR = "POP3 top: " . _("Error ") . "[$reply]";
             return false;
         }
@@ -260,63 +277,59 @@ class POP3 {
         $count = 0;
         $MsgArray = array();
 
-        $line = fgets($fp,$buffer);
-        while ( !preg_match('/^\.\r\n/',$line))
+        $line = fgets($fp, $buffer);
+        while ( !preg_match('/^\.\r\n/', $line))
         {
             $MsgArray[$count] = $line;
             $count++;
-            $line = fgets($fp,$buffer);
-            if(empty($line))    { break; }
+            $line = fgets($fp, $buffer);
+            if(empty($line)) { break; 
+            }
         }
 
         return $MsgArray;
     }
 
-    function pop_list ($msgNum = "") {
+    function pop_list($msgNum = "")
+    {
         //  If called with an argument, returns that msgs' size in octets
         //  No argument returns an associative array of undeleted
         //  msg numbers and their sizes in octets
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 pop_list: " . _("No connection to server");
             return false;
         }
         $fp = $this->FP;
         $Total = $this->COUNT;
-        if( (!$Total) or ($Total == -1) )
-        {
+        if((!$Total) or ($Total == -1) ) {
             return false;
         }
-        if($Total == 0)
-        {
+        if($Total == 0) {
             return array("0","0");
             // return -1;   // mailbox empty
         }
 
         $this->update_timer();
 
-        if(!empty($msgNum))
-        {
+        if(!empty($msgNum)) {
             $cmd = "LIST $msgNum";
-            fwrite($fp,"$cmd\r\n");
-            $reply = fgets($fp,$this->BUFFER);
+            fwrite($fp, "$cmd\r\n");
+            $reply = fgets($fp, $this->BUFFER);
             $reply = $this->strip_clf($reply);
             if($this->DEBUG) {
-                @error_log("POP3 SEND [$cmd] GOT [$reply]",0);
+                @error_log("POP3 SEND [$cmd] GOT [$reply]", 0);
             }
-            if(!$this->is_ok($reply))
-            {
+            if(!$this->is_ok($reply)) {
                 $this->ERROR = "POP3 pop_list: " . _("Error ") . "[$reply]";
                 return false;
             }
-            list($junk,$num,$size) = preg_split('/\s+/',$reply);
+            list($junk,$num,$size) = preg_split('/\s+/', $reply);
             return $size;
         }
         $cmd = "LIST";
         $reply = $this->send_cmd($cmd);
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             $reply = $this->strip_clf($reply);
             $this->ERROR = "POP3 pop_list: " . _("Error ") .  "[$reply]";
             return false;
@@ -325,18 +338,17 @@ class POP3 {
         $MsgArray[0] = $Total;
         for($msgC=1;$msgC <= $Total; $msgC++)
         {
-            if($msgC > $Total) { break; }
-            $line = fgets($fp,$this->BUFFER);
+            if($msgC > $Total) { break; 
+            }
+            $line = fgets($fp, $this->BUFFER);
             $line = $this->strip_clf($line);
-            if(strpos($line, '.') === 0)
-            {
+            if(strpos($line, '.') === 0) {
                 $this->ERROR = "POP3 pop_list: " . _("Premature end of list");
                 return false;
             }
-            list($thisMsg,$msgSize) = preg_split('/\s+/',$line);
-            settype($thisMsg,"integer");
-            if($thisMsg != $msgC)
-            {
+            list($thisMsg,$msgSize) = preg_split('/\s+/', $line);
+            settype($thisMsg, "integer");
+            if($thisMsg != $msgC) {
                 $MsgArray[$msgC] = "deleted";
             }
             else
@@ -347,12 +359,12 @@ class POP3 {
         return $MsgArray;
     }
 
-    function get ($msgNum) {
+    function get($msgNum)
+    {
         //  Retrieve the specified msg number. Returns an array
         //  where each line of the msg is an array element.
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 get: " . _("No connection to server");
             return false;
         }
@@ -364,8 +376,7 @@ class POP3 {
         $cmd = "RETR $msgNum";
         $reply = $this->send_cmd($cmd);
 
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             $this->ERROR = "POP3 get: " . _("Error ") . "[$reply]";
             return false;
         }
@@ -373,74 +384,73 @@ class POP3 {
         $count = 0;
         $MsgArray = array();
 
-        $line = fgets($fp,$buffer);
-        while ( !preg_match('/^\.\r\n/',$line))
+        $line = fgets($fp, $buffer);
+        while ( !preg_match('/^\.\r\n/', $line))
         {
-            if ( $line[0] == '.' ) { $line = substr($line,1); }
+            if ($line[0] == '.' ) { $line = substr($line, 1); 
+            }
             $MsgArray[$count] = $line;
             $count++;
-            $line = fgets($fp,$buffer);
-            if(empty($line))    { break; }
+            $line = fgets($fp, $buffer);
+            if(empty($line)) { break; 
+            }
         }
         return $MsgArray;
     }
 
-    function last ( $type = "count" ) {
+    function last( $type = "count" )
+    {
         //  Returns the highest msg number in the mailbox.
         //  returns -1 on error, 0+ on success, if type != count
         //  results in a popstat() call (2 element array returned)
 
         $last = -1;
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 last: " . _("No connection to server");
             return $last;
         }
 
         $reply = $this->send_cmd("STAT");
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             $this->ERROR = "POP3 last: " . _("Error ") . "[$reply]";
             return $last;
         }
 
-        $Vars = preg_split('/\s+/',$reply);
+        $Vars = preg_split('/\s+/', $reply);
         $count = $Vars[1];
         $size = $Vars[2];
-        settype($count,"integer");
-        settype($size,"integer");
-        if($type != "count")
-        {
+        settype($count, "integer");
+        settype($size, "integer");
+        if($type != "count") {
             return array($count,$size);
         }
         return $count;
     }
 
-    function reset () {
+    function reset()
+    {
         //  Resets the status of the remote server. This includes
         //  resetting the status of ALL msgs to not be deleted.
         //  This method automatically closes the connection to the server.
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 reset: " . _("No connection to server");
             return false;
         }
         $reply = $this->send_cmd("RSET");
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             //  The POP3 RSET command -never- gives a -ERR
             //  response - if it ever does, something truly
             //  wild is going on.
 
             $this->ERROR = "POP3 reset: " . _("Error ") . "[$reply]";
-            @error_log("POP3 reset: ERROR [$reply]",0);
+            @error_log("POP3 reset: ERROR [$reply]", 0);
         }
         $this->quit();
         return true;
     }
 
-    function send_cmd ( $cmd = "" )
+    function send_cmd( $cmd = "" )
     {
         //  Sends a user defined command string to the
         //  POP server and returns the results. Useful for
@@ -455,14 +465,12 @@ class POP3 {
         //  This method works best if $cmd responds with only
         //  one line of data.
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 send_cmd: " . _("No connection to server");
             return false;
         }
 
-        if(empty($cmd))
-        {
+        if(empty($cmd)) {
             $this->ERROR = "POP3 send_cmd: " . _("Empty command string");
             return "";
         }
@@ -470,49 +478,52 @@ class POP3 {
         $fp = $this->FP;
         $buffer = $this->BUFFER;
         $this->update_timer();
-        fwrite($fp,"$cmd\r\n");
-        $reply = fgets($fp,$buffer);
+        fwrite($fp, "$cmd\r\n");
+        $reply = fgets($fp, $buffer);
         $reply = $this->strip_clf($reply);
-        if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]",0); }
+        if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]", 0); 
+        }
         return $reply;
     }
 
-    function quit() {
+    function quit()
+    {
         //  Closes the connection to the POP3 server, deleting
         //  any msgs marked as deleted.
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 quit: " . _("connection does not exist");
             return false;
         }
         $fp = $this->FP;
         $cmd = "QUIT";
-        fwrite($fp,"$cmd\r\n");
-        $reply = fgets($fp,$this->BUFFER);
+        fwrite($fp, "$cmd\r\n");
+        $reply = fgets($fp, $this->BUFFER);
         $reply = $this->strip_clf($reply);
-        if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]",0); }
+        if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]", 0); 
+        }
         fclose($fp);
         unset($this->FP);
         return true;
     }
 
-    function popstat () {
+    function popstat()
+    {
         //  Returns an array of 2 elements. The number of undeleted
         //  msgs in the mailbox, and the size of the mbox in octets.
 
         $PopArray = $this->last("array");
 
-        if($PopArray == -1) { return false; }
+        if($PopArray == -1) { return false; 
+        }
 
-        if( (!$PopArray) or (empty($PopArray)) )
-        {
+        if((!$PopArray) or (empty($PopArray)) ) {
             return false;
         }
         return $PopArray;
     }
 
-    function uidl ($msgNum = "")
+    function uidl($msgNum = "")
     {
         //  Returns the UIDL of the msg specified. If called with
         //  no arguments, returns an associative array where each
@@ -530,12 +541,11 @@ class POP3 {
         if(!empty($msgNum)) {
             $cmd = "UIDL $msgNum";
             $reply = $this->send_cmd($cmd);
-            if(!$this->is_ok($reply))
-            {
+            if(!$this->is_ok($reply)) {
                 $this->ERROR = "POP3 uidl: " . _("Error ") . "[$reply]";
                 return false;
             }
-            list ($ok,$num,$myUidl) = preg_split('/\s+/',$reply);
+            list ($ok,$num,$myUidl) = preg_split('/\s+/', $reply);
             return $myUidl;
         } else {
             $this->update_timer();
@@ -544,26 +554,25 @@ class POP3 {
             $Total = $this->COUNT;
             $UIDLArray[0] = $Total;
 
-            if ($Total < 1)
-            {
+            if ($Total < 1) {
                 return $UIDLArray;
             }
             $cmd = "UIDL";
             fwrite($fp, "UIDL\r\n");
             $reply = fgets($fp, $buffer);
             $reply = $this->strip_clf($reply);
-            if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]",0); }
-            if(!$this->is_ok($reply))
-            {
+            if($this->DEBUG) { @error_log("POP3 SEND [$cmd] GOT [$reply]", 0); 
+            }
+            if(!$this->is_ok($reply)) {
                 $this->ERROR = "POP3 uidl: " . _("Error ") . "[$reply]";
                 return false;
             }
 
             $line = "";
             $count = 1;
-            $line = fgets($fp,$buffer);
-            while ( !preg_match('/^\.\r\n/',$line)) {
-                list ($msg,$msgUidl) = preg_split('/\s+/',$line);
+            $line = fgets($fp, $buffer);
+            while ( !preg_match('/^\.\r\n/', $line)) {
+                list ($msg,$msgUidl) = preg_split('/\s+/', $line);
                 $msgUidl = $this->strip_clf($msgUidl);
                 if($count == $msg) {
                     $UIDLArray[$msg] = $msgUidl;
@@ -573,29 +582,27 @@ class POP3 {
                     $UIDLArray[$count] = 'deleted';
                 }
                 $count++;
-                $line = fgets($fp,$buffer);
+                $line = fgets($fp, $buffer);
             }
         }
         return $UIDLArray;
     }
 
-    function delete ($msgNum = "") {
+    function delete($msgNum = "")
+    {
         //  Flags a specified msg as deleted. The msg will not
         //  be deleted until a quit() method is called.
 
-        if(!isset($this->FP))
-        {
+        if(!isset($this->FP)) {
             $this->ERROR = "POP3 delete: " . _("No connection to server");
             return false;
         }
-        if(empty($msgNum))
-        {
+        if(empty($msgNum)) {
             $this->ERROR = "POP3 delete: " . _("No msg number submitted");
             return false;
         }
         $reply = $this->send_cmd("DELE $msgNum");
-        if(!$this->is_ok($reply))
-        {
+        if(!$this->is_ok($reply)) {
             $this->ERROR = "POP3 delete: " . _("Command failed ") . "[$reply]";
             return false;
         }
@@ -606,44 +613,45 @@ class POP3 {
 
     //  The following methods are internal to the class.
 
-    function is_ok ($cmd = "") {
+    function is_ok($cmd = "")
+    {
         //  Return true or false on +OK or -ERR
 
-        if( empty($cmd) )
+        if(empty($cmd) ) {
             return false;
-        else
+        } else {
             return( stripos($cmd, '+OK') !== false );
+        }
     }
 
-    function strip_clf ($text = "") {
+    function strip_clf($text = "")
+    {
         // Strips \r\n from server responses
 
-        if(empty($text))
+        if(empty($text)) {
             return $text;
-        else {
-            $stripped = str_replace(array("\r","\n"),'',$text);
+        } else {
+            $stripped = str_replace(array("\r","\n"), '', $text);
             return $stripped;
         }
     }
 
-    function parse_banner ( $server_text ) {
+    function parse_banner( $server_text )
+    {
         $outside = true;
         $banner = "";
         $length = strlen($server_text);
         for($count =0; $count < $length; $count++)
         {
-            $digit = substr($server_text,$count,1);
-            if(!empty($digit))             {
-                if( (!$outside) && ($digit != '<') && ($digit != '>') )
-                {
+            $digit = substr($server_text, $count, 1);
+            if(!empty($digit)) {
+                if((!$outside) && ($digit != '<') && ($digit != '>') ) {
                     $banner .= $digit;
                 }
-                if ($digit == '<')
-                {
+                if ($digit == '<') {
                     $outside = false;
                 }
-                if($digit == '>')
-                {
+                if($digit == '>') {
                     $outside = true;
                 }
             }
@@ -656,7 +664,8 @@ class POP3 {
 
 // For php4 compatibility
 if (!function_exists("stripos")) {
-    function stripos($haystack, $needle){
-        return strpos($haystack, stristr( $haystack, $needle ));
+    function stripos($haystack, $needle)
+    {
+        return strpos($haystack, stristr($haystack, $needle));
     }
 }

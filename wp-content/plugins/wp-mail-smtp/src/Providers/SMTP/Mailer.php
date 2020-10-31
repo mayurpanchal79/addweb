@@ -10,23 +10,24 @@ use WPMailSMTP\Providers\MailerAbstract;
  *
  * @package WPMailSMTP\Providers\SMTP
  */
-class Mailer extends MailerAbstract {
+class Mailer extends MailerAbstract
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	public function is_mailer_complete() {
+    /**
+     * @inheritdoc
+     */
+    public function is_mailer_complete()
+    {
 
-		$options = $this->options->get_group( $this->mailer );
+        $options = $this->options->get_group($this->mailer);
 
-		// Host and Port are the only really required options.
-		if (
-			! empty( $options['host'] ) &&
-			! empty( $options['port'] )
-		) {
-			return true;
-		}
+        // Host and Port are the only really required options.
+        if (! empty($options['host']) 
+            && ! empty($options['port'])
+        ) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

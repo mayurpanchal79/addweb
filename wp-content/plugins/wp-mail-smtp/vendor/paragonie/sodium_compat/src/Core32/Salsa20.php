@@ -16,9 +16,9 @@ abstract class ParagonIE_Sodium_Core32_Salsa20 extends ParagonIE_Sodium_Core32_U
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $in
-     * @param string $k
-     * @param string|null $c
+     * @param  string      $in
+     * @param  string      $k
+     * @param  string|null $c
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -183,9 +183,9 @@ abstract class ParagonIE_Sodium_Core32_Salsa20 extends ParagonIE_Sodium_Core32_U
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $len
-     * @param string $nonce
-     * @param string $key
+     * @param  int    $len
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -227,10 +227,10 @@ abstract class ParagonIE_Sodium_Core32_Salsa20 extends ParagonIE_Sodium_Core32_U
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $m
-     * @param string $n
-     * @param int $ic
-     * @param string $k
+     * @param  string $m
+     * @param  string $n
+     * @param  int    $ic
+     * @param  string $k
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -285,9 +285,9 @@ abstract class ParagonIE_Sodium_Core32_Salsa20 extends ParagonIE_Sodium_Core32_U
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $nonce
-     * @param string $key
+     * @param  string $message
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError

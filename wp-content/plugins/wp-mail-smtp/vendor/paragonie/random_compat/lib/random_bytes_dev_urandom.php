@@ -36,6 +36,7 @@ if (!is_callable('random_bytes')) {
      * random numbers in accordance with best practices
      *
      * Why we use /dev/urandom and not /dev/random
+     *
      * @ref https://www.2uo.de/myths-about-urandom
      * @ref http://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers
      *
@@ -47,7 +48,9 @@ if (!is_callable('random_bytes')) {
      */
     function random_bytes($bytes)
     {
-        /** @var resource $fp */
+        /**
+         * @var resource $fp 
+         */
         static $fp = null;
 
         /**
@@ -75,10 +78,14 @@ if (!is_callable('random_bytes')) {
                  * We use /dev/urandom if it is a char device.
                  * We never fall back to /dev/random
                  */
-                /** @var resource|bool $fp */
+                /**
+ * @var resource|bool $fp 
+*/
                 $fp = fopen('/dev/urandom', 'rb');
                 if (is_resource($fp)) {
-                    /** @var array<string, int> $st */
+                    /**
+ * @var array<string, int> $st 
+*/
                     $st = fstat($fp);
                     if (($st['mode'] & 0170000) !== 020000) {
                         fclose($fp);
@@ -106,7 +113,9 @@ if (!is_callable('random_bytes')) {
         }
 
         try {
-            /** @var int $bytes */
+            /**
+ * @var int $bytes 
+*/
             $bytes = RandomCompat_intval($bytes);
         } catch (TypeError $ex) {
             throw new TypeError(
@@ -168,6 +177,7 @@ if (!is_callable('random_bytes')) {
 
             /**
              * Is our result valid?
+             *
              * @var string|bool $buf
              */
             if (is_string($buf)) {

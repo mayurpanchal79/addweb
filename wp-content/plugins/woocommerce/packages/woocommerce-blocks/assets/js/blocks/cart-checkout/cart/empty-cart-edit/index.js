@@ -16,77 +16,77 @@ import './style.scss';
  * Component to handle edit mode for the Cart block when cart is empty.
  */
 const EmptyCartEdit = ( { hidden = false } ) => {
-	return (
-		<div hidden={ hidden }>
-			<InnerBlocks
-				templateInsertUpdatesSelection={ false }
-				template={ [
-					[
-						'core/image',
-						{
-							align: 'center',
-							url: iconDataUri,
-							sizeSlug: 'small',
-						},
-					],
-					[
-						'core/heading',
-						{
-							align: 'center',
-							content: __(
-								'Your cart is currently empty!',
-								'woocommerce'
-							),
-							level: 2,
-							className: 'wc-block-cart__empty-cart__title',
-						},
-					],
-					[
-						'core/paragraph',
-						{
-							align: 'center',
-							content: sprintf(
-								__(
-									'<a href="%s">Browse store</a>.',
-									'woocommerce'
-								),
-								SHOP_URL
-							),
-							dropCap: false,
-						},
-					],
-					[
-						'core/separator',
-						{
-							className: 'is-style-dots',
-						},
-					],
-					[
-						'core/heading',
-						{
-							align: 'center',
-							content: __(
-								'New in store',
-								'woocommerce'
-							),
-							level: 2,
-						},
-					],
-					[
-						'woocommerce/product-new',
-						{
-							columns: 3,
-							rows: 1,
-						},
-					],
-				] }
-			/>
-		</div>
-	);
+    return (
+    <div hidden={ hidden }>
+    <InnerBlocks
+                templateInsertUpdatesSelection={ false }
+                template={ [
+                    [
+                    'core/image',
+                    {
+                        align: 'center',
+                        url: iconDataUri,
+                        sizeSlug: 'small',
+                    },
+                    ],
+                    [
+                    'core/heading',
+                    {
+                        align: 'center',
+                        content: __(
+                            'Your cart is currently empty!',
+                            'woocommerce'
+                        ),
+                    level: 2,
+                    className: 'wc-block-cart__empty-cart__title',
+                    },
+                    ],
+                    [
+                    'core/paragraph',
+                    {
+                        align: 'center',
+                        content: sprintf(
+                            __(
+                                '<a href="%s">Browse store</a>.',
+                                'woocommerce'
+                            ),
+                            SHOP_URL
+                        ),
+                    dropCap: false,
+                    },
+                    ],
+                    [
+                    'core/separator',
+                    {
+                        className: 'is-style-dots',
+                    },
+                    ],
+                    [
+                    'core/heading',
+                    {
+                        align: 'center',
+                        content: __(
+                            'New in store',
+                            'woocommerce'
+                        ),
+                    level: 2,
+                    },
+                    ],
+                    [
+                    'woocommerce/product-new',
+                    {
+                        columns: 3,
+                        rows: 1,
+                    },
+                    ],
+                    ] }
+    />
+    </div>
+    );
 };
 
 EmptyCartEdit.propTypes = {
-	hidden: PropTypes.bool,
+    hidden: PropTypes.bool,
 };
 
 export default EmptyCartEdit;

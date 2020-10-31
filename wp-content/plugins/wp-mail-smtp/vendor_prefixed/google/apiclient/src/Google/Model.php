@@ -21,7 +21,6 @@ namespace WPMailSMTP\Vendor;
  * This class defines attributes, valid values, and usage which is generated
  * from a given json schema.
  * http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5
- *
  */
 class Google_Model implements \ArrayAccess
 {
@@ -48,7 +47,8 @@ class Google_Model implements \ArrayAccess
     }
     /**
      * Getter that handles passthrough access to the data array, and lazy object creation.
-     * @param string $key Property name.
+     *
+     * @param  string $key Property name.
      * @return mixed The value if any, or null.
      */
     public function __get($key)
@@ -87,7 +87,7 @@ class Google_Model implements \ArrayAccess
     /**
      * Initialize this object's properties from an array.
      *
-     * @param array $array Used to seed this object's properties.
+     * @param  array $array Used to seed this object's properties.
      * @return void
      */
     protected function mapTypes($array)
@@ -205,7 +205,8 @@ class Google_Model implements \ArrayAccess
     }
     /**
      * Returns true only if the array is associative.
-     * @param array $array
+     *
+     * @param  array $array
      * @return bool True if the array is associative.
      */
     protected function isAssociativeArray($array)
@@ -223,9 +224,10 @@ class Google_Model implements \ArrayAccess
     }
     /**
      * Verify if $obj is an array.
+     *
      * @throws Google_Exception Thrown if $obj isn't an array.
-     * @param array $obj Items that should be validated.
-     * @param string $method Method expecting an array as an argument.
+     * @param  array  $obj    Items that should be validated.
+     * @param  string $method Method expecting an array as an argument.
      */
     public function assertIsArray($obj, $method)
     {
@@ -279,6 +281,7 @@ class Google_Model implements \ArrayAccess
     }
     /**
      * Convert a string to camelCase
+     *
      * @param  string $value
      * @return string
      */

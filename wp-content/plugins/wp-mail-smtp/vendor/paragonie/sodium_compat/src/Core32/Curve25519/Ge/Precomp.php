@@ -29,9 +29,9 @@ class ParagonIE_Sodium_Core32_Curve25519_Ge_Precomp
      *
      * @internal You should not use this directly from another application
      *
-     * @param ParagonIE_Sodium_Core32_Curve25519_Fe $yplusx
-     * @param ParagonIE_Sodium_Core32_Curve25519_Fe $yminusx
-     * @param ParagonIE_Sodium_Core32_Curve25519_Fe $xy2d
+     * @param  ParagonIE_Sodium_Core32_Curve25519_Fe $yplusx
+     * @param  ParagonIE_Sodium_Core32_Curve25519_Fe $yminusx
+     * @param  ParagonIE_Sodium_Core32_Curve25519_Fe $xy2d
      * @throws SodiumException
      * @throws TypeError
      */

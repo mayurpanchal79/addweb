@@ -32,11 +32,11 @@ use WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer;
 /**
  * SendSmtpEmailSender Class Doc Comment
  *
- * @category Class
+ * @category    Class
  * @description Mandatory if &#39;templateId&#39; is not passed. Pass name (optional) and email of sender from which emails will be sent. For example, {&#39;name&#39;:&#39;Mary from MyShop&#39;, &#39;email&#39;:&#39;no-reply@myshop.com&#39;}
- * @package  SendinBlue\Client
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @package     SendinBlue\Client
+ * @author      Swagger Codegen team
+ * @link        https://github.com/swagger-api/swagger-codegen
  */
 class SendSmtpEmailSender implements \WPMailSMTP\Vendor\SendinBlue\Client\Model\ModelInterface, \ArrayAccess
 {

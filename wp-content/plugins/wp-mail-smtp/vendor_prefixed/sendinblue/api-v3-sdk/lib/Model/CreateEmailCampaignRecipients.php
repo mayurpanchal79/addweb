@@ -32,11 +32,11 @@ use WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer;
 /**
  * CreateEmailCampaignRecipients Class Doc Comment
  *
- * @category Class
+ * @category    Class
  * @description List ids to include/exclude from campaign
- * @package  SendinBlue\Client
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @package     SendinBlue\Client
+ * @author      Swagger Codegen team
+ * @link        https://github.com/swagger-api/swagger-codegen
  */
 class CreateEmailCampaignRecipients implements \WPMailSMTP\Vendor\SendinBlue\Client\Model\ModelInterface, \ArrayAccess
 {

@@ -32,11 +32,11 @@ class Google_Http_REST
      * Executes a Psr\Http\Message\RequestInterface and (if applicable) automatically retries
      * when errors occur.
      *
-     * @param Google_Client $client
-     * @param Psr\Http\Message\RequestInterface $req
-     * @param string $expectedClass
-     * @param array $config
-     * @param array $retryMap
+     * @param  Google_Client                     $client
+     * @param  Psr\Http\Message\RequestInterface $req
+     * @param  string                            $expectedClass
+     * @param  array                             $config
+     * @param  array                             $retryMap
      * @return array decoded result
      * @throws Google_Service_Exception on server side error (ie: not authenticated,
      *  invalid or malformed post body, invalid url)
@@ -52,9 +52,9 @@ class Google_Http_REST
     /**
      * Executes a Psr\Http\Message\RequestInterface
      *
-     * @param Google_Client $client
-     * @param Psr\Http\Message\RequestInterface $request
-     * @param string $expectedClass
+     * @param  Google_Client                     $client
+     * @param  Psr\Http\Message\RequestInterface $request
+     * @param  string                            $expectedClass
      * @return array decoded result
      * @throws Google_Service_Exception on server side error (ie: not authenticated,
      *  invalid or malformed post body, invalid url)
@@ -79,11 +79,12 @@ class Google_Http_REST
     }
     /**
      * Decode an HTTP Response.
+     *
      * @static
      * @throws Google_Service_Exception
-     * @param Psr\Http\Message\RequestInterface $response The http response to be decoded.
-     * @param Psr\Http\Message\ResponseInterface $response
-     * @param string $expectedClass
+     * @param  Psr\Http\Message\RequestInterface  $response      The http response to be decoded.
+     * @param  Psr\Http\Message\ResponseInterface $response
+     * @param  string                             $expectedClass
      * @return mixed|null
      */
     public static function decodeHttpResponse(\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response, \WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request = null, $expectedClass = null)

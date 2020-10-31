@@ -81,8 +81,8 @@ class ListsApi
      *
      * Add existing contacts to a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
+     * @param int                                       $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -98,8 +98,8 @@ class ListsApi
      *
      * Add existing contacts to a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
+     * @param int                                       $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -133,18 +133,18 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -154,25 +154,27 @@ class ListsApi
      *
      * Add existing contacts to a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
+     * @param int                                       $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function addContactToListAsync($listId, $contactEmails)
     {
-        return $this->addContactToListAsyncWithHttpInfo($listId, $contactEmails)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->addContactToListAsyncWithHttpInfo($listId, $contactEmails)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation addContactToListAsyncWithHttpInfo
      *
      * Add existing contacts to a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
+     * @param int                                       $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -181,29 +183,31 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo';
         $request = $this->addContactToListRequest($listId, $contactEmails);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'addContactToList'
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
+     * @param int                                       $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\AddContactToList $contactEmails Emails addresses of the contacts (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -290,7 +294,7 @@ class ListsApi
      *
      * Create a list
      *
-     * @param  \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
+     * @param \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -306,7 +310,7 @@ class ListsApi
      *
      * Create a list
      *
-     * @param  \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
+     * @param \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -340,14 +344,14 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -357,23 +361,25 @@ class ListsApi
      *
      * Create a list
      *
-     * @param  \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
+     * @param \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createListAsync($createList)
     {
-        return $this->createListAsyncWithHttpInfo($createList)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createListAsyncWithHttpInfo($createList)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createListAsyncWithHttpInfo
      *
      * Create a list
      *
-     * @param  \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
+     * @param \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -382,28 +388,30 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel';
         $request = $this->createListRequest($createList);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createList'
      *
-     * @param  \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
+     * @param \SendinBlue\Client\Model\CreateList $createList Values to create a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -482,7 +490,7 @@ class ListsApi
      *
      * Delete a list
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -497,7 +505,7 @@ class ListsApi
      *
      * Delete a list
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -521,14 +529,14 @@ class ListsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -538,23 +546,25 @@ class ListsApi
      *
      * Delete a list
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteListAsync($listId)
     {
-        return $this->deleteListAsyncWithHttpInfo($listId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteListAsyncWithHttpInfo($listId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteListAsyncWithHttpInfo
      *
      * Delete a list
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -563,18 +573,20 @@ class ListsApi
     {
         $returnType = '';
         $request = $this->deleteListRequest($listId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteList'
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -654,10 +666,10 @@ class ListsApi
      *
      * Get contacts in a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int       $listId        Id of the list (required)
+     * @param \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
+     * @param int       $limit         Number of documents per page (optional, default to 50)
+     * @param int       $offset        Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -673,10 +685,10 @@ class ListsApi
      *
      * Get contacts in a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int       $listId        Id of the list (required)
+     * @param \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
+     * @param int       $limit         Number of documents per page (optional, default to 50)
+     * @param int       $offset        Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -710,18 +722,18 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetContacts', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetContacts', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -731,29 +743,31 @@ class ListsApi
      *
      * Get contacts in a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int       $listId        Id of the list (required)
+     * @param \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
+     * @param int       $limit         Number of documents per page (optional, default to 50)
+     * @param int       $offset        Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getContactsFromListAsync($listId, $modifiedSince = null, $limit = '50', $offset = '0')
     {
-        return $this->getContactsFromListAsyncWithHttpInfo($listId, $modifiedSince, $limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getContactsFromListAsyncWithHttpInfo($listId, $modifiedSince, $limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getContactsFromListAsyncWithHttpInfo
      *
      * Get contacts in a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int       $listId        Id of the list (required)
+     * @param \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
+     * @param int       $limit         Number of documents per page (optional, default to 50)
+     * @param int       $offset        Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -762,31 +776,33 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetContacts';
         $request = $this->getContactsFromListRequest($listId, $modifiedSince, $limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getContactsFromList'
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int       $listId        Id of the list (required)
+     * @param \DateTime $modifiedSince Filter (urlencoded) the contacts modified after a given UTC date-time (YYYY-MM-DDTHH:mm:ss.SSSZ). Prefer to pass your timezone in date-time format for accurate result. (optional)
+     * @param int       $limit         Number of documents per page (optional, default to 50)
+     * @param int       $offset        Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -881,9 +897,9 @@ class ListsApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -899,9 +915,9 @@ class ListsApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -935,18 +951,18 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -956,27 +972,29 @@ class ListsApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getFolderListsAsync($folderId, $limit = '10', $offset = '0')
     {
-        return $this->getFolderListsAsyncWithHttpInfo($folderId, $limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getFolderListsAsyncWithHttpInfo($folderId, $limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getFolderListsAsyncWithHttpInfo
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -985,30 +1003,32 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists';
         $request = $this->getFolderListsRequest($folderId, $limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getFolderLists'
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1099,7 +1119,7 @@ class ListsApi
      *
      * Get a list's details
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1115,7 +1135,7 @@ class ListsApi
      *
      * Get a list's details
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1149,18 +1169,18 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetExtendedList', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetExtendedList', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1170,23 +1190,25 @@ class ListsApi
      *
      * Get a list's details
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getListAsync($listId)
     {
-        return $this->getListAsyncWithHttpInfo($listId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getListAsyncWithHttpInfo($listId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getListAsyncWithHttpInfo
      *
      * Get a list's details
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1195,28 +1217,30 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetExtendedList';
         $request = $this->getListRequest($listId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getList'
      *
-     * @param  int $listId Id of the list (required)
+     * @param int $listId Id of the list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1296,8 +1320,8 @@ class ListsApi
      *
      * Get all the lists
      *
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $limit  Number of documents per page (optional, default to 10)
+     * @param int $offset Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1313,8 +1337,8 @@ class ListsApi
      *
      * Get all the lists
      *
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $limit  Number of documents per page (optional, default to 10)
+     * @param int $offset Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1348,14 +1372,14 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetLists', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetLists', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1365,25 +1389,27 @@ class ListsApi
      *
      * Get all the lists
      *
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $limit  Number of documents per page (optional, default to 10)
+     * @param int $offset Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getListsAsync($limit = '10', $offset = '0')
     {
-        return $this->getListsAsyncWithHttpInfo($limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getListsAsyncWithHttpInfo($limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getListsAsyncWithHttpInfo
      *
      * Get all the lists
      *
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $limit  Number of documents per page (optional, default to 10)
+     * @param int $offset Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1392,29 +1418,31 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetLists';
         $request = $this->getListsRequest($limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getLists'
      *
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $limit  Number of documents per page (optional, default to 10)
+     * @param int $offset Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1497,8 +1525,8 @@ class ListsApi
      *
      * Delete a contact from a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
+     * @param int                                            $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1514,8 +1542,8 @@ class ListsApi
      *
      * Delete a contact from a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
+     * @param int                                            $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1549,18 +1577,18 @@ class ListsApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1570,25 +1598,27 @@ class ListsApi
      *
      * Delete a contact from a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
+     * @param int                                            $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function removeContactFromListAsync($listId, $contactEmails)
     {
-        return $this->removeContactFromListAsyncWithHttpInfo($listId, $contactEmails)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->removeContactFromListAsyncWithHttpInfo($listId, $contactEmails)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation removeContactFromListAsyncWithHttpInfo
      *
      * Delete a contact from a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
+     * @param int                                            $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1597,29 +1627,31 @@ class ListsApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostContactInfo';
         $request = $this->removeContactFromListRequest($listId, $contactEmails);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'removeContactFromList'
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
+     * @param int                                            $listId        Id of the list (required)
+     * @param \SendinBlue\Client\Model\RemoveContactFromList $contactEmails Emails adresses of the contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1706,8 +1738,8 @@ class ListsApi
      *
      * Update a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
+     * @param int                                 $listId     Id of the list (required)
+     * @param \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1722,8 +1754,8 @@ class ListsApi
      *
      * Update a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
+     * @param int                                 $listId     Id of the list (required)
+     * @param \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1747,14 +1779,14 @@ class ListsApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1764,25 +1796,27 @@ class ListsApi
      *
      * Update a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
+     * @param int                                 $listId     Id of the list (required)
+     * @param \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateListAsync($listId, $updateList)
     {
-        return $this->updateListAsyncWithHttpInfo($listId, $updateList)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateListAsyncWithHttpInfo($listId, $updateList)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateListAsyncWithHttpInfo
      *
      * Update a list
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
+     * @param int                                 $listId     Id of the list (required)
+     * @param \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1791,19 +1825,21 @@ class ListsApi
     {
         $returnType = '';
         $request = $this->updateListRequest($listId, $updateList);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateList'
      *
-     * @param  int $listId Id of the list (required)
-     * @param  \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
+     * @param int                                 $listId     Id of the list (required)
+     * @param \SendinBlue\Client\Model\UpdateList $updateList Values to update a list (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

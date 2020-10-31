@@ -3,9 +3,9 @@
  */
 import { useEffect } from '@wordpress/element';
 import {
-	CardElement,
-	CardNumberElement,
-	useElements,
+    CardElement,
+    CardNumberElement,
+    useElements,
 } from '@stripe/react-stripe-js';
 
 /**
@@ -13,8 +13,8 @@ import {
  */
 import { PAYMENT_METHOD_NAME } from './constants';
 import {
-	getStripeServerData,
-	getErrorMessageForTypeAndCode,
+    getStripeServerData,
+    getErrorMessageForTypeAndCode,
 } from '../stripe-utils';
 import { errorTypes } from '../stripe-utils/constants';
 
@@ -46,121 +46,123 @@ import { errorTypes } from '../stripe-utils/constants';
  * @param {EventRegistration}    onPaymentProcessing The event emitter for processing payment.
  */
 export const usePaymentProcessing = (
-	onStripeError,
-	error,
-	stripe,
-	billing,
-	emitResponse,
-	sourceId,
-	setSourceId,
-	onPaymentProcessing
+    onStripeError,
+    error,
+    stripe,
+    billing,
+    emitResponse,
+    sourceId,
+    setSourceId,
+    onPaymentProcessing
 ) => {
-	const elements = useElements();
-	// hook into and register callbacks for events
-	useEffect( () => {
-		const createSource = async ( ownerInfo ) => {
-			const elementToGet = getStripeServerData().inline_cc_form
-				? CardElement
-				: CardNumberElement;
-			return await stripe.createSource(
-				// @ts-ignore
-				elements?.getElement( elementToGet ),
-				{
-					type: 'card',
-					owner: ownerInfo,
-				}
-			);
-		};
-		const onSubmit = async () => {
-			try {
-				const billingData = billing.billingData;
-				// if there's an error return that.
-				if ( error ) {
-					return {
-						type: emitResponse.responseTypes.ERROR,
-						message: error,
-					};
-				}
-				// use token if it's set.
-				if ( sourceId !== '' && sourceId !== '0' ) {
-					return {
-						type: emitResponse.responseTypes.SUCCESS,
-						meta: {
-							paymentMethodData: {
-								paymentMethod: PAYMENT_METHOD_NAME,
-								paymentRequestType: 'cc',
-								stripe_source: sourceId,
-							},
-							billingData,
-						},
-					};
-				}
-				const ownerInfo = {
-					address: {
-						line1: billingData.address_1,
-						line2: billingData.address_2,
-						city: billingData.city,
-						state: billingData.state,
-						postal_code: billingData.postcode,
-						country: billingData.country,
-					},
-				};
-				if ( billingData.phone ) {
-					ownerInfo.phone = billingData.phone;
-				}
-				if ( billingData.email ) {
-					ownerInfo.email = billingData.email;
-				}
-				if ( billingData.first_name || billingData.last_name ) {
-					ownerInfo.name = `${ billingData.first_name } ${ billingData.last_name }`;
-				}
+    const elements = useElements();
+    // hook into and register callbacks for events
+    useEffect(
+        () => {
+            const createSource = async(ownerInfo) => {
+        const elementToGet = getStripeServerData().inline_cc_form
+                ? CardElement
+                : CardNumberElement;
+        return await stripe.createSource(
+                // @ts-ignore
+                elements?.getElement(elementToGet),
+                {
+                    type: 'card',
+                    owner: ownerInfo,
+                    }
+            );
+            };
+            const onSubmit = async() => {
+                try {
+                    const billingData = billing.billingData;
+                    // if there's an error return that.
+                    if (error ) {
+                          return {
+                                type: emitResponse.responseTypes.ERROR,
+                                message: error,
+                        };
+                    }
+                    // use token if it's set.
+                    if (sourceId !== '' && sourceId !== '0' ) {
+                        return {
+                            type: emitResponse.responseTypes.SUCCESS,
+                            meta: {
+                                paymentMethodData: {
+                                    paymentMethod: PAYMENT_METHOD_NAME,
+                                    paymentRequestType: 'cc',
+                                    stripe_source: sourceId,
+                                },
+                                billingData,
+                            },
+                        };
+                    }
+                    const ownerInfo = {
+                        address: {
+                            line1: billingData.address_1,
+                            line2: billingData.address_2,
+                            city: billingData.city,
+                            state: billingData.state,
+                            postal_code: billingData.postcode,
+                            country: billingData.country,
+                        },
+                    };
+                    if (billingData.phone ) {
+                        ownerInfo.phone = billingData.phone;
+                    }
+                    if (billingData.email ) {
+                        ownerInfo.email = billingData.email;
+                    }
+                    if (billingData.first_name || billingData.last_name ) {
+                        ownerInfo.name = `${ billingData.first_name } ${ billingData.last_name }`;
+                    }
 
-				const response = await createSource( ownerInfo );
-				if ( response.error ) {
-					return {
-						type: emitResponse.responseTypes.ERROR,
-						message: onStripeError( response ),
-					};
-				}
-				if ( ! response.source || ! response.source.id ) {
-					throw new Error(
-						getErrorMessageForTypeAndCode( errorTypes.API_ERROR )
-					);
-				}
-				setSourceId( response.source.id );
-				return {
-					type: emitResponse.responseTypes.SUCCESS,
-					meta: {
-						paymentMethodData: {
-							stripe_source: response.source.id,
-							paymentMethod: PAYMENT_METHOD_NAME,
-							paymentRequestType: 'cc',
-						},
-						billingData,
-					},
-				};
-			} catch ( e ) {
-				return {
-					type: emitResponse.responseTypes.ERROR,
-					message: e,
-				};
-			}
-		};
-		const unsubscribeProcessing = onPaymentProcessing( onSubmit );
-		return () => {
-			unsubscribeProcessing();
-		};
-	}, [
-		onPaymentProcessing,
-		billing.billingData,
-		stripe,
-		sourceId,
-		setSourceId,
-		onStripeError,
-		error,
-		emitResponse.noticeContexts.PAYMENTS,
-		emitResponse.responseTypes.ERROR,
-		emitResponse.responseTypes.SUCCESS,
-		elements,
-	] );
+                    const response = await createSource(ownerInfo);
+                    if (response.error ) {
+                        return {
+                            type: emitResponse.responseTypes.ERROR,
+                            message: onStripeError(response),
+                        };
+                    }
+                    if (! response.source || ! response.source.id ) {
+                        throw new Error(
+                            getErrorMessageForTypeAndCode(errorTypes.API_ERROR)
+                        );
+                    }
+                    setSourceId(response.source.id);
+                    return {
+                        type: emitResponse.responseTypes.SUCCESS,
+                        meta: {
+                            paymentMethodData: {
+                                stripe_source: response.source.id,
+                                paymentMethod: PAYMENT_METHOD_NAME,
+                                paymentRequestType: 'cc',
+                            },
+                            billingData,
+                        },
+                    };
+                    } catch ( e ) {
+                    return {
+                        type: emitResponse.responseTypes.ERROR,
+                        message: e,
+                };
+            }
+            };
+            const unsubscribeProcessing = onPaymentProcessing(onSubmit);
+            return () => {
+        unsubscribeProcessing();
+            };
+        }, [
+        onPaymentProcessing,
+        billing.billingData,
+        stripe,
+        sourceId,
+        setSourceId,
+        onStripeError,
+        error,
+        emitResponse.noticeContexts.PAYMENTS,
+        emitResponse.responseTypes.ERROR,
+        emitResponse.responseTypes.SUCCESS,
+        elements,
+        ] 
+    );
 };

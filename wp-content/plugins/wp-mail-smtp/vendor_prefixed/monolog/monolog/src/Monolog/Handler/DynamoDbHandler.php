@@ -18,7 +18,7 @@ use WPMailSMTP\Vendor\Monolog\Logger;
 /**
  * Amazon DynamoDB handler (http://aws.amazon.com/dynamodb/)
  *
- * @link https://github.com/aws/aws-sdk-php/
+ * @link   https://github.com/aws/aws-sdk-php/
  * @author Andrew Lawson <adlawson@gmail.com>
  */
 class DynamoDbHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingHandler
@@ -77,9 +77,11 @@ class DynamoDbHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcess
      */
     protected function filterEmptyFields(array $record)
     {
-        return \array_filter($record, function ($value) {
-            return !empty($value) || \false === $value || 0 === $value;
-        });
+        return \array_filter(
+            $record, function ($value) {
+                return !empty($value) || \false === $value || 0 === $value;
+            }
+        );
     }
     /**
      * {@inheritdoc}

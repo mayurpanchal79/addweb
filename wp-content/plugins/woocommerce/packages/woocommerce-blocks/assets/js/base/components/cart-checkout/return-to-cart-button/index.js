@@ -11,15 +11,15 @@ import { Icon, arrowBack } from '@woocommerce/icons';
 import './style.scss';
 
 const ReturnToCartButton = ( { link } ) => {
-	return (
-		<a
-			href={ link || CART_URL }
-			className="wc-block-components-checkout-return-to-cart-button"
-		>
-			<Icon srcElement={ arrowBack } />
-			{ __( 'Return to Cart', 'woocommerce' ) }
-		</a>
-	);
+    return (
+    <a
+    href={ link || CART_URL }
+    className="wc-block-components-checkout-return-to-cart-button"
+    >
+    <Icon srcElement={ arrowBack } />
+    { __('Return to Cart', 'woocommerce') }
+    </a>
+    );
 };
 
 export default ReturnToCartButton;

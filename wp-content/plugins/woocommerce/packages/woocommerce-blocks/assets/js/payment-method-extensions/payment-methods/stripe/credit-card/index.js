@@ -14,50 +14,56 @@ import { PAYMENT_METHOD_NAME } from './constants';
 const stripePromise = loadStripe();
 
 const StripeComponent = ( props ) => {
-	const [ errorMessage, setErrorMessage ] = useState( '' );
+    const [ errorMessage, setErrorMessage ] = useState('');
 
-	useEffect( () => {
-		Promise.resolve( stripePromise ).then( ( { error } ) => {
-			if ( error ) {
-				setErrorMessage( error.message );
-			}
-		} );
-	}, [ setErrorMessage ] );
+    useEffect(
+        () => {
+            Promise.resolve(stripePromise).then(
+            ( { error } ) => {
+                    if (error ) {
+                        setErrorMessage(error.message);
+                    }
+            } 
+        );
+        }, [ setErrorMessage ] 
+    );
 
-	useEffect( () => {
-		if ( errorMessage ) {
-			throw new Error( errorMessage );
-		}
-	}, [ errorMessage ] );
+    useEffect(
+        () => {
+        if (errorMessage ) {
+            throw new Error(errorMessage);
+        }
+        }, [ errorMessage ] 
+    );
 
-	return <StripeCreditCard stripe={ stripePromise } { ...props } />;
+    return <StripeCreditCard stripe={ stripePromise } { ...props } />;
 };
 
 const StripeLabel = ( props ) => {
-	const { PaymentMethodLabel } = props.components;
+    const { PaymentMethodLabel } = props.components;
 
-	return (
-		<PaymentMethodLabel
-			text={ __( 'Credit / Debit Card', 'woocommerce' ) }
-		/>
-	);
+    return (
+    <PaymentMethodLabel
+    text={ __('Credit / Debit Card', 'woocommerce') }
+    />
+    );
 };
 
 const cardIcons = getStripeCreditCardIcons();
 const stripeCcPaymentMethod = {
-	name: PAYMENT_METHOD_NAME,
-	label: <StripeLabel />,
-	content: <StripeComponent />,
-	edit: <StripeComponent />,
-	icons: cardIcons,
-	canMakePayment: () => stripePromise,
-	ariaLabel: __(
-		'Stripe Credit Card payment method',
-		'woocommerce'
-	),
-	supports: {
-		savePaymentInfo: getStripeServerData().allowSavedCards,
-	},
+    name: PAYMENT_METHOD_NAME,
+    label: <StripeLabel />,
+    content: <StripeComponent />,
+    edit: <StripeComponent />,
+    icons: cardIcons,
+    canMakePayment: () => stripePromise,
+    ariaLabel: __(
+        'Stripe Credit Card payment method',
+        'woocommerce'
+    ),
+supports: {
+    savePaymentInfo: getStripeServerData().allowSavedCards,
+    },
 };
 
 export default stripeCcPaymentMethod;

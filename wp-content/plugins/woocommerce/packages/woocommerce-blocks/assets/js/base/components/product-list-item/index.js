@@ -12,34 +12,34 @@ import { withInstanceId } from '@woocommerce/base-hocs/with-instance-id';
 import { renderProductLayout } from './utils';
 
 const ProductListItem = ( { product, attributes, instanceId } ) => {
-	const { layoutConfig } = attributes;
-	const { parentClassName, parentName } = useInnerBlockLayoutContext();
-	const isLoading = Object.keys( product ).length === 0;
-	const classes = classnames(
-		`${ parentClassName }__product`,
-		'wc-block-layout',
-		{
-			'is-loading': isLoading,
-		}
-	);
+    const { layoutConfig } = attributes;
+    const { parentClassName, parentName } = useInnerBlockLayoutContext();
+    const isLoading = Object.keys(product).length === 0;
+    const classes = classnames(
+        `${ parentClassName }__product`,
+        'wc-block-layout',
+        {
+            'is-loading': isLoading,
+        }
+    );
 
-	return (
-		<li className={ classes } aria-hidden={ isLoading }>
-			{ renderProductLayout(
-				parentName,
-				product,
-				layoutConfig,
-				instanceId
-			) }
-		</li>
-	);
+    return (
+        <li className={ classes } aria-hidden={ isLoading }>
+            { renderProductLayout(
+                parentName,
+                product,
+                layoutConfig,
+                instanceId
+            ) }
+    </li>
+    );
 };
 
 ProductListItem.propTypes = {
-	attributes: PropTypes.object.isRequired,
-	product: PropTypes.object,
-	// from withInstanceId
-	instanceId: PropTypes.number.isRequired,
+    attributes: PropTypes.object.isRequired,
+    product: PropTypes.object,
+    // from withInstanceId
+    instanceId: PropTypes.number.isRequired,
 };
 
-export default withInstanceId( ProductListItem );
+export default withInstanceId(ProductListItem);

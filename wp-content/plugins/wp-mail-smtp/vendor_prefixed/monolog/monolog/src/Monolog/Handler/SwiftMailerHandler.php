@@ -45,7 +45,7 @@ class SwiftMailerHandler extends \WPMailSMTP\Vendor\Monolog\Handler\MailHandler
     /**
      * Gets the formatter for the Swift_Message subject.
      *
-     * @param  string             $format The format of the subject
+     * @param  string $format The format of the subject
      * @return FormatterInterface
      */
     protected function getSubjectFormatter($format)
@@ -55,8 +55,8 @@ class SwiftMailerHandler extends \WPMailSMTP\Vendor\Monolog\Handler\MailHandler
     /**
      * Creates instance of Swift_Message to be sent
      *
-     * @param  string         $content formatted email body to be sent
-     * @param  array          $records Log records that formed the content
+     * @param  string $content formatted email body to be sent
+     * @param  array  $records Log records that formed the content
      * @return \Swift_Message
      */
     protected function buildMessage($content, array $records)

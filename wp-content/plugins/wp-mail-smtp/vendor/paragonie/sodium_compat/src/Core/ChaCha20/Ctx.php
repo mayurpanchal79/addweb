@@ -19,10 +19,10 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $key     ChaCha20 key.
-     * @param string $iv      Initialization Vector (a.k.a. nonce).
-     * @param string $counter The initial counter value.
-     *                        Defaults to 8 0x00 bytes.
+     * @param  string $key     ChaCha20 key.
+     * @param  string $iv      Initialization Vector (a.k.a. nonce).
+     * @param  string $counter The initial counter value.
+     *                         Defaults to 8 0x00 bytes.
      * @throws InvalidArgumentException
      * @throws TypeError
      */
@@ -64,9 +64,9 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @param int $value
-     * @return void
+     * @param          int $offset
+     * @param          int $value
+     * @return         void
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetSet($offset, $value)
@@ -83,7 +83,7 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
+     * @param  int $offset
      * @return bool
      */
     public function offsetExists($offset)
@@ -94,8 +94,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @return void
+     * @param          int $offset
+     * @return         void
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetUnset($offset)
@@ -106,8 +106,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $offset
-     * @return mixed|null
+     * @param          int $offset
+     * @return         mixed|null
      * @psalm-suppress MixedArrayOffset
      */
     public function offsetGet($offset)

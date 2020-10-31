@@ -79,7 +79,9 @@ class PHPConsoleHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProce
         // bool Autodetect and append trace data to debug
         'dataStorage' => null,
     );
-    /** @var Connector */
+    /**
+     * @var Connector 
+     */
     private $connector;
     /**
      * @param  array          $options   See \Monolog\Handler\PHPConsoleHandler::$options for more details

@@ -14,9 +14,11 @@ class MauticInstaller extends BaseInstaller
     public function inflectPackageVars($vars)
     {
         if ($vars['type'] == 'mautic-plugin') {
-            $vars['name'] = preg_replace_callback('/(-[a-z])/', function ($matches) {
-                return strtoupper($matches[0][1]);
-            }, ucfirst($vars['name']));
+            $vars['name'] = preg_replace_callback(
+                '/(-[a-z])/', function ($matches) {
+                    return strtoupper($matches[0][1]);
+                }, ucfirst($vars['name'])
+            );
         }
 
         return $vars;

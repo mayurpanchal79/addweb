@@ -10,16 +10,18 @@ import { renderFrontend } from '@woocommerce/base-utils';
 import Block from './block.js';
 
 const getProps = ( el ) => {
-	return {
-		attributes: {
-			showInputFields: el.dataset.showinputfields === 'true',
-			showFilterButton: el.dataset.showfilterbutton === 'true',
-		},
-	};
+    return {
+        attributes: {
+            showInputFields: el.dataset.showinputfields === 'true',
+            showFilterButton: el.dataset.showfilterbutton === 'true',
+        },
+    };
 };
 
-renderFrontend( {
-	selector: '.wp-block-woocommerce-price-filter',
-	Block: withRestApiHydration( Block ),
-	getProps,
-} );
+renderFrontend(
+    {
+        selector: '.wp-block-woocommerce-price-filter',
+        Block: withRestApiHydration(Block),
+            getProps,
+    } 
+);

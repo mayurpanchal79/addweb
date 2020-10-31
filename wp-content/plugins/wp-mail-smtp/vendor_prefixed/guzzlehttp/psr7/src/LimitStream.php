@@ -9,9 +9,13 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
 class LimitStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
 {
     use StreamDecoratorTrait;
-    /** @var int Offset to start reading from */
+    /**
+     * @var int Offset to start reading from 
+     */
     private $offset;
-    /** @var int Limit the number of bytes that can be read */
+    /**
+     * @var int Limit the number of bytes that can be read 
+     */
     private $limit;
     /**
      * @param StreamInterface $stream Stream to wrap

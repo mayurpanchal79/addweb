@@ -57,19 +57,23 @@ class RavenHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessing
     {
         $level = $this->level;
         // filter records based on their level
-        $records = \array_filter($records, function ($record) use($level) {
-            return $record['level'] >= $level;
-        });
+        $records = \array_filter(
+            $records, function ($record) use ($level) {
+                return $record['level'] >= $level;
+            }
+        );
         if (!$records) {
             return;
         }
         // the record with the highest severity is the "main" one
-        $record = \array_reduce($records, function ($highest, $record) {
-            if (null === $highest || $record['level'] > $highest['level']) {
-                return $record;
+        $record = \array_reduce(
+            $records, function ($highest, $record) {
+                if (null === $highest || $record['level'] > $highest['level']) {
+                    return $record;
+                }
+                return $highest;
             }
-            return $highest;
-        });
+        );
         // the other ones are added as a context item
         $logs = array();
         foreach ($records as $r) {
@@ -186,7 +190,7 @@ class RavenHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessing
         return array('contexts', 'checksum', 'release', 'event_id');
     }
     /**
-     * @param string $value
+     * @param  string $value
      * @return self
      */
     public function setRelease($value)

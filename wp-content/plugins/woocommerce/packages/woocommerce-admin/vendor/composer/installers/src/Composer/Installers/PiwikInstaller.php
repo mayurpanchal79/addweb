@@ -17,6 +17,7 @@ class PiwikInstaller extends BaseInstaller
 
     /**
      * Format package name to CamelCase
+     *
      * @param array $vars
      *
      * @return array

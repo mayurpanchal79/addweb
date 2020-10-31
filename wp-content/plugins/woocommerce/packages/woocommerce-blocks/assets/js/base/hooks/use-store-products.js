@@ -22,21 +22,25 @@ import { useCollectionHeader } from './use-collection-header';
  *                                    are still loading or not.
  */
 export const useStoreProducts = ( query ) => {
-	const collectionOptions = {
-		namespace: '/wc/store',
-		resourceName: 'products',
-	};
-	const { results: products, isLoading: productsLoading } = useCollection( {
-		...collectionOptions,
-		query,
-	} );
-	const { value: totalProducts } = useCollectionHeader( 'x-wp-total', {
-		...collectionOptions,
-		query,
-	} );
-	return {
-		products,
-		totalProducts: parseInt( totalProducts, 10 ),
-		productsLoading,
-	};
+    const collectionOptions = {
+        namespace: '/wc/store',
+        resourceName: 'products',
+    };
+    const { results: products, isLoading: productsLoading } = useCollection(
+        {
+            ...collectionOptions,
+            query,
+        } 
+    );
+    const { value: totalProducts } = useCollectionHeader(
+        'x-wp-total', {
+            ...collectionOptions,
+            query,
+        } 
+    );
+    return {
+        products,
+        totalProducts: parseInt(totalProducts, 10),
+        productsLoading,
+    };
 };

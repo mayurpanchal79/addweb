@@ -47,6 +47,7 @@ class ElasticaFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerF
     }
     /**
      * Getter index
+     *
      * @return string
      */
     public function getIndex()
@@ -55,6 +56,7 @@ class ElasticaFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerF
     }
     /**
      * Getter type
+     *
      * @return string
      */
     public function getType()
@@ -64,7 +66,7 @@ class ElasticaFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerF
     /**
      * Convert a log message into an Elastica Document
      *
-     * @param  array    $record Log message
+     * @param  array $record Log message
      * @return Document
      */
     protected function getDocument($record)

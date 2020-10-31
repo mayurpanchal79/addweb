@@ -7,8 +7,8 @@
  * @return {Object} pluckedAddress  An object containing shipping address that are needed to fetch an address.
  */
 export const pluckAddress = ( { country, state, city, postcode } ) => ( {
-	country,
-	state,
-	city,
-	postcode: postcode.replace( ' ', '' ).toUpperCase(),
+    country,
+    state,
+    city,
+    postcode: postcode.replace(' ', '').toUpperCase(),
 } );

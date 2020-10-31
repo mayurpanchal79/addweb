@@ -11,20 +11,20 @@ import { ContainerWidthContextProvider } from '@woocommerce/base-context';
 import './style.scss';
 
 const SidebarLayout = ( { children, className } ) => {
-	return (
-		<ContainerWidthContextProvider
-			className={ classNames(
-				'wc-block-components-sidebar-layout',
-				className
-			) }
-		>
-			{ children }
-		</ContainerWidthContextProvider>
-	);
+    return (
+    <ContainerWidthContextProvider
+    className={ classNames(
+        'wc-block-components-sidebar-layout',
+        className
+    ) }
+    >
+    { children }
+    </ContainerWidthContextProvider>
+    );
 };
 
 SidebarLayout.propTypes = {
-	className: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export default SidebarLayout;

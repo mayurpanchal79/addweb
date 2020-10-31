@@ -8,7 +8,7 @@
  * @since   3.0.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Shipping methods controller class.
@@ -16,12 +16,13 @@ defined( 'ABSPATH' ) || exit;
  * @package WooCommerce\RestApi
  * @extends WC_REST_Shipping_Methods_V2_Controller
  */
-class WC_REST_Shipping_Methods_Controller extends WC_REST_Shipping_Methods_V2_Controller {
+class WC_REST_Shipping_Methods_Controller extends WC_REST_Shipping_Methods_V2_Controller
+{
 
-	/**
-	 * Endpoint namespace.
-	 *
-	 * @var string
-	 */
-	protected $namespace = 'wc/v3';
+    /**
+     * Endpoint namespace.
+     *
+     * @var string
+     */
+    protected $namespace = 'wc/v3';
 }

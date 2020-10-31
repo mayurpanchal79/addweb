@@ -74,144 +74,148 @@ define( 'WPMS_SMTP_AUTOTLS', true ); // True turns it on, false turns it off.
  *
  * @since 1.5.0
  */
-if ( function_exists( 'wp_mail_smtp' ) ) {
+if (function_exists('wp_mail_smtp') ) {
 
-	if ( ! function_exists( 'wp_mail_smtp_deactivate' ) ) {
-		/**
-		 * Deactivate if plugin already activated.
-		 * Needed when transitioning from 1.5+ Lite to Pro.
-		 *
-		 * @since 1.5.0
-		 */
-		function wp_mail_smtp_deactivate() {
+    if (! function_exists('wp_mail_smtp_deactivate') ) {
+        /**
+         * Deactivate if plugin already activated.
+         * Needed when transitioning from 1.5+ Lite to Pro.
+         *
+         * @since 1.5.0
+         */
+        function wp_mail_smtp_deactivate()
+        {
 
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-		}
-	}
-	add_action( 'admin_init', 'wp_mail_smtp_deactivate' );
+            deactivate_plugins(plugin_basename(__FILE__));
+        }
+    }
+    add_action('admin_init', 'wp_mail_smtp_deactivate');
 
-	// Do not process the plugin code further.
-	return;
+    // Do not process the plugin code further.
+    return;
 }
 
-if ( ! function_exists( 'wp_mail_smtp_check_pro_loading_allowed' ) ) {
-	/**
-	 * Don't allow 1.4.x and below to break when 1.5+ Pro is activated.
-	 * This will stop the current plugin from loading and display a message in admin area.
-	 *
-	 * @since 1.5.0
-	 */
-	function wp_mail_smtp_check_pro_loading_allowed() {
+if (! function_exists('wp_mail_smtp_check_pro_loading_allowed') ) {
+    /**
+     * Don't allow 1.4.x and below to break when 1.5+ Pro is activated.
+     * This will stop the current plugin from loading and display a message in admin area.
+     *
+     * @since 1.5.0
+     */
+    function wp_mail_smtp_check_pro_loading_allowed()
+    {
 
-		// Check for pro without using wp_mail_smtp()->is_pro(), because at this point it's too early.
-		if ( ! is_readable( rtrim( plugin_dir_path( __FILE__ ), '/\\' ) . '/src/Pro/Pro.php' ) ) {
-			// Currently, not a pro version of the plugin is loaded.
-			return false;
-		}
+        // Check for pro without using wp_mail_smtp()->is_pro(), because at this point it's too early.
+        if (! is_readable(rtrim(plugin_dir_path(__FILE__), '/\\') . '/src/Pro/Pro.php') ) {
+            // Currently, not a pro version of the plugin is loaded.
+            return false;
+        }
 
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . '/wp-admin/includes/plugin.php';
-		}
+        if (! function_exists('is_plugin_active') ) {
+            include_once ABSPATH . '/wp-admin/includes/plugin.php';
+        }
 
-		// Search for old plugin name.
-		if ( is_plugin_active( 'wp-mail-smtp/wp_mail_smtp.php' ) ) {
-			// As Pro is loaded and Lite too - deactivate *silently* itself not to break older SMTP plugin.
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+        // Search for old plugin name.
+        if (is_plugin_active('wp-mail-smtp/wp_mail_smtp.php') ) {
+            // As Pro is loaded and Lite too - deactivate *silently* itself not to break older SMTP plugin.
+            deactivate_plugins(plugin_basename(__FILE__));
 
-			add_action( 'admin_notices', 'wp_mail_smtp_lite_deactivation_notice' );
+            add_action('admin_notices', 'wp_mail_smtp_lite_deactivation_notice');
 
-			return true;
-		}
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	if ( ! function_exists( 'wp_mail_smtp_lite_deactivation_notice' ) ) {
-		/**
-		 * Display the notice after deactivation.
-		 *
-		 * @since 1.5.0
-		 */
-		function wp_mail_smtp_lite_deactivation_notice() {
+    if (! function_exists('wp_mail_smtp_lite_deactivation_notice') ) {
+        /**
+         * Display the notice after deactivation.
+         *
+         * @since 1.5.0
+         */
+        function wp_mail_smtp_lite_deactivation_notice()
+        {
 
-			echo '<div class="notice notice-warning"><p>' . esc_html__( 'Please deactivate the free version of the WP Mail SMTP plugin before activating WP Mail SMTP Pro.', 'wp-mail-smtp' ) . '</p></div>';
+            echo '<div class="notice notice-warning"><p>' . esc_html__('Please deactivate the free version of the WP Mail SMTP plugin before activating WP Mail SMTP Pro.', 'wp-mail-smtp') . '</p></div>';
 
-			if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
-				unset( $_GET['activate'] ); // phpcs:ignore
-			}
-		}
-	}
+         if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
+                unset( $_GET['activate'] ); // phpcs:ignore
+            }
+        }
+    }
 
-	// Stop the plugin loading.
-	if ( wp_mail_smtp_check_pro_loading_allowed() === true ) {
-		return;
-	}
+    // Stop the plugin loading.
+    if (wp_mail_smtp_check_pro_loading_allowed() === true ) {
+        return;
+    }
 }
 
-if ( ! function_exists( 'wp_mail_smtp_insecure_php_version_notice' ) ) {
-	/**
-	 * Display admin notice, if the server is using old/insecure PHP version.
-	 *
-	 * @since 2.0.0
-	 */
-	function wp_mail_smtp_insecure_php_version_notice() {
+if (! function_exists('wp_mail_smtp_insecure_php_version_notice') ) {
+    /**
+     * Display admin notice, if the server is using old/insecure PHP version.
+     *
+     * @since 2.0.0
+     */
+    function wp_mail_smtp_insecure_php_version_notice()
+    {
 
-		?>
-		<div class="notice notice-error">
-			<p>
-				<?php
-				printf(
-					wp_kses( /* translators: %1$s - WPBeginner URL for recommended WordPress hosting. */
-						__( 'Your site is running an <strong>insecure version</strong> of PHP that is no longer supported. Please contact your web hosting provider to update your PHP version or switch to a <a href="%1$s" target="_blank" rel="noopener noreferrer">recommended WordPress hosting company</a>.', 'wp-mail-smtp' ),
-						array(
-							'a'      => array(
-								'href'   => array(),
-								'target' => array(),
-								'rel'    => array(),
-							),
-							'strong' => array(),
-						)
-					),
-					'https://www.wpbeginner.com/wordpress-hosting/'
-				);
-				?>
-				<br><br>
-				<?php
-				printf(
-					wp_kses( /* translators: %s - WPMailSMTP.com docs URL with more details. */
-						__( '<strong>WP Mail SMTP plugin is disabled</strong> on your site until you fix the issue. <a href="%s" target="_blank" rel="noopener noreferrer">Read more for additional information.</a>', 'wp-mail-smtp' ),
-						array(
-							'a'      => array(
-								'href'   => array(),
-								'target' => array(),
-								'rel'    => array(),
-							),
-							'strong' => array(),
-						)
-					),
-					'https://wpmailsmtp.com/docs/supported-php-versions-for-wp-mail-smtp/'
-				);
-				?>
-			</p>
-		</div>
+        ?>
+        <div class="notice notice-error">
+            <p>
+        <?php
+        printf(
+            wp_kses( /* translators: %1$s - WPBeginner URL for recommended WordPress hosting. */
+                __('Your site is running an <strong>insecure version</strong> of PHP that is no longer supported. Please contact your web hosting provider to update your PHP version or switch to a <a href="%1$s" target="_blank" rel="noopener noreferrer">recommended WordPress hosting company</a>.', 'wp-mail-smtp'),
+                array(
+                'a'      => array(
+                                'href'   => array(),
+                                'target' => array(),
+                                'rel'    => array(),
+                ),
+                'strong' => array(),
+                )
+            ),
+            'https://www.wpbeginner.com/wordpress-hosting/'
+        );
+        ?>
+                <br><br>
+        <?php
+        printf(
+            wp_kses( /* translators: %s - WPMailSMTP.com docs URL with more details. */
+                __('<strong>WP Mail SMTP plugin is disabled</strong> on your site until you fix the issue. <a href="%s" target="_blank" rel="noopener noreferrer">Read more for additional information.</a>', 'wp-mail-smtp'),
+                array(
+                'a'      => array(
+                                'href'   => array(),
+                                'target' => array(),
+                                'rel'    => array(),
+                ),
+                'strong' => array(),
+                )
+            ),
+            'https://wpmailsmtp.com/docs/supported-php-versions-for-wp-mail-smtp/'
+        );
+        ?>
+            </p>
+        </div>
 
-		<?php
+        <?php
 
-		// In case this is on plugin activation.
-		if ( isset( $_GET['activate'] ) ) { //phpcs:ignore
-			unset( $_GET['activate'] ); //phpcs:ignore
-		}
-	}
+        // In case this is on plugin activation.
+     if ( isset( $_GET['activate'] ) ) { //phpcs:ignore
+            unset( $_GET['activate'] ); //phpcs:ignore
+        }
+    }
 }
 
-if ( ! defined( 'WPMS_PLUGIN_VER' ) ) {
-	define( 'WPMS_PLUGIN_VER', '2.5.1' );
+if (! defined('WPMS_PLUGIN_VER') ) {
+    define('WPMS_PLUGIN_VER', '2.5.1');
 }
-if ( ! defined( 'WPMS_PHP_VER' ) ) {
-	define( 'WPMS_PHP_VER', '5.5.0' );
+if (! defined('WPMS_PHP_VER') ) {
+    define('WPMS_PHP_VER', '5.5.0');
 }
-if ( ! defined( 'WPMS_PLUGIN_FILE' ) ) {
-	define( 'WPMS_PLUGIN_FILE', __FILE__ );
+if (! defined('WPMS_PLUGIN_FILE') ) {
+    define('WPMS_PLUGIN_FILE', __FILE__);
 }
 
 /**
@@ -220,10 +224,10 @@ if ( ! defined( 'WPMS_PLUGIN_FILE' ) ) {
  *
  * @since 2.0.0
  */
-if ( version_compare( phpversion(), WPMS_PHP_VER, '<' ) ) {
-	add_action( 'admin_notices', 'wp_mail_smtp_insecure_php_version_notice' );
+if (version_compare(phpversion(), WPMS_PHP_VER, '<') ) {
+    add_action('admin_notices', 'wp_mail_smtp_insecure_php_version_notice');
 
-	return;
+    return;
 }
 
-require_once dirname( __FILE__ ) . '/wp-mail-smtp.php';
+require_once dirname(__FILE__) . '/wp-mail-smtp.php';

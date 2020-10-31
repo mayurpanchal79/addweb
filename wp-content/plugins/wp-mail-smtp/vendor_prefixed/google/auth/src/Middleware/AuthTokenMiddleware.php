@@ -48,9 +48,9 @@ class AuthTokenMiddleware
     /**
      * Creates a new AuthTokenMiddleware.
      *
-     * @param FetchAuthTokenInterface $fetcher is used to fetch the auth token
-     * @param callable $httpHandler (optional) callback which delivers psr7 request
-     * @param callable $tokenCallback (optional) function to be called when a new token is fetched.
+     * @param FetchAuthTokenInterface $fetcher       is used to fetch the auth token
+     * @param callable                $httpHandler   (optional) callback which delivers psr7 request
+     * @param callable                $tokenCallback (optional) function to be called when a new token is fetched.
      */
     public function __construct(\WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface $fetcher, callable $httpHandler = null, callable $tokenCallback = null)
     {
@@ -80,12 +80,12 @@ class AuthTokenMiddleware
      *
      *   $res = $client->get('myproject/taskqueues/myqueue');
      *
-     * @param callable $handler
+     * @param  callable $handler
      * @return \Closure
      */
     public function __invoke(callable $handler)
     {
-        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use($handler) {
+        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use ($handler) {
             // Requests using "auth"="google_auth" will be authorized.
             if (!isset($options['auth']) || $options['auth'] !== 'google_auth') {
                 return $handler($request, $options);

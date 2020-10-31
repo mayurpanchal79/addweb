@@ -92,7 +92,7 @@ class ServerRequest extends \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Request implement
      * If the specification represents an array of values, this method will
      * delegate to normalizeNestedFileSpec() and return that return value.
      *
-     * @param array $value $_FILES struct
+     * @param  array $value $_FILES struct
      * @return array|UploadedFileInterface
      */
     private static function createUploadedFileFromSpec(array $value)
@@ -108,7 +108,7 @@ class ServerRequest extends \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Request implement
      * Loops through all nested files and returns a normalized array of
      * UploadedFileInterface instances.
      *
-     * @param array $files
+     * @param  array $files
      * @return UploadedFileInterface[]
      */
     private static function normalizeNestedFileSpec(array $files = [])

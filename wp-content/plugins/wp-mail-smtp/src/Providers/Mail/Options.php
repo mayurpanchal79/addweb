@@ -9,34 +9,37 @@ use WPMailSMTP\Providers\OptionsAbstract;
  *
  * @since 1.0.0
  */
-class Options extends OptionsAbstract {
+class Options extends OptionsAbstract
+{
 
-	/**
-	 * Mail constructor.
-	 *
-	 * @since 1.0.0
-	 */
-	public function __construct() {
+    /**
+     * Mail constructor.
+     *
+     * @since 1.0.0
+     */
+    public function __construct()
+    {
 
-		parent::__construct(
-			array(
-				'logo_url' => wp_mail_smtp()->assets_url . '/images/providers/php.svg',
-				'slug'     => 'mail',
-				'title'    => esc_html__( 'Default (none)', 'wp-mail-smtp' ),
-			)
-		);
-	}
+        parent::__construct(
+            array(
+            'logo_url' => wp_mail_smtp()->assets_url . '/images/providers/php.svg',
+            'slug'     => 'mail',
+            'title'    => esc_html__('Default (none)', 'wp-mail-smtp'),
+            )
+        );
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function display_options() {
-		?>
+    /**
+     * @inheritdoc
+     */
+    public function display_options()
+    {
+        ?>
 
-		<blockquote>
-			<?php esc_html_e( 'You currently have the native WordPress option selected. Please select any other Mailer option above to continue the setup.', 'wp-mail-smtp' ); ?>
-		</blockquote>
+        <blockquote>
+        <?php esc_html_e('You currently have the native WordPress option selected. Please select any other Mailer option above to continue the setup.', 'wp-mail-smtp'); ?>
+        </blockquote>
 
-		<?php
-	}
+        <?php
+    }
 }

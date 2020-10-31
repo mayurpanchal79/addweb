@@ -31,10 +31,10 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
      * Immediately and permanently deletes the specified thread. This operation
      * cannot be undone. Prefer `threads.trash` instead. (threads.delete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id ID of the Thread to delete.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        ID of the Thread to delete.
+     * @param array  $optParams Optional parameters.
      */
     public function delete($userId, $id, $optParams = array())
     {
@@ -45,15 +45,15 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
     /**
      * Gets the specified thread. (threads.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the thread to retrieve.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the thread to retrieve.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string format The format to return the messages in.
      * @opt_param string metadataHeaders When given and format is METADATA, only
      * include headers specified.
-     * @return Google_Service_Gmail_Thread
+     * @return    Google_Service_Gmail_Thread
      */
     public function get($userId, $id, $optParams = array())
     {
@@ -64,9 +64,9 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
     /**
      * Lists the threads in the user's mailbox. (threads.listUsersThreads)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string maxResults Maximum number of threads to return.
      * @opt_param bool includeSpamTrash Include threads from `SPAM` and `TRASH` in
@@ -79,7 +79,7 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
      * used when accessing the api using the gmail.metadata scope.
      * @opt_param string labelIds Only return threads with labels that match all of
      * the specified label IDs.
-     * @return Google_Service_Gmail_ListThreadsResponse
+     * @return    Google_Service_Gmail_ListThreadsResponse
      */
     public function listUsersThreads($userId, $optParams = array())
     {
@@ -91,11 +91,11 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
      * Modifies the labels applied to the thread. This applies to all messages in
      * the thread. (threads.modify)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the thread to modify.
-     * @param Google_Service_Gmail_ModifyThreadRequest $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                                   $userId    The user's email address. The special value `me` can be
+     *                                                             used to indicate the authenticated user.
+     * @param  string                                   $id        The ID of the thread to modify.
+     * @param  Google_Service_Gmail_ModifyThreadRequest $postBody
+     * @param  array                                    $optParams Optional parameters.
      * @return Google_Service_Gmail_Thread
      */
     public function modify($userId, $id, \WPMailSMTP\Vendor\Google_Service_Gmail_ModifyThreadRequest $postBody, $optParams = array())
@@ -107,10 +107,10 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
     /**
      * Moves the specified thread to the trash. (threads.trash)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the thread to Trash.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the thread to Trash.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Thread
      */
     public function trash($userId, $id, $optParams = array())
@@ -122,10 +122,10 @@ class Google_Service_Gmail_Resource_UsersThreads extends \WPMailSMTP\Vendor\Goog
     /**
      * Removes the specified thread from the trash. (threads.untrash)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the thread to remove from Trash.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the thread to remove from Trash.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Thread
      */
     public function untrash($userId, $id, $optParams = array())

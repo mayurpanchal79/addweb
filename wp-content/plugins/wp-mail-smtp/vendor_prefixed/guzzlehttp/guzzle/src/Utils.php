@@ -33,9 +33,11 @@ final class Utils
             $asciiHost = self::idnToAsci($uri->getHost(), $options, $info);
             if ($asciiHost === \false) {
                 $errorBitSet = isset($info['errors']) ? $info['errors'] : 0;
-                $errorConstants = \array_filter(\array_keys(\get_defined_constants()), function ($name) {
-                    return \substr($name, 0, 11) === 'IDNA_ERROR_';
-                });
+                $errorConstants = \array_filter(
+                    \array_keys(\get_defined_constants()), function ($name) {
+                        return \substr($name, 0, 11) === 'IDNA_ERROR_';
+                    }
+                );
                 $errors = [];
                 foreach ($errorConstants as $errorConstant) {
                     if ($errorBitSet & \constant($errorConstant)) {

@@ -21,71 +21,72 @@ import ErrorMessage from '@woocommerce/editor-components/error-placeholder/error
  * @return {Function} A functional component.
  */
 const ProductsControl = ( {
-	error,
-	onChange,
-	onSearch,
-	selected,
-	products,
-	isLoading,
+    error,
+    onChange,
+    onSearch,
+    selected,
+    products,
+    isLoading,
 } ) => {
-	const messages = {
-		clear: __( 'Clear all products', 'woocommerce' ),
-		list: __( 'Products', 'woocommerce' ),
-		noItems: __(
-			"Your store doesn't have any products.",
-			'woocommerce'
-		),
-		search: __(
-			'Search for products to display',
-			'woocommerce'
-		),
-		selected: ( n ) =>
-			sprintf(
-				_n(
-					'%d product selected',
-					'%d products selected',
-					n,
-					'woocommerce'
-				),
-				n
-			),
-		updated: __(
-			'Product search results updated.',
-			'woocommerce'
-		),
-	};
+    const messages = {
+        clear: __('Clear all products', 'woocommerce'),
+        list: __('Products', 'woocommerce'),
+        noItems: __(
+            "Your store doesn't have any products.",
+            'woocommerce'
+        ),
+    search: __(
+        'Search for products to display',
+        'woocommerce'
+    ),
+    selected: ( n ) =>
+    sprintf(
+        _n(
+            '%d product selected',
+            '%d products selected',
+            n,
+            'woocommerce'
+        ),
+        n
+    ),
+    updated: __(
+        'Product search results updated.',
+        'woocommerce'
+    ),
+    };
 
-	if ( error ) {
-		return <ErrorMessage error={ error } />;
-	}
+    if (error ) {
+        return <ErrorMessage error={ error } />;
+    }
 
-	return (
-		<SearchListControl
-			className="woocommerce-products"
-			list={ products }
-			isLoading={ isLoading }
-			selected={ products.filter( ( { id } ) =>
-				selected.includes( id )
-			) }
-			onSearch={ onSearch }
-			onChange={ onChange }
-			messages={ messages }
-		/>
-	);
+    return (
+    <SearchListControl
+    className="woocommerce-products"
+    list={ products }
+    isLoading={ isLoading }
+    selected={ products.filter(
+        ( { id } ) =>
+        selected.includes(id)
+    ) }
+    onSearch={ onSearch }
+    onChange={ onChange }
+    messages={ messages }
+    />
+    );
 };
 
 ProductsControl.propTypes = {
-	onChange: PropTypes.func.isRequired,
-	onSearch: PropTypes.func,
-	selected: PropTypes.array,
-	products: PropTypes.array,
-	isLoading: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    onSearch: PropTypes.func,
+    selected: PropTypes.array,
+    products: PropTypes.array,
+    isLoading: PropTypes.bool,
 };
 
 ProductsControl.defaultProps = {
-	selected: [],
-	products: [],
-	isLoading: true,
+    selected: [],
+    products: [],
+    isLoading: true,
 };
 
-export default withSearchedProducts( ProductsControl );
+export default withSearchedProducts(ProductsControl);

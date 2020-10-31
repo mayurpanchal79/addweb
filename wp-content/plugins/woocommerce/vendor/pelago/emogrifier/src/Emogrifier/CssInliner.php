@@ -185,7 +185,9 @@ class CssInliner extends AbstractHtmlProcessor
                 continue;
             }
 
-            /** @var \DOMElement $node */
+            /**
+ * @var \DOMElement $node 
+*/
             foreach ($nodesMatchingCssSelectors as $node) {
                 if (\in_array($node, $excludedNodes, true)) {
                     continue;
@@ -347,7 +349,9 @@ class CssInliner extends AbstractHtmlProcessor
      */
     private function normalizeStyleAttributesOfAllNodes()
     {
-        /** @var \DOMElement $node */
+        /**
+ * @var \DOMElement $node 
+*/
         foreach ($this->getAllNodesWithStyleAttribute() as $node) {
             if ($this->isInlineStyleAttributesParsingEnabled) {
                 $this->normalizeStyleAttributes($node);
@@ -452,7 +456,9 @@ class CssInliner extends AbstractHtmlProcessor
         }
 
         $css = '';
-        /** @var \DOMNode $styleNode */
+        /**
+ * @var \DOMNode $styleNode 
+*/
         foreach ($styleNodes as $styleNode) {
             $css .= "\n\n" . $styleNode->nodeValue;
             $styleNode->parentNode->removeChild($styleNode);
@@ -579,8 +585,12 @@ class CssInliner extends AbstractHtmlProcessor
             'inlinable' => [],
             'uninlinable' => [],
         ];
-        /** @var string[][] $matches */
-        /** @var string[] $cssRule */
+        /**
+ * @var string[][] $matches 
+*/
+        /**
+ * @var string[] $cssRule 
+*/
         foreach ($matches as $key => $cssRule) {
             $cssDeclaration = \trim($cssRule['declarations']);
             if ($cssDeclaration === '') {
@@ -682,7 +692,9 @@ class CssInliner extends AbstractHtmlProcessor
             // process each part for selectors and definitions
             \preg_match_all('/(?:^|[\\s^{}]*)([^{]+){([^}]*)}/mi', $cssPart['css'], $matches, PREG_SET_ORDER);
 
-            /** @var string[][] $matches */
+            /**
+ * @var string[][] $matches 
+*/
             foreach ($matches as $cssRule) {
                 $ruleMatches[] = [
                     'media' => $cssPart['media'],
@@ -775,7 +787,7 @@ class CssInliner extends AbstractHtmlProcessor
      * Note: This method does not check whether $cssRule matches $node.
      *
      * @param \DOMElement $node
-     * @param string[][] $cssRule
+     * @param string[][]  $cssRule
      *
      * @return void
      */
@@ -824,8 +836,7 @@ class CssInliner extends AbstractHtmlProcessor
             }
 
             $newAttributeValue = $newStyles[$attributeName];
-            if (
-                $this->attributeValueIsImportant($attributeValue)
+            if ($this->attributeValueIsImportant($attributeValue)
                 && !$this->attributeValueIsImportant($newAttributeValue)
             ) {
                 unset($newStyles[$attributeName]);
@@ -1011,11 +1022,13 @@ class CssInliner extends AbstractHtmlProcessor
     {
         // The regex allows nested brackets via `(?2)`.
         // A space is temporarily prepended because the callback can't determine if the match was at the very start.
-        $selectorWithoutNots = \ltrim(\preg_replace_callback(
-            '/(\\s?+):not(\\([^()]*+(?:(?2)[^()]*+)*+\\))/i',
-            [$this, 'replaceUnmatchableNotComponent'],
-            ' ' . $selector
-        ));
+        $selectorWithoutNots = \ltrim(
+            \preg_replace_callback(
+                '/(\\s?+):not(\\([^()]*+(?:(?2)[^()]*+)*+\\))/i',
+                [$this, 'replaceUnmatchableNotComponent'],
+                ' ' . $selector
+            )
+        );
 
         $pseudoComponentMatcher = ':(?!' . self::PSEUDO_CLASS_MATCHER . '):?+[\\w\\-]++(?:\\([^\\)]*+\\))?+';
         return \preg_replace(
@@ -1054,9 +1067,9 @@ class CssInliner extends AbstractHtmlProcessor
      * element.
      *
      * @param string $cssImportRules This may contain any `@import` rules that should precede the CSS placed in the
-     *        `<style>` element.  If there are no unlinlinable CSS rules to copy there, a `<style>` element will be
-     *        created containing just `$cssImportRules`.  `$cssImportRules` may be an empty string; if it is, and there
-     *        are no unlinlinable CSS rules, an empty `<style>` element will not be created.
+     *                               `<style>` element.  If there are no unlinlinable CSS rules to copy there, a `<style>` element will be
+     *                               created containing just `$cssImportRules`.  `$cssImportRules` may be an empty string; if it is, and there
+     *                               are no unlinlinable CSS rules, an empty `<style>` element will not be created.
      *
      * @return void
      */

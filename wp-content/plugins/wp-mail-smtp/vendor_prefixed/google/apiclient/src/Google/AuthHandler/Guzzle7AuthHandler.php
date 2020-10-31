@@ -18,8 +18,8 @@ namespace WPMailSMTP\Vendor;
  * limitations under the License.
  */
 /**
-* This supports Guzzle 7
-*/
+ * This supports Guzzle 7
+ */
 class Google_AuthHandler_Guzzle7AuthHandler extends \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle6AuthHandler
 {
 }

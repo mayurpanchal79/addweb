@@ -1,4 +1,4 @@
 export {
-	PaymentMethodDataProvider,
-	usePaymentMethodDataContext,
+    PaymentMethodDataProvider,
+    usePaymentMethodDataContext,
 } from './payment-method-data-context';

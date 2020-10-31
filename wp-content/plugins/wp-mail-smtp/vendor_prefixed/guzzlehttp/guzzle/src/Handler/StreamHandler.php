@@ -164,10 +164,12 @@ class StreamHandler
     private function createResource(callable $callback)
     {
         $errors = null;
-        \set_error_handler(function ($_, $msg, $file, $line) use(&$errors) {
-            $errors[] = ['message' => $msg, 'file' => $file, 'line' => $line];
-            return \true;
-        });
+        \set_error_handler(
+            function ($_, $msg, $file, $line) use (&$errors) {
+                $errors[] = ['message' => $msg, 'file' => $file, 'line' => $line];
+                return \true;
+            }
+        );
         $resource = $callback();
         \restore_error_handler();
         if (!$resource) {
@@ -220,20 +222,24 @@ class StreamHandler
             throw new \InvalidArgumentException('Microsoft NTLM authentication only supported with curl handler');
         }
         $uri = $this->resolveHost($request, $options);
-        $context = $this->createResource(function () use($context, $params) {
-            return \stream_context_create($context, $params);
-        });
-        return $this->createResource(function () use($uri, &$http_response_header, $context, $options) {
-            $resource = \fopen((string) $uri, 'r', null, $context);
-            $this->lastHeaders = $http_response_header;
-            if (isset($options['read_timeout'])) {
-                $readTimeout = $options['read_timeout'];
-                $sec = (int) $readTimeout;
-                $usec = ($readTimeout - $sec) * 100000;
-                \stream_set_timeout($resource, $sec, $usec);
+        $context = $this->createResource(
+            function () use ($context, $params) {
+                return \stream_context_create($context, $params);
             }
-            return $resource;
-        });
+        );
+        return $this->createResource(
+            function () use ($uri, &$http_response_header, $context, $options) {
+                $resource = \fopen((string) $uri, 'r', null, $context);
+                $this->lastHeaders = $http_response_header;
+                if (isset($options['read_timeout'])) {
+                    $readTimeout = $options['read_timeout'];
+                    $sec = (int) $readTimeout;
+                    $usec = ($readTimeout - $sec) * 100000;
+                    \stream_set_timeout($resource, $sec, $usec);
+                }
+                return $resource;
+            }
+        );
     }
     private function resolveHost(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options)
     {
@@ -331,11 +337,13 @@ class StreamHandler
     }
     private function add_progress(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, &$options, $value, &$params)
     {
-        $this->addNotification($params, function ($code, $a, $b, $c, $transferred, $total) use($value) {
-            if ($code == \STREAM_NOTIFY_PROGRESS) {
-                $value($total, $transferred, null, null);
+        $this->addNotification(
+            $params, function ($code, $a, $b, $c, $transferred, $total) use ($value) {
+                if ($code == \STREAM_NOTIFY_PROGRESS) {
+                    $value($total, $transferred, null, null);
+                }
             }
-        });
+        );
     }
     private function add_debug(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, &$options, $value, &$params)
     {
@@ -346,15 +354,17 @@ class StreamHandler
         static $args = ['severity', 'message', 'message_code', 'bytes_transferred', 'bytes_max'];
         $value = \WPMailSMTP\Vendor\GuzzleHttp\debug_resource($value);
         $ident = $request->getMethod() . ' ' . $request->getUri()->withFragment('');
-        $this->addNotification($params, function () use($ident, $value, $map, $args) {
-            $passed = \func_get_args();
-            $code = \array_shift($passed);
-            \fprintf($value, '<%s> [%s] ', $ident, $map[$code]);
-            foreach (\array_filter($passed) as $i => $v) {
-                \fwrite($value, $args[$i] . ': "' . $v . '" ');
+        $this->addNotification(
+            $params, function () use ($ident, $value, $map, $args) {
+                $passed = \func_get_args();
+                $code = \array_shift($passed);
+                \fprintf($value, '<%s> [%s] ', $ident, $map[$code]);
+                foreach (\array_filter($passed) as $i => $v) {
+                    \fwrite($value, $args[$i] . ': "' . $v . '" ');
+                }
+                \fwrite($value, "\n");
             }
-            \fwrite($value, "\n");
-        });
+        );
     }
     private function addNotification(array &$params, callable $notify)
     {
@@ -367,7 +377,7 @@ class StreamHandler
     }
     private function callArray(array $functions)
     {
-        return function () use($functions) {
+        return function () use ($functions) {
             $args = \func_get_args();
             foreach ($functions as $fn) {
                 \call_user_func_array($fn, $args);

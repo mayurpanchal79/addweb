@@ -21,30 +21,30 @@ import ProductBadge from '../product-badge';
  * @return {*} The component.
  */
 const ProductSaleBadge = ( { currency, saleAmount } ) => {
-	if ( ! saleAmount || saleAmount <= 0 ) {
-		return null;
-	}
-	return (
-		<ProductBadge className="wc-block-components-sale-badge">
-			{ __experimentalCreateInterpolateElement(
-				/* translators: <price/> will be replaced by the discount amount */
-				__( 'Save <price/>', 'woocommerce' ),
-				{
-					price: (
-						<FormattedMonetaryAmount
-							currency={ currency }
-							value={ saleAmount }
-						/>
-					),
-				}
-			) }
-		</ProductBadge>
-	);
+    if (! saleAmount || saleAmount <= 0 ) {
+        return null;
+    }
+    return (
+    <ProductBadge className="wc-block-components-sale-badge">
+    { __experimentalCreateInterpolateElement(
+        /* translators: <price/> will be replaced by the discount amount */
+        __('Save <price/>', 'woocommerce'),
+        {
+            price: (
+            <FormattedMonetaryAmount
+             currency={ currency }
+             value={ saleAmount }
+            />
+        ),
+        }
+    ) }
+    </ProductBadge>
+    );
 };
 
 ProductSaleBadge.propTypes = {
-	currency: PropTypes.object,
-	saleAmount: PropTypes.number,
+    currency: PropTypes.object,
+    saleAmount: PropTypes.number,
 };
 
 export default ProductSaleBadge;

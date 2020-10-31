@@ -235,7 +235,7 @@ class Emogrifier
 
     /**
      * @param string $unprocessedHtml the HTML to process, must be UTF-8-encoded
-     * @param string $css the CSS to merge, must be UTF-8-encoded
+     * @param string $css             the CSS to merge, must be UTF-8-encoded
      */
     public function __construct($unprocessedHtml = '', $css = '')
     {
@@ -499,7 +499,9 @@ class Emogrifier
                 continue;
             }
 
-            /** @var \DOMElement $node */
+            /**
+ * @var \DOMElement $node 
+*/
             foreach ($nodesMatchingCssSelectors as $node) {
                 if (\in_array($node, $excludedNodes, true)) {
                     continue;
@@ -603,8 +605,12 @@ class Emogrifier
                 'inlinable' => [],
                 'uninlinable' => [],
             ];
-            /** @var string[][] $matches */
-            /** @var string[] $cssRule */
+            /**
+ * @var string[][] $matches 
+*/
+            /**
+ * @var string[] $cssRule 
+*/
             foreach ($matches as $key => $cssRule) {
                 $cssDeclaration = \trim($cssRule['declarations']);
                 if ($cssDeclaration === '') {
@@ -663,7 +669,9 @@ class Emogrifier
             // process each part for selectors and definitions
             \preg_match_all('/(?:^|[\\s^{}]*)([^{]+){([^}]*)}/mi', $cssPart['css'], $matches, PREG_SET_ORDER);
 
-            /** @var string[][] $matches */
+            /**
+ * @var string[][] $matches 
+*/
             foreach ($matches as $cssRule) {
                 $ruleMatches[] = [
                     'media' => $cssPart['media'],
@@ -751,7 +759,9 @@ class Emogrifier
     {
         $key = \array_search($tagName, $this->unprocessableHtmlTags, true);
         if ($key !== false) {
-            /** @var int|string $key */
+            /**
+ * @var int|string $key 
+*/
             unset($this->unprocessableHtmlTags[$key]);
         }
     }
@@ -820,7 +830,9 @@ class Emogrifier
      */
     private function normalizeStyleAttributesOfAllNodes()
     {
-        /** @var \DOMElement $node */
+        /**
+ * @var \DOMElement $node 
+*/
         foreach ($this->getAllNodesWithStyleAttribute() as $node) {
             if ($this->isInlineStyleAttributesParsingEnabled) {
                 $this->normalizeStyleAttributes($node);
@@ -906,8 +918,7 @@ class Emogrifier
             }
 
             $newAttributeValue = $newStyles[$attributeName];
-            if (
-                $this->attributeValueIsImportant($attributeValue)
+            if ($this->attributeValueIsImportant($attributeValue)
                 && !$this->attributeValueIsImportant($newAttributeValue)
             ) {
                 unset($newStyles[$attributeName]);
@@ -959,7 +970,7 @@ class Emogrifier
      * Note: This method does not check whether $cssRule matches $node.
      *
      * @param \DOMElement $node
-     * @param string[][] $cssRule
+     * @param string[][]  $cssRule
      *
      * @return void
      */
@@ -987,11 +998,12 @@ class Emogrifier
      * Applies $cssRules to $this->domDocument, limited to the rules that actually apply to the document, by placing
      * them as CSS in a `<style>` element.
      *
-     * @param string[][] $cssRules the "uninlinable" array of CSS rules returned by `parseCssRules`
-     * @param string $cssImportRules This may contain any `@import` rules that should precede the CSS placed in the
-     *        `<style>` element.  If there are no unlinlinable CSS rules to copy there, a `<style>` element will be
-     *        created containing just `$cssImportRules`.  `$cssImportRules` may be an empty string; if it is, and there
-     *        are no unlinlinable CSS rules, an empty `<style>` element will not be created.
+     * @param string[][] $cssRules       the "uninlinable" array of CSS rules returned by `parseCssRules`
+     * @param string     $cssImportRules This may contain any `@import` rules that should precede the CSS placed in the
+     *                                   `<style>` element.  If there are no unlinlinable CSS rules to copy there, a
+     *                                   `<style>` element will be created containing just `$cssImportRules`. 
+     *                                   `$cssImportRules` may be an empty string; if it is, and there are no
+     *                                   unlinlinable CSS rules, an empty `<style>` element will not be created.
      *
      * @return void
      */
@@ -1005,7 +1017,7 @@ class Emogrifier
         if ($cssRulesRelevantForDocument !== []) {
             // support use without autoload
             if (!\class_exists(CssConcatenator::class)) {
-                require_once __DIR__ . '/Emogrifier/Utilities/CssConcatenator.php';
+                include_once __DIR__ . '/Emogrifier/Utilities/CssConcatenator.php';
             }
 
             $cssConcatenator = new CssConcatenator();
@@ -1057,11 +1069,13 @@ class Emogrifier
     {
         // The regex allows nested brackets via `(?2)`.
         // A space is temporarily prepended because the callback can't determine if the match was at the very start.
-        $selectorWithoutNots = \ltrim(\preg_replace_callback(
-            '/(\\s?+):not(\\([^()]*+(?:(?2)[^()]*+)*+\\))/i',
-            [$this, 'replaceUnmatchableNotComponent'],
-            ' ' . $selector
-        ));
+        $selectorWithoutNots = \ltrim(
+            \preg_replace_callback(
+                '/(\\s?+):not(\\([^()]*+(?:(?2)[^()]*+)*+\\))/i',
+                [$this, 'replaceUnmatchableNotComponent'],
+                ' ' . $selector
+            )
+        );
 
         $pseudoComponentMatcher = ':(?!' . self::PSEUDO_CLASS_MATCHER . '):?+[\\w\\-]++(?:\\([^\\)]*+\\))?+';
         return \preg_replace(
@@ -1134,7 +1148,9 @@ class Emogrifier
         }
 
         $css = '';
-        /** @var \DOMNode $styleNode */
+        /**
+ * @var \DOMNode $styleNode 
+*/
         foreach ($styleNodes as $styleNode) {
             $css .= "\n\n" . $styleNode->nodeValue;
             $styleNode->parentNode->removeChild($styleNode);
@@ -1321,7 +1337,9 @@ class Emogrifier
             foreach ($this->domDocument->getElementsByTagName($tagName) as $node) {
                 $nodes[] = $node;
             }
-            /** @var \DOMNode $node */
+            /**
+ * @var \DOMNode $node 
+*/
             foreach ($nodes as $node) {
                 if (!$node->hasChildNodes()) {
                     $node->parentNode->removeChild($node);
@@ -1473,7 +1491,9 @@ class Emogrifier
             $matches
         );
         if ($hasNotSelector) {
-            /** @var string[] $matches */
+            /**
+ * @var string[] $matches 
+*/
             list(, $partBeforeNot, $notContents) = $matches;
             $xPath = '//' . $this->translateCssToXpathPass($partBeforeNot) .
                 '[not(' . $this->translateCssToXpathPassInline($notContents) . ')]';
@@ -1519,7 +1539,7 @@ class Emogrifier
      * Flexibly translates the CSS selector $trimmedLowercaseSelector to an xPath selector while using
      * $matchClassAttributesCallback as to match the class attributes.
      *
-     * @param string $trimmedLowercaseSelector
+     * @param string   $trimmedLowercaseSelector
      * @param callable $matchClassAttributesCallback
      *
      * @return string
@@ -1769,11 +1789,11 @@ class Emogrifier
      * during querying \DOMDocument and trigger an \InvalidArgumentException with an invalid selector
      * or \RuntimeException, depending on the source of the warning.
      *
-     * @param int $type
+     * @param int    $type
      * @param string $message
      * @param string $file
-     * @param int $line
-     * @param array $context
+     * @param int    $line
+     * @param array  $context
      *
      * @return bool always false
      *

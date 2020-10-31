@@ -73,9 +73,13 @@ class FilterHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractHandler
         } else {
             $minLevelOrList = \WPMailSMTP\Vendor\Monolog\Logger::toMonologLevel($minLevelOrList);
             $maxLevel = \WPMailSMTP\Vendor\Monolog\Logger::toMonologLevel($maxLevel);
-            $acceptedLevels = \array_values(\array_filter(\WPMailSMTP\Vendor\Monolog\Logger::getLevels(), function ($level) use($minLevelOrList, $maxLevel) {
-                return $level >= $minLevelOrList && $level <= $maxLevel;
-            }));
+            $acceptedLevels = \array_values(
+                \array_filter(
+                    \WPMailSMTP\Vendor\Monolog\Logger::getLevels(), function ($level) use ($minLevelOrList, $maxLevel) {
+                        return $level >= $minLevelOrList && $level <= $maxLevel;
+                    }
+                )
+            );
         }
         $this->acceptedLevels = \array_flip($acceptedLevels);
     }

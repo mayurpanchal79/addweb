@@ -13,14 +13,19 @@ if (class_exists('SplFixedArray')) {
  */
 class SplFixedArray implements Iterator, ArrayAccess, Countable
 {
-    /** @var array<int, mixed> */
+    /**
+     * @var array<int, mixed> 
+     */
     private $internalArray = array();
 
-    /** @var int $size */
+    /**
+     * @var int $size 
+     */
     private $size = 0;
 
     /**
      * SplFixedArray constructor.
+     *
      * @param int $size
      */
     public function __construct($size = 0)
@@ -47,9 +52,9 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param array $array
-     * @param bool $save_indexes
-     * @return SplFixedArray
+     * @param          array $array
+     * @param          bool  $save_indexes
+     * @return         SplFixedArray
      * @psalm-suppress MixedAssignment
      */
     public static function fromArray(array $array, $save_indexes = true)
@@ -78,7 +83,7 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param int $size
+     * @param  int $size
      * @return bool
      */
     public function setSize($size)
@@ -88,7 +93,7 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param string|int $index
+     * @param  string|int $index
      * @return bool
      */
     public function offsetExists($index)
@@ -97,7 +102,7 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param string|int $index
+     * @param  string|int $index
      * @return mixed
      */
     public function offsetGet($index)
@@ -106,8 +111,8 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param string|int $index
-     * @param mixed $newval
+     * @param          string|int $index
+     * @param          mixed      $newval
      * @psalm-suppress MixedAssignment
      */
     public function offsetSet($index, $newval)
@@ -125,9 +130,10 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
 
     /**
      * Rewind iterator back to the start
-     * @link https://php.net/manual/en/splfixedarray.rewind.php
+     *
+     * @link   https://php.net/manual/en/splfixedarray.rewind.php
      * @return void
-     * @since 5.3.0
+     * @since  5.3.0
      */
     public function rewind()
     {
@@ -136,9 +142,10 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
 
     /**
      * Return current array entry
-     * @link https://php.net/manual/en/splfixedarray.current.php
+     *
+     * @link   https://php.net/manual/en/splfixedarray.current.php
      * @return mixed The current element value.
-     * @since 5.3.0
+     * @since  5.3.0
      */
     public function current()
     {
@@ -147,6 +154,7 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
 
     /**
      * Return current array index
+     *
      * @return int The current array index.
      */
     public function key()
@@ -164,7 +172,8 @@ class SplFixedArray implements Iterator, ArrayAccess, Countable
 
     /**
      * Check whether the array contains more elements
-     * @link https://php.net/manual/en/splfixedarray.valid.php
+     *
+     * @link   https://php.net/manual/en/splfixedarray.valid.php
      * @return bool true if the array contains any more elements, false otherwise.
      */
     public function valid()

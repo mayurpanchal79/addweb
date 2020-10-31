@@ -22,8 +22,7 @@ class SilverStripeInstaller extends BaseInstaller
      */
     public function getInstallPath(PackageInterface $package, $frameworkType = '')
     {
-        if (
-            $package->getName() == 'silverstripe/framework'
+        if ($package->getName() == 'silverstripe/framework'
             && preg_match('/^\d+\.\d+\.\d+/', $package->getVersion())
             && version_compare($package->getVersion(), '2.999.999') < 0
         ) {

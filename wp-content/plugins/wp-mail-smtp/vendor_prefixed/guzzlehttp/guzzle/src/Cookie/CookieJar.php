@@ -9,12 +9,16 @@ use WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface;
  */
 class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterface
 {
-    /** @var SetCookie[] Loaded cookie data */
+    /**
+     * @var SetCookie[] Loaded cookie data 
+     */
     private $cookies = [];
-    /** @var bool */
+    /**
+     * @var bool 
+     */
     private $strictMode;
     /**
-     * @param bool $strictMode   Set to true to throw exceptions when invalid
+     * @param bool  $strictMode  Set to true to throw exceptions when invalid
      *                           cookies are added to the cookie jar.
      * @param array $cookieArray Array of SetCookie objects or a hash of
      *                           arrays that can be used with the SetCookie
@@ -57,8 +61,8 @@ class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterfa
      * Evaluate if this cookie should be persisted to storage
      * that survives between requests.
      *
-     * @param SetCookie $cookie Being evaluated.
-     * @param bool $allowSessionCookies If we should persist session cookies
+     * @param  SetCookie $cookie              Being evaluated.
+     * @param  bool      $allowSessionCookies If we should persist session cookies
      * @return bool
      */
     public static function shouldPersist(\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie, $allowSessionCookies = \false)
@@ -73,7 +77,7 @@ class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterfa
     /**
      * Finds and returns the cookie based on the name
      *
-     * @param string $name cookie name to search for
+     * @param  string $name cookie name to search for
      * @return SetCookie|null cookie that was found or null if not found
      */
     public function getCookieByName($name)
@@ -91,9 +95,11 @@ class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterfa
     }
     public function toArray()
     {
-        return \array_map(function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) {
-            return $cookie->toArray();
-        }, $this->getIterator()->getArrayCopy());
+        return \array_map(
+            function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) {
+                return $cookie->toArray();
+            }, $this->getIterator()->getArrayCopy()
+        );
     }
     public function clear($domain = null, $path = null, $name = null)
     {
@@ -101,24 +107,32 @@ class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterfa
             $this->cookies = [];
             return;
         } elseif (!$path) {
-            $this->cookies = \array_filter($this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use($domain) {
-                return !$cookie->matchesDomain($domain);
-            });
+            $this->cookies = \array_filter(
+                $this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use ($domain) {
+                    return !$cookie->matchesDomain($domain);
+                }
+            );
         } elseif (!$name) {
-            $this->cookies = \array_filter($this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use($path, $domain) {
-                return !($cookie->matchesPath($path) && $cookie->matchesDomain($domain));
-            });
+            $this->cookies = \array_filter(
+                $this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use ($path, $domain) {
+                    return !($cookie->matchesPath($path) && $cookie->matchesDomain($domain));
+                }
+            );
         } else {
-            $this->cookies = \array_filter($this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use($path, $domain, $name) {
-                return !($cookie->getName() == $name && $cookie->matchesPath($path) && $cookie->matchesDomain($domain));
-            });
+            $this->cookies = \array_filter(
+                $this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) use ($path, $domain, $name) {
+                    return !($cookie->getName() == $name && $cookie->matchesPath($path) && $cookie->matchesDomain($domain));
+                }
+            );
         }
     }
     public function clearSessionCookies()
     {
-        $this->cookies = \array_filter($this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) {
-            return !$cookie->getDiscard() && $cookie->getExpires();
-        });
+        $this->cookies = \array_filter(
+            $this->cookies, function (\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie) {
+                return !$cookie->getDiscard() && $cookie->getExpires();
+            }
+        );
     }
     public function setCookie(\WPMailSMTP\Vendor\GuzzleHttp\Cookie\SetCookie $cookie)
     {
@@ -196,7 +210,7 @@ class CookieJar implements \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterfa
      *
      * @link https://tools.ietf.org/html/rfc6265#section-5.1.4
      *
-     * @param RequestInterface $request
+     * @param  RequestInterface $request
      * @return string
      */
     private function getCookiePathFromRequest(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request)

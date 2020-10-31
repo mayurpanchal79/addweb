@@ -16,69 +16,73 @@ import './style.scss';
  * and a <select> with the options provided in the props.
  */
 const SortSelect = ( {
-	className,
-	instanceId,
-	defaultValue,
-	label,
-	onChange,
-	options,
-	screenReaderLabel,
-	readOnly,
-	value,
+    className,
+    instanceId,
+    defaultValue,
+    label,
+    onChange,
+    options,
+    screenReaderLabel,
+    readOnly,
+    value,
 } ) => {
-	const selectId = `wc-block-components-sort-select__select-${ instanceId }`;
+    const selectId = `wc-block-components-sort-select__select-${ instanceId }`;
 
-	return (
-		<div
-			className={ classNames(
-				'wc-block-sort-select',
-				'wc-block-components-sort-select',
-				className
-			) }
-		>
-			<Label
-				label={ label }
-				screenReaderLabel={ screenReaderLabel }
-				wrapperElement="label"
-				wrapperProps={ {
-					className:
-						'wc-block-sort-select__label wc-block-components-sort-select__label',
-					htmlFor: selectId,
-				} }
-			/>
-			<select // eslint-disable-line jsx-a11y/no-onchange
-				id={ selectId }
-				className="wc-block-sort-select__select wc-block-components-sort-select__select"
-				defaultValue={ defaultValue }
-				onChange={ onChange }
-				readOnly={ readOnly }
-				value={ value }
-			>
-				{ options.map( ( option ) => (
-					<option key={ option.key } value={ option.key }>
-						{ option.label }
-					</option>
-				) ) }
-			</select>
-		</div>
-	);
+    return (
+    <div
+    className={ classNames(
+        'wc-block-sort-select',
+        'wc-block-components-sort-select',
+        className
+    ) }
+    >
+    <Label
+                label={ label }
+                screenReaderLabel={ screenReaderLabel }
+                wrapperElement="label"
+                wrapperProps={ {
+                    className:
+                    'wc-block-sort-select__label wc-block-components-sort-select__label',
+                    htmlFor: selectId,
+                    } }
+    />
+    <select // eslint-disable-line jsx-a11y/no-onchange
+                id={ selectId }
+                className="wc-block-sort-select__select wc-block-components-sort-select__select"
+                defaultValue={ defaultValue }
+                onChange={ onChange }
+                readOnly={ readOnly }
+                value={ value }
+    >
+                { options.map(
+                    ( option ) => (
+                    <option key={ option.key } value={ option.key }>
+                    { option.label }
+                    </option>
+                    ) 
+                ) }
+    </select>
+    </div>
+    );
 };
 
 SortSelect.propTypes = {
-	defaultValue: PropTypes.string,
-	label: PropTypes.string,
-	onChange: PropTypes.func,
-	options: PropTypes.arrayOf(
-		PropTypes.shape( {
-			key: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-		} )
-	),
-	readOnly: PropTypes.bool,
-	screenReaderLabel: PropTypes.string,
-	value: PropTypes.string,
-	// from withInstanceId
-	instanceId: PropTypes.number.isRequired,
+    defaultValue: PropTypes.string,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    options: PropTypes.arrayOf(
+        PropTypes.shape(
+            {
+                key: PropTypes.string.isRequired,
+                label: PropTypes.string.isRequired,
+            } 
+        )
+    ),
+readOnly: PropTypes.bool,
+screenReaderLabel: PropTypes.string,
+value: PropTypes.string,
+    // from withInstanceId
+instanceId: PropTypes.number.isRequired,
 };
 
-export default withInstanceId( SortSelect );
+export default withInstanceId(SortSelect);

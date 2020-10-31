@@ -12,28 +12,28 @@ import { RemovableChip } from '@woocommerce/base-components/chip';
  * @param {number} maxPrice The max price, if set.
  */
 export const formatPriceRange = ( minPrice, maxPrice ) => {
-	if ( Number.isFinite( minPrice ) && Number.isFinite( maxPrice ) ) {
-		return sprintf(
-			/* translators: %s min price, %s max price */
-			__( 'Between %s and %s', 'woocommerce' ),
-			formatPrice( minPrice ),
-			formatPrice( maxPrice )
-		);
-	}
+    if (Number.isFinite(minPrice) && Number.isFinite(maxPrice) ) {
+        return sprintf(
+        /* translators: %s min price, %s max price */
+            __('Between %s and %s', 'woocommerce'),
+            formatPrice(minPrice),
+            formatPrice(maxPrice)
+        );
+    }
 
-	if ( Number.isFinite( minPrice ) ) {
-		return sprintf(
-			/* translators: %s min price */
-			__( 'From %s', 'woocommerce' ),
-			formatPrice( minPrice )
-		);
-	}
+    if (Number.isFinite(minPrice) ) {
+        return sprintf(
+        /* translators: %s min price */
+            __('From %s', 'woocommerce'),
+            formatPrice(minPrice)
+        );
+    }
 
-	return sprintf(
-		/* translators: %s max price */
-		__( 'Up to %s', 'woocommerce' ),
-		formatPrice( maxPrice )
-	);
+    return sprintf(
+    /* translators: %s max price */
+        __('Up to %s', 'woocommerce'),
+        formatPrice(maxPrice)
+    );
 };
 
 /**
@@ -49,57 +49,57 @@ export const formatPriceRange = ( minPrice, maxPrice ) => {
  *                                             this item?
  */
 export const renderRemovableListItem = ( {
-	type,
-	name,
-	prefix,
-	removeCallback = () => {},
-	showLabel = true,
-	displayStyle,
+    type,
+    name,
+    prefix,
+    removeCallback = () => {},
+    showLabel = true,
+    displayStyle,
 } ) => {
-	const prefixedName = prefix ? (
-		<>
-			{ prefix }
-			&nbsp;
-			{ name }
-		</>
-	) : (
-		name
-	);
-	const removeText = sprintf(
-		/* translators: %s attribute value used in the filter. For example: yellow, green, small, large. */
-		__( 'Remove %s filter', 'woocommerce' ),
-		name
-	);
+    const prefixedName = prefix ? (
+    <>
+    { prefix }
+    &nbsp;
+    { name }
+    </>
+    ) : (
+        name
+    );
+    const removeText = sprintf(
+        /* translators: %s attribute value used in the filter. For example: yellow, green, small, large. */
+        __('Remove %s filter', 'woocommerce'),
+        name
+    );
 
-	return (
-		<li
-			className="wc-block-active-filters__list-item"
-			key={ type + ':' + name }
-		>
-			{ showLabel && (
-				<span className="wc-block-active-filters__list-item-type">
-					{ type + ': ' }
-				</span>
-			) }
-			{ displayStyle === 'chips' ? (
-				<RemovableChip
-					element="span"
-					text={ prefixedName }
-					onRemove={ removeCallback }
-					radius="large"
-					ariaLabel={ removeText }
-				/>
-			) : (
-				<span className="wc-block-active-filters__list-item-name">
-					{ prefixedName }
-					<button
-						className="wc-block-active-filters__list-item-remove"
-						onClick={ removeCallback }
-					>
-						{ removeText }
-					</button>
-				</span>
-			) }
-		</li>
-	);
+    return (
+        <li
+            className="wc-block-active-filters__list-item"
+            key={ type + ':' + name }
+        >
+            { showLabel && (
+                <span className="wc-block-active-filters__list-item-type">
+                { type + ': ' }
+                </span>
+            ) }
+    { displayStyle === 'chips' ? (
+        <RemovableChip
+        element="span"
+        text={ prefixedName }
+        onRemove={ removeCallback }
+        radius="large"
+        ariaLabel={ removeText }
+        />
+    ) : (
+                <span className="wc-block-active-filters__list-item-name">
+                    { prefixedName }
+                    <button
+                        className="wc-block-active-filters__list-item-remove"
+                        onClick={ removeCallback }
+                    >
+                        { removeText }
+                    </button>
+                </span>
+    ) }
+    </li>
+    );
 };

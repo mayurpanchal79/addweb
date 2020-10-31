@@ -15,11 +15,11 @@ let nonce = wcStoreApiNonce || '';
  * @return {boolean} Returns true if this is a store request.
  */
 const isStoreApiGetRequest = ( options ) => {
-	const url = options.url || options.path;
-	if ( ! url || ! options.method || options.method === 'GET' ) {
-		return false;
-	}
-	return /wc\/store\//.exec( url ) !== null;
+    const url = options.url || options.path;
+    if (! url || ! options.method || options.method === 'GET' ) {
+        return false;
+    }
+    return /wc\/store\//.exec(url) !== null;
 };
 
 /**
@@ -28,10 +28,10 @@ const isStoreApiGetRequest = ( options ) => {
  * @param {Object} headers Headers object.
  */
 const setNonce = ( headers ) => {
-	const newNonce = headers?.get( 'X-WC-Store-API-Nonce' );
-	if ( newNonce ) {
-		nonce = newNonce;
-	}
+    const newNonce = headers?.get('X-WC-Store-API-Nonce');
+    if (newNonce ) {
+        nonce = newNonce;
+    }
 };
 
 /**
@@ -43,15 +43,15 @@ const setNonce = ( headers ) => {
  * @return {*} The evaluated result of the remaining middleware chain.
  */
 const storeNonceMiddleware = ( options, next ) => {
-	if ( isStoreApiGetRequest( options ) ) {
-		const existingHeaders = options.headers || {};
-		options.headers = {
-			...existingHeaders,
-			'X-WC-Store-API-Nonce': nonce,
-		};
-	}
-	return next( options, next );
+    if (isStoreApiGetRequest(options) ) {
+        const existingHeaders = options.headers || {};
+        options.headers = {
+            ...existingHeaders,
+            'X-WC-Store-API-Nonce': nonce,
+        };
+    }
+    return next(options, next);
 };
 
-apiFetch.use( storeNonceMiddleware );
+apiFetch.use(storeNonceMiddleware);
 apiFetch.setNonce = setNonce;

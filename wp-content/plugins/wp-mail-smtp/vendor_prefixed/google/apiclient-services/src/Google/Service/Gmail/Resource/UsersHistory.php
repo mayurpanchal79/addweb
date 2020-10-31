@@ -32,9 +32,9 @@ class Google_Service_Gmail_Resource_UsersHistory extends \WPMailSMTP\Vendor\Goog
      * returned in chronological order (increasing `historyId`).
      * (history.listUsersHistory)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string startHistoryId Required. Returns history records after the
      * specified `startHistoryId`. The supplied `startHistoryId` should be obtained
@@ -52,7 +52,7 @@ class Google_Service_Gmail_Resource_UsersHistory extends \WPMailSMTP\Vendor\Goog
      * in the list.
      * @opt_param string maxResults The maximum number of history records to return.
      * @opt_param string labelId Only return messages with a label matching the ID.
-     * @return Google_Service_Gmail_ListHistoryResponse
+     * @return    Google_Service_Gmail_ListHistoryResponse
      */
     public function listUsersHistory($userId, $optParams = array())
     {

@@ -15,57 +15,70 @@ import { formatError } from '../base/utils/errors.js';
  *
  * @param {Function} OriginalComponent Component being wrapped.
  */
-const withCategories = createHigherOrderComponent( ( OriginalComponent ) => {
-	return class WrappedComponent extends Component {
-		constructor() {
-			super( ...arguments );
-			this.state = {
-				error: null,
-				loading: false,
-				categories: null,
-			};
-			this.loadCategories = this.loadCategories.bind( this );
-		}
+const withCategories = createHigherOrderComponent(
+    ( OriginalComponent ) => {
+        return class WrappedComponent extends Component {
+            constructor()
+            {
+                super(...arguments);
+                this.state = {
+                    error: null,
+                    loading: false,
+                    categories: null,
+                };
+                this.loadCategories = this.loadCategories.bind(this);
+                }
 
-		componentDidMount() {
-			this.loadCategories();
-		}
+            componentDidMount()
+            {
+                this.loadCategories();
+                }
 
-		loadCategories() {
-			this.setState( { loading: true } );
+            loadCategories()
+            {
+                  this.setState({ loading: true });
 
-			getCategories()
-				.then( ( categories ) => {
-					this.setState( {
-						categories,
-						loading: false,
-						error: null,
-					} );
-				} )
-				.catch( async ( e ) => {
-					const error = await formatError( e );
+                  getCategories()
+                .then(
+                    ( categories ) => {
+                        this.setState(
+                        {
+                                    categories,
+                                loading: false,
+                                error: null,
+                                } 
+                    );
+                    } 
+                )
+                .catch(
+                    async(e) => {
+                        const error = await formatError(e);
+                        this.setState(
+                        {
+                                categories: null,
+                                loading: false,
+                                    error,
+                                } 
+                    );
+                    } 
+                );
+                }
 
-					this.setState( {
-						categories: null,
-						loading: false,
-						error,
-					} );
-				} );
-		}
+            render()
+            {
+                const { error, loading, categories } = this.state;
 
-		render() {
-			const { error, loading, categories } = this.state;
-
-			return (
-				<OriginalComponent
-					{ ...this.props }
-					error={ error }
-					isLoading={ loading }
-					categories={ categories }
-				/>
-			);
-		}
-	};
-}, 'withCategories' );
+                return (
+                <OriginalComponent
+                { ...this.props }
+                error={ error }
+                isLoading={ loading }
+                categories={ categories }
+                />
+                );
+                }
+        };
+    }, 'withCategories' 
+);
 
 export default withCategories;

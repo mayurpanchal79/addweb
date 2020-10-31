@@ -37,7 +37,9 @@ class HtmlPruner extends AbstractHtmlProcessor
             return $this;
         }
 
-        /** @var \DOMNode $element */
+        /**
+ * @var \DOMNode $element 
+*/
         foreach ($elementsWithStyleDisplayNone as $element) {
             $parentNode = $element->parentNode;
             if ($parentNode !== null) {
@@ -80,7 +82,7 @@ class HtmlPruner extends AbstractHtmlProcessor
      * removing the `class` attribute itself if the resultant list is empty.
      *
      * @param \DOMNodeList $elements
-     * @param string[] $classesToKeep
+     * @param string[]     $classesToKeep
      *
      * @return void
      */
@@ -88,7 +90,9 @@ class HtmlPruner extends AbstractHtmlProcessor
     {
         $classesToKeepIntersector = new ArrayIntersector($classesToKeep);
 
-        /** @var \DOMNode $element */
+        /**
+ * @var \DOMNode $element 
+*/
         foreach ($elements as $element) {
             $elementClasses = \preg_split('/\\s++/', \trim($element->getAttribute('class')));
             $elementClassesToKeep = $classesToKeepIntersector->intersectWith($elementClasses);
@@ -109,7 +113,9 @@ class HtmlPruner extends AbstractHtmlProcessor
      */
     private function removeClassAttributeFromElements(\DOMNodeList $elements)
     {
-        /** @var \DOMNode $element */
+        /**
+ * @var \DOMNode $element 
+*/
         foreach ($elements as $element) {
             $element->removeAttribute('class');
         }

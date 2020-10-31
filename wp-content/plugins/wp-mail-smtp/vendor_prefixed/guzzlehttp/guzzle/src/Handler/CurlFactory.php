@@ -16,9 +16,13 @@ class CurlFactory implements \WPMailSMTP\Vendor\GuzzleHttp\Handler\CurlFactoryIn
 {
     const CURL_VERSION_STR = 'curl_version';
     const LOW_CURL_VERSION_NUMBER = '7.21.2';
-    /** @var array */
+    /**
+     * @var array 
+     */
     private $handles = [];
-    /** @var int Total number of idle handles to keep in cache */
+    /**
+     * @var int Total number of idle handles to keep in cache 
+     */
     private $maxHandles;
     /**
      * @param int $maxHandles Maximum number of idle handles.
@@ -187,7 +191,7 @@ class CurlFactory implements \WPMailSMTP\Vendor\GuzzleHttp\Handler\CurlFactoryIn
             if ($body->isSeekable()) {
                 $body->rewind();
             }
-            $conf[\CURLOPT_READFUNCTION] = function ($ch, $fd, $length) use($body) {
+            $conf[\CURLOPT_READFUNCTION] = function ($ch, $fd, $length) use ($body) {
                 return $body->read($length);
             };
         }
@@ -281,7 +285,7 @@ class CurlFactory implements \WPMailSMTP\Vendor\GuzzleHttp\Handler\CurlFactoryIn
                 $sink = new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\LazyOpenStream($sink, 'w+');
             }
             $easy->sink = $sink;
-            $conf[\CURLOPT_WRITEFUNCTION] = function ($ch, $write) use($sink) {
+            $conf[\CURLOPT_WRITEFUNCTION] = function ($ch, $write) use ($sink) {
                 return $sink->write($write);
             };
         } else {
@@ -353,7 +357,7 @@ class CurlFactory implements \WPMailSMTP\Vendor\GuzzleHttp\Handler\CurlFactoryIn
                 throw new \InvalidArgumentException('progress client option must be callable');
             }
             $conf[\CURLOPT_NOPROGRESS] = \false;
-            $conf[\CURLOPT_PROGRESSFUNCTION] = function () use($progress) {
+            $conf[\CURLOPT_PROGRESSFUNCTION] = function () use ($progress) {
                 $args = \func_get_args();
                 // PHP 5.5 pushed the handle onto the start of the args
                 if (\is_resource($args[0])) {
@@ -409,7 +413,7 @@ class CurlFactory implements \WPMailSMTP\Vendor\GuzzleHttp\Handler\CurlFactoryIn
         } else {
             $onHeaders = null;
         }
-        return function ($ch, $h) use($onHeaders, $easy, &$startingResponse) {
+        return function ($ch, $h) use ($onHeaders, $easy, &$startingResponse) {
             $value = \trim($h);
             if ($value === '') {
                 $startingResponse = \true;

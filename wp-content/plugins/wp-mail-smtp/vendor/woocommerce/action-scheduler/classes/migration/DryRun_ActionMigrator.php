@@ -12,17 +12,19 @@ namespace Action_Scheduler\Migration;
  *
  * @codeCoverageIgnore
  */
-class DryRun_ActionMigrator extends ActionMigrator {
-	/**
-	 * Simulate migrating an action.
-	 *
-	 * @param int $source_action_id Action ID.
-	 *
-	 * @return int
-	 */
-	public function migrate( $source_action_id ) {
-		do_action( 'action_scheduler/migrate_action_dry_run', $source_action_id );
+class DryRun_ActionMigrator extends ActionMigrator
+{
+    /**
+     * Simulate migrating an action.
+     *
+     * @param int $source_action_id Action ID.
+     *
+     * @return int
+     */
+    public function migrate( $source_action_id )
+    {
+        do_action('action_scheduler/migrate_action_dry_run', $source_action_id);
 
-		return 0;
-	}
+        return 0;
+    }
 }

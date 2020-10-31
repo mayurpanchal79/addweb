@@ -11,27 +11,27 @@ import ShippingCalculatorAddress from './address';
 import './style.scss';
 
 const ShippingCalculator = ( {
-	onUpdate = () => {},
-	addressFields = [ 'country', 'state', 'city', 'postcode' ],
+    onUpdate = () => {},
+    addressFields = [ 'country', 'state', 'city', 'postcode' ],
 } ) => {
-	const { shippingAddress, setShippingAddress } = useShippingDataContext();
-	return (
-		<div className="wc-block-components-shipping-calculator">
-			<ShippingCalculatorAddress
-				address={ shippingAddress }
-				addressFields={ addressFields }
-				onUpdate={ ( newAddress ) => {
-					setShippingAddress( newAddress );
-					onUpdate( newAddress );
-				} }
-			/>
-		</div>
-	);
+    const { shippingAddress, setShippingAddress } = useShippingDataContext();
+    return (
+    <div className="wc-block-components-shipping-calculator">
+    <ShippingCalculatorAddress
+                address={ shippingAddress }
+                addressFields={ addressFields }
+                onUpdate={ ( newAddress ) => {
+                    setShippingAddress(newAddress);
+                    onUpdate(newAddress);
+                    } }
+    />
+    </div>
+    );
 };
 
 ShippingCalculator.propTypes = {
-	onUpdate: PropTypes.func,
-	addressFields: PropTypes.array,
+    onUpdate: PropTypes.func,
+    addressFields: PropTypes.array,
 };
 
 export default ShippingCalculator;

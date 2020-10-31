@@ -10,69 +10,72 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * withDefaultAttributes HOC for editor.BlockListBlock.
  *
- * @param	object BlockListBlock The BlockListBlock element.
+ * @param object BlockListBlock The BlockListBlock element.
  */
 const withDefaultAttributes = createHigherOrderComponent(
-	( BlockListBlock ) => {
-		class WrappedComponent extends Component {
-			mounted = false;
+    ( BlockListBlock ) => {
+        class WrappedComponent extends Component {
+            mounted = false;
 
-			componentDidMount() {
-				const { block, setAttributes } = this.props;
+            componentDidMount()
+            {
+                const { block, setAttributes } = this.props;
 
-				if ( block.name.startsWith( 'woocommerce/' ) ) {
-					setAttributes( this.getAttributesWithDefaults() );
-				}
-			}
+                if (block.name.startsWith('woocommerce/') ) {
+                    setAttributes(this.getAttributesWithDefaults());
+                }
+            }
 
-			componentDidUpdate() {
-				if (
-					this.props.block.name.startsWith( 'woocommerce/' ) &&
-					! this.mounted
-				) {
-					this.mounted = true;
-				}
-			}
+            componentDidUpdate()
+            {
+                if (this.props.block.name.startsWith('woocommerce/') 
+                && ! this.mounted
+                ) {
+                    this.mounted = true;
+                }
+            }
 
-			getAttributesWithDefaults() {
-				const blockType = getBlockType( this.props.block.name );
-				let attributes = this.props.attributes;
+            getAttributesWithDefaults()
+            {
+                const blockType = getBlockType(this.props.block.name);
+                let attributes = this.props.attributes;
 
-				if (
-					! this.mounted &&
-					this.props.block.name.startsWith( 'woocommerce/' ) &&
-					typeof blockType.attributes !== 'undefined' &&
-					typeof blockType.defaults !== 'undefined'
-				) {
-					attributes = Object.assign(
-						{},
-						this.props.attributes || {}
-					);
-					Object.keys( blockType.attributes ).map( ( key ) => {
-						if (
-							typeof attributes[ key ] === 'undefined' &&
-							typeof blockType.defaults[ key ] !== 'undefined'
-						) {
-							attributes[ key ] = blockType.defaults[ key ];
-						}
-						return key;
-					} );
-				}
-				return attributes;
-			}
+                if (! this.mounted 
+                && this.props.block.name.startsWith('woocommerce/') 
+                && typeof blockType.attributes !== 'undefined' 
+                && typeof blockType.defaults !== 'undefined'
+                ) {
+                        attributes = Object.assign(
+                        {},
+                        this.props.attributes || {}
+                            );
+                            Object.keys(blockType.attributes).map(
+                            ( key ) => {
+                                if (typeof attributes[ key ] === 'undefined' 
+                                && typeof blockType.defaults[ key ] !== 'undefined'
+                            ) {
+                                attributes[ key ] = blockType.defaults[ key ];
+                                }
+                                return key;
+                                } 
+                            );
+                }
+                return attributes;
+            }
 
-			render() {
-				return (
-					<BlockListBlock
-						{ ...this.props }
-						attributes={ this.getAttributesWithDefaults() }
-					/>
-				);
-			}
-		}
-		return WrappedComponent;
-	},
-	'withDefaultAttributes'
+            render()
+            {
+                return (
+                <BlockListBlock
+                { ...this.props }
+                attributes={ this.getAttributesWithDefaults() }
+                />
+                );
+            }
+        }
+        return WrappedComponent;
+    },
+    'withDefaultAttributes'
 );
 
 /**
@@ -88,10 +91,10 @@ const withDefaultAttributes = createHigherOrderComponent(
  * as defining `attributes` during block registration, you must also declare an
  * array called `defaults`. Defaults should be omitted from `attributes`.
  */
-if ( compareWithWpVersion( '5.3', '<=' ) ) {
-	addFilter(
-		'editor.BlockListBlock',
-		'woocommerce-blocks/block-list-block',
-		withDefaultAttributes
-	);
+if (compareWithWpVersion('5.3', '<=') ) {
+    addFilter(
+        'editor.BlockListBlock',
+        'woocommerce-blocks/block-list-block',
+        withDefaultAttributes
+    );
 }

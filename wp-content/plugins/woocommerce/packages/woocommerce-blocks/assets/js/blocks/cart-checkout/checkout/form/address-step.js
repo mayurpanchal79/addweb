@@ -15,82 +15,84 @@ import ShippingFieldsStep from './shipping-fields-step';
 import './style.scss';
 
 const AddressStep = ( {
-	requireCompanyField,
-	requirePhoneField,
-	showApartmentField,
-	showCompanyField,
-	showPhoneField,
+    requireCompanyField,
+    requirePhoneField,
+    showApartmentField,
+    showCompanyField,
+    showPhoneField,
 } ) => {
-	const {
-		defaultAddressFields,
-		billingFields,
-		setBillingFields,
-		setEmail,
-		setPhone,
-		setShippingAsBilling,
-		setShippingFields,
-		shippingAsBilling,
-		shippingFields,
-		showBillingFields,
-	} = useCheckoutAddress();
-	const { needsShipping } = useShippingDataContext();
-	const addressFieldsConfig = useMemo( () => {
-		return {
-			company: {
-				...defaultAddressFields.company,
-				hidden: ! showCompanyField,
-				required: requireCompanyField,
-			},
-			address_2: {
-				...defaultAddressFields.address_2,
-				hidden: ! showApartmentField,
-			},
-		};
-	}, [
-		defaultAddressFields,
-		showCompanyField,
-		requireCompanyField,
-		showApartmentField,
-	] );
+    const {
+        defaultAddressFields,
+        billingFields,
+        setBillingFields,
+        setEmail,
+        setPhone,
+        setShippingAsBilling,
+        setShippingFields,
+        shippingAsBilling,
+        shippingFields,
+        showBillingFields,
+    } = useCheckoutAddress();
+    const { needsShipping } = useShippingDataContext();
+    const addressFieldsConfig = useMemo(
+        () => {
+            return {
+                company: {
+                    ...defaultAddressFields.company,
+                    hidden: ! showCompanyField,
+                    required: requireCompanyField,
+                    },
+                address_2: {
+                    ...defaultAddressFields.address_2,
+                    hidden: ! showApartmentField,
+                    },
+            };
+        }, [
+        defaultAddressFields,
+        showCompanyField,
+        requireCompanyField,
+        showApartmentField,
+        ] 
+    );
 
-	return (
-		<>
-			<ContactFieldsStep
-				emailValue={ billingFields.email }
-				onChangeEmail={ setEmail }
-			/>
-			{ needsShipping && (
-				<ShippingFieldsStep
-					addressFieldsConfig={ addressFieldsConfig }
-					billingFields={ billingFields }
-					defaultAddressFields={ defaultAddressFields }
-					requirePhoneField={ requirePhoneField }
-					setPhone={ setPhone }
-					setShippingAsBilling={ setShippingAsBilling }
-					setShippingFields={ setShippingFields }
-					shippingAsBilling={ shippingAsBilling }
-					shippingFields={ shippingFields }
-					showPhoneField={ showPhoneField }
-				/>
-			) }
-			{ showBillingFields && (
-				<BillingFieldsStep
-					addressFieldsConfig={ addressFieldsConfig }
-					billingFields={ billingFields }
-					defaultAddressFields={ defaultAddressFields }
-					setBillingFields={ setBillingFields }
-				/>
-			) }
-		</>
-	);
+    return (
+        <>
+            <ContactFieldsStep
+                emailValue={ billingFields.email }
+                onChangeEmail={ setEmail }
+            />
+            { needsShipping && (
+                <ShippingFieldsStep
+                addressFieldsConfig={ addressFieldsConfig }
+                billingFields={ billingFields }
+                defaultAddressFields={ defaultAddressFields }
+                requirePhoneField={ requirePhoneField }
+                setPhone={ setPhone }
+                setShippingAsBilling={ setShippingAsBilling }
+                setShippingFields={ setShippingFields }
+                shippingAsBilling={ shippingAsBilling }
+                shippingFields={ shippingFields }
+                showPhoneField={ showPhoneField }
+                />
+            ) }
+    { showBillingFields && (
+        <BillingFieldsStep
+        addressFieldsConfig={ addressFieldsConfig }
+        billingFields={ billingFields }
+        defaultAddressFields={ defaultAddressFields }
+        setBillingFields={ setBillingFields }
+        />
+    ) }
+    </>
+    );
 };
 
 AddressStep.propTypes = {
-	requireCompanyField: PropTypes.bool.isRequired,
-	requirePhoneField: PropTypes.bool.isRequired,
-	showApartmentField: PropTypes.bool.isRequired,
-	showCompanyField: PropTypes.bool.isRequired,
-	showPhoneField: PropTypes.bool.isRequired,
+    requireCompanyField: PropTypes.bool.isRequired,
+    requirePhoneField: PropTypes.bool.isRequired,
+    showApartmentField: PropTypes.bool.isRequired,
+    showCompanyField: PropTypes.bool.isRequired,
+    showPhoneField: PropTypes.bool.isRequired,
 };
 
 export default AddressStep;

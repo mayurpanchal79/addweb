@@ -20,29 +20,31 @@ if (PHP_VERSION_ID < 50300) {
  *
  * $x = Compat::crypto_aead_xchacha20poly1305_encrypt(...$args);
  */
-spl_autoload_register(function ($class) {
-    if ($class[0] === '\\') {
-        $class = substr($class, 1);
-    }
-    $namespace = 'ParagonIE\\Sodium';
-    // Does the class use the namespace prefix?
-    $len = strlen($namespace);
-    if (strncmp($namespace, $class, $len) !== 0) {
-        // no, move to the next registered autoloader
+spl_autoload_register(
+    function ($class) {
+        if ($class[0] === '\\') {
+            $class = substr($class, 1);
+        }
+        $namespace = 'ParagonIE\\Sodium';
+        // Does the class use the namespace prefix?
+        $len = strlen($namespace);
+        if (strncmp($namespace, $class, $len) !== 0) {
+            // no, move to the next registered autoloader
+            return false;
+        }
+
+        // Get the relative class name
+        $relative_class = substr($class, $len);
+
+        // Replace the namespace prefix with the base directory, replace namespace
+        // separators with directory separators in the relative class name, append
+        // with .php
+        $file = dirname(dirname(__FILE__)) . '/namespaced/' . str_replace('\\', '/', $relative_class) . '.php';
+        // if the file exists, require it
+        if (file_exists($file)) {
+            include_once $file;
+            return true;
+        }
         return false;
     }
-
-    // Get the relative class name
-    $relative_class = substr($class, $len);
-
-    // Replace the namespace prefix with the base directory, replace namespace
-    // separators with directory separators in the relative class name, append
-    // with .php
-    $file = dirname(dirname(__FILE__)) . '/namespaced/' . str_replace('\\', '/', $relative_class) . '.php';
-    // if the file exists, require it
-    if (file_exists($file)) {
-        require_once $file;
-        return true;
-    }
-    return false;
-});
+);

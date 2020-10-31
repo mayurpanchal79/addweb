@@ -12,44 +12,44 @@ import { Spinner } from 'wordpress-components';
 import './style.scss';
 
 const LoadingMask = ( {
-	children,
-	className,
-	screenReaderLabel,
-	showSpinner = false,
-	isLoading = true,
+    children,
+    className,
+    screenReaderLabel,
+    showSpinner = false,
+    isLoading = true,
 } ) => {
-	// If nothing is loading, just pass through the children.
-	if ( ! isLoading ) {
-		return children;
-	}
+    // If nothing is loading, just pass through the children.
+    if (! isLoading ) {
+        return children;
+    }
 
-	return (
-		<div
-			className={ classNames(
-				className,
-				'wc-block-components-loading-mask'
-			) }
-		>
-			{ showSpinner && <Spinner /> }
-			<div
-				className="wc-block-components-loading-mask__children"
-				aria-hidden={ true }
-			>
-				{ children }
-			</div>
-			<span className="screen-reader-text">
-				{ screenReaderLabel ||
-					__( 'Loading…', 'woocommerce' ) }
-			</span>
-		</div>
-	);
+    return (
+    <div
+    className={ classNames(
+        className,
+        'wc-block-components-loading-mask'
+    ) }
+    >
+    { showSpinner && <Spinner /> }
+    <div
+                className="wc-block-components-loading-mask__children"
+                aria-hidden={ true }
+    >
+                { children }
+    </div>
+    <span className="screen-reader-text">
+                { screenReaderLabel ||
+                    __('Loading…', 'woocommerce') }
+    </span>
+    </div>
+    );
 };
 
 LoadingMask.propTypes = {
-	className: PropTypes.string,
-	screenReaderLabel: PropTypes.string,
-	showSpinner: PropTypes.bool,
-	isLoading: PropTypes.bool,
+    className: PropTypes.string,
+    screenReaderLabel: PropTypes.string,
+    showSpinner: PropTypes.bool,
+    isLoading: PropTypes.bool,
 };
 
 export default LoadingMask;

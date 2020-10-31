@@ -15,69 +15,75 @@ import { formatError } from '../base/utils/errors.js';
  *
  * @param {Function} OriginalComponent Component being wrapped.
  */
-const withProduct = createHigherOrderComponent( ( OriginalComponent ) => {
-	return class WrappedComponent extends Component {
-		state = {
-			error: null,
-			loading: false,
-			product:
-				this.props.attributes.productId === 'preview'
-					? this.props.attributes.previewProduct
-					: null,
-		};
+const withProduct = createHigherOrderComponent(
+    ( OriginalComponent ) => {
+        return class WrappedComponent extends Component {
+             state = {
+                    error: null,
+                    loading: false,
+                    product:
+                    this.props.attributes.productId === 'preview'
+                    ? this.props.attributes.previewProduct
+                    : null,
+                };
 
-		componentDidMount() {
-			this.loadProduct();
-		}
+            componentDidMount()
+            {
+                this.loadProduct();
+                }
 
-		componentDidUpdate( prevProps ) {
-			if (
-				prevProps.attributes.productId !==
-				this.props.attributes.productId
-			) {
-				this.loadProduct();
-			}
-		}
+            componentDidUpdate( prevProps )
+            {
+                if (prevProps.attributes.productId !==       this.props.attributes.productId
+                ) {
+                    this.loadProduct();
+                }
+                }
 
-		loadProduct = () => {
-			const { productId } = this.props.attributes;
+                loadProduct = () => {
+                       const { productId } = this.props.attributes;
 
-			if ( productId === 'preview' ) {
-				return;
-			}
+                    if (productId === 'preview' ) {
+                        return;
+                    }
 
-			if ( ! productId ) {
-				this.setState( { product: null, loading: false, error: null } );
-				return;
-			}
+                    if (! productId ) {
+                        this.setState({ product: null, loading: false, error: null });
+                        return;
+                    }
 
-			this.setState( { loading: true } );
+                    this.setState({ loading: true });
 
-			getProduct( productId )
-				.then( ( product ) => {
-					this.setState( { product, loading: false, error: null } );
-				} )
-				.catch( async ( e ) => {
-					const error = await formatError( e );
+                    getProduct(productId)
+                    .then(
+                        ( product ) => {
+                        this.setState({ product, loading: false, error: null });
+                        } 
+                    )
+                .catch(
+                    async(e) => {
+                    const error = await formatError(e);
+                    this.setState({ product: null, loading: false, error });
+                    } 
+                );
+                };
 
-					this.setState( { product: null, loading: false, error } );
-				} );
-		};
+            render()
+            {
+                const { error, loading, product } = this.state;
 
-		render() {
-			const { error, loading, product } = this.state;
-
-			return (
-				<OriginalComponent
-					{ ...this.props }
-					error={ error }
-					getProduct={ this.loadProduct }
-					isLoading={ loading }
-					product={ product }
-				/>
-			);
-		}
-	};
-}, 'withProduct' );
+                return (
+                <OriginalComponent
+                { ...this.props }
+                error={ error }
+                getProduct={ this.loadProduct }
+                isLoading={ loading }
+                product={ product }
+                />
+                );
+                }
+        };
+    }, 'withProduct' 
+);
 
 export default withProduct;

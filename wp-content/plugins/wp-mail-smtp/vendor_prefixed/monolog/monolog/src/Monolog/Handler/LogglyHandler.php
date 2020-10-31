@@ -53,9 +53,11 @@ class LogglyHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessin
     public function handleBatch(array $records)
     {
         $level = $this->level;
-        $records = \array_filter($records, function ($record) use($level) {
-            return $record['level'] >= $level;
-        });
+        $records = \array_filter(
+            $records, function ($record) use ($level) {
+                return $record['level'] >= $level;
+            }
+        );
         if ($records) {
             $this->send($this->getFormatter()->formatBatch($records), self::ENDPOINT_BATCH);
         }

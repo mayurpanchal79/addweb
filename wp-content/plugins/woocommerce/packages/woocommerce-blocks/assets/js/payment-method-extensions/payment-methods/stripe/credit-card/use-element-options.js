@@ -19,46 +19,45 @@ import { useState, useEffect, useCallback } from '@wordpress/element';
  * @return {string} The style value of that property in the document element.
  */
 const getComputedStyle = ( selector, property, defaultValue ) => {
-	let elementStyle = {};
+    let elementStyle = {};
 
-	if (
-		typeof document === 'object' &&
-		typeof document.querySelector === 'function' &&
-		typeof window.getComputedStyle === 'function'
-	) {
-		const element = document.querySelector( selector );
-		if ( element ) {
-			elementStyle = window.getComputedStyle( element );
-		}
-	}
+    if (typeof document === 'object' 
+        && typeof document.querySelector === 'function' 
+        && typeof window.getComputedStyle === 'function'
+    ) {
+        const element = document.querySelector(selector);
+        if (element ) {
+            elementStyle = window.getComputedStyle(element);
+        }
+    }
 
-	return elementStyle[ property ] || defaultValue;
+    return elementStyle[ property ] || defaultValue;
 };
 
 /**
  * Default options for the stripe elements.
  */
 const elementOptions = {
-	style: {
-		base: {
-			iconColor: '#666EE8',
-			color: '#31325F',
-			fontSize: getComputedStyle(
-				'.wc-block-checkout',
-				'fontSize',
-				'16px'
-			),
-			lineHeight: 1.375, // With a font-size of 16px, line-height will be 22px.
-			'::placeholder': {
-				color: '#fff',
-			},
-		},
-	},
-	classes: {
-		focus: 'focused',
-		empty: 'empty',
-		invalid: 'has-error',
-	},
+    style: {
+        base: {
+            iconColor: '#666EE8',
+            color: '#31325F',
+            fontSize: getComputedStyle(
+                '.wc-block-checkout',
+                'fontSize',
+                '16px'
+            ),
+        lineHeight: 1.375, // With a font-size of 16px, line-height will be 22px.
+        '::placeholder': {
+            color: '#fff',
+            },
+        },
+    },
+    classes: {
+        focus: 'focused',
+        empty: 'empty',
+        invalid: 'has-error',
+    },
 };
 
 /**
@@ -70,46 +69,51 @@ const elementOptions = {
  * @return {StripeElementOptions}  The stripe element options interface
  */
 export const useElementOptions = ( overloadedOptions ) => {
-	const [ isActive, setIsActive ] = useState( false );
-	const [ options, setOptions ] = useState( {
-		...elementOptions,
-		...overloadedOptions,
-	} );
-	const [ error, setError ] = useState( '' );
+    const [ isActive, setIsActive ] = useState(false);
+    const [ options, setOptions ] = useState(
+        {
+            ...elementOptions,
+            ...overloadedOptions,
+        } 
+    );
+    const [ error, setError ] = useState('');
 
-	useEffect( () => {
-		const color = isActive ? '#CFD7E0' : '#fff';
+    useEffect(
+        () => {
+            const color = isActive ? '#CFD7E0' : '#fff';
+            setOptions(
+            ( prevOptions ) => {
+                    const showIcon =
+                    typeof prevOptions.showIcon !== 'undefined'
+                    ? { showIcon: isActive }
+                    : {};
+                    return {
+                        ...options,
+                        style: {
+                                   ...options.style,
+                            base: {
+                                ...options.style.base,
+                                '::placeholder': {
+                                       color,
+                                },
+                            },
+                            },
+                        ...showIcon,
+                    };
+            } 
+        );
+        }, [ isActive ] 
+    );
 
-		setOptions( ( prevOptions ) => {
-			const showIcon =
-				typeof prevOptions.showIcon !== 'undefined'
-					? { showIcon: isActive }
-					: {};
-			return {
-				...options,
-				style: {
-					...options.style,
-					base: {
-						...options.style.base,
-						'::placeholder': {
-							color,
-						},
-					},
-				},
-				...showIcon,
-			};
-		} );
-	}, [ isActive ] );
-
-	const onActive = useCallback(
-		( isEmpty ) => {
-			if ( ! isEmpty ) {
-				setIsActive( true );
-			} else {
-				setIsActive( ( prevActive ) => ! prevActive );
-			}
-		},
-		[ setIsActive ]
-	);
-	return { options, onActive, error, setError };
+    const onActive = useCallback(
+        ( isEmpty ) => {
+        if (! isEmpty ) {
+            setIsActive(true);
+        } else {
+                setIsActive(( prevActive ) => ! prevActive);
+            }
+        },
+        [ setIsActive ]
+    );
+    return { options, onActive, error, setError };
 };

@@ -32,7 +32,7 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     const WELL_KNOWN_PATH = 'gcloud/application_default_credentials.json';
     const NON_WINDOWS_WELL_KNOWN_PATH_BASE = '.config';
     /**
-     * @param string $cause
+     * @param  string $cause
      * @return string
      */
     private static function unableToReadEnv($cause)
@@ -116,12 +116,13 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     /**
      * Create a new Credentials instance.
      *
-     * @param string|array $scope the scope of the access request, expressed
-     *        either as an Array or as a space-delimited String.
-     * @param array $jsonKey the JSON credentials.
+     * @param string|array $scope        the scope of the access request, expressed
+     *                                   either as an Array or as a space-delimited
+     *                                   String.
+     * @param array        $jsonKey      the JSON credentials.
      * @param string|array $defaultScope The default scope to use if no
-     *   user-defined scopes exist, expressed either as an Array or as a
-     *   space-delimited string.
+     *                                   user-defined scopes exist, expressed either as an Array or as a
+     *                                   space-delimited string.
      *
      * @return ServiceAccountCredentials|UserRefreshCredentials
      */
@@ -143,10 +144,10 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     /**
      * Create an authorized HTTP Client from an instance of FetchAuthTokenInterface.
      *
-     * @param FetchAuthTokenInterface $fetcher is used to fetch the auth token
-     * @param array $httpClientOptions (optional) Array of request options to apply.
-     * @param callable $httpHandler (optional) http client to fetch the token.
-     * @param callable $tokenCallback (optional) function to be called when a new token is fetched.
+     * @param  FetchAuthTokenInterface $fetcher           is used to fetch the auth token
+     * @param  array                   $httpClientOptions (optional) Array of request options to apply.
+     * @param  callable                $httpHandler       (optional) http client to fetch the token.
+     * @param  callable                $tokenCallback     (optional) function to be called when a new token is fetched.
      * @return \GuzzleHttp\Client
      */
     public static function makeHttpClient(\WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface $fetcher, array $httpClientOptions = [], callable $httpHandler = null, callable $tokenCallback = null)
@@ -175,7 +176,7 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     /**
      * export a callback function which updates runtime metadata.
      *
-     * @return array updateMetadata function
+     * @return     array updateMetadata function
      * @deprecated
      */
     public function getUpdateMetadataFunc()
@@ -185,9 +186,9 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     /**
      * Updates metadata with the authorization token.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $authUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  array    $metadata    metadata hashmap
+     * @param  string   $authUri     optional auth uri
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array updated metadata hashmap
      */
     public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null)

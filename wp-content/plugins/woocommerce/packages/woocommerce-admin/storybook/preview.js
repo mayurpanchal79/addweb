@@ -10,5 +10,5 @@ import { addDecorator } from '@storybook/react';
  */
 import './style.scss';
 
-addDecorator( withA11y );
-addDecorator( withKnobs );
+addDecorator(withA11y);
+addDecorator(withKnobs);

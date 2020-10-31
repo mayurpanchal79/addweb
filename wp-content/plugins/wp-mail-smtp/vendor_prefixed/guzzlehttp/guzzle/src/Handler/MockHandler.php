@@ -23,7 +23,7 @@ class MockHandler implements \Countable
      * Creates a new MockHandler that uses the default handler stack list of
      * middlewares.
      *
-     * @param array $queue Array of responses, callables, or exceptions.
+     * @param array    $queue       Array of responses, callables, or exceptions.
      * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
      * @param callable $onRejected  Callback to invoke when the return value is rejected.
      *
@@ -38,7 +38,7 @@ class MockHandler implements \Countable
      * {@see Psr7\Http\Message\ResponseInterface} objects, Exceptions,
      * callables, or Promises.
      *
-     * @param array $queue
+     * @param array    $queue
      * @param callable $onFulfilled Callback to invoke when the return value is fulfilled.
      * @param callable $onRejected  Callback to invoke when the return value is rejected.
      */
@@ -76,30 +76,32 @@ class MockHandler implements \Countable
             $response = \call_user_func($response, $request, $options);
         }
         $response = $response instanceof \Exception ? \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($response) : \WPMailSMTP\Vendor\GuzzleHttp\Promise\promise_for($response);
-        return $response->then(function ($value) use($request, $options) {
-            $this->invokeStats($request, $options, $value);
-            if ($this->onFulfilled) {
-                \call_user_func($this->onFulfilled, $value);
-            }
-            if (isset($options['sink'])) {
-                $contents = (string) $value->getBody();
-                $sink = $options['sink'];
-                if (\is_resource($sink)) {
-                    \fwrite($sink, $contents);
-                } elseif (\is_string($sink)) {
-                    \file_put_contents($sink, $contents);
-                } elseif ($sink instanceof \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface) {
-                    $sink->write($contents);
+        return $response->then(
+            function ($value) use ($request, $options) {
+                $this->invokeStats($request, $options, $value);
+                if ($this->onFulfilled) {
+                    \call_user_func($this->onFulfilled, $value);
                 }
+                if (isset($options['sink'])) {
+                    $contents = (string) $value->getBody();
+                    $sink = $options['sink'];
+                    if (\is_resource($sink)) {
+                        \fwrite($sink, $contents);
+                    } elseif (\is_string($sink)) {
+                        \file_put_contents($sink, $contents);
+                    } elseif ($sink instanceof \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface) {
+                        $sink->write($contents);
+                    }
+                }
+                return $value;
+            }, function ($reason) use ($request, $options) {
+                $this->invokeStats($request, $options, null, $reason);
+                if ($this->onRejected) {
+                    \call_user_func($this->onRejected, $reason);
+                }
+                return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
             }
-            return $value;
-        }, function ($reason) use($request, $options) {
-            $this->invokeStats($request, $options, null, $reason);
-            if ($this->onRejected) {
-                \call_user_func($this->onRejected, $reason);
-            }
-            return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
-        });
+        );
     }
     /**
      * Adds one or more variadic requests, exceptions, callables, or promises

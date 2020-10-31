@@ -20,7 +20,9 @@ class RedirectMiddleware
     const HISTORY_HEADER = 'X-Guzzle-Redirect-History';
     const STATUS_HISTORY_HEADER = 'X-Guzzle-Redirect-Status-History';
     public static $defaultSettings = ['max' => 5, 'protocols' => ['http', 'https'], 'strict' => \false, 'referer' => \false, 'track_redirects' => \false];
-    /** @var callable  */
+    /**
+     * @var callable  
+     */
     private $nextHandler;
     /**
      * @param callable $nextHandler Next handler to invoke.
@@ -52,9 +54,11 @@ class RedirectMiddleware
         if (empty($options['allow_redirects']['max'])) {
             return $fn($request, $options);
         }
-        return $fn($request, $options)->then(function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use($request, $options) {
-            return $this->checkRedirect($request, $options, $response);
-        });
+        return $fn($request, $options)->then(
+            function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use ($request, $options) {
+                return $this->checkRedirect($request, $options, $response);
+            }
+        );
     }
     /**
      * @param RequestInterface  $request
@@ -73,7 +77,9 @@ class RedirectMiddleware
         if (isset($options['allow_redirects']['on_redirect'])) {
             \call_user_func($options['allow_redirects']['on_redirect'], $request, $response, $nextRequest->getUri());
         }
-        /** @var PromiseInterface|ResponseInterface $promise */
+        /**
+ * @var PromiseInterface|ResponseInterface $promise 
+*/
         $promise = $this($nextRequest, $options);
         // Add headers to be able to track history of redirects.
         if (!empty($options['allow_redirects']['track_redirects'])) {
@@ -88,16 +94,18 @@ class RedirectMiddleware
      */
     private function withTracking(\WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseInterface $promise, $uri, $statusCode)
     {
-        return $promise->then(function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use($uri, $statusCode) {
-            // Note that we are pushing to the front of the list as this
-            // would be an earlier response than what is currently present
-            // in the history header.
-            $historyHeader = $response->getHeader(self::HISTORY_HEADER);
-            $statusHeader = $response->getHeader(self::STATUS_HISTORY_HEADER);
-            \array_unshift($historyHeader, $uri);
-            \array_unshift($statusHeader, $statusCode);
-            return $response->withHeader(self::HISTORY_HEADER, $historyHeader)->withHeader(self::STATUS_HISTORY_HEADER, $statusHeader);
-        });
+        return $promise->then(
+            function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use ($uri, $statusCode) {
+                // Note that we are pushing to the front of the list as this
+                // would be an earlier response than what is currently present
+                // in the history header.
+                $historyHeader = $response->getHeader(self::HISTORY_HEADER);
+                $statusHeader = $response->getHeader(self::STATUS_HISTORY_HEADER);
+                \array_unshift($historyHeader, $uri);
+                \array_unshift($statusHeader, $statusCode);
+                return $response->withHeader(self::HISTORY_HEADER, $historyHeader)->withHeader(self::STATUS_HISTORY_HEADER, $statusHeader);
+            }
+        );
     }
     /**
      * Check for too many redirects

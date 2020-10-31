@@ -17,36 +17,40 @@ import { registeredBlockComponents } from './registered-block-components-init';
  * This gets all registered Block Components so we know which Blocks map to which React Components.
  *
  * @export
- * @param {string} context Current context (a named parent Block). If Block Components were only
+ * @param  {string} context Current context (a named parent Block). If Block Components were only
  *                         registered under a certain context, those Components will be returned,
  *                         as well as any Components registered under all contexts.
  * @return {Object} List of React Components registered under the provided context.
  */
-export function getRegisteredBlockComponents( context ) {
-	const parentInnerBlocks =
-		typeof registeredBlockComponents[ context ] === 'object' &&
-		Object.keys( registeredBlockComponents[ context ] ).length > 0
-			? registeredBlockComponents[ context ]
-			: {};
+export function getRegisteredBlockComponents( context )
+{
+    const parentInnerBlocks =
+    typeof registeredBlockComponents[ context ] === 'object' &&
+    Object.keys(registeredBlockComponents[ context ]).length > 0
+    ? registeredBlockComponents[ context ]
+    : {};
 
-	return {
-		...parentInnerBlocks,
-		...registeredBlockComponents.any,
-	};
+    return {
+        ...parentInnerBlocks,
+        ...registeredBlockComponents.any,
+    };
 }
 
 /**
  * Alias of getRegisteredBlockComponents kept for backwards compatibility.
  *
  * @export
- * @param {string} main Name of the parent block to retrieve children of.
+ * @param  {string} main Name of the parent block to retrieve children of.
  * @return {Object} List of registered inner blocks.
  */
-export function getRegisteredInnerBlocks( main ) {
-	deprecated( 'getRegisteredInnerBlocks', {
-		version: '2.8.0',
-		alternative: 'getRegisteredBlockComponents',
-		plugin: 'WooCommerce Blocks',
-	} );
-	return getRegisteredBlockComponents( main );
+export function getRegisteredInnerBlocks( main )
+{
+    deprecated(
+        'getRegisteredInnerBlocks', {
+            version: '2.8.0',
+            alternative: 'getRegisteredBlockComponents',
+            plugin: 'WooCommerce Blocks',
+        } 
+    );
+    return getRegisteredBlockComponents(main);
 }

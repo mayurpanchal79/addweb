@@ -11,7 +11,9 @@ use WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface;
  */
 class PrepareBodyMiddleware
 {
-    /** @var callable  */
+    /**
+     * @var callable  
+     */
     private $nextHandler;
     /**
      * @param callable $nextHandler Next handler to invoke.

@@ -38,8 +38,8 @@ use Exception;
 class HeaderSelector
 {
     /**
-     * @param string[] $accept
-     * @param string[] $contentTypes
+     * @param  string[] $accept
+     * @param  string[] $contentTypes
      * @return array
      */
     public function selectHeaders($accept, $contentTypes)
@@ -53,7 +53,7 @@ class HeaderSelector
         return $headers;
     }
     /**
-     * @param string[] $accept
+     * @param  string[] $accept
      * @return array
      */
     public function selectHeadersForMultipart($accept)

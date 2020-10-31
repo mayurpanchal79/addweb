@@ -34,7 +34,7 @@ class IAMCredentials
     private $token;
     /**
      * @param $selector string the IAM selector
-     * @param $token string the IAM token
+     * @param $token    string the IAM token
      */
     public function __construct($selector, $token)
     {
@@ -59,11 +59,12 @@ class IAMCredentials
     /**
      * Updates metadata with the appropriate header metadata.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $unusedAuthUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
-     *        Note: this param is unused here, only included here for
-     *        consistency with other credentials class
+     * @param array    $metadata      metadata hashmap
+     * @param string   $unusedAuthUri optional auth uri
+     * @param callable $httpHandler   callback which delivers psr7 request
+     *                                Note: this param is unused here,
+     *                                only included here for consistency
+     *                                with other credentials class
      *
      * @return array updated metadata hashmap
      */

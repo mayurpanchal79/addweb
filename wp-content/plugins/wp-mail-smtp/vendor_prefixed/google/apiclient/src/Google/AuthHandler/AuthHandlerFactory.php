@@ -36,14 +36,14 @@ class Google_AuthHandler_AuthHandlerFactory
             $guzzleVersion = (int) \substr(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface::VERSION, 0, 1);
         }
         switch ($guzzleVersion) {
-            case 5:
-                return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle5AuthHandler($cache, $cacheConfig);
-            case 6:
-                return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle6AuthHandler($cache, $cacheConfig);
-            case 7:
-                return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle7AuthHandler($cache, $cacheConfig);
-            default:
-                throw new \Exception('Version not supported');
+        case 5:
+            return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle5AuthHandler($cache, $cacheConfig);
+        case 6:
+            return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle6AuthHandler($cache, $cacheConfig);
+        case 7:
+            return new \WPMailSMTP\Vendor\Google_AuthHandler_Guzzle7AuthHandler($cache, $cacheConfig);
+        default:
+            throw new \Exception('Version not supported');
         }
     }
 }

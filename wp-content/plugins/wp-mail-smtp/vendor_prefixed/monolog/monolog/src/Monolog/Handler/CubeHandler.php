@@ -15,7 +15,7 @@ use WPMailSMTP\Vendor\Monolog\Utils;
 /**
  * Logs to Cube.
  *
- * @link http://square.github.com/cube/
+ * @link   http://square.github.com/cube/
  * @author Wan Chen <kami@kamisama.me>
  */
 class CubeHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingHandler
@@ -68,6 +68,7 @@ class CubeHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingH
     }
     /**
      * Establish a connection to a http server
+     *
      * @throws \LogicException when no curl extension
      */
     protected function connectHttp()

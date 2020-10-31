@@ -27,20 +27,22 @@ class RejectedPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseIn
         $queue = \WPMailSMTP\Vendor\GuzzleHttp\Promise\Utils::queue();
         $reason = $this->reason;
         $p = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise([$queue, 'run']);
-        $queue->add(static function () use($p, $reason, $onRejected) {
-            if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::pending($p)) {
-                try {
-                    // Return a resolved promise if onRejected does not throw.
-                    $p->resolve($onRejected($reason));
-                } catch (\Throwable $e) {
-                    // onRejected threw, so return a rejected promise.
-                    $p->reject($e);
-                } catch (\Exception $e) {
-                    // onRejected threw, so return a rejected promise.
-                    $p->reject($e);
+        $queue->add(
+            static function () use ($p, $reason, $onRejected) {
+                if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::pending($p)) {
+                    try {
+                        // Return a resolved promise if onRejected does not throw.
+                        $p->resolve($onRejected($reason));
+                    } catch (\Throwable $e) {
+                        // onRejected threw, so return a rejected promise.
+                        $p->reject($e);
+                    } catch (\Exception $e) {
+                        // onRejected threw, so return a rejected promise.
+                        $p->reject($e);
+                    }
                 }
             }
-        });
+        );
         return $p;
     }
     public function otherwise(callable $onRejected)

@@ -143,14 +143,16 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
      */
     private $serviceAccountIdentity;
     /**
-     * @param Iam $iam [optional] An IAM instance.
-     * @param string|array $scope [optional] the scope of the access request,
-     *        expressed either as an array or as a space-delimited string.
-     * @param string $targetAudience [optional] The audience for the ID token.
-     * @param string $quotaProject [optional] Specifies a project to bill for access
-     *   charges associated with the request.
-     * @param string $serviceAccountIdentity [optional] Specify a service
-     *   account identity name to use instead of "default".
+     * @param Iam          $iam                    [optional] An IAM instance.
+     * @param string|array $scope                  [optional] the scope of the access request,
+     *                                             expressed either as an array or as a
+     *                                             space-delimited string.
+     * @param string       $targetAudience         [optional] The audience for the ID token.
+     * @param string       $quotaProject           [optional] Specifies a project to bill for access
+     *                                             charges associated with the request.
+     * @param string       $serviceAccountIdentity [optional] Specify a service
+     *                                             account identity name to use
+     *                                             instead of "default".
      */
     public function __construct(\WPMailSMTP\Vendor\Google\Auth\Iam $iam = null, $scope = null, $targetAudience = null, $quotaProject = null, $serviceAccountIdentity = null)
     {
@@ -177,8 +179,8 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
     /**
      * The full uri for accessing the default token.
      *
-     * @param string $serviceAccountIdentity [optional] Specify a service
-     *   account identity name to use instead of "default".
+     * @param  string $serviceAccountIdentity [optional] Specify a service
+     *                                        account identity name to use instead of "default".
      * @return string
      */
     public static function getTokenUri($serviceAccountIdentity = null)
@@ -193,8 +195,8 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
     /**
      * The full uri for accessing the default service account.
      *
-     * @param string $serviceAccountIdentity [optional] Specify a service
-     *   account identity name to use instead of "default".
+     * @param  string $serviceAccountIdentity [optional] Specify a service
+     *                                        account identity name to use instead of "default".
      * @return string
      */
     public static function getClientNameUri($serviceAccountIdentity = null)
@@ -209,8 +211,8 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
     /**
      * The full uri for accesesing the default identity token.
      *
-     * @param string $serviceAccountIdentity [optional] Specify a service
-     *   account identity name to use instead of "default".
+     * @param  string $serviceAccountIdentity [optional] Specify a service
+     *                                        account identity name to use instead of "default".
      * @return string
      */
     private static function getIdTokenUri($serviceAccountIdentity = null)
@@ -247,7 +249,7 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
      * host.
      * If $httpHandler is not specified a the default HttpHandler is used.
      *
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return bool True if this a GCEInstance, false otherwise
      */
     public static function onGce(callable $httpHandler = null)
@@ -338,7 +340,7 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
      *
      * Subsequent calls will return a cached value.
      *
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return string
      */
     public function getClientName(callable $httpHandler = null)
@@ -364,9 +366,9 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
      *
      * @see https://cloud.google.com/iam/credentials/reference/rest/v1/projects.serviceAccounts/signBlob SignBlob
      *
-     * @param string $stringToSign The string to sign.
-     * @param bool $forceOpenSsl [optional] Does not apply to this credentials
-     *        type.
+     * @param  string $stringToSign The string to sign.
+     * @param  bool   $forceOpenSsl [optional] Does not apply to this credentials
+     *                              type.
      * @return string
      */
     public function signBlob($stringToSign, $forceOpenSsl = \false)
@@ -385,7 +387,7 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
      *
      * Returns null if called outside GCE.
      *
-     * @param callable $httpHandler Callback which delivers psr7 request
+     * @param  callable $httpHandler Callback which delivers psr7 request
      * @return string|null
      */
     public function getProjectId(callable $httpHandler = null)
@@ -407,8 +409,8 @@ class GCECredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader im
     /**
      * Fetch the value of a GCE metadata server URI.
      *
-     * @param callable $httpHandler An HTTP Handler to deliver PSR7 requests.
-     * @param string $uri The metadata URI.
+     * @param  callable $httpHandler An HTTP Handler to deliver PSR7 requests.
+     * @param  string   $uri         The metadata URI.
      * @return string
      */
     private function getFromMetadata(callable $httpHandler, $uri)

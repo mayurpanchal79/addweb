@@ -40,7 +40,7 @@ class LogEntriesHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
     /**
      * {@inheritdoc}
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     protected function generateDataStream($record)

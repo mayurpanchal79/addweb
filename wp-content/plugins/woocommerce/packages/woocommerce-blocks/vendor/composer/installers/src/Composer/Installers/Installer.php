@@ -54,7 +54,7 @@ class Installer extends LibraryInstaller
         'joomla'       => 'JoomlaInstaller',
         'kanboard'     => 'KanboardInstaller',
         'kirby'        => 'KirbyInstaller',
-        'known'	       => 'KnownInstaller',
+        'known'           => 'KnownInstaller',
         'kodicms'      => 'KodiCMSInstaller',
         'kohana'       => 'KohanaInstaller',
         'lms'      => 'LanManagementSystemInstaller',
@@ -131,8 +131,10 @@ class Installer extends LibraryInstaller
         Filesystem $filesystem = null,
         BinaryInstaller $binaryInstaller = null
     ) {
-        parent::__construct($io, $composer, $type, $filesystem,
-            $binaryInstaller);
+        parent::__construct(
+            $io, $composer, $type, $filesystem,
+            $binaryInstaller
+        );
         $this->removeDisabledInstallers();
     }
 
@@ -213,7 +215,9 @@ class Installer extends LibraryInstaller
         $pattern = false;
         if (!empty($this->supportedTypes[$frameworkType])) {
             $frameworkClass = 'Composer\\Installers\\' . $this->supportedTypes[$frameworkType];
-            /** @var BaseInstaller $framework */
+            /**
+ * @var BaseInstaller $framework 
+*/
             $framework = new $frameworkClass(null, $this->composer, $this->getIO());
             $locations = array_keys($framework->getLocations());
             $pattern = $locations ? '(' . implode('|', $locations) . ')' : false;

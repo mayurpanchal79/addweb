@@ -10,29 +10,29 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 export const ValidationInputError = ( {
-	errorMessage = '',
-	propertyName = '',
-	elementId = '',
+    errorMessage = '',
+    propertyName = '',
+    elementId = '',
 } ) => {
-	const { getValidationError, getValidationErrorId } = useValidationContext();
-	if ( ! errorMessage ) {
-		const error = getValidationError( propertyName ) || {};
-		if ( error.message && ! error.hidden ) {
-			errorMessage = error.message;
-		} else {
-			return null;
-		}
-	}
+    const { getValidationError, getValidationErrorId } = useValidationContext();
+    if (! errorMessage ) {
+        const error = getValidationError(propertyName) || {};
+        if (error.message && ! error.hidden ) {
+            errorMessage = error.message;
+        } else {
+            return null;
+        }
+    }
 
-	return (
-		<div className="wc-block-components-validation-error" role="alert">
-			<p id={ getValidationErrorId( elementId ) }>{ errorMessage }</p>
-		</div>
-	);
+    return (
+    <div className="wc-block-components-validation-error" role="alert">
+    <p id={ getValidationErrorId(elementId) }>{ errorMessage }</p>
+    </div>
+    );
 };
 
 ValidationInputError.propTypes = {
-	errorMessage: PropTypes.string,
-	propertyName: PropTypes.string,
-	elementId: PropTypes.string,
+    errorMessage: PropTypes.string,
+    propertyName: PropTypes.string,
+    elementId: PropTypes.string,
 };

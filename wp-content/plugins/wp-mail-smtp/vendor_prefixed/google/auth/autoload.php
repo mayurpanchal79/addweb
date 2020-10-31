@@ -29,7 +29,7 @@ function oauth2client_php_autoload($className)
     }
     $filePath = \dirname(__FILE__) . '/src/' . \implode('/', $classPath) . '.php';
     if (\file_exists($filePath)) {
-        require_once $filePath;
+        include_once $filePath;
     }
 }
 \spl_autoload_register('oauth2client_php_autoload');

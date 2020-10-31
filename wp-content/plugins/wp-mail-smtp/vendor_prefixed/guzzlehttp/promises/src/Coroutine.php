@@ -58,11 +58,13 @@ final class Coroutine implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseIn
     public function __construct(callable $generatorFn)
     {
         $this->generator = $generatorFn();
-        $this->result = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(function () {
-            while (isset($this->currentPromise)) {
-                $this->currentPromise->wait();
+        $this->result = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(
+            function () {
+                while (isset($this->currentPromise)) {
+                    $this->currentPromise->wait();
+                }
             }
-        });
+        );
         try {
             $this->nextCoroutine($this->generator->current());
         } catch (\Exception $exception) {

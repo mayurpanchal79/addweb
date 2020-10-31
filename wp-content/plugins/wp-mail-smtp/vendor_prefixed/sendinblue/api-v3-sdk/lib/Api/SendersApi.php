@@ -81,7 +81,7 @@ class SendersApi
      *
      * Create a new sender
      *
-     * @param  \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
+     * @param \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -97,7 +97,7 @@ class SendersApi
      *
      * Create a new sender
      *
-     * @param  \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
+     * @param \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -131,14 +131,14 @@ class SendersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSenderModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSenderModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -148,23 +148,25 @@ class SendersApi
      *
      * Create a new sender
      *
-     * @param  \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
+     * @param \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createSenderAsync($sender = null)
     {
-        return $this->createSenderAsyncWithHttpInfo($sender)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createSenderAsyncWithHttpInfo($sender)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createSenderAsyncWithHttpInfo
      *
      * Create a new sender
      *
-     * @param  \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
+     * @param \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -173,28 +175,30 @@ class SendersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSenderModel';
         $request = $this->createSenderRequest($sender);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createSender'
      *
-     * @param  \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
+     * @param \SendinBlue\Client\Model\CreateSender $sender sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -269,7 +273,7 @@ class SendersApi
      *
      * Delete a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -284,7 +288,7 @@ class SendersApi
      *
      * Delete a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -308,14 +312,14 @@ class SendersApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -325,23 +329,25 @@ class SendersApi
      *
      * Delete a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteSenderAsync($senderId)
     {
-        return $this->deleteSenderAsyncWithHttpInfo($senderId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteSenderAsyncWithHttpInfo($senderId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteSenderAsyncWithHttpInfo
      *
      * Delete a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -350,18 +356,20 @@ class SendersApi
     {
         $returnType = '';
         $request = $this->deleteSenderRequest($senderId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteSender'
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -441,7 +449,6 @@ class SendersApi
      *
      * Get all the dedicated IPs for your account
      *
-     *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \SendinBlue\Client\Model\GetIps
@@ -455,7 +462,6 @@ class SendersApi
      * Operation getIpsWithHttpInfo
      *
      * Get all the dedicated IPs for your account
-     *
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -489,10 +495,10 @@ class SendersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIps', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIps', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -502,21 +508,21 @@ class SendersApi
      *
      * Get all the dedicated IPs for your account
      *
-     *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getIpsAsync()
     {
-        return $this->getIpsAsyncWithHttpInfo()->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getIpsAsyncWithHttpInfo()->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getIpsAsyncWithHttpInfo
      *
      * Get all the dedicated IPs for your account
-     *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -525,27 +531,28 @@ class SendersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIps';
         $request = $this->getIpsRequest();
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getIps'
-     *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -617,7 +624,7 @@ class SendersApi
      *
      * Get all the dedicated IPs for a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -633,7 +640,7 @@ class SendersApi
      *
      * Get all the dedicated IPs for a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -667,18 +674,18 @@ class SendersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIpsFromSender', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIpsFromSender', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -688,23 +695,25 @@ class SendersApi
      *
      * Get all the dedicated IPs for a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getIpsFromSenderAsync($senderId)
     {
-        return $this->getIpsFromSenderAsyncWithHttpInfo($senderId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getIpsFromSenderAsyncWithHttpInfo($senderId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getIpsFromSenderAsyncWithHttpInfo
      *
      * Get all the dedicated IPs for a sender
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -713,28 +722,30 @@ class SendersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetIpsFromSender';
         $request = $this->getIpsFromSenderRequest($senderId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getIpsFromSender'
      *
-     * @param  int $senderId Id of the sender (required)
+     * @param int $senderId Id of the sender (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -814,8 +825,8 @@ class SendersApi
      *
      * Get the list of all your senders
      *
-     * @param  string $ip Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
-     * @param  string $domain Filter your senders for a specific domain (optional)
+     * @param string $ip     Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
+     * @param string $domain Filter your senders for a specific domain (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -831,8 +842,8 @@ class SendersApi
      *
      * Get the list of all your senders
      *
-     * @param  string $ip Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
-     * @param  string $domain Filter your senders for a specific domain (optional)
+     * @param string $ip     Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
+     * @param string $domain Filter your senders for a specific domain (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -866,14 +877,14 @@ class SendersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSendersList', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSendersList', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -883,25 +894,27 @@ class SendersApi
      *
      * Get the list of all your senders
      *
-     * @param  string $ip Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
-     * @param  string $domain Filter your senders for a specific domain (optional)
+     * @param string $ip     Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
+     * @param string $domain Filter your senders for a specific domain (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSendersAsync($ip = null, $domain = null)
     {
-        return $this->getSendersAsyncWithHttpInfo($ip, $domain)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSendersAsyncWithHttpInfo($ip, $domain)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSendersAsyncWithHttpInfo
      *
      * Get the list of all your senders
      *
-     * @param  string $ip Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
-     * @param  string $domain Filter your senders for a specific domain (optional)
+     * @param string $ip     Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
+     * @param string $domain Filter your senders for a specific domain (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -910,29 +923,31 @@ class SendersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSendersList';
         $request = $this->getSendersRequest($ip, $domain);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSenders'
      *
-     * @param  string $ip Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
-     * @param  string $domain Filter your senders for a specific domain (optional)
+     * @param string $ip     Filter your senders for a specific ip (available for dedicated IP usage only) (optional)
+     * @param string $domain Filter your senders for a specific domain (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1012,8 +1027,8 @@ class SendersApi
      *
      * Update a sender
      *
-     * @param  int $senderId Id of the sender (required)
-     * @param  \SendinBlue\Client\Model\UpdateSender $sender sender&#39;s name (optional)
+     * @param int                                   $senderId Id of the sender (required)
+     * @param \SendinBlue\Client\Model\UpdateSender $sender   sender&#39;s name (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1028,8 +1043,8 @@ class SendersApi
      *
      * Update a sender
      *
-     * @param  int $senderId Id of the sender (required)
-     * @param  \SendinBlue\Client\Model\UpdateSender $sender sender&#39;s name (optional)
+     * @param int                                   $senderId Id of the sender (required)
+     * @param \SendinBlue\Client\Model\UpdateSender $sender   sender&#39;s name (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1053,14 +1068,14 @@ class SendersApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1070,25 +1085,27 @@ class SendersApi
      *
      * Update a sender
      *
-     * @param  int $senderId Id of the sender (required)
-     * @param  \SendinBlue\Client\Model\UpdateSender $sender sender&#39;s name (optional)
+     * @param int                                   $senderId Id of the sender (required)
+     * @param \SendinBlue\Client\Model\UpdateSender $sender   sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateSenderAsync($senderId, $sender = null)
     {
-        return $this->updateSenderAsyncWithHttpInfo($senderId, $sender)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateSenderAsyncWithHttpInfo($senderId, $sender)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateSenderAsyncWithHttpInfo
      *
      * Update a sender
      *
-     * @param  int $senderId Id of the sender (required)
-     * @param  \SendinBlue\Client\Model\UpdateSender $sender sender&#39;s name (optional)
+     * @param int                                   $senderId Id of the sender (required)
+     * @param \SendinBlue\Client\Model\UpdateSender $sender   sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1097,19 +1114,21 @@ class SendersApi
     {
         $returnType = '';
         $request = $this->updateSenderRequest($senderId, $sender);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateSender'
      *
-     * @param  int $senderId Id of the sender (required)
-     * @param  \SendinBlue\Client\Model\UpdateSender $sender sender&#39;s name (optional)
+     * @param int                                   $senderId Id of the sender (required)
+     * @param \SendinBlue\Client\Model\UpdateSender $sender   sender&#39;s name (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

@@ -10,14 +10,14 @@ import { SHIPPING_COUNTRIES } from '@woocommerce/block-settings';
 import CountryInput from './country-input.js';
 
 const ShippingCountryInput = ( props ) => {
-	return <CountryInput countries={ SHIPPING_COUNTRIES } { ...props } />;
+    return <CountryInput countries={ SHIPPING_COUNTRIES } { ...props } />;
 };
 
 ShippingCountryInput.propTypes = {
-	onChange: PropTypes.func.isRequired,
-	className: PropTypes.string,
-	label: PropTypes.string,
-	value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    label: PropTypes.string,
+    value: PropTypes.string,
 };
 
 export default ShippingCountryInput;

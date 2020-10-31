@@ -3,8 +3,8 @@
  */
 import { getValidBlockAttributes } from '@woocommerce/base-utils';
 import {
-	renderParentBlock,
-	renderStandaloneBlocks,
+    renderParentBlock,
+    renderStandaloneBlocks,
 } from '@woocommerce/atomic-utils';
 
 /**
@@ -15,16 +15,18 @@ import blockAttributes from './attributes';
 import { BLOCK_NAME } from './constants';
 
 const getProps = ( el ) => {
-	return {
-		attributes: getValidBlockAttributes( blockAttributes, el.dataset ),
-	};
+    return {
+        attributes: getValidBlockAttributes(blockAttributes, el.dataset),
+    };
 };
 
-renderParentBlock( {
-	Block,
-	blockName: BLOCK_NAME,
-	selector: '.wp-block-woocommerce-single-product',
-	getProps,
-} );
+renderParentBlock(
+    {
+            Block,
+        blockName: BLOCK_NAME,
+        selector: '.wp-block-woocommerce-single-product',
+            getProps,
+    } 
+);
 
 renderStandaloneBlocks();

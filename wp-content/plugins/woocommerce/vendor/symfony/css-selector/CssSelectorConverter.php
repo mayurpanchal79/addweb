@@ -43,8 +43,7 @@ class CssSelectorConverter
             ->registerParserShortcut(new EmptyStringParser())
             ->registerParserShortcut(new ElementParser())
             ->registerParserShortcut(new ClassParser())
-            ->registerParserShortcut(new HashParser())
-        ;
+            ->registerParserShortcut(new HashParser());
     }
 
     /**

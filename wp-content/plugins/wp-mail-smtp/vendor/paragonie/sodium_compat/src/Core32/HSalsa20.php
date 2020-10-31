@@ -17,9 +17,9 @@ abstract class ParagonIE_Sodium_Core32_HSalsa20 extends ParagonIE_Sodium_Core32_
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $in
-     * @param string $k
-     * @param string|null $c
+     * @param  string      $in
+     * @param  string      $k
+     * @param  string|null $c
      * @return string
      * @throws SodiumException
      * @throws TypeError

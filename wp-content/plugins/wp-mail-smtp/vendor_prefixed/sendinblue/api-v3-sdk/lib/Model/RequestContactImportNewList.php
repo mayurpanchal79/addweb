@@ -32,11 +32,11 @@ use WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer;
 /**
  * RequestContactImportNewList Class Doc Comment
  *
- * @category Class
+ * @category    Class
  * @description To create a new list and import the contacts into it, pass the listName and an optional folderId.
- * @package  SendinBlue\Client
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @package     SendinBlue\Client
+ * @author      Swagger Codegen team
+ * @link        https://github.com/swagger-api/swagger-codegen
  */
 class RequestContactImportNewList implements \WPMailSMTP\Vendor\SendinBlue\Client\Model\ModelInterface, \ArrayAccess
 {

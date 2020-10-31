@@ -12,31 +12,33 @@ const Event = window.Event || null;
  *                                         default, the body.
  */
 export const dispatchEvent = (
-	name,
-	{ bubbles = false, cancelable = false, element }
+    name,
+    { bubbles = false, cancelable = false, element }
 ) => {
-	if ( ! element ) {
-		element = document.body;
-	}
-	// In IE, Event is an object and can't be instantiated with `new Event()`.
-	if ( typeof Event === 'function' ) {
-		const event = new Event( name, {
-			bubbles,
-			cancelable,
-		} );
-		element.dispatchEvent( event );
-	} else {
-		const event = document.createEvent( 'Event' );
-		event.initEvent( name, bubbles, cancelable );
-		element.dispatchEvent( event );
-	}
+    if (! element ) {
+        element = document.body;
+    }
+    // In IE, Event is an object and can't be instantiated with `new Event()`.
+    if (typeof Event === 'function' ) {
+        const event = new Event(
+            name, {
+                bubbles,
+                cancelable,
+            } 
+        );
+        element.dispatchEvent(event);
+    } else {
+        const event = document.createEvent('Event');
+        event.initEvent(name, bubbles, cancelable);
+        element.dispatchEvent(event);
+    }
 };
 
 // This is a hack to trigger cart updates till we migrate to block based cart
 // that relies on the store, see
 // https://github.com/woocommerce/woocommerce-gutenberg-products-block/issues/1247
 export const triggerFragmentRefresh = () => {
-	dispatchEvent( 'wc_fragment_refresh', { bubbles: true, cancelable: true } );
+    dispatchEvent('wc_fragment_refresh', { bubbles: true, cancelable: true });
 };
 
 /**
@@ -52,22 +54,22 @@ export const triggerFragmentRefresh = () => {
  * should be used when the component is unmounted.
  */
 export const translateJQueryEventToNative = (
-	jQueryEventName,
-	nativeEventName,
-	bubbles = false,
-	cancelable = false
+    jQueryEventName,
+    nativeEventName,
+    bubbles = false,
+    cancelable = false
 ) => {
-	// @ts-ignore -- jQuery is window global
-	if ( typeof jQuery !== 'function' ) {
-		return () => void null;
-	}
+    // @ts-ignore -- jQuery is window global
+    if (typeof jQuery !== 'function' ) {
+        return () => void null;
+    }
 
-	const eventDispatcher = () => {
-		dispatchEvent( nativeEventName, { bubbles, cancelable } );
-	};
+    const eventDispatcher = () => {
+        dispatchEvent(nativeEventName, { bubbles, cancelable });
+    };
 
-	// @ts-ignore -- jQuery is window global
-	jQuery( document ).on( jQueryEventName, eventDispatcher );
-	// @ts-ignore -- jQuery is window global
-	return () => jQuery( document ).off( jQueryEventName, eventDispatcher );
+    // @ts-ignore -- jQuery is window global
+    jQuery(document).on(jQueryEventName, eventDispatcher);
+    // @ts-ignore -- jQuery is window global
+    return () => jQuery(document).off(jQueryEventName, eventDispatcher);
 };

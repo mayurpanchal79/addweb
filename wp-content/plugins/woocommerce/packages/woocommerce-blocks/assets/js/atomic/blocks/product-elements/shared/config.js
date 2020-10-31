@@ -13,22 +13,22 @@ import save from '../save';
  * Holds default config for this collection of blocks.
  */
 export default {
-	category: 'woocommerce-product-elements',
-	keywords: [ __( 'WooCommerce', 'woocommerce' ) ],
-	icon: {
-		src: <Icon srcElement={ grid } />,
-		foreground: '#96588a',
-	},
-	supports: {
-		html: false,
-	},
-	parent: isExperimentalBuild()
-		? null
-		: [ '@woocommerce/all-products', '@woocommerce/single-product' ],
-	save,
-	deprecated: [
-		{
-			save() {},
-		},
-	],
-};
+    category: 'woocommerce-product-elements',
+        keywords: [ __('WooCommerce', 'woocommerce') ],
+        icon: {
+            src: <Icon srcElement={ grid } />,
+            foreground: '#96588a',
+    },
+    supports: {
+        html: false,
+    },
+    parent: isExperimentalBuild()
+    ? null
+    : [ '@woocommerce/all-products', '@woocommerce/single-product' ],
+    save,
+    deprecated: [
+    {
+        save() {},
+    },
+    ],
+    };

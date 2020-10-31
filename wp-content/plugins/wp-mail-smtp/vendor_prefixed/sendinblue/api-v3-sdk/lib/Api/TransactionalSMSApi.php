@@ -81,14 +81,14 @@ class TransactionalSMSApi
      *
      * Get all your SMS activity (unaggregated events)
      *
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $phoneNumber Filter the report for a specific phone number (optional)
-     * @param  string $event Filter the report for specific events (optional)
-     * @param  string $tags Filter the report for specific tags passed as a serialized urlencoded array (optional)
+     * @param int    $limit       Number of documents per page (optional, default to 50)
+     * @param string $startDate   Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate     Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $offset      Index of the first document of the page (optional, default to 0)
+     * @param int    $days        Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $phoneNumber Filter the report for a specific phone number (optional)
+     * @param string $event       Filter the report for specific events (optional)
+     * @param string $tags        Filter the report for specific tags passed as a serialized urlencoded array (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -104,14 +104,14 @@ class TransactionalSMSApi
      *
      * Get all your SMS activity (unaggregated events)
      *
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $phoneNumber Filter the report for a specific phone number (optional)
-     * @param  string $event Filter the report for specific events (optional)
-     * @param  string $tags Filter the report for specific tags passed as a serialized urlencoded array (optional)
+     * @param int    $limit       Number of documents per page (optional, default to 50)
+     * @param string $startDate   Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate     Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $offset      Index of the first document of the page (optional, default to 0)
+     * @param int    $days        Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $phoneNumber Filter the report for a specific phone number (optional)
+     * @param string $event       Filter the report for specific events (optional)
+     * @param string $tags        Filter the report for specific tags passed as a serialized urlencoded array (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -145,14 +145,14 @@ class TransactionalSMSApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmsEventReport', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmsEventReport', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -162,37 +162,39 @@ class TransactionalSMSApi
      *
      * Get all your SMS activity (unaggregated events)
      *
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $phoneNumber Filter the report for a specific phone number (optional)
-     * @param  string $event Filter the report for specific events (optional)
-     * @param  string $tags Filter the report for specific tags passed as a serialized urlencoded array (optional)
+     * @param int    $limit       Number of documents per page (optional, default to 50)
+     * @param string $startDate   Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate     Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $offset      Index of the first document of the page (optional, default to 0)
+     * @param int    $days        Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $phoneNumber Filter the report for a specific phone number (optional)
+     * @param string $event       Filter the report for specific events (optional)
+     * @param string $tags        Filter the report for specific tags passed as a serialized urlencoded array (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSmsEventsAsync($limit = '50', $startDate = null, $endDate = null, $offset = '0', $days = null, $phoneNumber = null, $event = null, $tags = null)
     {
-        return $this->getSmsEventsAsyncWithHttpInfo($limit, $startDate, $endDate, $offset, $days, $phoneNumber, $event, $tags)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSmsEventsAsyncWithHttpInfo($limit, $startDate, $endDate, $offset, $days, $phoneNumber, $event, $tags)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSmsEventsAsyncWithHttpInfo
      *
      * Get all your SMS activity (unaggregated events)
      *
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $phoneNumber Filter the report for a specific phone number (optional)
-     * @param  string $event Filter the report for specific events (optional)
-     * @param  string $tags Filter the report for specific tags passed as a serialized urlencoded array (optional)
+     * @param int    $limit       Number of documents per page (optional, default to 50)
+     * @param string $startDate   Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate     Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $offset      Index of the first document of the page (optional, default to 0)
+     * @param int    $days        Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $phoneNumber Filter the report for a specific phone number (optional)
+     * @param string $event       Filter the report for specific events (optional)
+     * @param string $tags        Filter the report for specific tags passed as a serialized urlencoded array (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -201,35 +203,37 @@ class TransactionalSMSApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmsEventReport';
         $request = $this->getSmsEventsRequest($limit, $startDate, $endDate, $offset, $days, $phoneNumber, $event, $tags);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSmsEvents'
      *
-     * @param  int $limit Number of documents per page (optional, default to 50)
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $phoneNumber Filter the report for a specific phone number (optional)
-     * @param  string $event Filter the report for specific events (optional)
-     * @param  string $tags Filter the report for specific tags passed as a serialized urlencoded array (optional)
+     * @param int    $limit       Number of documents per page (optional, default to 50)
+     * @param string $startDate   Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate     Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $offset      Index of the first document of the page (optional, default to 0)
+     * @param int    $days        Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $phoneNumber Filter the report for a specific phone number (optional)
+     * @param string $event       Filter the report for specific events (optional)
+     * @param string $tags        Filter the report for specific tags passed as a serialized urlencoded array (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -336,10 +340,10 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -355,10 +359,10 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -392,14 +396,14 @@ class TransactionalSMSApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacAggregatedSmsReport', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacAggregatedSmsReport', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -409,29 +413,31 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getTransacAggregatedSmsReportAsync($startDate = null, $endDate = null, $days = null, $tag = null)
     {
-        return $this->getTransacAggregatedSmsReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getTransacAggregatedSmsReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getTransacAggregatedSmsReportAsyncWithHttpInfo
      *
      * Get your SMS activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -440,31 +446,33 @@ class TransactionalSMSApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacAggregatedSmsReport';
         $request = $this->getTransacAggregatedSmsReportRequest($startDate, $endDate, $days, $tag);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getTransacAggregatedSmsReport'
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with startDate and endDate (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -552,10 +560,10 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated per day
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -571,10 +579,10 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated per day
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -608,14 +616,14 @@ class TransactionalSMSApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacSmsReport', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacSmsReport', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -625,29 +633,31 @@ class TransactionalSMSApi
      *
      * Get your SMS activity aggregated per day
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getTransacSmsReportAsync($startDate = null, $endDate = null, $days = null, $tag = null)
     {
-        return $this->getTransacSmsReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getTransacSmsReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getTransacSmsReportAsyncWithHttpInfo
      *
      * Get your SMS activity aggregated per day
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -656,31 +666,33 @@ class TransactionalSMSApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacSmsReport';
         $request = $this->getTransacSmsReportRequest($startDate, $endDate, $days, $tag);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getTransacSmsReport'
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Filter on a tag (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) of the report (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) of the report (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Filter on a tag (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -768,7 +780,7 @@ class TransactionalSMSApi
      *
      * Send SMS message to a mobile number
      *
-     * @param  \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
+     * @param \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -784,7 +796,7 @@ class TransactionalSMSApi
      *
      * Send SMS message to a mobile number
      *
-     * @param  \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
+     * @param \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -818,18 +830,18 @@ class TransactionalSMSApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendSms', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 402:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendSms', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 402:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -839,23 +851,25 @@ class TransactionalSMSApi
      *
      * Send SMS message to a mobile number
      *
-     * @param  \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
+     * @param \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendTransacSmsAsync($sendTransacSms)
     {
-        return $this->sendTransacSmsAsyncWithHttpInfo($sendTransacSms)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendTransacSmsAsyncWithHttpInfo($sendTransacSms)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendTransacSmsAsyncWithHttpInfo
      *
      * Send SMS message to a mobile number
      *
-     * @param  \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
+     * @param \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -864,28 +878,30 @@ class TransactionalSMSApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendSms';
         $request = $this->sendTransacSmsRequest($sendTransacSms);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'sendTransacSms'
      *
-     * @param  \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
+     * @param \SendinBlue\Client\Model\SendTransacSms $sendTransacSms Values to send a transactional SMS (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

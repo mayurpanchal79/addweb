@@ -29,24 +29,24 @@ import { useShallowEqual } from './use-shallow-equal';
  *                 is a dispatcher function for setting the query state.
  */
 export const useQueryStateByContext = ( context ) => {
-	const queryStateContext = useQueryStateContext();
-	context = context || queryStateContext;
-	const queryState = useSelect(
-		( select ) => {
-			const store = select( storeKey );
-			return store.getValueForQueryContext( context, undefined );
-		},
-		[ context ]
-	);
-	const { setValueForQueryContext } = useDispatch( storeKey );
-	const setQueryState = useCallback(
-		( value ) => {
-			setValueForQueryContext( context, value );
-		},
-		[ context ]
-	);
+    const queryStateContext = useQueryStateContext();
+    context = context || queryStateContext;
+    const queryState = useSelect(
+        ( select ) => {
+        const store = select(storeKey);
+        return store.getValueForQueryContext(context, undefined);
+        },
+        [ context ]
+    );
+    const { setValueForQueryContext } = useDispatch(storeKey);
+    const setQueryState = useCallback(
+        ( value ) => {
+        setValueForQueryContext(context, value);
+        },
+        [ context ]
+    );
 
-	return [ queryState, setQueryState ];
+    return [ queryState, setQueryState ];
 };
 
 /**
@@ -66,25 +66,25 @@ export const useQueryStateByContext = ( context ) => {
  *              provided context and query key.
  */
 export const useQueryStateByKey = ( queryKey, defaultValue, context ) => {
-	const queryStateContext = useQueryStateContext();
-	context = context || queryStateContext;
-	const queryValue = useSelect(
-		( select ) => {
-			const store = select( storeKey );
-			return store.getValueForQueryKey( context, queryKey, defaultValue );
-		},
-		[ context, queryKey ]
-	);
+    const queryStateContext = useQueryStateContext();
+    context = context || queryStateContext;
+    const queryValue = useSelect(
+        ( select ) => {
+        const store = select(storeKey);
+        return store.getValueForQueryKey(context, queryKey, defaultValue);
+        },
+        [ context, queryKey ]
+    );
 
-	const { setQueryValue } = useDispatch( storeKey );
-	const setQueryValueByKey = useCallback(
-		( value ) => {
-			setQueryValue( context, queryKey, value );
-		},
-		[ context, queryKey ]
-	);
+    const { setQueryValue } = useDispatch(storeKey);
+    const setQueryValueByKey = useCallback(
+        ( value ) => {
+        setQueryValue(context, queryKey, value);
+        },
+        [ context, queryKey ]
+    );
 
-	return [ queryValue, setQueryValueByKey ];
+    return [ queryValue, setQueryValueByKey ];
 };
 
 /**
@@ -114,19 +114,21 @@ export const useQueryStateByKey = ( queryKey, defaultValue, context ) => {
  *                                   the QueryStateContextProvider in the tree.
  */
 export const useSynchronizedQueryState = ( synchronizedQuery, context ) => {
-	const queryStateContext = useQueryStateContext();
-	context = context || queryStateContext;
-	const [ queryState, setQueryState ] = useQueryStateByContext( context );
-	const currentSynchronizedQuery = useShallowEqual( synchronizedQuery );
-	// used to ensure we allow initial synchronization to occur before
-	// returning non-synced state.
-	const isInitialized = useRef( false );
-	// update queryState anytime incoming synchronizedQuery changes
-	useEffect( () => {
-		setQueryState( assign( {}, queryState, currentSynchronizedQuery ) );
-		isInitialized.current = true;
-	}, [ currentSynchronizedQuery ] );
-	return isInitialized.current
-		? [ queryState, setQueryState ]
-		: [ synchronizedQuery, setQueryState ];
+    const queryStateContext = useQueryStateContext();
+    context = context || queryStateContext;
+    const [ queryState, setQueryState ] = useQueryStateByContext(context);
+    const currentSynchronizedQuery = useShallowEqual(synchronizedQuery);
+    // used to ensure we allow initial synchronization to occur before
+    // returning non-synced state.
+    const isInitialized = useRef(false);
+    // update queryState anytime incoming synchronizedQuery changes
+    useEffect(
+        () => {
+        setQueryState(assign({}, queryState, currentSynchronizedQuery));
+        isInitialized.current = true;
+        }, [ currentSynchronizedQuery ] 
+    );
+    return isInitialized.current
+        ? [ queryState, setQueryState ]
+        : [ synchronizedQuery, setQueryState ];
 };

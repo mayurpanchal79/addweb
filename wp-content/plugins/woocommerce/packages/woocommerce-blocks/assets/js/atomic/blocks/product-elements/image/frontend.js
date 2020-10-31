@@ -10,4 +10,4 @@ import withFilteredAttributes from '@woocommerce/base-hocs/with-filtered-attribu
 import Block from './block';
 import attributes from './attributes';
 
-export default compose( withFilteredAttributes( attributes ) )( Block );
+export default compose(withFilteredAttributes(attributes))(Block);

@@ -12,8 +12,8 @@ use WPMailSMTP\Vendor\GuzzleHttp\Client;
 use WPMailSMTP\Vendor\GuzzleHttp\ClientInterface;
 use WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface;
 /**
-* This supports Guzzle 6
-*/
+ * This supports Guzzle 6
+ */
 class Google_AuthHandler_Guzzle6AuthHandler
 {
     protected $cache;
@@ -44,7 +44,7 @@ class Google_AuthHandler_Guzzle6AuthHandler
     }
     public function attachToken(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface $http, array $token, array $scopes)
     {
-        $tokenFunc = function ($scopes) use($token) {
+        $tokenFunc = function ($scopes) use ($token) {
             return $token['access_token'];
         };
         $middleware = new \WPMailSMTP\Vendor\Google\Auth\Middleware\ScopedAccessTokenMiddleware($tokenFunc, $scopes, $this->cacheConfig, $this->cache);

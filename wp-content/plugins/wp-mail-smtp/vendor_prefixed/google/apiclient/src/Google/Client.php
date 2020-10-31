@@ -73,7 +73,9 @@ class Google_Client
      * @var boolean $deferExecution
      */
     private $deferExecution = \false;
-    /** @var array $scopes */
+    /**
+     * @var array $scopes 
+     */
     // Scopes requested by the client
     protected $requestedScopes = [];
     /**
@@ -83,7 +85,8 @@ class Google_Client
      */
     public function __construct(array $config = array())
     {
-        $this->config = \array_merge([
+        $this->config = \array_merge(
+            [
             'application_name' => '',
             // Don't change these unless you're working against a special development
             // or testing environment.
@@ -135,7 +138,8 @@ class Google_Client
             // Setting api_format_v2 will return more detailed error messages
             // from certain APIs.
             'api_format_v2' => \false,
-        ], $config);
+            ], $config
+        );
         if (!\is_null($this->config['credentials'])) {
             $this->setAuthConfig($this->config['credentials']);
             unset($this->config['credentials']);
@@ -158,8 +162,8 @@ class Google_Client
      * For backwards compatibility
      * alias for fetchAccessTokenWithAuthCode
      *
-     * @param $code string code from accounts.google.com
-     * @return array access token
+     * @param      $code string code from accounts.google.com
+     * @return     array access token
      * @deprecated
      */
     public function authenticate($code)
@@ -170,7 +174,7 @@ class Google_Client
      * Attempt to exchange a code for an valid authentication token.
      * Helper wrapped around the OAuth 2.0 implementation.
      *
-     * @param $code string code from accounts.google.com
+     * @param  $code string code from accounts.google.com
      * @return array access token
      */
     public function fetchAccessTokenWithAuthCode($code)
@@ -193,7 +197,7 @@ class Google_Client
      * For backwards compatibility
      * alias for fetchAccessTokenWithAssertion
      *
-     * @return array access token
+     * @return     array access token
      * @deprecated
      */
     public function refreshTokenWithAssertion()
@@ -202,7 +206,8 @@ class Google_Client
     }
     /**
      * Fetches a fresh access token with a given assertion token.
-     * @param ClientInterface $authHttp optional.
+     *
+     * @param  ClientInterface $authHttp optional.
      * @return array access token
      */
     public function fetchAccessTokenWithAssertion(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface $authHttp = null)
@@ -224,7 +229,7 @@ class Google_Client
      * For backwards compatibility
      * alias for fetchAccessTokenWithRefreshToken
      *
-     * @param string $refreshToken
+     * @param  string $refreshToken
      * @return array access token
      */
     public function refreshToken($refreshToken)
@@ -233,7 +238,8 @@ class Google_Client
     }
     /**
      * Fetches a fresh OAuth 2.0 access token with the given refresh token.
-     * @param string $refreshToken
+     *
+     * @param  string $refreshToken
      * @return array access token
      */
     public function fetchAccessTokenWithRefreshToken($refreshToken = null)
@@ -262,7 +268,8 @@ class Google_Client
      * Create a URL to obtain user authorization.
      * The authorization endpoint allows the user to first
      * authenticate, and then grant/deny the access request.
-     * @param string|array $scope The scope is expressed as an array or list of space-delimited strings.
+     *
+     * @param  string|array $scope The scope is expressed as an array or list of space-delimited strings.
      * @return string
      */
     public function createAuthUrl($scope = null)
@@ -291,7 +298,7 @@ class Google_Client
      * Adds auth listeners to the HTTP client based on the credentials
      * set in the Google API Client object
      *
-     * @param GuzzleHttp\ClientInterface $http the http client object.
+     * @param  GuzzleHttp\ClientInterface $http the http client object.
      * @return GuzzleHttp\ClientInterface the http client object
      */
     public function authorize(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface $http = null)
@@ -331,7 +338,7 @@ class Google_Client
      * Set the configuration to use application default credentials for
      * authentication
      *
-     * @see https://developers.google.com/identity/protocols/application-default-credentials
+     * @see   https://developers.google.com/identity/protocols/application-default-credentials
      * @param boolean $useAppCreds
      */
     public function useApplicationDefaultCredentials($useAppCreds = \true)
@@ -360,7 +367,7 @@ class Google_Client
      * as calling `clear()` will remove all cache items, including any items not
      * related to Google API PHP Client.)
      *
-     * @param string|array $token
+     * @param  string|array $token
      * @throws InvalidArgumentException
      */
     public function setAccessToken($token)
@@ -397,6 +404,7 @@ class Google_Client
     }
     /**
      * Returns if the access_token is expired.
+     *
      * @return bool Returns True if the access_token is expired.
      */
     public function isAccessTokenExpired()
@@ -440,6 +448,7 @@ class Google_Client
     }
     /**
      * Set the OAuth 2.0 Client ID.
+     *
      * @param string $clientId
      */
     public function setClientId($clientId)
@@ -452,6 +461,7 @@ class Google_Client
     }
     /**
      * Set the OAuth 2.0 Client Secret.
+     *
      * @param string $clientSecret
      */
     public function setClientSecret($clientSecret)
@@ -464,6 +474,7 @@ class Google_Client
     }
     /**
      * Set the OAuth 2.0 Redirect URI.
+     *
      * @param string $redirectUri
      */
     public function setRedirectUri($redirectUri)
@@ -476,7 +487,8 @@ class Google_Client
     }
     /**
      * Set OAuth 2.0 "state" parameter to achieve per-request customization.
-     * @see http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-3.1.2.2
+     *
+     * @see   http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-3.1.2.2
      * @param string $state
      */
     public function setState($state)
@@ -485,8 +497,8 @@ class Google_Client
     }
     /**
      * @param string $accessType Possible values for access_type include:
-     *  {@code "offline"} to request offline access from the user.
-     *  {@code "online"} to request online access from the user.
+     *                           {@code "offline"} to request offline access from the user.
+     *                           {@code "online"} to request online access from the user.
      */
     public function setAccessType($accessType)
     {
@@ -494,8 +506,8 @@ class Google_Client
     }
     /**
      * @param string $approvalPrompt Possible values for approval_prompt include:
-     *  {@code "force"} to force the approval UI to appear.
-     *  {@code "auto"} to request auto-approval when possible. (This is the default value)
+     *                               {@code "force"} to force the approval UI to appear.
+     *                               {@code "auto"} to request auto-approval when possible. (This is the default value)
      */
     public function setApprovalPrompt($approvalPrompt)
     {
@@ -503,6 +515,7 @@ class Google_Client
     }
     /**
      * Set the login hint, email address or sub id.
+     *
      * @param string $loginHint
      */
     public function setLoginHint($loginHint)
@@ -511,6 +524,7 @@ class Google_Client
     }
     /**
      * Set the application name, this is included in the User-Agent HTTP header.
+     *
      * @param string $applicationName
      */
     public function setApplicationName($applicationName)
@@ -521,6 +535,7 @@ class Google_Client
      * If 'plus.login' is included in the list of requested scopes, you can use
      * this method to define types of app activities that your app will write.
      * You can find a list of available types here:
+     *
      * @link https://developers.google.com/+/api/moment-types
      *
      * @param array $requestVisibleActions Array of app activity types
@@ -534,7 +549,8 @@ class Google_Client
     }
     /**
      * Set the developer key to use, these are obtained through the API Console.
-     * @see http://code.google.com/apis/console-help/#generatingdevkeys
+     *
+     * @see   http://code.google.com/apis/console-help/#generatingdevkeys
      * @param string $developerKey
      */
     public function setDeveloperKey($developerKey)
@@ -545,6 +561,7 @@ class Google_Client
      * Set the hd (hosted domain) parameter streamlines the login process for
      * Google Apps hosted accounts. By including the domain of the user, you
      * restrict sign-in to accounts at that domain.
+     *
      * @param $hd string - the domain to use.
      */
     public function setHostedDomain($hd)
@@ -555,10 +572,11 @@ class Google_Client
      * Set the prompt hint. Valid values are none, consent and select_account.
      * If no value is specified and the user has not previously authorized
      * access, then the user is shown a consent screen.
+     *
      * @param $prompt string
-     *  {@code "none"} Do not display any authentication or consent screens. Must not be specified with other values.
-     *  {@code "consent"} Prompt the user for consent.
-     *  {@code "select_account"} Prompt the user to select an account.
+     *                {@code "none"} Do not display any authentication or consent screens. Must not be specified with other values.
+     *                {@code "consent"} Prompt the user for consent.
+     *                {@code "select_account"} Prompt the user to select an account.
      */
     public function setPrompt($prompt)
     {
@@ -568,6 +586,7 @@ class Google_Client
      * openid.realm is a parameter from the OpenID 2.0 protocol, not from OAuth
      * 2.0. It is used in OpenID 2.0 requests to signify the URL-space for which
      * an authentication request is valid.
+     *
      * @param $realm string - the URL-space to use.
      */
     public function setOpenidRealm($realm)
@@ -578,6 +597,7 @@ class Google_Client
      * If this is provided with the value true, and the authorization request is
      * granted, the authorization will include any previous authorizations
      * granted to this user/application combination for other scopes.
+     *
      * @param $include boolean - the URL-space to use.
      */
     public function setIncludeGrantedScopes($include)
@@ -586,6 +606,7 @@ class Google_Client
     }
     /**
      * sets function to be called when an access token is fetched
+     *
      * @param callable $tokenCallback - function ($cacheKey, $accessToken)
      */
     public function setTokenCallback(callable $tokenCallback)
@@ -596,7 +617,7 @@ class Google_Client
      * Revoke an OAuth2 access token or refresh token. This method will revoke the current access
      * token, if a token isn't provided.
      *
-     * @param string|array|null $token The token (access token or a refresh token) that should be revoked.
+     * @param  string|array|null $token The token (access token or a refresh token) that should be revoked.
      * @return boolean Returns True if the revocation was successful, otherwise False.
      */
     public function revokeToken($token = null)
@@ -610,7 +631,7 @@ class Google_Client
      *
      * @throws LogicException If no token was provided and no token was set using `setAccessToken`.
      * @throws UnexpectedValueException If the token is not a valid JWT.
-     * @param string|null $idToken The token (id_token) that should be verified.
+     * @param  string|null $idToken The token (id_token) that should be verified.
      * @return array|false Returns the token payload as an array if the verification was
      * successful, false otherwise.
      */
@@ -629,11 +650,12 @@ class Google_Client
     /**
      * Set the scopes to be requested. Must be called before createAuthUrl().
      * Will remove any previously configured scopes.
+     *
      * @param string|array $scope_or_scopes, ie:
-     *    array(
-     *        'https://www.googleapis.com/auth/plus.login',
-     *        'https://www.googleapis.com/auth/moderator'
-     *    );
+     *                                       array(
+     *                                       'https://www.googleapis.com/auth/plus.login',
+     *                                       'https://www.googleapis.com/auth/moderator'
+     *                                       );
      */
     public function setScopes($scope_or_scopes)
     {
@@ -645,6 +667,7 @@ class Google_Client
      * Will append any scopes not previously requested to the scope parameter.
      * A single string will be treated as a scope to request. An array of strings
      * will each be appended.
+     *
      * @param $scope_or_scopes string|array e.g. "profile"
      */
     public function addScope($scope_or_scopes)
@@ -661,15 +684,15 @@ class Google_Client
     }
     /**
      * Returns the list of scopes requested by the client
-     * @return array the list of scopes
      *
+     * @return array the list of scopes
      */
     public function getScopes()
     {
         return $this->requestedScopes;
     }
     /**
-     * @return string|null
+     * @return  string|null
      * @visible For Testing
      */
     public function prepareScopes()
@@ -682,8 +705,8 @@ class Google_Client
     /**
      * Helper method to execute deferred HTTP requests.
      *
-     * @param $request Psr\Http\Message\RequestInterface|Google_Http_Batch
-     * @param string $expectedClass
+     * @param  $request       Psr\Http\Message\RequestInterface|Google_Http_Batch
+     * @param  string $expectedClass
      * @throws Google_Exception
      * @return object of the type of the expected class or Psr\Http\Message\ResponseInterface.
      */
@@ -703,7 +726,7 @@ class Google_Client
      * by making multiple requests in one connection.
      *
      * @param boolean $useBatch True if the batch support should
-     * be enabled. Defaults to False.
+     *                          be enabled. Defaults to False.
      */
     public function setUseBatch($useBatch)
     {
@@ -730,8 +753,8 @@ class Google_Client
      * For backwards compatibility
      * alias for setAuthConfig
      *
-     * @param string $file the configuration file
-     * @throws Google_Exception
+     * @param      string $file the configuration file
+     * @throws     Google_Exception
      * @deprecated
      */
     public function setAuthConfigFile($file)
@@ -743,7 +766,8 @@ class Google_Client
      * This structure should match the file downloaded from
      * the "Download JSON" button on in the Google Developer
      * Console.
-     * @param string|array $config the configuration json
+     *
+     * @param  string|array $config the configuration json
      * @throws Google_Exception
      */
     public function setAuthConfig($config)
@@ -803,6 +827,7 @@ class Google_Client
     }
     /**
      * Whether or not to return raw requests
+     *
      * @return boolean
      */
     public function shouldDefer()
@@ -829,6 +854,7 @@ class Google_Client
     }
     /**
      * Set the Cache object
+     *
      * @param Psr\Cache\CacheItemPoolInterface $cache
      */
     public function setCache(\WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache)
@@ -854,6 +880,7 @@ class Google_Client
     }
     /**
      * Set the Logger object
+     *
      * @param Psr\Log\LoggerInterface $logger
      */
     public function setLogger(\WPMailSMTP\Vendor\Psr\Log\LoggerInterface $logger)
@@ -887,6 +914,7 @@ class Google_Client
     }
     /**
      * Set the Http Client object
+     *
      * @param GuzzleHttp\ClientInterface $http
      */
     public function setHttpClient(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface $http)

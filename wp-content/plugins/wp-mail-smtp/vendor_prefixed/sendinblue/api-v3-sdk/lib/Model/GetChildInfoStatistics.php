@@ -32,11 +32,11 @@ use WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer;
 /**
  * GetChildInfoStatistics Class Doc Comment
  *
- * @category Class
+ * @category    Class
  * @description Statistics about your child account activity
- * @package  SendinBlue\Client
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @package     SendinBlue\Client
+ * @author      Swagger Codegen team
+ * @link        https://github.com/swagger-api/swagger-codegen
  */
 class GetChildInfoStatistics implements \WPMailSMTP\Vendor\SendinBlue\Client\Model\ModelInterface, \ArrayAccess
 {

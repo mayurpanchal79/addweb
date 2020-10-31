@@ -10,20 +10,22 @@ import classNames from 'classnames';
  * @typedef {import('@woocommerce/type-defs/contexts').ContainerWidthContext} ContainerWidthContext
  */
 
-const ContainerWidthContext = createContext( {
-	hasContainerWidth: false,
-	containerClassName: '',
-	isMobile: false,
-	isSmall: false,
-	isMedium: false,
-	isLarge: false,
-} );
+const ContainerWidthContext = createContext(
+    {
+        hasContainerWidth: false,
+        containerClassName: '',
+        isMobile: false,
+        isSmall: false,
+        isMedium: false,
+        isLarge: false,
+    } 
+);
 
 /**
  * @return {ContainerWidthContext} Returns the container width context value
  */
 export const useContainerWidthContext = () => {
-	return useContext( ContainerWidthContext );
+    return useContext(ContainerWidthContext);
 };
 
 /**
@@ -31,33 +33,33 @@ export const useContainerWidthContext = () => {
  * container.
  */
 export const ContainerWidthContextProvider = ( {
-	children,
-	className = '',
+    children,
+    className = '',
 } ) => {
-	const [ resizeListener, containerClassName ] = useContainerQueries();
+    const [ resizeListener, containerClassName ] = useContainerQueries();
 
-	const contextValue = {
-		hasContainerWidth: containerClassName !== '',
-		containerClassName,
-		isMobile: containerClassName === 'is-mobile',
-		isSmall: containerClassName === 'is-small',
-		isMedium: containerClassName === 'is-medium',
-		isLarge: containerClassName === 'is-large',
-	};
+    const contextValue = {
+        hasContainerWidth: containerClassName !== '',
+        containerClassName,
+        isMobile: containerClassName === 'is-mobile',
+        isSmall: containerClassName === 'is-small',
+        isMedium: containerClassName === 'is-medium',
+        isLarge: containerClassName === 'is-large',
+    };
 
-	/**
-	 * @type {ContainerWidthContext}
-	 */
-	return (
-		<ContainerWidthContext.Provider value={ contextValue }>
-			<div className={ classNames( className, containerClassName ) }>
-				{ resizeListener }
-				{ children }
-			</div>
-		</ContainerWidthContext.Provider>
-	);
+    /**
+     * @type {ContainerWidthContext}
+     */
+    return (
+    <ContainerWidthContext.Provider value={ contextValue }>
+    <div className={ classNames(className, containerClassName) }>
+                { resizeListener }
+                { children }
+    </div>
+    </ContainerWidthContext.Provider>
+    );
 };
 
 ContainerWidthContextProvider.propTypes = {
-	children: PropTypes.node,
+    children: PropTypes.node,
 };

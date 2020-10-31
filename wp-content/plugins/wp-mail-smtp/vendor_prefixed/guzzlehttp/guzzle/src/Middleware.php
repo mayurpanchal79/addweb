@@ -24,7 +24,7 @@ final class Middleware
     public static function cookies()
     {
         return function (callable $handler) {
-            return function ($request, array $options) use($handler) {
+            return function ($request, array $options) use ($handler) {
                 if (empty($options['cookies'])) {
                     return $handler($request, $options);
                 } elseif (!$options['cookies'] instanceof \WPMailSMTP\Vendor\GuzzleHttp\Cookie\CookieJarInterface) {
@@ -32,10 +32,12 @@ final class Middleware
                 }
                 $cookieJar = $options['cookies'];
                 $request = $cookieJar->withCookieHeader($request);
-                return $handler($request, $options)->then(function ($response) use($cookieJar, $request) {
-                    $cookieJar->extractCookies($request, $response);
-                    return $response;
-                });
+                return $handler($request, $options)->then(
+                    function ($response) use ($cookieJar, $request) {
+                        $cookieJar->extractCookies($request, $response);
+                        return $response;
+                    }
+                );
             };
         };
     }
@@ -48,17 +50,19 @@ final class Middleware
     public static function httpErrors()
     {
         return function (callable $handler) {
-            return function ($request, array $options) use($handler) {
+            return function ($request, array $options) use ($handler) {
                 if (empty($options['http_errors'])) {
                     return $handler($request, $options);
                 }
-                return $handler($request, $options)->then(function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use($request) {
-                    $code = $response->getStatusCode();
-                    if ($code < 400) {
-                        return $response;
+                return $handler($request, $options)->then(
+                    function (\WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response) use ($request) {
+                        $code = $response->getStatusCode();
+                        if ($code < 400) {
+                            return $response;
+                        }
+                        throw \WPMailSMTP\Vendor\GuzzleHttp\Exception\RequestException::create($request, $response);
                     }
-                    throw \WPMailSMTP\Vendor\GuzzleHttp\Exception\RequestException::create($request, $response);
-                });
+                );
             };
         };
     }
@@ -75,15 +79,17 @@ final class Middleware
         if (!\is_array($container) && !$container instanceof \ArrayAccess) {
             throw new \InvalidArgumentException('history container must be an array or object implementing ArrayAccess');
         }
-        return function (callable $handler) use(&$container) {
-            return function ($request, array $options) use($handler, &$container) {
-                return $handler($request, $options)->then(function ($value) use($request, &$container, $options) {
-                    $container[] = ['request' => $request, 'response' => $value, 'error' => null, 'options' => $options];
-                    return $value;
-                }, function ($reason) use($request, &$container, $options) {
-                    $container[] = ['request' => $request, 'response' => null, 'error' => $reason, 'options' => $options];
-                    return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
-                });
+        return function (callable $handler) use (&$container) {
+            return function ($request, array $options) use ($handler, &$container) {
+                return $handler($request, $options)->then(
+                    function ($value) use ($request, &$container, $options) {
+                        $container[] = ['request' => $request, 'response' => $value, 'error' => null, 'options' => $options];
+                        return $value;
+                    }, function ($reason) use ($request, &$container, $options) {
+                        $container[] = ['request' => $request, 'response' => null, 'error' => $reason, 'options' => $options];
+                        return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
+                    }
+                );
             };
         };
     }
@@ -102,8 +108,8 @@ final class Middleware
      */
     public static function tap(callable $before = null, callable $after = null)
     {
-        return function (callable $handler) use($before, $after) {
-            return function ($request, array $options) use($handler, $before, $after) {
+        return function (callable $handler) use ($before, $after) {
+            return function ($request, array $options) use ($handler, $before, $after) {
                 if ($before) {
                     $before($request, $options);
                 }
@@ -143,7 +149,7 @@ final class Middleware
      */
     public static function retry(callable $decider, callable $delay = null)
     {
-        return function (callable $handler) use($decider, $delay) {
+        return function (callable $handler) use ($decider, $delay) {
             return new \WPMailSMTP\Vendor\GuzzleHttp\RetryMiddleware($decider, $handler, $delay);
         };
     }
@@ -151,26 +157,28 @@ final class Middleware
      * Middleware that logs requests, responses, and errors using a message
      * formatter.
      *
-     * @param LoggerInterface  $logger Logs messages.
+     * @param LoggerInterface  $logger    Logs messages.
      * @param MessageFormatter $formatter Formatter used to create message strings.
-     * @param string           $logLevel Level at which to log requests.
+     * @param string           $logLevel  Level at which to log requests.
      *
      * @return callable Returns a function that accepts the next handler.
      */
     public static function log(\WPMailSMTP\Vendor\Psr\Log\LoggerInterface $logger, \WPMailSMTP\Vendor\GuzzleHttp\MessageFormatter $formatter, $logLevel = 'info')
     {
-        return function (callable $handler) use($logger, $formatter, $logLevel) {
-            return function ($request, array $options) use($handler, $logger, $formatter, $logLevel) {
-                return $handler($request, $options)->then(function ($response) use($logger, $request, $formatter, $logLevel) {
-                    $message = $formatter->format($request, $response);
-                    $logger->log($logLevel, $message);
-                    return $response;
-                }, function ($reason) use($logger, $request, $formatter) {
-                    $response = $reason instanceof \WPMailSMTP\Vendor\GuzzleHttp\Exception\RequestException ? $reason->getResponse() : null;
-                    $message = $formatter->format($request, $response, $reason);
-                    $logger->notice($message);
-                    return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
-                });
+        return function (callable $handler) use ($logger, $formatter, $logLevel) {
+            return function ($request, array $options) use ($handler, $logger, $formatter, $logLevel) {
+                return $handler($request, $options)->then(
+                    function ($response) use ($logger, $request, $formatter, $logLevel) {
+                        $message = $formatter->format($request, $response);
+                        $logger->log($logLevel, $message);
+                        return $response;
+                    }, function ($reason) use ($logger, $request, $formatter) {
+                        $response = $reason instanceof \WPMailSMTP\Vendor\GuzzleHttp\Exception\RequestException ? $reason->getResponse() : null;
+                        $message = $formatter->format($request, $response, $reason);
+                        $logger->notice($message);
+                        return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
+                    }
+                );
             };
         };
     }
@@ -190,14 +198,14 @@ final class Middleware
      * Middleware that applies a map function to the request before passing to
      * the next handler.
      *
-     * @param callable $fn Function that accepts a RequestInterface and returns
-     *                     a RequestInterface.
+     * @param  callable $fn Function that accepts a RequestInterface and returns
+     *                      a RequestInterface.
      * @return callable
      */
     public static function mapRequest(callable $fn)
     {
-        return function (callable $handler) use($fn) {
-            return function ($request, array $options) use($handler, $fn) {
+        return function (callable $handler) use ($fn) {
+            return function ($request, array $options) use ($handler, $fn) {
                 return $handler($fn($request), $options);
             };
         };
@@ -206,14 +214,14 @@ final class Middleware
      * Middleware that applies a map function to the resolved promise's
      * response.
      *
-     * @param callable $fn Function that accepts a ResponseInterface and
-     *                     returns a ResponseInterface.
+     * @param  callable $fn Function that accepts a ResponseInterface and
+     *                      returns a ResponseInterface.
      * @return callable
      */
     public static function mapResponse(callable $fn)
     {
-        return function (callable $handler) use($fn) {
-            return function ($request, array $options) use($handler, $fn) {
+        return function (callable $handler) use ($fn) {
+            return function ($request, array $options) use ($handler, $fn) {
                 return $handler($request, $options)->then($fn);
             };
         };

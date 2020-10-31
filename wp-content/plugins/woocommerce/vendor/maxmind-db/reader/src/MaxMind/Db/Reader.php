@@ -210,31 +210,31 @@ class Reader
         $baseOffset = $nodeNumber * $this->metadata->nodeByteSize;
 
         switch ($this->metadata->recordSize) {
-            case 24:
-                $bytes = Util::read($this->fileHandle, $baseOffset + $index * 3, 3);
-                list(, $node) = unpack('N', "\x00" . $bytes);
+        case 24:
+            $bytes = Util::read($this->fileHandle, $baseOffset + $index * 3, 3);
+            list(, $node) = unpack('N', "\x00" . $bytes);
 
-                return $node;
-            case 28:
-                $bytes = Util::read($this->fileHandle, $baseOffset + 3 * $index, 4);
-                if ($index === 0) {
-                    $middle = (0xF0 & \ord($bytes[3])) >> 4;
-                } else {
-                    $middle = 0x0F & \ord($bytes[0]);
-                }
-                list(, $node) = unpack('N', \chr($middle) . substr($bytes, $index, 3));
+            return $node;
+        case 28:
+            $bytes = Util::read($this->fileHandle, $baseOffset + 3 * $index, 4);
+            if ($index === 0) {
+                $middle = (0xF0 & \ord($bytes[3])) >> 4;
+            } else {
+                $middle = 0x0F & \ord($bytes[0]);
+            }
+            list(, $node) = unpack('N', \chr($middle) . substr($bytes, $index, 3));
 
-                return $node;
-            case 32:
-                $bytes = Util::read($this->fileHandle, $baseOffset + $index * 4, 4);
-                list(, $node) = unpack('N', $bytes);
+            return $node;
+        case 32:
+            $bytes = Util::read($this->fileHandle, $baseOffset + $index * 4, 4);
+            list(, $node) = unpack('N', $bytes);
 
-                return $node;
-            default:
-                throw new InvalidDatabaseException(
-                    'Unknown record size: '
+            return $node;
+        default:
+            throw new InvalidDatabaseException(
+                'Unknown record size: '
                     . $this->metadata->recordSize
-                );
+            );
         }
     }
 

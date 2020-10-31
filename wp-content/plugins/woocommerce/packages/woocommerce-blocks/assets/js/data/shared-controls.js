@@ -13,21 +13,21 @@ import triggerFetch from '@wordpress/api-fetch';
  * @return {Object} The control action descriptor.
  */
 export const apiFetchWithHeaders = ( options ) => {
-	return {
-		type: 'API_FETCH_WITH_HEADERS',
-		options,
-	};
+    return {
+        type: 'API_FETCH_WITH_HEADERS',
+        options,
+    };
 };
 
 /**
  * Error thrown when JSON cannot be parsed.
  */
 const invalidJsonError = {
-	code: 'invalid_json',
-	message: __(
-		'The response is not a valid JSON response.',
-		'woocommerce'
-	),
+    code: 'invalid_json',
+    message: __(
+        'The response is not a valid JSON response.',
+        'woocommerce'
+    ),
 };
 
 /**
@@ -37,38 +37,54 @@ const invalidJsonError = {
  *                  the controls property of the registration object.
  */
 export const controls = {
-	API_FETCH_WITH_HEADERS( { options } ) {
-		return new Promise( ( resolve, reject ) => {
-			triggerFetch( { ...options, parse: false } )
-				.then( ( fetchResponse ) => {
-					fetchResponse
-						.json()
-						.then( ( response ) => {
-							resolve( {
-								response,
-								headers: fetchResponse.headers,
-							} );
-							triggerFetch.setNonce( fetchResponse.headers );
-						} )
-						.catch( () => {
-							reject( invalidJsonError );
-						} );
-				} )
-				.catch( ( errorResponse ) => {
-					if ( typeof errorResponse.json === 'function' ) {
-						// Parse error response before rejecting it.
-						errorResponse
-							.json()
-							.then( ( error ) => {
-								reject( error );
-							} )
-							.catch( () => {
-								reject( invalidJsonError );
-							} );
-					} else {
-						reject( errorResponse.message );
-					}
-				} );
-		} );
-	},
+    API_FETCH_WITH_HEADERS({ options }) {
+        return new Promise(
+            ( resolve, reject ) => {
+                triggerFetch({ ...options, parse: false })
+                .then(
+                    ( fetchResponse ) => {
+                        fetchResponse
+                        .json()
+                        .then(
+                            ( response ) => {
+                                resolve(
+                                {
+                                        response,
+                                        headers: fetchResponse.headers,
+                                    } 
+                            );
+                            triggerFetch.setNonce(fetchResponse.headers);
+                            } 
+                        )
+                    .catch(
+                        () => {
+                        reject(invalidJsonError);
+                        } 
+                    );
+                    } 
+                )
+            .catch(
+                ( errorResponse ) => {
+                if (typeof errorResponse.json === 'function' ) {
+                    // Parse error response before rejecting it.
+                    errorResponse
+                    .json()
+                    .then(
+                    ( error ) => {
+                        reject(error);
+                        } 
+                    )
+                    .catch(
+                        () => {
+                            reject(invalidJsonError);
+                        } 
+                    );
+                } else {
+                        reject(errorResponse.message);
+                }
+                } 
+            );
+            } 
+        );
+    },
 };

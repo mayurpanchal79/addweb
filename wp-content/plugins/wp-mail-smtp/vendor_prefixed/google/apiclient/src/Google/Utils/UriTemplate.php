@@ -19,6 +19,7 @@ namespace WPMailSMTP\Vendor;
  */
 /**
  * Implementation of levels 1-3 of the URI Template spec.
+ *
  * @see http://tools.ietf.org/html/rfc6570
  */
 class Google_Utils_UriTemplate
@@ -74,42 +75,42 @@ class Google_Utils_UriTemplate
             $prefix = "";
             $prefix_on_missing = \false;
             switch ($op) {
-                case "reserved":
-                    // Reserved means certain characters should not be URL encoded
-                    $data = $this->replaceVars($data, $parameters, ",", null, \true);
-                    break;
-                case "fragment":
-                    // Comma separated with fragment prefix. Bare values only.
-                    $prefix = "#";
-                    $prefix_on_missing = \true;
-                    $data = $this->replaceVars($data, $parameters, ",", null, \true);
-                    break;
-                case "segments":
-                    // Slash separated data. Bare values only.
-                    $prefix = "/";
-                    $data = $this->replaceVars($data, $parameters, "/");
-                    break;
-                case "dotprefix":
-                    // Dot separated data. Bare values only.
-                    $prefix = ".";
-                    $prefix_on_missing = \true;
-                    $data = $this->replaceVars($data, $parameters, ".");
-                    break;
-                case "semicolon":
-                    // Semicolon prefixed and separated. Uses the key name
-                    $prefix = ";";
-                    $data = $this->replaceVars($data, $parameters, ";", "=", \false, \true, \false);
-                    break;
-                case "form":
-                    // Standard URL format. Uses the key name
-                    $prefix = "?";
-                    $data = $this->replaceVars($data, $parameters, "&", "=");
-                    break;
-                case "continuation":
-                    // Standard URL, but with leading ampersand. Uses key name.
-                    $prefix = "&";
-                    $data = $this->replaceVars($data, $parameters, "&", "=");
-                    break;
+            case "reserved":
+                // Reserved means certain characters should not be URL encoded
+                $data = $this->replaceVars($data, $parameters, ",", null, \true);
+                break;
+            case "fragment":
+                // Comma separated with fragment prefix. Bare values only.
+                $prefix = "#";
+                $prefix_on_missing = \true;
+                $data = $this->replaceVars($data, $parameters, ",", null, \true);
+                break;
+            case "segments":
+                // Slash separated data. Bare values only.
+                $prefix = "/";
+                $data = $this->replaceVars($data, $parameters, "/");
+                break;
+            case "dotprefix":
+                // Dot separated data. Bare values only.
+                $prefix = ".";
+                $prefix_on_missing = \true;
+                $data = $this->replaceVars($data, $parameters, ".");
+                break;
+            case "semicolon":
+                // Semicolon prefixed and separated. Uses the key name
+                $prefix = ";";
+                $data = $this->replaceVars($data, $parameters, ";", "=", \false, \true, \false);
+                break;
+            case "form":
+                // Standard URL format. Uses the key name
+                $prefix = "?";
+                $data = $this->replaceVars($data, $parameters, "&", "=");
+                break;
+            case "continuation":
+                // Standard URL, but with leading ampersand. Uses key name.
+                $prefix = "&";
+                $data = $this->replaceVars($data, $parameters, "&", "=");
+                break;
             }
             // Add the initial prefix character if data is valid.
             if ($data || $data !== \false && $prefix_on_missing) {
@@ -165,42 +166,42 @@ class Google_Utils_UriTemplate
         if (isset($parameters[$key])) {
             $data_type = $this->getDataType($parameters[$key]);
             switch ($data_type) {
-                case self::TYPE_SCALAR:
-                    $value = $this->getValue($parameters[$key], $length);
-                    break;
-                case self::TYPE_LIST:
-                    $values = array();
-                    foreach ($parameters[$key] as $pkey => $pvalue) {
-                        $pvalue = $this->getValue($pvalue, $length);
-                        if ($combine && $explode) {
-                            $values[$pkey] = $key . $combine . $pvalue;
-                        } else {
-                            $values[$pkey] = $pvalue;
-                        }
+            case self::TYPE_SCALAR:
+                $value = $this->getValue($parameters[$key], $length);
+                break;
+            case self::TYPE_LIST:
+                $values = array();
+                foreach ($parameters[$key] as $pkey => $pvalue) {
+                    $pvalue = $this->getValue($pvalue, $length);
+                    if ($combine && $explode) {
+                        $values[$pkey] = $key . $combine . $pvalue;
+                    } else {
+                        $values[$pkey] = $pvalue;
                     }
-                    $value = \implode($list_sep, $values);
-                    if ($value == '') {
-                        return '';
+                }
+                $value = \implode($list_sep, $values);
+                if ($value == '') {
+                    return '';
+                }
+                break;
+            case self::TYPE_MAP:
+                $values = array();
+                foreach ($parameters[$key] as $pkey => $pvalue) {
+                    $pvalue = $this->getValue($pvalue, $length);
+                    if ($explode) {
+                        $pkey = $this->getValue($pkey, $length);
+                        $values[] = $pkey . "=" . $pvalue;
+                        // Explode triggers = combine.
+                    } else {
+                        $values[] = $pkey;
+                        $values[] = $pvalue;
                     }
-                    break;
-                case self::TYPE_MAP:
-                    $values = array();
-                    foreach ($parameters[$key] as $pkey => $pvalue) {
-                        $pvalue = $this->getValue($pvalue, $length);
-                        if ($explode) {
-                            $pkey = $this->getValue($pkey, $length);
-                            $values[] = $pkey . "=" . $pvalue;
-                            // Explode triggers = combine.
-                        } else {
-                            $values[] = $pkey;
-                            $values[] = $pvalue;
-                        }
-                    }
-                    $value = \implode($list_sep, $values);
-                    if ($value == '') {
-                        return \false;
-                    }
-                    break;
+                }
+                $value = \implode($list_sep, $values);
+                if ($value == '') {
+                    return \false;
+                }
+                break;
             }
         } else {
             if ($tag_empty) {

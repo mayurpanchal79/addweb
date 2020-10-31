@@ -81,7 +81,7 @@ class FoldersApi
      *
      * Create a folder
      *
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -97,7 +97,7 @@ class FoldersApi
      *
      * Create a folder
      *
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -131,14 +131,14 @@ class FoldersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -148,23 +148,25 @@ class FoldersApi
      *
      * Create a folder
      *
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createFolderAsync($createFolder)
     {
-        return $this->createFolderAsyncWithHttpInfo($createFolder)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createFolderAsyncWithHttpInfo($createFolder)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createFolderAsyncWithHttpInfo
      *
      * Create a folder
      *
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -173,28 +175,30 @@ class FoldersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel';
         $request = $this->createFolderRequest($createFolder);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createFolder'
      *
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $createFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -273,7 +277,7 @@ class FoldersApi
      *
      * Delete a folder (and all its lists)
      *
-     * @param  int $folderId Id of the folder (required)
+     * @param int $folderId Id of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -288,7 +292,7 @@ class FoldersApi
      *
      * Delete a folder (and all its lists)
      *
-     * @param  int $folderId Id of the folder (required)
+     * @param int $folderId Id of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -312,14 +316,14 @@ class FoldersApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -329,23 +333,25 @@ class FoldersApi
      *
      * Delete a folder (and all its lists)
      *
-     * @param  int $folderId Id of the folder (required)
+     * @param int $folderId Id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteFolderAsync($folderId)
     {
-        return $this->deleteFolderAsyncWithHttpInfo($folderId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteFolderAsyncWithHttpInfo($folderId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteFolderAsyncWithHttpInfo
      *
      * Delete a folder (and all its lists)
      *
-     * @param  int $folderId Id of the folder (required)
+     * @param int $folderId Id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -354,18 +360,20 @@ class FoldersApi
     {
         $returnType = '';
         $request = $this->deleteFolderRequest($folderId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteFolder'
      *
-     * @param  int $folderId Id of the folder (required)
+     * @param int $folderId Id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -445,7 +453,7 @@ class FoldersApi
      *
      * Returns a folder's details
      *
-     * @param  int $folderId id of the folder (required)
+     * @param int $folderId id of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -461,7 +469,7 @@ class FoldersApi
      *
      * Returns a folder's details
      *
-     * @param  int $folderId id of the folder (required)
+     * @param int $folderId id of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -495,18 +503,18 @@ class FoldersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolder', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolder', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -516,23 +524,25 @@ class FoldersApi
      *
      * Returns a folder's details
      *
-     * @param  int $folderId id of the folder (required)
+     * @param int $folderId id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getFolderAsync($folderId)
     {
-        return $this->getFolderAsyncWithHttpInfo($folderId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getFolderAsyncWithHttpInfo($folderId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getFolderAsyncWithHttpInfo
      *
      * Returns a folder's details
      *
-     * @param  int $folderId id of the folder (required)
+     * @param int $folderId id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -541,28 +551,30 @@ class FoldersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolder';
         $request = $this->getFolderRequest($folderId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getFolder'
      *
-     * @param  int $folderId id of the folder (required)
+     * @param int $folderId id of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -642,9 +654,9 @@ class FoldersApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -660,9 +672,9 @@ class FoldersApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -696,18 +708,18 @@ class FoldersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -717,27 +729,29 @@ class FoldersApi
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getFolderListsAsync($folderId, $limit = '10', $offset = '0')
     {
-        return $this->getFolderListsAsyncWithHttpInfo($folderId, $limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getFolderListsAsyncWithHttpInfo($folderId, $limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getFolderListsAsyncWithHttpInfo
      *
      * Get lists in a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -746,30 +760,32 @@ class FoldersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolderLists';
         $request = $this->getFolderListsRequest($folderId, $limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getFolderLists'
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  int $limit Number of documents per page (optional, default to 10)
-     * @param  int $offset Index of the first document of the page (optional, default to 0)
+     * @param int $folderId Id of the folder (required)
+     * @param int $limit    Number of documents per page (optional, default to 10)
+     * @param int $offset   Index of the first document of the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -860,8 +876,8 @@ class FoldersApi
      *
      * Get all folders
      *
-     * @param  int $limit Number of documents per page (required)
-     * @param  int $offset Index of the first document of the page (required)
+     * @param int $limit  Number of documents per page (required)
+     * @param int $offset Index of the first document of the page (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -877,8 +893,8 @@ class FoldersApi
      *
      * Get all folders
      *
-     * @param  int $limit Number of documents per page (required)
-     * @param  int $offset Index of the first document of the page (required)
+     * @param int $limit  Number of documents per page (required)
+     * @param int $offset Index of the first document of the page (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -912,14 +928,14 @@ class FoldersApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolders', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolders', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -929,25 +945,27 @@ class FoldersApi
      *
      * Get all folders
      *
-     * @param  int $limit Number of documents per page (required)
-     * @param  int $offset Index of the first document of the page (required)
+     * @param int $limit  Number of documents per page (required)
+     * @param int $offset Index of the first document of the page (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getFoldersAsync($limit, $offset)
     {
-        return $this->getFoldersAsyncWithHttpInfo($limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getFoldersAsyncWithHttpInfo($limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getFoldersAsyncWithHttpInfo
      *
      * Get all folders
      *
-     * @param  int $limit Number of documents per page (required)
-     * @param  int $offset Index of the first document of the page (required)
+     * @param int $limit  Number of documents per page (required)
+     * @param int $offset Index of the first document of the page (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -956,29 +974,31 @@ class FoldersApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetFolders';
         $request = $this->getFoldersRequest($limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getFolders'
      *
-     * @param  int $limit Number of documents per page (required)
-     * @param  int $offset Index of the first document of the page (required)
+     * @param int $limit  Number of documents per page (required)
+     * @param int $offset Index of the first document of the page (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1069,8 +1089,8 @@ class FoldersApi
      *
      * Update a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
+     * @param int                                         $folderId     Id of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1085,8 +1105,8 @@ class FoldersApi
      *
      * Update a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
+     * @param int                                         $folderId     Id of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1110,14 +1130,14 @@ class FoldersApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1127,25 +1147,27 @@ class FoldersApi
      *
      * Update a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
+     * @param int                                         $folderId     Id of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateFolderAsync($folderId, $updateFolder)
     {
-        return $this->updateFolderAsyncWithHttpInfo($folderId, $updateFolder)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateFolderAsyncWithHttpInfo($folderId, $updateFolder)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateFolderAsyncWithHttpInfo
      *
      * Update a folder
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
+     * @param int                                         $folderId     Id of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1154,19 +1176,21 @@ class FoldersApi
     {
         $returnType = '';
         $request = $this->updateFolderRequest($folderId, $updateFolder);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateFolder'
      *
-     * @param  int $folderId Id of the folder (required)
-     * @param  \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
+     * @param int                                         $folderId     Id of the folder (required)
+     * @param \SendinBlue\Client\Model\CreateUpdateFolder $updateFolder Name of the folder (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

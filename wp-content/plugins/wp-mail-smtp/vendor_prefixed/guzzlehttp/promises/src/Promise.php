@@ -83,7 +83,9 @@ class Promise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseInterface
             }
         }
         // Reject the promise only if it wasn't rejected in a then callback.
-        /** @psalm-suppress RedundantCondition */
+        /**
+ * @psalm-suppress RedundantCondition 
+*/
         if ($this->state === self::PENDING) {
             $this->reject(new \WPMailSMTP\Vendor\GuzzleHttp\Promise\CancellationException('Promise has been cancelled'));
         }
@@ -123,25 +125,29 @@ class Promise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseInterface
         if (!\is_object($value) || !\method_exists($value, 'then')) {
             $id = $state === self::FULFILLED ? 1 : 2;
             // It's a success, so resolve the handlers in the queue.
-            \WPMailSMTP\Vendor\GuzzleHttp\Promise\Utils::queue()->add(static function () use($id, $value, $handlers) {
-                foreach ($handlers as $handler) {
-                    self::callHandler($id, $value, $handler);
+            \WPMailSMTP\Vendor\GuzzleHttp\Promise\Utils::queue()->add(
+                static function () use ($id, $value, $handlers) {
+                    foreach ($handlers as $handler) {
+                        self::callHandler($id, $value, $handler);
+                    }
                 }
-            });
+            );
         } elseif ($value instanceof \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise && \WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::pending($value)) {
             // We can just merge our handlers onto the next promise.
             $value->handlers = \array_merge($value->handlers, $handlers);
         } else {
             // Resolve the handlers when the forwarded promise is resolved.
-            $value->then(static function ($value) use($handlers) {
-                foreach ($handlers as $handler) {
-                    self::callHandler(1, $value, $handler);
+            $value->then(
+                static function ($value) use ($handlers) {
+                    foreach ($handlers as $handler) {
+                        self::callHandler(1, $value, $handler);
+                    }
+                }, static function ($reason) use ($handlers) {
+                    foreach ($handlers as $handler) {
+                        self::callHandler(2, $reason, $handler);
+                    }
                 }
-            }, static function ($reason) use($handlers) {
-                foreach ($handlers as $handler) {
-                    self::callHandler(2, $reason, $handler);
-                }
-            });
+            );
         }
     }
     /**
@@ -153,7 +159,9 @@ class Promise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseInterface
      */
     private static function callHandler($index, $value, array $handler)
     {
-        /** @var PromiseInterface $promise */
+        /**
+ * @var PromiseInterface $promise 
+*/
         $promise = $handler[0];
         // The promise may have been cancelled or resolved before placing
         // this thunk in the queue.
@@ -197,7 +205,9 @@ class Promise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseInterface
             $this->reject('Cannot wait on a promise that has ' . 'no internal wait function. You must provide a wait ' . 'function when constructing the promise to be able to ' . 'wait on a promise.');
         }
         \WPMailSMTP\Vendor\GuzzleHttp\Promise\Utils::queue()->run();
-        /** @psalm-suppress RedundantCondition */
+        /**
+ * @psalm-suppress RedundantCondition 
+*/
         if ($this->state === self::PENDING) {
             $this->reject('Invoking the wait callback did not resolve the promise');
         }

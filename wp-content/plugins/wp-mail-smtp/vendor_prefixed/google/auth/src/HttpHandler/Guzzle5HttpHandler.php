@@ -41,8 +41,8 @@ class Guzzle5HttpHandler
     /**
      * Accepts a PSR-7 Request and an array of options and returns a PSR-7 response.
      *
-     * @param RequestInterface $request
-     * @param array $options
+     * @param  RequestInterface $request
+     * @param  array            $options
      * @return ResponseInterface
      */
     public function __invoke(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options = [])
@@ -53,8 +53,8 @@ class Guzzle5HttpHandler
     /**
      * Accepts a PSR-7 request and an array of options and returns a PromiseInterface
      *
-     * @param RequestInterface $request
-     * @param array $options
+     * @param  RequestInterface $request
+     * @param  array            $options
      * @return Promise
      */
     public function async(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options = [])
@@ -63,21 +63,25 @@ class Guzzle5HttpHandler
             throw new \Exception('Install guzzlehttp/promises to use async with Guzzle 5');
         }
         $futureResponse = $this->client->send($this->createGuzzle5Request($request, ['future' => \true] + $options));
-        $promise = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(function () use($futureResponse) {
-            try {
-                $futureResponse->wait();
-            } catch (\Exception $e) {
-                // The promise is already delivered when the exception is
-                // thrown, so don't rethrow it.
-            }
-        }, [$futureResponse, 'cancel']);
+        $promise = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(
+            function () use ($futureResponse) {
+                try {
+                    $futureResponse->wait();
+                } catch (\Exception $e) {
+                    // The promise is already delivered when the exception is
+                    // thrown, so don't rethrow it.
+                }
+            }, [$futureResponse, 'cancel']
+        );
         $futureResponse->then([$promise, 'resolve'], [$promise, 'reject']);
-        return $promise->then(function (\WPMailSMTP\Vendor\GuzzleHttp\Message\ResponseInterface $response) {
-            // Adapt the Guzzle 5 Response to a PSR-7 Response.
-            return $this->createPsr7Response($response);
-        }, function (\Exception $e) {
-            return new \WPMailSMTP\Vendor\GuzzleHttp\Promise\RejectedPromise($e);
-        });
+        return $promise->then(
+            function (\WPMailSMTP\Vendor\GuzzleHttp\Message\ResponseInterface $response) {
+                // Adapt the Guzzle 5 Response to a PSR-7 Response.
+                return $this->createPsr7Response($response);
+            }, function (\Exception $e) {
+                return new \WPMailSMTP\Vendor\GuzzleHttp\Promise\RejectedPromise($e);
+            }
+        );
     }
     private function createGuzzle5Request(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options)
     {

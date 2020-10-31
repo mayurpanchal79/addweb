@@ -13,42 +13,42 @@ import { AddToCartButton, QuantityInput, ProductUnavailable } from '../shared';
  * Simple Product Add To Cart Form
  */
 const Simple = () => {
-	const {
-		product,
-		quantity,
-		minQuantity,
-		maxQuantity,
-		dispatchActions,
-		isDisabled,
-	} = useAddToCartFormContext();
+    const {
+        product,
+        quantity,
+        minQuantity,
+        maxQuantity,
+        dispatchActions,
+        isDisabled,
+    } = useAddToCartFormContext();
 
-	if ( product.id && ! product.is_purchasable ) {
-		return <ProductUnavailable />;
-	}
+    if (product.id && ! product.is_purchasable ) {
+        return <ProductUnavailable />;
+    }
 
-	if ( product.id && ! product.is_in_stock ) {
-		return (
-			<ProductUnavailable
-				reason={ __(
-					'This product is currently out of stock and cannot be purchased.',
-					'woocommerce'
-				) }
-			/>
-		);
-	}
+    if (product.id && ! product.is_in_stock ) {
+        return (
+        <ProductUnavailable
+        reason={ __(
+            'This product is currently out of stock and cannot be purchased.',
+            'woocommerce'
+        ) }
+        />
+        );
+    }
 
-	return (
-		<>
-			<QuantityInput
-				value={ quantity }
-				min={ minQuantity }
-				max={ maxQuantity }
-				disabled={ isDisabled }
-				onChange={ dispatchActions.setQuantity }
-			/>
-			<AddToCartButton />
-		</>
-	);
+    return (
+    <>
+    <QuantityInput
+                value={ quantity }
+                min={ minQuantity }
+                max={ maxQuantity }
+                disabled={ isDisabled }
+                onChange={ dispatchActions.setQuantity }
+    />
+    <AddToCartButton />
+    </>
+    );
 };
 
 export default Simple;

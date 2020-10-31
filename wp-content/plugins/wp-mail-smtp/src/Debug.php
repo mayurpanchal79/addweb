@@ -13,110 +13,116 @@ namespace WPMailSMTP;
  *
  * @since 1.2.0
  */
-class Debug {
+class Debug
+{
 
-	/**
-	 * Key for options table where all messages will be saved to.
-	 */
-	const OPTION_KEY = 'wp_mail_smtp_debug';
+    /**
+     * Key for options table where all messages will be saved to.
+     */
+    const OPTION_KEY = 'wp_mail_smtp_debug';
 
-	/**
-	 * Save unique debug message to a debug log.
-	 * Adds one more to a list, at the end.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param mixed $message
-	 */
-	public static function set( $message ) {
+    /**
+     * Save unique debug message to a debug log.
+     * Adds one more to a list, at the end.
+     *
+     * @since 1.2.0
+     *
+     * @param mixed $message
+     */
+    public static function set( $message )
+    {
 
-		if ( empty( $message ) ) {
-			return;
-		}
+        if (empty($message) ) {
+            return;
+        }
 
-		if ( ! is_string( $message ) ) {
-			$message = wp_json_encode( $message );
-		} else {
-			$message = wp_strip_all_tags( $message, false );
-		}
+        if (! is_string($message) ) {
+            $message = wp_json_encode($message);
+        } else {
+            $message = wp_strip_all_tags($message, false);
+        }
 
-		$all = self::get();
+        $all = self::get();
 
-		array_push( $all, $message );
+        array_push($all, $message);
 
-		update_option( self::OPTION_KEY, array_unique( $all ), false );
-	}
+        update_option(self::OPTION_KEY, array_unique($all), false);
+    }
 
-	/**
-	 * Remove all messages for a debug log.
-	 *
-	 * @since 1.2.0
-	 */
-	public static function clear() {
-		update_option( self::OPTION_KEY, array(), false );
-	}
+    /**
+     * Remove all messages for a debug log.
+     *
+     * @since 1.2.0
+     */
+    public static function clear()
+    {
+        update_option(self::OPTION_KEY, array(), false);
+    }
 
-	/**
-	 * Retrieve all messages from a debug log.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @return array
-	 */
-	public static function get() {
+    /**
+     * Retrieve all messages from a debug log.
+     *
+     * @since 1.2.0
+     *
+     * @return array
+     */
+    public static function get()
+    {
 
-		$all = get_option( self::OPTION_KEY, array() );
+        $all = get_option(self::OPTION_KEY, array());
 
-		if ( ! is_array( $all ) ) {
-			$all = (array) $all;
-		}
+        if (! is_array($all) ) {
+            $all = (array) $all;
+        }
 
-		return $all;
-	}
+        return $all;
+    }
 
-	/**
-	 * Get the last message that was saved to a debug log.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @return string
-	 */
-	public static function get_last() {
+    /**
+     * Get the last message that was saved to a debug log.
+     *
+     * @since 1.2.0
+     *
+     * @return string
+     */
+    public static function get_last()
+    {
 
-		$all = self::get();
+        $all = self::get();
 
-		if ( ! empty( $all ) && is_array( $all ) ) {
-			return (string) end( $all );
-		}
+        if (! empty($all) && is_array($all) ) {
+            return (string) end($all);
+        }
 
-		return '';
-	}
+        return '';
+    }
 
-	/**
-	 * Get the proper variable content output to debug.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param mixed $var
-	 *
-	 * @return string
-	 */
-	public static function pvar( $var = '' ) {
+    /**
+     * Get the proper variable content output to debug.
+     *
+     * @since 1.2.0
+     *
+     * @param mixed $var
+     *
+     * @return string
+     */
+    public static function pvar( $var = '' )
+    {
 
-		ob_start();
+        ob_start();
 
-		echo '<code>';
+        echo '<code>';
 
-		if ( is_bool( $var ) || empty( $var ) ) {
-			var_dump( $var );
-		} else {
-			print_r( $var );
-		}
+        if (is_bool($var) || empty($var) ) {
+            var_dump($var);
+        } else {
+            print_r($var);
+        }
 
-		echo '</code>';
+        echo '</code>';
 
-		$output = ob_get_clean();
+        $output = ob_get_clean();
 
-		return str_replace( array( "\r\n", "\r", "\n" ), '', $output );
-	}
+        return str_replace(array( "\r\n", "\r", "\n" ), '', $output);
+    }
 }

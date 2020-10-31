@@ -22,36 +22,43 @@ class NativeMailerHandler extends \WPMailSMTP\Vendor\Monolog\Handler\MailHandler
 {
     /**
      * The email addresses to which the message will be sent
+     *
      * @var array
      */
     protected $to;
     /**
      * The subject of the email
+     *
      * @var string
      */
     protected $subject;
     /**
      * Optional headers for the message
+     *
      * @var array
      */
     protected $headers = array();
     /**
      * Optional parameters for the message
+     *
      * @var array
      */
     protected $parameters = array();
     /**
      * The wordwrap length for the message
+     *
      * @var int
      */
     protected $maxColumnWidth;
     /**
      * The Content-type for the message
+     *
      * @var string
      */
     protected $contentType = 'text/plain';
     /**
      * The encoding for the message
+     *
      * @var string
      */
     protected $encoding = 'utf-8';

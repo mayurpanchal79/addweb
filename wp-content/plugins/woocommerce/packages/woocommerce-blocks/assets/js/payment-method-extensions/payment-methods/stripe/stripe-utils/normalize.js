@@ -20,13 +20,15 @@
  * @return {StripePaymentItem[]} An array of PaymentItems
  */
 const normalizeLineItems = ( cartTotalItems, pending = false ) => {
-	return cartTotalItems.map( ( cartTotalItem ) => {
-		return {
-			amount: cartTotalItem.value,
-			label: cartTotalItem.label,
-			pending,
-		};
-	} );
+    return cartTotalItems.map(
+        ( cartTotalItem ) => {
+            return {
+                amount: cartTotalItem.value,
+                label: cartTotalItem.label,
+                pending,
+            };
+        } 
+    );
 };
 
 /**
@@ -38,15 +40,17 @@ const normalizeLineItems = ( cartTotalItems, pending = false ) => {
  * @return {StripeShippingOption[]}  An array of Stripe shipping option items.
  */
 const normalizeShippingOptions = ( shippingOptions ) => {
-	const rates = shippingOptions[ 0 ].shipping_rates;
-	return rates.map( ( rate ) => {
-		return {
-			id: rate.rate_id,
-			label: rate.name,
-			detail: rate.description,
-			amount: parseInt( rate.price, 10 ),
-		};
-	} );
+    const rates = shippingOptions[ 0 ].shipping_rates;
+    return rates.map(
+        ( rate ) => {
+            return {
+                id: rate.rate_id,
+                label: rate.name,
+                detail: rate.description,
+                amount: parseInt(rate.price, 10),
+            };
+        } 
+    );
 };
 
 /**
@@ -59,30 +63,30 @@ const normalizeShippingOptions = ( shippingOptions ) => {
  * the cart.
  */
 const normalizeShippingAddressForCheckout = ( shippingAddress ) => {
-	const address = {
-		first_name: shippingAddress.recipient
-			.split( ' ' )
-			.slice( 0, 1 )
-			.join( ' ' ),
-		last_name: shippingAddress.recipient
-			.split( ' ' )
-			.slice( 1 )
-			.join( ' ' ),
-		company: '',
-		address_1:
-			typeof shippingAddress.addressLine[ 0 ] === 'undefined'
-				? ''
-				: shippingAddress.addressLine[ 0 ],
-		address_2:
-			typeof shippingAddress.addressLine[ 1 ] === 'undefined'
-				? ''
-				: shippingAddress.addressLine[ 1 ],
-		city: shippingAddress.city,
-		state: shippingAddress.region,
-		country: shippingAddress.country,
-		postcode: shippingAddress.postalCode.replace( ' ', '' ),
-	};
-	return address;
+    const address = {
+        first_name: shippingAddress.recipient
+        .split(' ')
+        .slice(0, 1)
+        .join(' '),
+        last_name: shippingAddress.recipient
+        .split(' ')
+        .slice(1)
+        .join(' '),
+        company: '',
+        address_1:
+        typeof shippingAddress.addressLine[ 0 ] === 'undefined'
+        ? ''
+        : shippingAddress.addressLine[ 0 ],
+        address_2:
+        typeof shippingAddress.addressLine[ 1 ] === 'undefined'
+        ? ''
+        : shippingAddress.addressLine[ 1 ],
+        city: shippingAddress.city,
+        state: shippingAddress.region,
+        country: shippingAddress.country,
+        postcode: shippingAddress.postalCode.replace(' ', ''),
+    };
+    return address;
 };
 
 /**
@@ -95,7 +99,7 @@ const normalizeShippingAddressForCheckout = ( shippingAddress ) => {
  * @return {string[]}  An array of ids (in this case will just be one)
  */
 const normalizeShippingOptionSelectionsForCheckout = ( shippingOption ) => {
-	return shippingOption.id;
+    return shippingOption.id;
 };
 
 /**
@@ -108,26 +112,26 @@ const normalizeShippingOptionSelectionsForCheckout = ( shippingOption ) => {
  * @return {CartBillingAddress} The cart billing data
  */
 const getBillingData = ( paymentResponse ) => {
-	const source = paymentResponse.source;
-	const name = source && source.owner.name;
-	const billing = source && source.owner.address;
-	const payerEmail = paymentResponse.payerEmail || '';
-	const payerPhone = paymentResponse.payerPhone || '';
-	return {
-		first_name: name ? name.split( ' ' ).slice( 0, 1 ).join( ' ' ) : '',
-		last_name: name ? name.split( ' ' ).slice( 1 ).join( ' ' ) : '',
-		email: ( source && source.owner.email ) || payerEmail,
-		phone:
-			( source && source.owner.phone ) ||
-			payerPhone.replace( '/[() -]/g', '' ),
-		country: ( billing && billing.country ) || '',
-		address_1: ( billing && billing.line1 ) || '',
-		address_2: ( billing && billing.line2 ) || '',
-		city: ( billing && billing.city ) || '',
-		state: ( billing && billing.state ) || '',
-		postcode: ( billing && billing.postal_code ) || '',
-		company: '',
-	};
+    const source = paymentResponse.source;
+    const name = source && source.owner.name;
+    const billing = source && source.owner.address;
+    const payerEmail = paymentResponse.payerEmail || '';
+    const payerPhone = paymentResponse.payerPhone || '';
+    return {
+        first_name: name ? name.split(' ').slice(0, 1).join(' ') : '',
+        last_name: name ? name.split(' ').slice(1).join(' ') : '',
+        email: ( source && source.owner.email ) || payerEmail,
+        phone:
+        ( source && source.owner.phone ) ||
+        payerPhone.replace('/[() -]/g', ''),
+        country: ( billing && billing.country ) || '',
+        address_1: ( billing && billing.line1 ) || '',
+        address_2: ( billing && billing.line2 ) || '',
+        city: ( billing && billing.city ) || '',
+        state: ( billing && billing.state ) || '',
+        postcode: ( billing && billing.postal_code ) || '',
+        company: '',
+    };
 };
 
 /**
@@ -142,31 +146,31 @@ const getBillingData = ( paymentResponse ) => {
  * @return {Object} An object with the extra payment data.
  */
 const getPaymentMethodData = ( paymentResponse, paymentRequestType ) => {
-	return {
-		payment_method: 'stripe',
-		stripe_source: paymentResponse.source
-			? paymentResponse.source.id
-			: null,
-		payment_request_type: paymentRequestType,
-	};
+    return {
+        payment_method: 'stripe',
+        stripe_source: paymentResponse.source
+        ? paymentResponse.source.id
+        : null,
+        payment_request_type: paymentRequestType,
+    };
 };
 
 const getShippingData = ( paymentResponse ) => {
-	return paymentResponse.shippingAddress
-		? {
-				address: normalizeShippingAddressForCheckout(
-					paymentResponse.shippingAddress
-				),
-		  }
-		: null;
+    return paymentResponse.shippingAddress
+    ? {
+        address: normalizeShippingAddressForCheckout(
+            paymentResponse.shippingAddress
+        ),
+    }
+    : null;
 };
 
 export {
-	normalizeLineItems,
-	normalizeShippingOptions,
-	normalizeShippingAddressForCheckout,
-	normalizeShippingOptionSelectionsForCheckout,
-	getBillingData,
-	getPaymentMethodData,
-	getShippingData,
+    normalizeLineItems,
+    normalizeShippingOptions,
+    normalizeShippingAddressForCheckout,
+    normalizeShippingOptionSelectionsForCheckout,
+    getBillingData,
+    getPaymentMethodData,
+    getShippingData,
 };

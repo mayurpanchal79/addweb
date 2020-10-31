@@ -56,10 +56,10 @@ class CssConcatenator
     /**
      * Appends a declaration block to the CSS.
      *
-     * @param string[] $selectors Array of selectors for the rule, e.g. ["ul", "ol", "p:first-child"].
-     * @param string $declarationsBlock The property declarations, e.g. "margin-top: 0.5em; padding: 0".
-     * @param string $media The media query for the rule, e.g. "@media screen and (max-width:639px)",
-     *                      or an empty string if none.
+     * @param string[] $selectors         Array of selectors for the rule, e.g. ["ul", "ol", "p:first-child"].
+     * @param string   $declarationsBlock The property declarations, e.g. "margin-top: 0.5em; padding: 0".
+     * @param string   $media             The media query for the rule, e.g. "@media screen and (max-width:639px)",
+     *                                    or an empty string if none.
      */
     public function append(array $selectors, $declarationsBlock, $media = '')
     {
@@ -144,7 +144,7 @@ class CssConcatenator
 
     /**
      * @param \stdClass $ruleBlock Object with properties as described for elements of the `ruleBlocks` property of
-     *                            elements of `$mediaRules`.
+     *                             elements of `$mediaRules`.
      *
      * @return string CSS for the rule block.
      */

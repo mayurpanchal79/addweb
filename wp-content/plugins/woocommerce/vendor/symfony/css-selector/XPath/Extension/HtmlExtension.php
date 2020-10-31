@@ -162,13 +162,15 @@ class HtmlExtension extends AbstractExtension
             }
         }
 
-        return $xpath->addCondition(sprintf(
-            'ancestor-or-self::*[@lang][1][starts-with(concat('
-            ."translate(@%s, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '-')"
-            .', %s)]',
-            'lang',
-            Translator::getXpathLiteral(strtolower($arguments[0]->getValue()).'-')
-        ));
+        return $xpath->addCondition(
+            sprintf(
+                'ancestor-or-self::*[@lang][1][starts-with(concat('
+                ."translate(@%s, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '-')"
+                .', %s)]',
+                'lang',
+                Translator::getXpathLiteral(strtolower($arguments[0]->getValue()).'-')
+            )
+        );
     }
 
     /**

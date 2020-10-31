@@ -17,7 +17,9 @@ use WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface;
  */
 class CurlMultiHandler
 {
-    /** @var CurlFactoryInterface */
+    /**
+     * @var CurlFactoryInterface 
+     */
     private $factory;
     private $selectTimeout;
     private $active;
@@ -72,9 +74,11 @@ class CurlMultiHandler
     {
         $easy = $this->factory->create($request, $options);
         $id = (int) $easy->handle;
-        $promise = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise([$this, 'execute'], function () use($id) {
-            return $this->cancel($id);
-        });
+        $promise = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(
+            [$this, 'execute'], function () use ($id) {
+                return $this->cancel($id);
+            }
+        );
         $this->addRequest(['easy' => $easy, 'deferred' => $promise]);
         return $promise;
     }

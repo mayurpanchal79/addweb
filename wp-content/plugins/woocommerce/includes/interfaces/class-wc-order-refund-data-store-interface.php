@@ -6,8 +6,8 @@
  * @package WooCommerce\Interface
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (! defined('ABSPATH') ) {
+    exit;
 }
 
 /**
@@ -15,7 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Functions that must be defined by order store classes.
  *
- * @version  3.0.0
+ * @version 3.0.0
  */
-interface WC_Order_Refund_Data_Store_Interface {
+interface WC_Order_Refund_Data_Store_Interface
+{
 }

@@ -21,37 +21,69 @@ class Decoder
     private $pointerTestHack;
     private $switchByteOrder;
 
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _EXTENDED = 0;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _POINTER = 1;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _UTF8_STRING = 2;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _DOUBLE = 3;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _BYTES = 4;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _UINT16 = 5;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _UINT32 = 6;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _MAP = 7;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _INT32 = 8;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _UINT64 = 9;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _UINT128 = 10;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _ARRAY = 11;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _CONTAINER = 12;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _END_MARKER = 13;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _BOOLEAN = 14;
-    /** @ignore */
+    /**
+ * @ignore 
+*/
     const _FLOAT = 15;
 
     public function __construct(
@@ -116,39 +148,39 @@ class Decoder
     private function decodeByType($type, $offset, $size)
     {
         switch ($type) {
-            case self::_MAP:
-                return $this->decodeMap($size, $offset);
-            case self::_ARRAY:
-                return $this->decodeArray($size, $offset);
-            case self::_BOOLEAN:
-                return [$this->decodeBoolean($size), $offset];
+        case self::_MAP:
+            return $this->decodeMap($size, $offset);
+        case self::_ARRAY:
+            return $this->decodeArray($size, $offset);
+        case self::_BOOLEAN:
+            return [$this->decodeBoolean($size), $offset];
         }
 
         $newOffset = $offset + $size;
         $bytes = Util::read($this->fileStream, $offset, $size);
         switch ($type) {
-            case self::_BYTES:
-            case self::_UTF8_STRING:
-                return [$bytes, $newOffset];
-            case self::_DOUBLE:
-                $this->verifySize(8, $size);
+        case self::_BYTES:
+        case self::_UTF8_STRING:
+            return [$bytes, $newOffset];
+        case self::_DOUBLE:
+            $this->verifySize(8, $size);
 
-                return [$this->decodeDouble($bytes), $newOffset];
-            case self::_FLOAT:
-                $this->verifySize(4, $size);
+            return [$this->decodeDouble($bytes), $newOffset];
+        case self::_FLOAT:
+            $this->verifySize(4, $size);
 
-                return [$this->decodeFloat($bytes), $newOffset];
-            case self::_INT32:
-                return [$this->decodeInt32($bytes, $size), $newOffset];
-            case self::_UINT16:
-            case self::_UINT32:
-            case self::_UINT64:
-            case self::_UINT128:
-                return [$this->decodeUint($bytes, $size), $newOffset];
-            default:
-                throw new InvalidDatabaseException(
-                    'Unknown or unexpected type: ' . $type
-                );
+            return [$this->decodeFloat($bytes), $newOffset];
+        case self::_INT32:
+            return [$this->decodeInt32($bytes, $size), $newOffset];
+        case self::_UINT16:
+        case self::_UINT32:
+        case self::_UINT64:
+        case self::_UINT128:
+            return [$this->decodeUint($bytes, $size), $newOffset];
+        default:
+            throw new InvalidDatabaseException(
+                'Unknown or unexpected type: ' . $type
+            );
         }
     }
 
@@ -207,19 +239,19 @@ class Decoder
     private function decodeInt32($bytes, $size)
     {
         switch ($size) {
-            case 0:
-                return 0;
-            case 1:
-            case 2:
-            case 3:
-                $bytes = str_pad($bytes, 4, "\x00", STR_PAD_LEFT);
-                break;
-            case 4:
-                break;
-            default:
-                throw new InvalidDatabaseException(
-                    "The MaxMind DB file's data section contains bad data (unknown data type or corrupt data)"
-                );
+        case 0:
+            return 0;
+        case 1:
+        case 2:
+        case 3:
+            $bytes = str_pad($bytes, 4, "\x00", STR_PAD_LEFT);
+            break;
+        case 4:
+            break;
+        default:
+            throw new InvalidDatabaseException(
+                "The MaxMind DB file's data section contains bad data (unknown data type or corrupt data)"
+            );
         }
 
         list(, $int) = unpack('l', $this->maybeSwitchByteOrder($bytes));
@@ -248,42 +280,42 @@ class Decoder
         $offset = $offset + $pointerSize;
 
         switch ($pointerSize) {
-            case 1:
-                $packed = \chr($ctrlByte & 0x7) . $buffer;
-                list(, $pointer) = unpack('n', $packed);
-                $pointer += $this->pointerBase;
-                break;
-            case 2:
-                $packed = "\x00" . \chr($ctrlByte & 0x7) . $buffer;
-                list(, $pointer) = unpack('N', $packed);
-                $pointer += $this->pointerBase + 2048;
-                break;
-            case 3:
-                $packed = \chr($ctrlByte & 0x7) . $buffer;
+        case 1:
+            $packed = \chr($ctrlByte & 0x7) . $buffer;
+            list(, $pointer) = unpack('n', $packed);
+            $pointer += $this->pointerBase;
+            break;
+        case 2:
+            $packed = "\x00" . \chr($ctrlByte & 0x7) . $buffer;
+            list(, $pointer) = unpack('N', $packed);
+            $pointer += $this->pointerBase + 2048;
+            break;
+        case 3:
+            $packed = \chr($ctrlByte & 0x7) . $buffer;
 
-                // It is safe to use 'N' here, even on 32 bit machines as the
-                // first bit is 0.
-                list(, $pointer) = unpack('N', $packed);
-                $pointer += $this->pointerBase + 526336;
-                break;
-            case 4:
-                // We cannot use unpack here as we might overflow on 32 bit
-                // machines
-                $pointerOffset = $this->decodeUint($buffer, $pointerSize);
+            // It is safe to use 'N' here, even on 32 bit machines as the
+            // first bit is 0.
+            list(, $pointer) = unpack('N', $packed);
+            $pointer += $this->pointerBase + 526336;
+            break;
+        case 4:
+            // We cannot use unpack here as we might overflow on 32 bit
+            // machines
+            $pointerOffset = $this->decodeUint($buffer, $pointerSize);
 
-                $byteLength = $pointerSize + $this->pointerBaseByteSize;
+            $byteLength = $pointerSize + $this->pointerBaseByteSize;
 
-                if ($byteLength <= _MM_MAX_INT_BYTES) {
-                    $pointer = $pointerOffset + $this->pointerBase;
-                } elseif (\extension_loaded('gmp')) {
-                    $pointer = gmp_strval(gmp_add($pointerOffset, $this->pointerBase));
-                } elseif (\extension_loaded('bcmath')) {
-                    $pointer = bcadd($pointerOffset, $this->pointerBase);
-                } else {
-                    throw new RuntimeException(
-                        'The gmp or bcmath extension must be installed to read this database.'
-                    );
-                }
+            if ($byteLength <= _MM_MAX_INT_BYTES) {
+                $pointer = $pointerOffset + $this->pointerBase;
+            } elseif (\extension_loaded('gmp')) {
+                $pointer = gmp_strval(gmp_add($pointerOffset, $this->pointerBase));
+            } elseif (\extension_loaded('bcmath')) {
+                $pointer = bcadd($pointerOffset, $this->pointerBase);
+            } else {
+                throw new RuntimeException(
+                    'The gmp or bcmath extension must be installed to read this database.'
+                );
+            }
         }
 
         return [$pointer, $offset];

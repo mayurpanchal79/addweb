@@ -16,19 +16,21 @@ import Block from './block';
  * @param {*} props
  */
 const AllProductsFrontend = ( props ) => {
-	return (
-		<StoreNoticesProvider context="wc/all-products">
-			<Block { ...props } />
-		</StoreNoticesProvider>
-	);
+    return (
+    <StoreNoticesProvider context="wc/all-products">
+    <Block { ...props } />
+    </StoreNoticesProvider>
+    );
 };
 
 const getProps = ( el ) => ( {
-	attributes: JSON.parse( el.dataset.attributes ),
+    attributes: JSON.parse(el.dataset.attributes),
 } );
 
-renderFrontend( {
-	selector: '.wp-block-woocommerce-all-products',
-	Block: withRestApiHydration( AllProductsFrontend ),
-	getProps,
-} );
+renderFrontend(
+    {
+        selector: '.wp-block-woocommerce-all-products',
+        Block: withRestApiHydration(AllProductsFrontend),
+            getProps,
+    } 
+);

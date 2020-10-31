@@ -7,39 +7,40 @@ namespace WPMailSMTP\Admin;
  *
  * @since 1.0.0
  */
-interface PageInterface {
+interface PageInterface
+{
 
-	/**
-	 * URL to a tab.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_link();
+    /**
+     * URL to a tab.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    public function get_link();
 
-	/**
-	 * Title of a tab.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_title();
+    /**
+     * Title of a tab.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    public function get_title();
 
-	/**
-	 * Link label of a tab.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_label();
+    /**
+     * Link label of a tab.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    public function get_label();
 
-	/**
-	 * Tab content.
-	 *
-	 * @since 1.0.0
-	 */
-	public function display();
+    /**
+     * Tab content.
+     *
+     * @since 1.0.0
+     */
+    public function display();
 }

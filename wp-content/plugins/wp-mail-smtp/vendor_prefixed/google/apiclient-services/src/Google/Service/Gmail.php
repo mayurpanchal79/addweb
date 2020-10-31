@@ -33,33 +33,61 @@ namespace WPMailSMTP\Vendor;
  */
 class Google_Service_Gmail extends \WPMailSMTP\Vendor\Google_Service
 {
-    /** Read, compose, send, and permanently delete all your email from Gmail. */
+    /**
+ * Read, compose, send, and permanently delete all your email from Gmail. 
+*/
     const MAIL_GOOGLE_COM = "https://mail.google.com/";
-    /** Manage drafts and send emails when you interact with the add-on. */
+    /**
+ * Manage drafts and send emails when you interact with the add-on. 
+*/
     const GMAIL_ADDONS_CURRENT_ACTION_COMPOSE = "https://www.googleapis.com/auth/gmail.addons.current.action.compose";
-    /** View your email messages when you interact with the add-on. */
+    /**
+ * View your email messages when you interact with the add-on. 
+*/
     const GMAIL_ADDONS_CURRENT_MESSAGE_ACTION = "https://www.googleapis.com/auth/gmail.addons.current.message.action";
-    /** View your email message metadata when the add-on is running. */
+    /**
+ * View your email message metadata when the add-on is running. 
+*/
     const GMAIL_ADDONS_CURRENT_MESSAGE_METADATA = "https://www.googleapis.com/auth/gmail.addons.current.message.metadata";
-    /** View your email messages when the add-on is running. */
+    /**
+ * View your email messages when the add-on is running. 
+*/
     const GMAIL_ADDONS_CURRENT_MESSAGE_READONLY = "https://www.googleapis.com/auth/gmail.addons.current.message.readonly";
-    /** Manage drafts and send emails. */
+    /**
+ * Manage drafts and send emails. 
+*/
     const GMAIL_COMPOSE = "https://www.googleapis.com/auth/gmail.compose";
-    /** Insert mail into your mailbox. */
+    /**
+ * Insert mail into your mailbox. 
+*/
     const GMAIL_INSERT = "https://www.googleapis.com/auth/gmail.insert";
-    /** Manage mailbox labels. */
+    /**
+ * Manage mailbox labels. 
+*/
     const GMAIL_LABELS = "https://www.googleapis.com/auth/gmail.labels";
-    /** View your email message metadata such as labels and headers, but not the email body. */
+    /**
+ * View your email message metadata such as labels and headers, but not the email body. 
+*/
     const GMAIL_METADATA = "https://www.googleapis.com/auth/gmail.metadata";
-    /** View and modify but not delete your email. */
+    /**
+ * View and modify but not delete your email. 
+*/
     const GMAIL_MODIFY = "https://www.googleapis.com/auth/gmail.modify";
-    /** View your email messages and settings. */
+    /**
+ * View your email messages and settings. 
+*/
     const GMAIL_READONLY = "https://www.googleapis.com/auth/gmail.readonly";
-    /** Send email on your behalf. */
+    /**
+ * Send email on your behalf. 
+*/
     const GMAIL_SEND = "https://www.googleapis.com/auth/gmail.send";
-    /** Manage your basic mail settings. */
+    /**
+ * Manage your basic mail settings. 
+*/
     const GMAIL_SETTINGS_BASIC = "https://www.googleapis.com/auth/gmail.settings.basic";
-    /** Manage your sensitive mail settings, including who can manage your mail. */
+    /**
+ * Manage your sensitive mail settings, including who can manage your mail. 
+*/
     const GMAIL_SETTINGS_SHARING = "https://www.googleapis.com/auth/gmail.settings.sharing";
     public $users;
     public $users_drafts;
@@ -77,8 +105,8 @@ class Google_Service_Gmail extends \WPMailSMTP\Vendor\Google_Service
     /**
      * Constructs the internal representation of the Gmail service.
      *
-     * @param Google_Client $client The client used to deliver requests.
-     * @param string $rootUrl The root URL used for requests to the service.
+     * @param Google_Client $client  The client used to deliver requests.
+     * @param string        $rootUrl The root URL used for requests to the service.
      */
     public function __construct(\WPMailSMTP\Vendor\Google_Client $client, $rootUrl = null)
     {

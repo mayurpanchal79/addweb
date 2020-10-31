@@ -31,7 +31,7 @@ class JsonFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerForma
      */
     protected $includeStacktraces = \false;
     /**
-     * @param int $batchMode
+     * @param int  $batchMode
      * @param bool $appendNewline
      */
     public function __construct($batchMode = self::BATCH_MODE_JSON, $appendNewline = \true)
@@ -74,11 +74,11 @@ class JsonFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerForma
     public function formatBatch(array $records)
     {
         switch ($this->batchMode) {
-            case static::BATCH_MODE_NEWLINES:
-                return $this->formatBatchNewlines($records);
-            case static::BATCH_MODE_JSON:
-            default:
-                return $this->formatBatchJson($records);
+        case static::BATCH_MODE_NEWLINES:
+            return $this->formatBatchNewlines($records);
+        case static::BATCH_MODE_JSON:
+        default:
+            return $this->formatBatchJson($records);
         }
     }
     /**
@@ -91,7 +91,7 @@ class JsonFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerForma
     /**
      * Return a JSON-encoded array of records.
      *
-     * @param  array  $records
+     * @param  array $records
      * @return string
      */
     protected function formatBatchJson(array $records)
@@ -102,7 +102,7 @@ class JsonFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerForma
      * Use new lines to separate records instead of a
      * JSON-encoded array.
      *
-     * @param  array  $records
+     * @param  array $records
      * @return string
      */
     protected function formatBatchNewlines(array $records)
@@ -110,9 +110,11 @@ class JsonFormatter extends \WPMailSMTP\Vendor\Monolog\Formatter\NormalizerForma
         $instance = $this;
         $oldNewline = $this->appendNewline;
         $this->appendNewline = \false;
-        \array_walk($records, function (&$value, $key) use($instance) {
-            $value = $instance->format($value);
-        });
+        \array_walk(
+            $records, function (&$value, $key) use ($instance) {
+                $value = $instance->format($value);
+            }
+        );
         $this->appendNewline = $oldNewline;
         return \implode("\n", $records);
     }

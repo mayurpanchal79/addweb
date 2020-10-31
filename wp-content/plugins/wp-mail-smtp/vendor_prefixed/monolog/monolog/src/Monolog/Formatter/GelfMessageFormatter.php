@@ -14,6 +14,7 @@ use WPMailSMTP\Vendor\Monolog\Logger;
 use WPMailSMTP\Vendor\Gelf\Message;
 /**
  * Serializes a log message to GELF
+ *
  * @see http://www.graylog2.org/about/gelf
  *
  * @author Matt Lehner <mlehner@gmail.com>

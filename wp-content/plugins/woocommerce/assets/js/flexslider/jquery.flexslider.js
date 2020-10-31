@@ -1019,17 +1019,17 @@
                     slider.container.width((slider.count + slider.cloneCount) * 200 + "%");
                     slider.setProps(sliderOffset * slider.computedW, "init");
                     setTimeout(
-                    function () {
-                        slider.doMath();
-                        if(slider.vars.rtl) {
-                              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "right", "display": "block"});
-                        }
-                        else{
-                            slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
-                        }
-                        // SMOOTH HEIGHT:
-                        if (slider.vars.smoothHeight) { methods.smoothHeight(); }
-                    }, (type === "init") ? 100 : 0
+                        function () {
+                            slider.doMath();
+                            if(slider.vars.rtl) {
+                                  slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "right", "display": "block"});
+                            }
+                            else{
+                                slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+                            }
+                            // SMOOTH HEIGHT:
+                            if (slider.vars.smoothHeight) { methods.smoothHeight(); }
+                        }, (type === "init") ? 100 : 0
                     );
                 }
             } else { // FADE:

@@ -12,51 +12,53 @@ import { Icon, chevronUp, chevronDown } from '@woocommerce/icons';
 import './style.scss';
 
 const Panel = ( {
-	children,
-	className,
-	initialOpen = false,
-	hasBorder = false,
-	title,
-	titleTag: TitleTag = 'div',
+    children,
+    className,
+    initialOpen = false,
+    hasBorder = false,
+    title,
+    titleTag: TitleTag = 'div',
 } ) => {
-	const [ isOpen, setIsOpen ] = useState( initialOpen );
+    const [ isOpen, setIsOpen ] = useState(initialOpen);
 
-	return (
-		<div
-			className={ classNames( className, 'wc-blocks-components-panel', {
-				'has-border': hasBorder,
-			} ) }
-		>
-			<TitleTag>
-				<button
-					aria-expanded={ isOpen }
-					className="wc-blocks-components-panel__button"
-					onClick={ () => setIsOpen( ! isOpen ) }
-				>
-					<Icon
-						aria-hidden="true"
-						className="wc-blocks-components-panel__button-icon"
-						srcElement={ isOpen ? chevronUp : chevronDown }
-					/>
-					{ title }
-				</button>
-			</TitleTag>
-			<div
-				className="wc-blocks-components-panel__content"
-				hidden={ ! isOpen }
-			>
-				{ children }
-			</div>
-		</div>
-	);
+    return (
+    <div
+    className={ classNames(
+        className, 'wc-blocks-components-panel', {
+            'has-border': hasBorder,
+        } 
+    ) }
+    >
+    <TitleTag>
+                <button
+                    aria-expanded={ isOpen }
+                    className="wc-blocks-components-panel__button"
+                    onClick={ () => setIsOpen(! isOpen) }
+                >
+                    <Icon
+                        aria-hidden="true"
+                        className="wc-blocks-components-panel__button-icon"
+                        srcElement={ isOpen ? chevronUp : chevronDown }
+                    />
+                    { title }
+                </button>
+    </TitleTag>
+    <div
+                className="wc-blocks-components-panel__content"
+                hidden={ ! isOpen }
+    >
+                { children }
+    </div>
+    </div>
+    );
 };
 
 Panel.propTypes = {
-	className: PropTypes.string,
-	hasBorder: PropTypes.bool,
-	initialOpen: PropTypes.bool,
-	title: PropTypes.element,
-	titleTag: PropTypes.string,
+    className: PropTypes.string,
+    hasBorder: PropTypes.bool,
+    initialOpen: PropTypes.bool,
+    title: PropTypes.element,
+    titleTag: PropTypes.string,
 };
 
 export default Panel;

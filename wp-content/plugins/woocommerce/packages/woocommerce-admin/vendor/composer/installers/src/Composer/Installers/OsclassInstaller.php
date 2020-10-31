@@ -2,7 +2,7 @@
 namespace Composer\Installers;
 
 
-class OsclassInstaller extends BaseInstaller 
+class OsclassInstaller extends BaseInstaller
 {
     
     protected $locations = array(

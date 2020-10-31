@@ -55,10 +55,10 @@ class ScopedAccessTokenMiddleware
     /**
      * Creates a new ScopedAccessTokenMiddleware.
      *
-     * @param callable $tokenFunc a token generator function
-     * @param array|string $scopes the token authentication scopes
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache an implementation of CacheItemPoolInterface
+     * @param callable               $tokenFunc   a token generator function
+     * @param array|string           $scopes      the token authentication scopes
+     * @param array                  $cacheConfig configuration for the cache when it's present
+     * @param CacheItemPoolInterface $cache       an implementation of CacheItemPoolInterface
      */
     public function __construct(callable $tokenFunc, $scopes, array $cacheConfig = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache = null)
     {
@@ -101,12 +101,12 @@ class ScopedAccessTokenMiddleware
      *
      *   $res = $client->get('myproject/taskqueues/myqueue');
      *
-     * @param callable $handler
+     * @param  callable $handler
      * @return \Closure
      */
     public function __invoke(callable $handler)
     {
-        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use($handler) {
+        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use ($handler) {
             // Requests using "auth"="scoped" will be authorized.
             if (!isset($options['auth']) || $options['auth'] !== 'scoped') {
                 return $handler($request, $options);

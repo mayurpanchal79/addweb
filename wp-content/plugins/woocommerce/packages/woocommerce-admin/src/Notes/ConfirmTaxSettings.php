@@ -8,41 +8,43 @@
 
 namespace Automattic\WooCommerce\Admin\Notes;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * ConfirmTaxSettings.
  */
-class Confirm_Tax_Settings {
-	/**
-	 * Note traits.
-	 */
-	use NoteTraits;
+class Confirm_Tax_Settings
+{
+    /**
+     * Note traits.
+     */
+    use NoteTraits;
 
-	/**
-	 * Name of the note for use in the database.
-	 */
-	const NOTE_NAME = 'wc-admin-confirm-tax-settings';
+    /**
+     * Name of the note for use in the database.
+     */
+    const NOTE_NAME = 'wc-admin-confirm-tax-settings';
 
-	/**
-	 * Get the note.
-	 *
-	 * @return Note
-	 */
-	public static function get_note() {
-		$note = new WC_Admin_Note();
+    /**
+     * Get the note.
+     *
+     * @return Note
+     */
+    public static function get_note()
+    {
+        $note = new WC_Admin_Note();
 
-		$note->set_title( __( 'Confirm tax settings', 'woocommerce' ) );
-		$note->set_content( __( 'Automated tax calculations are enabled on your store through WooCommerce Shipping & Tax. Learn more about automated taxes <a href="https://docs.woocommerce.com/document/woocommerce-services/#section-12">here</a>.', 'woocommerce' ) );
-		$note->set_source( 'woocommerce-admin' );
-		$note->add_action(
-			'confirm-tax-settings_edit-tax-settings',
-			__( 'Edit tax settings', 'woocommerce' ),
-			admin_url( 'admin.php?page=wc-settings&tab=tax' ),
-			WC_Admin_Note::E_WC_ADMIN_NOTE_UNACTIONED,
-			true
-		);
+        $note->set_title(__('Confirm tax settings', 'woocommerce'));
+        $note->set_content(__('Automated tax calculations are enabled on your store through WooCommerce Shipping & Tax. Learn more about automated taxes <a href="https://docs.woocommerce.com/document/woocommerce-services/#section-12">here</a>.', 'woocommerce'));
+        $note->set_source('woocommerce-admin');
+        $note->add_action(
+            'confirm-tax-settings_edit-tax-settings',
+            __('Edit tax settings', 'woocommerce'),
+            admin_url('admin.php?page=wc-settings&tab=tax'),
+            WC_Admin_Note::E_WC_ADMIN_NOTE_UNACTIONED,
+            true
+        );
 
-		return $note;
-	}
+        return $note;
+    }
 }

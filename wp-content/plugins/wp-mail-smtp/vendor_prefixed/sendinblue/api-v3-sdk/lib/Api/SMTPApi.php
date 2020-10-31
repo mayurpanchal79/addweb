@@ -81,7 +81,7 @@ class SMTPApi
      *
      * Create an email template
      *
-     * @param  \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -97,7 +97,7 @@ class SMTPApi
      *
      * Create an email template
      *
-     * @param  \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -131,14 +131,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -148,23 +148,25 @@ class SMTPApi
      *
      * Create an email template
      *
-     * @param  \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createSmtpTemplateAsync($smtpTemplate)
     {
-        return $this->createSmtpTemplateAsyncWithHttpInfo($smtpTemplate)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->createSmtpTemplateAsyncWithHttpInfo($smtpTemplate)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation createSmtpTemplateAsyncWithHttpInfo
      *
      * Create an email template
      *
-     * @param  \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -173,28 +175,30 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateModel';
         $request = $this->createSmtpTemplateRequest($smtpTemplate);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'createSmtpTemplate'
      *
-     * @param  \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param \SendinBlue\Client\Model\CreateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -273,7 +277,7 @@ class SMTPApi
      *
      * Delete hardbounces
      *
-     * @param  \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
+     * @param \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -288,7 +292,7 @@ class SMTPApi
      *
      * Delete hardbounces
      *
-     * @param  \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
+     * @param \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -312,10 +316,10 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -325,23 +329,25 @@ class SMTPApi
      *
      * Delete hardbounces
      *
-     * @param  \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
+     * @param \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteHardbouncesAsync($deleteHardbounces = null)
     {
-        return $this->deleteHardbouncesAsyncWithHttpInfo($deleteHardbounces)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteHardbouncesAsyncWithHttpInfo($deleteHardbounces)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteHardbouncesAsyncWithHttpInfo
      *
      * Delete hardbounces
      *
-     * @param  \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
+     * @param \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -350,18 +356,20 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->deleteHardbouncesRequest($deleteHardbounces);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteHardbounces'
      *
-     * @param  \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
+     * @param \SendinBlue\Client\Model\DeleteHardbounces $deleteHardbounces values to delete hardbounces (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -436,7 +444,7 @@ class SMTPApi
      *
      * Delete an inactive email template
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -451,7 +459,7 @@ class SMTPApi
      *
      * Delete an inactive email template
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -475,14 +483,14 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -492,23 +500,25 @@ class SMTPApi
      *
      * Delete an inactive email template
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteSmtpTemplateAsync($templateId)
     {
-        return $this->deleteSmtpTemplateAsyncWithHttpInfo($templateId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->deleteSmtpTemplateAsyncWithHttpInfo($templateId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation deleteSmtpTemplateAsyncWithHttpInfo
      *
      * Delete an inactive email template
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -517,18 +527,20 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->deleteSmtpTemplateRequest($templateId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'deleteSmtpTemplate'
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -608,10 +620,10 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -627,10 +639,10 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -664,14 +676,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAggregatedReport', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAggregatedReport', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -681,29 +693,31 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getAggregatedSmtpReportAsync($startDate = null, $endDate = null, $days = null, $tag = null)
     {
-        return $this->getAggregatedSmtpReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getAggregatedSmtpReportAsyncWithHttpInfo($startDate, $endDate, $days, $tag)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getAggregatedSmtpReportAsyncWithHttpInfo
      *
      * Get your transactional email activity aggregated over a period of time
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -712,31 +726,33 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetAggregatedReport';
         $request = $this->getAggregatedSmtpReportRequest($startDate, $endDate, $days, $tag);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getAggregatedSmtpReport'
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -824,16 +840,16 @@ class SMTPApi
      *
      * Get all your transactional email activity (unaggregated events)
      *
-     * @param  int $limit Number limitation for the result returned (optional, default to 50)
-     * @param  int $offset Beginning point in the list to retrieve from. (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $email Filter the report for a specific email addresses (optional)
-     * @param  string $event Filter the report for a specific event type (optional)
-     * @param  string $tags Filter the report for tags (serialized and urlencoded array) (optional)
-     * @param  string $messageId Filter on a specific message id (optional)
-     * @param  int $templateId Filter on a specific template id (optional)
+     * @param int    $limit      Number limitation for the result returned (optional, default to 50)
+     * @param int    $offset     Beginning point in the list to retrieve from. (optional, default to 0)
+     * @param string $startDate  Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate    Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days       Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $email      Filter the report for a specific email addresses (optional)
+     * @param string $event      Filter the report for a specific event type (optional)
+     * @param string $tags       Filter the report for tags (serialized and urlencoded array) (optional)
+     * @param string $messageId  Filter on a specific message id (optional)
+     * @param int    $templateId Filter on a specific template id (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -849,16 +865,16 @@ class SMTPApi
      *
      * Get all your transactional email activity (unaggregated events)
      *
-     * @param  int $limit Number limitation for the result returned (optional, default to 50)
-     * @param  int $offset Beginning point in the list to retrieve from. (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $email Filter the report for a specific email addresses (optional)
-     * @param  string $event Filter the report for a specific event type (optional)
-     * @param  string $tags Filter the report for tags (serialized and urlencoded array) (optional)
-     * @param  string $messageId Filter on a specific message id (optional)
-     * @param  int $templateId Filter on a specific template id (optional)
+     * @param int    $limit      Number limitation for the result returned (optional, default to 50)
+     * @param int    $offset     Beginning point in the list to retrieve from. (optional, default to 0)
+     * @param string $startDate  Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate    Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days       Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $email      Filter the report for a specific email addresses (optional)
+     * @param string $event      Filter the report for a specific event type (optional)
+     * @param string $tags       Filter the report for tags (serialized and urlencoded array) (optional)
+     * @param string $messageId  Filter on a specific message id (optional)
+     * @param int    $templateId Filter on a specific template id (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -892,14 +908,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailEventReport', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailEventReport', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -909,41 +925,43 @@ class SMTPApi
      *
      * Get all your transactional email activity (unaggregated events)
      *
-     * @param  int $limit Number limitation for the result returned (optional, default to 50)
-     * @param  int $offset Beginning point in the list to retrieve from. (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $email Filter the report for a specific email addresses (optional)
-     * @param  string $event Filter the report for a specific event type (optional)
-     * @param  string $tags Filter the report for tags (serialized and urlencoded array) (optional)
-     * @param  string $messageId Filter on a specific message id (optional)
-     * @param  int $templateId Filter on a specific template id (optional)
+     * @param int    $limit      Number limitation for the result returned (optional, default to 50)
+     * @param int    $offset     Beginning point in the list to retrieve from. (optional, default to 0)
+     * @param string $startDate  Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate    Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days       Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $email      Filter the report for a specific email addresses (optional)
+     * @param string $event      Filter the report for a specific event type (optional)
+     * @param string $tags       Filter the report for tags (serialized and urlencoded array) (optional)
+     * @param string $messageId  Filter on a specific message id (optional)
+     * @param int    $templateId Filter on a specific template id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getEmailEventReportAsync($limit = '50', $offset = '0', $startDate = null, $endDate = null, $days = null, $email = null, $event = null, $tags = null, $messageId = null, $templateId = null)
     {
-        return $this->getEmailEventReportAsyncWithHttpInfo($limit, $offset, $startDate, $endDate, $days, $email, $event, $tags, $messageId, $templateId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getEmailEventReportAsyncWithHttpInfo($limit, $offset, $startDate, $endDate, $days, $email, $event, $tags, $messageId, $templateId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getEmailEventReportAsyncWithHttpInfo
      *
      * Get all your transactional email activity (unaggregated events)
      *
-     * @param  int $limit Number limitation for the result returned (optional, default to 50)
-     * @param  int $offset Beginning point in the list to retrieve from. (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $email Filter the report for a specific email addresses (optional)
-     * @param  string $event Filter the report for a specific event type (optional)
-     * @param  string $tags Filter the report for tags (serialized and urlencoded array) (optional)
-     * @param  string $messageId Filter on a specific message id (optional)
-     * @param  int $templateId Filter on a specific template id (optional)
+     * @param int    $limit      Number limitation for the result returned (optional, default to 50)
+     * @param int    $offset     Beginning point in the list to retrieve from. (optional, default to 0)
+     * @param string $startDate  Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate    Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days       Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $email      Filter the report for a specific email addresses (optional)
+     * @param string $event      Filter the report for a specific event type (optional)
+     * @param string $tags       Filter the report for tags (serialized and urlencoded array) (optional)
+     * @param string $messageId  Filter on a specific message id (optional)
+     * @param int    $templateId Filter on a specific template id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -952,37 +970,39 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetEmailEventReport';
         $request = $this->getEmailEventReportRequest($limit, $offset, $startDate, $endDate, $days, $email, $event, $tags, $messageId, $templateId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getEmailEventReport'
      *
-     * @param  int $limit Number limitation for the result returned (optional, default to 50)
-     * @param  int $offset Beginning point in the list to retrieve from. (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $email Filter the report for a specific email addresses (optional)
-     * @param  string $event Filter the report for a specific event type (optional)
-     * @param  string $tags Filter the report for tags (serialized and urlencoded array) (optional)
-     * @param  string $messageId Filter on a specific message id (optional)
-     * @param  int $templateId Filter on a specific template id (optional)
+     * @param int    $limit      Number limitation for the result returned (optional, default to 50)
+     * @param int    $offset     Beginning point in the list to retrieve from. (optional, default to 0)
+     * @param string $startDate  Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD). Must be lower than equal to endDate (optional)
+     * @param string $endDate    Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD). Must be greater than equal to startDate (optional)
+     * @param int    $days       Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $email      Filter the report for a specific email addresses (optional)
+     * @param string $event      Filter the report for a specific event type (optional)
+     * @param string $tags       Filter the report for tags (serialized and urlencoded array) (optional)
+     * @param string $messageId  Filter on a specific message id (optional)
+     * @param int    $templateId Filter on a specific template id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1097,12 +1117,12 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated per day
      *
-     * @param  int $limit Number of documents returned per page (optional, default to 10)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param int    $limit     Number of documents returned per page (optional, default to 10)
+     * @param int    $offset    Index of the first document on the page (optional, default to 0)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1118,12 +1138,12 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated per day
      *
-     * @param  int $limit Number of documents returned per page (optional, default to 10)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param int    $limit     Number of documents returned per page (optional, default to 10)
+     * @param int    $offset    Index of the first document on the page (optional, default to 0)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1157,14 +1177,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetReports', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetReports', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1174,33 +1194,35 @@ class SMTPApi
      *
      * Get your transactional email activity aggregated per day
      *
-     * @param  int $limit Number of documents returned per page (optional, default to 10)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param int    $limit     Number of documents returned per page (optional, default to 10)
+     * @param int    $offset    Index of the first document on the page (optional, default to 0)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSmtpReportAsync($limit = '10', $offset = '0', $startDate = null, $endDate = null, $days = null, $tag = null)
     {
-        return $this->getSmtpReportAsyncWithHttpInfo($limit, $offset, $startDate, $endDate, $days, $tag)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSmtpReportAsyncWithHttpInfo($limit, $offset, $startDate, $endDate, $days, $tag)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSmtpReportAsyncWithHttpInfo
      *
      * Get your transactional email activity aggregated per day
      *
-     * @param  int $limit Number of documents returned per page (optional, default to 10)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param int    $limit     Number of documents returned per page (optional, default to 10)
+     * @param int    $offset    Index of the first document on the page (optional, default to 0)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1209,33 +1231,35 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetReports';
         $request = $this->getSmtpReportRequest($limit, $offset, $startDate, $endDate, $days, $tag);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSmtpReport'
      *
-     * @param  int $limit Number of documents returned per page (optional, default to 10)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
-     * @param  int $days Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
-     * @param  string $tag Tag of the emails (optional)
+     * @param int    $limit     Number of documents returned per page (optional, default to 10)
+     * @param int    $offset    Index of the first document on the page (optional, default to 0)
+     * @param string $startDate Mandatory if endDate is used. Starting date of the report (YYYY-MM-DD) (optional)
+     * @param string $endDate   Mandatory if startDate is used. Ending date of the report (YYYY-MM-DD) (optional)
+     * @param int    $days      Number of days in the past including today (positive integer). Not compatible with &#39;startDate&#39; and &#39;endDate&#39; (optional)
+     * @param string $tag       Tag of the emails (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1334,7 +1358,7 @@ class SMTPApi
      *
      * Returns the template information
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1350,7 +1374,7 @@ class SMTPApi
      *
      * Returns the template information
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1384,18 +1408,18 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplateOverview', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplateOverview', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1405,23 +1429,25 @@ class SMTPApi
      *
      * Returns the template information
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSmtpTemplateAsync($templateId)
     {
-        return $this->getSmtpTemplateAsyncWithHttpInfo($templateId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSmtpTemplateAsyncWithHttpInfo($templateId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSmtpTemplateAsyncWithHttpInfo
      *
      * Returns the template information
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1430,28 +1456,30 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplateOverview';
         $request = $this->getSmtpTemplateRequest($templateId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSmtpTemplate'
      *
-     * @param  int $templateId id of the template (required)
+     * @param int $templateId id of the template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1531,9 +1559,9 @@ class SMTPApi
      *
      * Get the list of email templates
      *
-     * @param  bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
+     * @param int  $limit          Number of documents returned per page (optional, default to 50)
+     * @param int  $offset         Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1549,9 +1577,9 @@ class SMTPApi
      *
      * Get the list of email templates
      *
-     * @param  bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
+     * @param int  $limit          Number of documents returned per page (optional, default to 50)
+     * @param int  $offset         Index of the first document in the page (optional, default to 0)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1585,14 +1613,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplates', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplates', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1602,27 +1630,29 @@ class SMTPApi
      *
      * Get the list of email templates
      *
-     * @param  bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
+     * @param int  $limit          Number of documents returned per page (optional, default to 50)
+     * @param int  $offset         Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getSmtpTemplatesAsync($templateStatus = null, $limit = '50', $offset = '0')
     {
-        return $this->getSmtpTemplatesAsyncWithHttpInfo($templateStatus, $limit, $offset)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getSmtpTemplatesAsyncWithHttpInfo($templateStatus, $limit, $offset)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getSmtpTemplatesAsyncWithHttpInfo
      *
      * Get the list of email templates
      *
-     * @param  bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
+     * @param int  $limit          Number of documents returned per page (optional, default to 50)
+     * @param int  $offset         Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1631,30 +1661,32 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetSmtpTemplates';
         $request = $this->getSmtpTemplatesRequest($templateStatus, $limit, $offset);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getSmtpTemplates'
      *
-     * @param  bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document in the page (optional, default to 0)
+     * @param bool $templateStatus Filter on the status of the template. Active &#x3D; true, inactive &#x3D; false (optional)
+     * @param int  $limit          Number of documents returned per page (optional, default to 50)
+     * @param int  $offset         Index of the first document in the page (optional, default to 0)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1741,11 +1773,11 @@ class SMTPApi
      *
      * Get the list of blocked or unsubscribed transactional contacts
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string[] $senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
+     * @param string   $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param string   $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param int      $limit     Number of documents returned per page (optional, default to 50)
+     * @param int      $offset    Index of the first document on the page (optional, default to 0)
+     * @param string[] $senders   Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1761,11 +1793,11 @@ class SMTPApi
      *
      * Get the list of blocked or unsubscribed transactional contacts
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string[] $senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
+     * @param string   $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param string   $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param int      $limit     Number of documents returned per page (optional, default to 50)
+     * @param int      $offset    Index of the first document on the page (optional, default to 0)
+     * @param string[] $senders   Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1799,14 +1831,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacBlockedContacts', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacBlockedContacts', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -1816,31 +1848,33 @@ class SMTPApi
      *
      * Get the list of blocked or unsubscribed transactional contacts
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string[] $senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
+     * @param string   $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param string   $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param int      $limit     Number of documents returned per page (optional, default to 50)
+     * @param int      $offset    Index of the first document on the page (optional, default to 0)
+     * @param string[] $senders   Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getTransacBlockedContactsAsync($startDate = null, $endDate = null, $limit = '50', $offset = '0', $senders = null)
     {
-        return $this->getTransacBlockedContactsAsyncWithHttpInfo($startDate, $endDate, $limit, $offset, $senders)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getTransacBlockedContactsAsyncWithHttpInfo($startDate, $endDate, $limit, $offset, $senders)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getTransacBlockedContactsAsyncWithHttpInfo
      *
      * Get the list of blocked or unsubscribed transactional contacts
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string[] $senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
+     * @param string   $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param string   $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param int      $limit     Number of documents returned per page (optional, default to 50)
+     * @param int      $offset    Index of the first document on the page (optional, default to 0)
+     * @param string[] $senders   Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -1849,32 +1883,34 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacBlockedContacts';
         $request = $this->getTransacBlockedContactsRequest($startDate, $endDate, $limit, $offset, $senders);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getTransacBlockedContacts'
      *
-     * @param  string $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  string $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
-     * @param  int $limit Number of documents returned per page (optional, default to 50)
-     * @param  int $offset Index of the first document on the page (optional, default to 0)
-     * @param  string[] $senders Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
+     * @param string   $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param string   $endDate   Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the blocked or unsubscribed contacts (optional)
+     * @param int      $limit     Number of documents returned per page (optional, default to 50)
+     * @param int      $offset    Index of the first document on the page (optional, default to 0)
+     * @param string[] $senders   Comma separated list of emails of the senders from which contacts are blocked or unsubscribed (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1973,7 +2009,7 @@ class SMTPApi
      *
      * Get the personalized content of a sent transactional email
      *
-     * @param  string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
+     * @param string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -1989,7 +2025,7 @@ class SMTPApi
      *
      * Get the personalized content of a sent transactional email
      *
-     * @param  string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
+     * @param string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2023,10 +2059,10 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailContent', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailContent', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2036,23 +2072,25 @@ class SMTPApi
      *
      * Get the personalized content of a sent transactional email
      *
-     * @param  string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
+     * @param string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getTransacEmailContentAsync($uuid)
     {
-        return $this->getTransacEmailContentAsyncWithHttpInfo($uuid)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getTransacEmailContentAsyncWithHttpInfo($uuid)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getTransacEmailContentAsyncWithHttpInfo
      *
      * Get the personalized content of a sent transactional email
      *
-     * @param  string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
+     * @param string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2061,28 +2099,30 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailContent';
         $request = $this->getTransacEmailContentRequest($uuid);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getTransacEmailContent'
      *
-     * @param  string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
+     * @param string $uuid Unique id of the transactional email that has been sent to a particular contact (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2162,11 +2202,11 @@ class SMTPApi
      *
      * Get the list of transactional emails on the basis of allowed filters
      *
-     * @param  string $email Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
-     * @param  int $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
-     * @param  string $messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param string    $email      Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
+     * @param int       $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
+     * @param string    $messageId  Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
+     * @param \DateTime $startDate  Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param \DateTime $endDate    Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2182,11 +2222,11 @@ class SMTPApi
      *
      * Get the list of transactional emails on the basis of allowed filters
      *
-     * @param  string $email Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
-     * @param  int $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
-     * @param  string $messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param string    $email      Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
+     * @param int       $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
+     * @param string    $messageId  Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
+     * @param \DateTime $startDate  Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param \DateTime $endDate    Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2220,14 +2260,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailsList', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 200:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailsList', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2237,31 +2277,33 @@ class SMTPApi
      *
      * Get the list of transactional emails on the basis of allowed filters
      *
-     * @param  string $email Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
-     * @param  int $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
-     * @param  string $messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param string    $email      Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
+     * @param int       $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
+     * @param string    $messageId  Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
+     * @param \DateTime $startDate  Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param \DateTime $endDate    Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getTransacEmailsListAsync($email = null, $templateId = null, $messageId = null, $startDate = null, $endDate = null)
     {
-        return $this->getTransacEmailsListAsyncWithHttpInfo($email, $templateId, $messageId, $startDate, $endDate)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->getTransacEmailsListAsyncWithHttpInfo($email, $templateId, $messageId, $startDate, $endDate)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation getTransacEmailsListAsyncWithHttpInfo
      *
      * Get the list of transactional emails on the basis of allowed filters
      *
-     * @param  string $email Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
-     * @param  int $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
-     * @param  string $messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param string    $email      Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
+     * @param int       $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
+     * @param string    $messageId  Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
+     * @param \DateTime $startDate  Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param \DateTime $endDate    Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2270,32 +2312,34 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\GetTransacEmailsList';
         $request = $this->getTransacEmailsListRequest($email, $templateId, $messageId, $startDate, $endDate);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'getTransacEmailsList'
      *
-     * @param  string $email Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
-     * @param  int $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
-     * @param  string $messageId Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
-     * @param  \DateTime $startDate Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
-     * @param  \DateTime $endDate Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param string    $email      Mandatory if templateId and messageId are not passed in query filters. Email address to which transactional email has been sent. (optional)
+     * @param int       $templateId Mandatory if email and messageId are not passed in query filters. Id of the template that was used to compose transactional email. (optional)
+     * @param string    $messageId  Mandatory if templateId and email are not passed in query filters. Message ID of the transactional email sent. (optional)
+     * @param \DateTime $startDate  Mandatory if endDate is used. Starting date (YYYY-MM-DD) from which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
+     * @param \DateTime $endDate    Mandatory if startDate is used. Ending date (YYYY-MM-DD) till which you want to fetch the list. Maximum time period that can be selected is one month. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2387,8 +2431,8 @@ class SMTPApi
      *
      * Send a template
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendEmail $sendEmail sendEmail (required)
+     * @param int                                $templateId Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendEmail $sendEmail  sendEmail (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2404,8 +2448,8 @@ class SMTPApi
      *
      * Send a template
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendEmail $sendEmail (required)
+     * @param int                                $templateId Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendEmail $sendEmail  (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2439,18 +2483,18 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendTemplateEmail', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendTemplateEmail', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2460,25 +2504,27 @@ class SMTPApi
      *
      * Send a template
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendEmail $sendEmail (required)
+     * @param int                                $templateId Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendEmail $sendEmail  (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendTemplateAsync($templateId, $sendEmail)
     {
-        return $this->sendTemplateAsyncWithHttpInfo($templateId, $sendEmail)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendTemplateAsyncWithHttpInfo($templateId, $sendEmail)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendTemplateAsyncWithHttpInfo
      *
      * Send a template
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendEmail $sendEmail (required)
+     * @param int                                $templateId Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendEmail $sendEmail  (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2487,29 +2533,31 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\SendTemplateEmail';
         $request = $this->sendTemplateRequest($templateId, $sendEmail);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'sendTemplate'
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendEmail $sendEmail (required)
+     * @param int                                $templateId Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendEmail $sendEmail  (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2596,8 +2644,8 @@ class SMTPApi
      *
      * Send a template to your test list
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $sendTestEmail sendTestEmail (required)
+     * @param int                                    $templateId    Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $sendTestEmail sendTestEmail (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2612,8 +2660,8 @@ class SMTPApi
      *
      * Send a template to your test list
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
+     * @param int                                    $templateId    Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2637,14 +2685,14 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\PostSendFailed', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2654,25 +2702,27 @@ class SMTPApi
      *
      * Send a template to your test list
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
+     * @param int                                    $templateId    Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendTestTemplateAsync($templateId, $sendTestEmail)
     {
-        return $this->sendTestTemplateAsyncWithHttpInfo($templateId, $sendTestEmail)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendTestTemplateAsyncWithHttpInfo($templateId, $sendTestEmail)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendTestTemplateAsyncWithHttpInfo
      *
      * Send a template to your test list
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
+     * @param int                                    $templateId    Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2681,19 +2731,21 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->sendTestTemplateRequest($templateId, $sendTestEmail);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'sendTestTemplate'
      *
-     * @param  int $templateId Id of the template (required)
-     * @param  \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
+     * @param int                                    $templateId    Id of the template (required)
+     * @param \SendinBlue\Client\Model\SendTestEmail $sendTestEmail (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2780,7 +2832,7 @@ class SMTPApi
      *
      * Send a transactional email
      *
-     * @param  \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
+     * @param \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2796,7 +2848,7 @@ class SMTPApi
      *
      * Send a transactional email
      *
-     * @param  \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
+     * @param \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2830,14 +2882,14 @@ class SMTPApi
             return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 201:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSmtpEmail', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 201:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSmtpEmail', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -2847,23 +2899,25 @@ class SMTPApi
      *
      * Send a transactional email
      *
-     * @param  \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
+     * @param \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function sendTransacEmailAsync($sendSmtpEmail)
     {
-        return $this->sendTransacEmailAsyncWithHttpInfo($sendSmtpEmail)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->sendTransacEmailAsyncWithHttpInfo($sendSmtpEmail)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation sendTransacEmailAsyncWithHttpInfo
      *
      * Send a transactional email
      *
-     * @param  \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
+     * @param \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -2872,28 +2926,30 @@ class SMTPApi
     {
         $returnType = 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\CreateSmtpEmail';
         $request = $this->sendTransacEmailRequest($sendSmtpEmail);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            $responseBody = $response->getBody();
-            if ($returnType === '\\SplFileObject') {
-                $content = $responseBody;
-                //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = \json_decode($content);
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                $responseBody = $response->getBody();
+                if ($returnType === '\\SplFileObject') {
+                    $content = $responseBody;
+                    //stream goes to serializer
+                } else {
+                    $content = $responseBody->getContents();
+                    if ($returnType !== 'string') {
+                        $content = \json_decode($content);
+                    }
                 }
+                return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
             }
-            return [\WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($content, $returnType, []), $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        );
     }
     /**
      * Create request for operation 'sendTransacEmail'
      *
-     * @param  \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
+     * @param \SendinBlue\Client\Model\SendSmtpEmail $sendSmtpEmail Values to send a transactional email (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -2972,7 +3028,7 @@ class SMTPApi
      *
      * Unblock or resubscribe a transactional contact
      *
-     * @param  string $email contact email (urlencoded) to unblock. (required)
+     * @param string $email contact email (urlencoded) to unblock. (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -2987,7 +3043,7 @@ class SMTPApi
      *
      * Unblock or resubscribe a transactional contact
      *
-     * @param  string $email contact email (urlencoded) to unblock. (required)
+     * @param string $email contact email (urlencoded) to unblock. (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3011,14 +3067,14 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -3028,23 +3084,25 @@ class SMTPApi
      *
      * Unblock or resubscribe a transactional contact
      *
-     * @param  string $email contact email (urlencoded) to unblock. (required)
+     * @param string $email contact email (urlencoded) to unblock. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function smtpBlockedContactsEmailDeleteAsync($email)
     {
-        return $this->smtpBlockedContactsEmailDeleteAsyncWithHttpInfo($email)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->smtpBlockedContactsEmailDeleteAsyncWithHttpInfo($email)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation smtpBlockedContactsEmailDeleteAsyncWithHttpInfo
      *
      * Unblock or resubscribe a transactional contact
      *
-     * @param  string $email contact email (urlencoded) to unblock. (required)
+     * @param string $email contact email (urlencoded) to unblock. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -3053,18 +3111,20 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->smtpBlockedContactsEmailDeleteRequest($email);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'smtpBlockedContactsEmailDelete'
      *
-     * @param  string $email contact email (urlencoded) to unblock. (required)
+     * @param string $email contact email (urlencoded) to unblock. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -3144,7 +3204,7 @@ class SMTPApi
      *
      * Delete an SMTP transactional log
      *
-     * @param  string $messageId MessageId of the transactional log to delete (required)
+     * @param string $messageId MessageId of the transactional log to delete (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3159,7 +3219,7 @@ class SMTPApi
      *
      * Delete an SMTP transactional log
      *
-     * @param  string $messageId MessageId of the transactional log to delete (required)
+     * @param string $messageId MessageId of the transactional log to delete (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3183,14 +3243,14 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -3200,23 +3260,25 @@ class SMTPApi
      *
      * Delete an SMTP transactional log
      *
-     * @param  string $messageId MessageId of the transactional log to delete (required)
+     * @param string $messageId MessageId of the transactional log to delete (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function smtpLogMessageIdDeleteAsync($messageId)
     {
-        return $this->smtpLogMessageIdDeleteAsyncWithHttpInfo($messageId)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->smtpLogMessageIdDeleteAsyncWithHttpInfo($messageId)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation smtpLogMessageIdDeleteAsyncWithHttpInfo
      *
      * Delete an SMTP transactional log
      *
-     * @param  string $messageId MessageId of the transactional log to delete (required)
+     * @param string $messageId MessageId of the transactional log to delete (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -3225,18 +3287,20 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->smtpLogMessageIdDeleteRequest($messageId);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'smtpLogMessageIdDelete'
      *
-     * @param  string $messageId MessageId of the transactional log to delete (required)
+     * @param string $messageId MessageId of the transactional log to delete (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -3316,8 +3380,8 @@ class SMTPApi
      *
      * Update an email template
      *
-     * @param  int $templateId id of the template (required)
-     * @param  \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param int                                         $templateId   id of the template (required)
+     * @param \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3332,8 +3396,8 @@ class SMTPApi
      *
      * Update an email template
      *
-     * @param  int $templateId id of the template (required)
-     * @param  \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param int                                         $templateId   id of the template (required)
+     * @param \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \SendinBlue\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -3357,14 +3421,14 @@ class SMTPApi
             return [null, $statusCode, $response->getHeaders()];
         } catch (\WPMailSMTP\Vendor\SendinBlue\Client\ApiException $e) {
             switch ($e->getCode()) {
-                case 400:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
+            case 400:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
+            case 404:
+                $data = \WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer::deserialize($e->getResponseBody(), 'WPMailSMTP\\Vendor\\SendinBlue\\Client\\Model\\ErrorModel', $e->getResponseHeaders());
+                $e->setResponseObject($data);
+                break;
             }
             throw $e;
         }
@@ -3374,25 +3438,27 @@ class SMTPApi
      *
      * Update an email template
      *
-     * @param  int $templateId id of the template (required)
-     * @param  \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param int                                         $templateId   id of the template (required)
+     * @param \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateSmtpTemplateAsync($templateId, $smtpTemplate)
     {
-        return $this->updateSmtpTemplateAsyncWithHttpInfo($templateId, $smtpTemplate)->then(function ($response) {
-            return $response[0];
-        });
+        return $this->updateSmtpTemplateAsyncWithHttpInfo($templateId, $smtpTemplate)->then(
+            function ($response) {
+                return $response[0];
+            }
+        );
     }
     /**
      * Operation updateSmtpTemplateAsyncWithHttpInfo
      *
      * Update an email template
      *
-     * @param  int $templateId id of the template (required)
-     * @param  \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param int                                         $templateId   id of the template (required)
+     * @param \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -3401,19 +3467,21 @@ class SMTPApi
     {
         $returnType = '';
         $request = $this->updateSmtpTemplateRequest($templateId, $smtpTemplate);
-        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(function ($response) use($returnType) {
-            return [null, $response->getStatusCode(), $response->getHeaders()];
-        }, function ($exception) {
-            $response = $exception->getResponse();
-            $statusCode = $response->getStatusCode();
-            throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
-        });
+        return $this->client->sendAsync($request, $this->createHttpClientOption())->then(
+            function ($response) use ($returnType) {
+                return [null, $response->getStatusCode(), $response->getHeaders()];
+            }, function ($exception) {
+                $response = $exception->getResponse();
+                $statusCode = $response->getStatusCode();
+                throw new \WPMailSMTP\Vendor\SendinBlue\Client\ApiException(\sprintf('[%d] Error connecting to the API (%s)', $statusCode, $exception->getRequest()->getUri()), $statusCode, $response->getHeaders(), $response->getBody());
+            }
+        );
     }
     /**
      * Create request for operation 'updateSmtpTemplate'
      *
-     * @param  int $templateId id of the template (required)
-     * @param  \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
+     * @param int                                         $templateId   id of the template (required)
+     * @param \SendinBlue\Client\Model\UpdateSmtpTemplate $smtpTemplate values to update in transactional email template (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request

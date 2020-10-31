@@ -13,49 +13,46 @@ import { Suspense } from '@wordpress/element';
  * @param {number} componentId Parent component ID needed for key generation.
  */
 export const renderProductLayout = (
-	blockName,
-	product,
-	layoutConfig,
-	componentId
+    blockName,
+    product,
+    layoutConfig,
+    componentId
 ) => {
-	if ( ! layoutConfig ) {
-		return;
-	}
+    if (! layoutConfig ) {
+        return;
+    }
 
-	const blockMap = getBlockMap( blockName );
+    const blockMap = getBlockMap(blockName);
 
-	return layoutConfig.map( ( [ name, props = {} ], index ) => {
-		let children = [];
-
-		if ( !! props.children && props.children.length > 0 ) {
-			children = renderProductLayout(
-				blockName,
-				product,
-				props.children,
-				componentId
-			);
-		}
-
-		const LayoutComponent = blockMap[ name ];
-
-		if ( ! LayoutComponent ) {
-			return null;
-		}
-
-		const productID = product.id || 0;
-		const keyParts = [ 'layout', name, index, componentId, productID ];
-
-		return (
-			<Suspense
-				key={ keyParts.join( '_' ) }
-				fallback={ <div className="wc-block-placeholder" /> }
-			>
-				<LayoutComponent
-					{ ...props }
-					children={ children }
-					product={ product }
-				/>
-			</Suspense>
-		);
-	} );
+    return layoutConfig.map(
+        ( [ name, props = {} ], index ) => {
+            let children = [];
+        if (!! props.children && props.children.length > 0 ) {
+            children = renderProductLayout(
+            blockName,
+            product,
+            props.children,
+            componentId
+            );
+        }
+        const LayoutComponent = blockMap[ name ];
+        if (! LayoutComponent ) {
+            return null;
+        }
+        const productID = product.id || 0;
+        const keyParts = [ 'layout', name, index, componentId, productID ];
+        return (
+            <Suspense
+            key={ keyParts.join('_') }
+            fallback={ <div className="wc-block-placeholder" /> }
+            >
+            <LayoutComponent
+                    { ...props }
+                    children={ children }
+                    product={ product }
+            />
+            </Suspense>
+        );
+        } 
+    );
 };

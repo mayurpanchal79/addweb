@@ -59,8 +59,8 @@ class AccessToken
      */
     private $cache;
     /**
-     * @param callable $httpHandler [optional] An HTTP Handler to deliver PSR-7 requests.
-     * @param CacheItemPoolInterface $cache [optional] A PSR-6 compatible cache implementation.
+     * @param callable               $httpHandler [optional] An HTTP Handler to deliver PSR-7 requests.
+     * @param CacheItemPoolInterface $cache       [optional] A PSR-6 compatible cache implementation.
      */
     public function __construct(callable $httpHandler = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache = null)
     {
@@ -73,20 +73,23 @@ class AccessToken
      * The audience parameter can be used to control which id tokens are
      * accepted.  By default, the id token must have been issued to this OAuth2 client.
      *
-     * @param string $token The JSON Web Token to be verified.
-     * @param array $options [optional] Configuration options.
-     * @param string $options.audience The indended recipient of the token.
-     * @param string $options.issuer The intended issuer of the token.
-     * @param string $options.cacheKey The cache key of the cached certs. Defaults to
-     *        the sha1 of $certsLocation if provided, otherwise is set to
-     *        "federated_signon_certs_v3".
-     * @param string $options.certsLocation The location (remote or local) from which
-     *        to retrieve certificates, if not cached. This value should only be
-     *        provided in limited circumstances in which you are sure of the
-     *        behavior.
-     * @param bool $options.throwException Whether the function should throw an
-     *        exception if the verification fails. This is useful for
-     *        determining the reason verification failed.
+     * @param  string $token                  The JSON Web Token to be verified.
+     * @param  array  $options                [optional] Configuration options.
+     * @param  string $options.audience       The indended recipient of the token.
+     * @param  string $options.issuer         The intended issuer of the token.
+     * @param  string $options.cacheKey       The cache key of the cached certs. Defaults to
+     *                                        the sha1 of $certsLocation if provided,
+     *                                        otherwise is set to
+     *                                        "federated_signon_certs_v3".
+     * @param  string $options.certsLocation  The location (remote or local) from which
+     *                                        to retrieve certificates, if not cached.
+     *                                        This value should only be provided in
+     *                                        limited circumstances in which you are
+     *                                        sure of the behavior.
+     * @param  bool   $options.throwException Whether the function should throw an
+     *                                        exception if the verification fails.
+     *                                        This is useful for determining the
+     *                                        reason verification failed.
      * @return array|bool the token payload, if successful, or false if not.
      * @throws InvalidArgumentException If certs could not be retrieved from a local file.
      * @throws InvalidArgumentException If received certs are in an invalid format.
@@ -137,8 +140,8 @@ class AccessToken
      * Identifies the expected algorithm to verify by looking at the "alg" key
      * of the provided certs.
      *
-     * @param array $certs Certificate array according to the JWK spec (see
-     *                     https://tools.ietf.org/html/rfc7517).
+     * @param  array $certs Certificate array according to the JWK spec (see
+     *                      https://tools.ietf.org/html/rfc7517).
      * @return string The expected algorithm, such as "ES256" or "RS256".
      */
     private function determineAlg(array $certs)
@@ -158,13 +161,14 @@ class AccessToken
     /**
      * Verifies an ES256-signed JWT.
      *
-     * @param string $token The JSON Web Token to be verified.
-     * @param array $certs Certificate array according to the JWK spec (see
-     *        https://tools.ietf.org/html/rfc7517).
-     * @param string|null $audience If set, returns false if the provided
-     *        audience does not match the "aud" claim on the JWT.
-     * @param string|null $issuer If set, returns false if the provided
-     *        issuer does not match the "iss" claim on the JWT.
+     * @param  string      $token    The JSON Web Token to be verified.
+     * @param  array       $certs    Certificate array according to the JWK spec (see
+     *                               https://tools.ietf.org/html/rfc7517).
+     * @param  string|null $audience If set, returns false if the provided
+     *                               audience does not match the "aud" claim on the JWT.
+     * @param  string|null $issuer   If set, returns false if the provided
+     *                               issuer does not match the "iss" claim
+     *                               on the JWT.
      * @return array|bool the token payload, if successful, or false if not.
      */
     private function verifyEs256($token, array $certs, $audience = null, $issuer = null)
@@ -192,13 +196,14 @@ class AccessToken
     /**
      * Verifies an RS256-signed JWT.
      *
-     * @param string $token The JSON Web Token to be verified.
-     * @param array $certs Certificate array according to the JWK spec (see
-     *        https://tools.ietf.org/html/rfc7517).
-     * @param string|null $audience If set, returns false if the provided
-     *        audience does not match the "aud" claim on the JWT.
-     * @param string|null $issuer If set, returns false if the provided
-     *        issuer does not match the "iss" claim on the JWT.
+     * @param  string      $token    The JSON Web Token to be verified.
+     * @param  array       $certs    Certificate array according to the JWK spec (see
+     *                               https://tools.ietf.org/html/rfc7517).
+     * @param  string|null $audience If set, returns false if the provided
+     *                               audience does not match the "aud" claim on the JWT.
+     * @param  string|null $issuer   If set, returns false if the provided
+     *                               issuer does not match the "iss" claim
+     *                               on the JWT.
      * @return array|bool the token payload, if successful, or false if not.
      */
     private function verifyRs256($token, array $certs, $audience = null, $issuer = null)
@@ -235,8 +240,8 @@ class AccessToken
      * Revoke an OAuth2 access token or refresh token. This method will revoke the current access
      * token, if a token isn't provided.
      *
-     * @param string|array $token The token (access token or a refresh token) that should be revoked.
-     * @param array $options [optional] Configuration options.
+     * @param  string|array $token   The token (access token or a refresh token) that should be revoked.
+     * @param  array        $options [optional] Configuration options.
      * @return bool Returns True if the revocation was successful, otherwise False.
      */
     public function revoke($token, array $options = [])
@@ -259,9 +264,9 @@ class AccessToken
      * Returns certs as array structure, where keys are key ids, and values
      * are PEM encoded certificates.
      *
-     * @param string $location The location from which to retrieve certs.
-     * @param string $cacheKey The key under which to cache the retrieved certs.
-     * @param array $options [optional] Configuration options.
+     * @param  string $location The location from which to retrieve certs.
+     * @param  string $cacheKey The key under which to cache the retrieved certs.
+     * @param  array  $options  [optional] Configuration options.
      * @return array
      * @throws InvalidArgumentException If received certs are in an invalid format.
      */
@@ -292,8 +297,8 @@ class AccessToken
     /**
      * Retrieve and cache a certificates file.
      *
-     * @param $url string location
-     * @param array $options [optional] Configuration options.
+     * @param  $url     string location
+     * @param  array $options [optional] Configuration options.
      * @return array certificates
      * @throws InvalidArgumentException If certs could not be retrieved from a local file.
      * @throws RuntimeException If certs could not be retrieved from a remote location.
@@ -336,8 +341,8 @@ class AccessToken
      * whitelisting in the AppEngine VM environment. This function
      * sets constants to bypass the need for phpseclib to check phpinfo
      *
-     * @see phpseclib/Math/BigInteger
-     * @see https://github.com/GoogleCloudPlatform/getting-started-php/issues/85
+     * @see                phpseclib/Math/BigInteger
+     * @see                https://github.com/GoogleCloudPlatform/getting-started-php/issues/85
      * @codeCoverageIgnore
      */
     private function setPhpsecConstants()
@@ -354,8 +359,8 @@ class AccessToken
     /**
      * Provide a hook to mock calls to the JWT static methods.
      *
-     * @param string $method
-     * @param array $args
+     * @param  string $method
+     * @param  array  $args
      * @return mixed
      */
     protected function callJwtStatic($method, array $args = [])
@@ -366,7 +371,7 @@ class AccessToken
     /**
      * Provide a hook to mock calls to the JWT static methods.
      *
-     * @param array $args
+     * @param  array $args
      * @return mixed
      */
     protected function callSimpleJwtDecode(array $args = [])
@@ -377,7 +382,7 @@ class AccessToken
      * Generate a cache key based on the cert location using sha1 with the
      * exception of using "federated_signon_certs_v3" to preserve BC.
      *
-     * @param string $certsLocation
+     * @param  string $certsLocation
      * @return string
      */
     private function getCacheKeyFromCertLocation($certsLocation)

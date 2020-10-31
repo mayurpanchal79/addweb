@@ -7,9 +7,13 @@ namespace WPMailSMTP\Vendor\GuzzleHttp\Cookie;
  */
 class SetCookie
 {
-    /** @var array */
+    /**
+     * @var array 
+     */
     private static $defaults = ['Name' => null, 'Value' => null, 'Domain' => null, 'Path' => '/', 'Max-Age' => null, 'Expires' => null, 'Secure' => \false, 'Discard' => \false, 'HttpOnly' => \false];
-    /** @var array Cookie data */
+    /**
+     * @var array Cookie data 
+     */
     private $data;
     /**
      * Create a new SetCookie object from a string

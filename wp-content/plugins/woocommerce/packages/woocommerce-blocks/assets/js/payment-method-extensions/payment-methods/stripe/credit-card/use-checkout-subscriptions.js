@@ -32,65 +32,69 @@ import { usePaymentProcessing } from './use-payment-processing';
  * @return {function(Object):Object} Returns a function for handling stripe error.
  */
 export const useCheckoutSubscriptions = (
-	eventRegistration,
-	billing,
-	sourceId,
-	setSourceId,
-	emitResponse,
-	stripe
+    eventRegistration,
+    billing,
+    sourceId,
+    setSourceId,
+    emitResponse,
+    stripe
 ) => {
-	const [ error, setError ] = useState( '' );
-	const onStripeError = useCallback( ( event ) => {
-		const type = event.error.type;
-		const code = event.error.code || '';
-		const message =
-			getErrorMessageForTypeAndCode( type, code ) ?? event.error.message;
-		setError( message );
-		return message;
-	}, [] );
-	const {
-		onCheckoutAfterProcessingWithSuccess,
-		onPaymentProcessing,
-		onCheckoutAfterProcessingWithError,
-	} = eventRegistration;
-	usePaymentIntents(
-		stripe,
-		onCheckoutAfterProcessingWithSuccess,
-		emitResponse
-	);
-	usePaymentProcessing(
-		onStripeError,
-		error,
-		stripe,
-		billing,
-		emitResponse,
-		sourceId,
-		setSourceId,
-		onPaymentProcessing
-	);
-	// hook into and register callbacks for events.
-	useEffect( () => {
-		const onError = ( { processingResponse } ) => {
-			if ( processingResponse?.paymentDetails?.errorMessage ) {
-				return {
-					type: emitResponse.responseTypes.ERROR,
-					message: processingResponse.paymentDetails.errorMessage,
-					messageContext: emitResponse.noticeContexts.PAYMENTS,
-				};
-			}
-			// so we don't break the observers.
-			return true;
-		};
-		const unsubscribeAfterProcessing = onCheckoutAfterProcessingWithError(
-			onError
-		);
-		return () => {
-			unsubscribeAfterProcessing();
-		};
-	}, [
-		onCheckoutAfterProcessingWithError,
-		emitResponse.noticeContexts.PAYMENTS,
-		emitResponse.responseTypes.ERROR,
-	] );
-	return onStripeError;
+    const [ error, setError ] = useState('');
+    const onStripeError = useCallback(
+        ( event ) => {
+            const type = event.error.type;
+            const code = event.error.code || '';
+            const message =
+            getErrorMessageForTypeAndCode(type, code) ?? event.error.message;
+            setError(message);
+            return message;
+        }, [] 
+    );
+    const {
+        onCheckoutAfterProcessingWithSuccess,
+        onPaymentProcessing,
+        onCheckoutAfterProcessingWithError,
+    } = eventRegistration;
+    usePaymentIntents(
+        stripe,
+        onCheckoutAfterProcessingWithSuccess,
+        emitResponse
+    );
+    usePaymentProcessing(
+        onStripeError,
+        error,
+        stripe,
+        billing,
+        emitResponse,
+        sourceId,
+        setSourceId,
+        onPaymentProcessing
+    );
+    // hook into and register callbacks for events.
+    useEffect(
+        () => {
+        const onError = ( { processingResponse } ) => {
+                if (processingResponse?.paymentDetails?.errorMessage ) {
+                    return {
+                        type: emitResponse.responseTypes.ERROR,
+                        message: processingResponse.paymentDetails.errorMessage,
+                        messageContext: emitResponse.noticeContexts.PAYMENTS,
+                    };
+                }
+                // so we don't break the observers.
+                return true;
+        };
+        const unsubscribeAfterProcessing = onCheckoutAfterProcessingWithError(
+                onError
+            );
+        return () => {
+        unsubscribeAfterProcessing();
+        };
+        }, [
+        onCheckoutAfterProcessingWithError,
+        emitResponse.noticeContexts.PAYMENTS,
+        emitResponse.responseTypes.ERROR,
+        ] 
+    );
+    return onStripeError;
 };

@@ -14,54 +14,57 @@
 
 namespace Automattic\WooCommerce\Admin\API\Reports\Revenue;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 use \Automattic\WooCommerce\Admin\API\Reports\Query as ReportsQuery;
 
 /**
  * API\Reports\Revenue\Query
  */
-class Query extends ReportsQuery {
+class Query extends ReportsQuery
+{
 
-	/**
-	 * Valid fields for Revenue report.
-	 *
-	 * @return array
-	 */
-	protected function get_default_query_vars() {
-		return array(
-			'per_page' => get_option( 'posts_per_page' ), // not sure if this should be the default.
-			'page'     => 1,
-			'order'    => 'DESC',
-			'orderby'  => 'date',
-			'before'   => '',
-			'after'    => '',
-			'interval' => 'week',
-			'fields'   => array(
-				'orders_count',
-				'num_items_sold',
-				'total_sales',
-				'coupons',
-				'coupons_count',
-				'refunds',
-				'taxes',
-				'shipping',
-				'net_revenue',
-				'gross_sales',
-			),
-		);
-	}
+    /**
+     * Valid fields for Revenue report.
+     *
+     * @return array
+     */
+    protected function get_default_query_vars()
+    {
+        return array(
+        'per_page' => get_option('posts_per_page'), // not sure if this should be the default.
+        'page'     => 1,
+        'order'    => 'DESC',
+        'orderby'  => 'date',
+        'before'   => '',
+        'after'    => '',
+        'interval' => 'week',
+        'fields'   => array(
+        'orders_count',
+        'num_items_sold',
+        'total_sales',
+        'coupons',
+        'coupons_count',
+        'refunds',
+        'taxes',
+        'shipping',
+        'net_revenue',
+        'gross_sales',
+        ),
+        );
+    }
 
-	/**
-	 * Get revenue data based on the current query vars.
-	 *
-	 * @return array
-	 */
-	public function get_data() {
-		$args = apply_filters( 'woocommerce_analytics_revenue_query_args', $this->get_query_vars() );
+    /**
+     * Get revenue data based on the current query vars.
+     *
+     * @return array
+     */
+    public function get_data()
+    {
+        $args = apply_filters('woocommerce_analytics_revenue_query_args', $this->get_query_vars());
 
-		$data_store = \WC_Data_Store::load( 'report-revenue-stats' );
-		$results    = $data_store->get_data( $args );
-		return apply_filters( 'woocommerce_analytics_revenue_select_query', $results, $args );
-	}
+        $data_store = \WC_Data_Store::load('report-revenue-stats');
+        $results    = $data_store->get_data($args);
+        return apply_filters('woocommerce_analytics_revenue_select_query', $results, $args);
+    }
 }

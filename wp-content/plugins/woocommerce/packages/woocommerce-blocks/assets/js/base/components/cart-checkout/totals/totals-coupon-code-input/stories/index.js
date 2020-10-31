@@ -3,8 +3,8 @@
  */
 import { text, boolean } from '@storybook/addon-knobs';
 import {
-	useValidationContext,
-	ValidationContextProvider,
+    useValidationContext,
+    ValidationContextProvider,
 } from '@woocommerce/base-context';
 
 /**
@@ -13,34 +13,34 @@ import {
 import CouponInput from '../';
 
 export default {
-	title: 'WooCommerce Blocks/@base-components/CouponInput',
-	component: CouponInput,
-};
+    title: 'WooCommerce Blocks/@base-components/CouponInput',
+        component: CouponInput,
+    };
 
-const StoryComponent = ( { validCoupon, isLoading, invalidCouponText } ) => {
-	const { setValidationErrors } = useValidationContext();
-	const onSubmit = ( coupon ) => {
-		if ( coupon !== validCoupon ) {
-			setValidationErrors( { coupon: invalidCouponText } );
-		}
-	};
-	return <CouponInput isLoading={ isLoading } onSubmit={ onSubmit } />;
-};
+    const StoryComponent = ( { validCoupon, isLoading, invalidCouponText } ) => {
+        const { setValidationErrors } = useValidationContext();
+        const onSubmit = ( coupon ) => {
+            if (coupon !== validCoupon ) {
+                setValidationErrors({ coupon: invalidCouponText });
+            }
+        };
+        return <CouponInput isLoading={ isLoading } onSubmit={ onSubmit } />;
+    };
 
-export const Default = () => {
-	const validCoupon = text( 'A valid coupon code', 'validcoupon' );
-	const invalidCouponText = text(
-		'Error message for invalid code',
-		'Invalid coupon code.'
-	);
-	const isLoading = boolean( 'Toggle isLoading state', false );
-	return (
-		<ValidationContextProvider>
-			<StoryComponent
-				validCoupon={ validCoupon }
-				isLoading={ isLoading }
-				invalidCouponText={ invalidCouponText }
-			/>
-		</ValidationContextProvider>
-	);
-};
+    export const Default = () => {
+        const validCoupon = text('A valid coupon code', 'validcoupon');
+        const invalidCouponText = text(
+            'Error message for invalid code',
+            'Invalid coupon code.'
+        );
+     const isLoading = boolean('Toggle isLoading state', false);
+     return (
+      <ValidationContextProvider>
+       <StoryComponent
+                validCoupon={ validCoupon }
+                isLoading={ isLoading }
+                invalidCouponText={ invalidCouponText }
+       />
+      </ValidationContextProvider>
+     );
+    };

@@ -30,9 +30,9 @@ class Google_Service_Gmail_Resource_Users extends \WPMailSMTP\Vendor\Google_Serv
     /**
      * Gets the current user's Gmail profile. (users.getProfile)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Profile
      */
     public function getProfile($userId, $optParams = array())
@@ -44,9 +44,9 @@ class Google_Service_Gmail_Resource_Users extends \WPMailSMTP\Vendor\Google_Serv
     /**
      * Stop receiving push notifications for the given user mailbox. (users.stop)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param array  $optParams Optional parameters.
      */
     public function stop($userId, $optParams = array())
     {
@@ -58,10 +58,10 @@ class Google_Service_Gmail_Resource_Users extends \WPMailSMTP\Vendor\Google_Serv
      * Set up or update a push notification watch on the given user mailbox.
      * (users.watch)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_WatchRequest $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                            $userId    The user's email address. The special value `me` can be
+     *                                                      used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_WatchRequest $postBody
+     * @param  array                             $optParams Optional parameters.
      * @return Google_Service_Gmail_WatchResponse
      */
     public function watch($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_WatchRequest $postBody, $optParams = array())

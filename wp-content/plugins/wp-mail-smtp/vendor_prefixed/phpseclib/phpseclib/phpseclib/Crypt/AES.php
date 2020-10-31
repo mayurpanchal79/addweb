@@ -62,9 +62,9 @@ class AES extends \WPMailSMTP\Vendor\phpseclib\Crypt\Rijndael
      *
      * Since \phpseclib\Crypt\AES extends \phpseclib\Crypt\Rijndael, this function is, technically, available, but it doesn't do anything.
      *
-     * @see \phpseclib\Crypt\Rijndael::setBlockLength()
+     * @see    \phpseclib\Crypt\Rijndael::setBlockLength()
      * @access public
-     * @param int $length
+     * @param  int $length
      */
     function setBlockLength($length)
     {
@@ -76,18 +76,18 @@ class AES extends \WPMailSMTP\Vendor\phpseclib\Crypt\Rijndael
      * Valid key lengths are 128, 192, and 256.  If the length is less than 128, it will be rounded up to
      * 128.  If the length is greater than 128 and invalid, it will be rounded down to the closest valid amount.
      *
-     * @see \phpseclib\Crypt\Rijndael:setKeyLength()
+     * @see    \phpseclib\Crypt\Rijndael:setKeyLength()
      * @access public
-     * @param int $length
+     * @param  int $length
      */
     function setKeyLength($length)
     {
         switch ($length) {
-            case 160:
-                $length = 192;
-                break;
-            case 224:
-                $length = 256;
+        case 160:
+            $length = 192;
+            break;
+        case 224:
+            $length = 256;
         }
         parent::setKeyLength($length);
     }
@@ -96,10 +96,10 @@ class AES extends \WPMailSMTP\Vendor\phpseclib\Crypt\Rijndael
      *
      * Rijndael supports five different key lengths, AES only supports three.
      *
-     * @see \phpseclib\Crypt\Rijndael:setKey()
-     * @see setKeyLength()
+     * @see    \phpseclib\Crypt\Rijndael:setKey()
+     * @see    setKeyLength()
      * @access public
-     * @param string $key
+     * @param  string $key
      */
     function setKey($key)
     {
@@ -107,14 +107,14 @@ class AES extends \WPMailSMTP\Vendor\phpseclib\Crypt\Rijndael
         if (!$this->explicit_key_length) {
             $length = \strlen($key);
             switch (\true) {
-                case $length <= 16:
-                    $this->key_length = 16;
-                    break;
-                case $length <= 24:
-                    $this->key_length = 24;
-                    break;
-                default:
-                    $this->key_length = 32;
+            case $length <= 16:
+                $this->key_length = 16;
+                break;
+            case $length <= 24:
+                $this->key_length = 24;
+                break;
+            default:
+                $this->key_length = 32;
             }
             $this->_setEngine();
         }

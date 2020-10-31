@@ -180,7 +180,7 @@ class ObjectSerializer
      *
      * @param array  $collection                 collection to serialize to a string
      * @param string $collectionFormat           the format use for serialization (csv,
-     * ssv, tsv, pipes, multi)
+     *                                           ssv, tsv, pipes, multi)
      * @param bool   $allowCollectionFormatMulti allow collection format to be a multidimensional array
      *
      * @return string
@@ -193,16 +193,16 @@ class ObjectSerializer
             return \preg_replace('/%5B[0-9]+%5D=/', '=', \http_build_query($collection, '', '&'));
         }
         switch ($collectionFormat) {
-            case 'pipes':
-                return \implode('|', $collection);
-            case 'tsv':
-                return \implode("\t", $collection);
-            case 'ssv':
-                return \implode(' ', $collection);
-            case 'csv':
+        case 'pipes':
+            return \implode('|', $collection);
+        case 'tsv':
+            return \implode("\t", $collection);
+        case 'ssv':
+            return \implode(' ', $collection);
+        case 'csv':
             // Deliberate fall through. CSV is default format.
-            default:
-                return \implode(',', $collection);
+        default:
+            return \implode(',', $collection);
         }
     }
     /**
@@ -257,7 +257,9 @@ class ObjectSerializer
             \settype($data, $class);
             return $data;
         } elseif ($class === '\\SplFileObject') {
-            /** @var \Psr\Http\Message\StreamInterface $data */
+            /**
+ * @var \Psr\Http\Message\StreamInterface $data 
+*/
             // determine file name
             if (\array_key_exists('Content-Disposition', $httpHeaders) && \preg_match('/inline; filename=[\'"]?([^\'"\\s]+)[\'"]?$/i', $httpHeaders['Content-Disposition'], $match)) {
                 $filename = \WPMailSMTP\Vendor\SendinBlue\Client\Configuration::getDefaultConfiguration()->getTempFolderPath() . \DIRECTORY_SEPARATOR . self::sanitizeFilename($match[1]);

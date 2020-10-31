@@ -43,8 +43,8 @@ class CakePHPInstaller extends BaseInstaller
     /**
      * Check if CakePHP version matches against a version
      *
-     * @param string $matcher
-     * @param string $version
+     * @param  string $matcher
+     * @param  string $version
      * @return bool
      */
     protected function matchesCakeVersion($matcher, $version)
@@ -63,10 +63,12 @@ class CakePHPInstaller extends BaseInstaller
             if (!$repos) {
                 return false;
             }
-            $cake3 = new $multiClass(array(
+            $cake3 = new $multiClass(
+                array(
                 new $constraintClass($matcher, $version),
                 new $constraintClass('!=', '9999999-dev'),
-            ));
+                )
+            );
             $pool = new Pool('dev');
             $pool->addRepository($repos);
             $packages = $pool->whatProvides('cakephp/cakephp');

@@ -27,6 +27,7 @@ trait ProcessableHandlerTrait
     protected $processors = [];
     /**
      * {@inheritdoc}
+     *
      * @suppress PhanTypeMismatchReturn
      */
     public function pushProcessor($callback) : \WPMailSMTP\Vendor\Monolog\Handler\HandlerInterface

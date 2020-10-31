@@ -13,7 +13,7 @@ namespace WPMailSMTP\Vendor\Monolog\Processor;
 /**
  * Injects memory_get_usage in all records
  *
- * @see Monolog\Processor\MemoryProcessor::__construct() for options
+ * @see    Monolog\Processor\MemoryProcessor::__construct() for options
  * @author Rob Jensen
  */
 class MemoryUsageProcessor extends \WPMailSMTP\Vendor\Monolog\Processor\MemoryProcessor

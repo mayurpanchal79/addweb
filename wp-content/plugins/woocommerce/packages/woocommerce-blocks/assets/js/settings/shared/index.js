@@ -26,14 +26,14 @@ export { setSetting } from './set-setting';
  * @param {string} operator Comparison operator.
  */
 export const compareWithWpVersion = ( version, operator ) => {
-	let replacement = getSetting( 'wpVersion', '' ).replace(
-		/-[a-zA-Z0-9]*[\-]*/,
-		'.0-rc.'
-	);
-	replacement = replacement.endsWith( '.' )
-		? replacement.substring( 0, replacement.length - 1 )
-		: replacement;
-	return compareVersions.compare( version, replacement, operator );
+    let replacement = getSetting('wpVersion', '').replace(
+        /-[a-zA-Z0-9]*[\-]*/,
+        '.0-rc.'
+    );
+    replacement = replacement.endsWith('.')
+        ? replacement.substring(0, replacement.length - 1)
+        : replacement;
+    return compareVersions.compare(version, replacement, operator);
 };
 
 export { compareVersions, getSetting };
@@ -41,7 +41,7 @@ export { compareVersions, getSetting };
 /**
  * Returns a string with the site's wp-admin URL appended. JS version of `admin_url`.
  *
- * @param {string} path Relative path.
+ * @param  {string} path Relative path.
  * @return {string} Full admin URL.
  */
-export const getAdminLink = ( path ) => getSetting( 'adminUrl' ) + path;
+export const getAdminLink = ( path ) => getSetting('adminUrl') + path;

@@ -27,9 +27,9 @@ interface UpdateMetadataInterface
     /**
      * Updates metadata with the authorization token.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $authUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  array    $metadata    metadata hashmap
+     * @param  string   $authUri     optional auth uri
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array updated metadata hashmap
      */
     public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null);

@@ -5,21 +5,30 @@
  */
 class ParagonIE_Sodium_Core32_SecretStream_State
 {
-    /** @var string $key */
+    /**
+     * @var string $key 
+     */
     protected $key;
 
-    /** @var int $counter */
+    /**
+     * @var int $counter 
+     */
     protected $counter;
 
-    /** @var string $nonce */
+    /**
+     * @var string $nonce 
+     */
     protected $nonce;
 
-    /** @var string $_pad */
+    /**
+     * @var string $_pad 
+     */
     protected $_pad;
 
     /**
      * ParagonIE_Sodium_Core32_SecretStream_State constructor.
-     * @param string $key
+     *
+     * @param string      $key
      * @param string|null $nonce
      */
     public function __construct($key, $nonce = null)
@@ -100,7 +109,7 @@ class ParagonIE_Sodium_Core32_SecretStream_State
     }
 
     /**
-     * @param string $newKeyAndNonce
+     * @param  string $newKeyAndNonce
      * @return self
      */
     public function rekey($newKeyAndNonce)
@@ -116,7 +125,7 @@ class ParagonIE_Sodium_Core32_SecretStream_State
     }
 
     /**
-     * @param string $str
+     * @param  string $str
      * @return self
      */
     public function xorNonce($str)
@@ -134,7 +143,7 @@ class ParagonIE_Sodium_Core32_SecretStream_State
     }
 
     /**
-     * @param string $string
+     * @param  string $string
      * @return self
      */
     public static function fromString($string)

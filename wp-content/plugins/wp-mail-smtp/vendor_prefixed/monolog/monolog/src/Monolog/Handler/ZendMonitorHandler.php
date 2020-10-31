@@ -15,8 +15,8 @@ use WPMailSMTP\Vendor\Monolog\Logger;
 /**
  * Handler sending logs to Zend Monitor
  *
- * @author  Christian Bergau <cbergau86@gmail.com>
- * @author  Jason Davis <happydude@jasondavis.net>
+ * @author Christian Bergau <cbergau86@gmail.com>
+ * @author Jason Davis <happydude@jasondavis.net>
  */
 class ZendMonitorHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingHandler
 {
@@ -29,8 +29,8 @@ class ZendMonitorHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProc
     /**
      * Construct
      *
-     * @param  int                       $level
-     * @param  bool                      $bubble
+     * @param  int  $level
+     * @param  bool $bubble
      * @throws MissingExtensionException
      */
     public function __construct($level = \WPMailSMTP\Vendor\Monolog\Logger::DEBUG, $bubble = \true)
@@ -51,10 +51,11 @@ class ZendMonitorHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProc
     }
     /**
      * Write to Zend Monitor Events
-     * @param string $type Text displayed in "Class Name (custom)" field
-     * @param string $message Text displayed in "Error String"
-     * @param mixed $formatted Displayed in Custom Variables tab
-     * @param int $severity Set the event severity level (-1,0,1)
+     *
+     * @param string $type      Text displayed in "Class Name (custom)" field
+     * @param string $message   Text displayed in "Error String"
+     * @param mixed  $formatted Displayed in Custom Variables tab
+     * @param int    $severity  Set the event severity level (-1,0,1)
      */
     protected function writeZendMonitorCustomEvent($type, $message, $formatted, $severity)
     {

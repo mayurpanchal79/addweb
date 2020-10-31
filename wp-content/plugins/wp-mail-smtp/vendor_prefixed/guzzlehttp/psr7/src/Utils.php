@@ -65,9 +65,9 @@ final class Utils
      * Copy the contents of a stream into a string until the given number of
      * bytes have been read.
      *
-     * @param StreamInterface $stream Stream to read
-     * @param int             $maxLen Maximum number of bytes to read. Pass -1
-     *                                to read the entire stream.
+     * @param  StreamInterface $stream Stream to read
+     * @param  int             $maxLen Maximum number of bytes to read. Pass -1
+     *                                 to read the entire stream.
      * @return string
      *
      * @throws \RuntimeException on error.
@@ -255,26 +255,28 @@ final class Utils
             return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream($stream, $options);
         }
         switch (\gettype($resource)) {
-            case 'resource':
-                return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream($resource, $options);
-            case 'object':
-                if ($resource instanceof \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface) {
-                    return $resource;
-                } elseif ($resource instanceof \Iterator) {
-                    return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\PumpStream(function () use($resource) {
+        case 'resource':
+            return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream($resource, $options);
+        case 'object':
+            if ($resource instanceof \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface) {
+                return $resource;
+            } elseif ($resource instanceof \Iterator) {
+                return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\PumpStream(
+                    function () use ($resource) {
                         if (!$resource->valid()) {
                             return \false;
                         }
                         $result = $resource->current();
                         $resource->next();
                         return $result;
-                    }, $options);
-                } elseif (\method_exists($resource, '__toString')) {
-                    return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::streamFor((string) $resource, $options);
-                }
-                break;
-            case 'NULL':
-                return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream(\fopen('php://temp', 'r+'), $options);
+                    }, $options
+                );
+            } elseif (\method_exists($resource, '__toString')) {
+                return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::streamFor((string) $resource, $options);
+            }
+            break;
+        case 'NULL':
+            return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream(\fopen('php://temp', 'r+'), $options);
         }
         if (\is_callable($resource)) {
             return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\PumpStream($resource, $options);
@@ -297,13 +299,17 @@ final class Utils
     public static function tryFopen($filename, $mode)
     {
         $ex = null;
-        \set_error_handler(function () use($filename, $mode, &$ex) {
-            $ex = new \RuntimeException(\sprintf('Unable to open %s using mode %s: %s', $filename, $mode, \func_get_args()[1]));
-        });
+        \set_error_handler(
+            function () use ($filename, $mode, &$ex) {
+                $ex = new \RuntimeException(\sprintf('Unable to open %s using mode %s: %s', $filename, $mode, \func_get_args()[1]));
+            }
+        );
         $handle = \fopen($filename, $mode);
         \restore_error_handler();
         if ($ex) {
-            /** @var $ex \RuntimeException */
+            /**
+ * @var $ex \RuntimeException 
+*/
             throw $ex;
         }
         return $handle;

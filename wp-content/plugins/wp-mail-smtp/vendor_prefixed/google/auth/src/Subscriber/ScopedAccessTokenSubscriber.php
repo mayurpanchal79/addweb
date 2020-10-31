@@ -57,10 +57,10 @@ class ScopedAccessTokenSubscriber implements \WPMailSMTP\Vendor\GuzzleHttp\Event
     /**
      * Creates a new ScopedAccessTokenSubscriber.
      *
-     * @param callable $tokenFunc a token generator function
-     * @param array|string $scopes the token authentication scopes
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache an implementation of CacheItemPoolInterface
+     * @param callable               $tokenFunc   a token generator function
+     * @param array|string           $scopes      the token authentication scopes
+     * @param array                  $cacheConfig configuration for the cache when it's present
+     * @param CacheItemPoolInterface $cache       an implementation of CacheItemPoolInterface
      */
     public function __construct(callable $tokenFunc, $scopes, array $cacheConfig = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache = null)
     {

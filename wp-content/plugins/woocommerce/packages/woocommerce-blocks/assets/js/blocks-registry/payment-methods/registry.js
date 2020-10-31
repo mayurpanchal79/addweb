@@ -9,33 +9,33 @@ const paymentMethods = {};
 const expressPaymentMethods = {};
 
 export const registerPaymentMethod = ( paymentMethodCreator ) => {
-	assertValidPaymentMethodCreator(
-		paymentMethodCreator,
-		'PaymentMethodConfig'
-	);
-	const paymentMethodConfig = paymentMethodCreator( PaymentMethodConfig );
-	if ( paymentMethodConfig instanceof PaymentMethodConfig ) {
-		paymentMethods[ paymentMethodConfig.name ] = paymentMethodConfig;
-	}
+    assertValidPaymentMethodCreator(
+        paymentMethodCreator,
+        'PaymentMethodConfig'
+    );
+    const paymentMethodConfig = paymentMethodCreator(PaymentMethodConfig);
+if (paymentMethodConfig instanceof PaymentMethodConfig ) {
+    paymentMethods[ paymentMethodConfig.name ] = paymentMethodConfig;
+}
 };
 
 export const registerExpressPaymentMethod = ( expressPaymentMethodCreator ) => {
-	assertValidPaymentMethodCreator(
-		expressPaymentMethodCreator,
-		'ExpressPaymentMethodConfig'
-	);
-	const paymentMethodConfig = expressPaymentMethodCreator(
-		ExpressPaymentMethodConfig
-	);
-	if ( paymentMethodConfig instanceof ExpressPaymentMethodConfig ) {
-		expressPaymentMethods[ paymentMethodConfig.name ] = paymentMethodConfig;
-	}
+    assertValidPaymentMethodCreator(
+        expressPaymentMethodCreator,
+        'ExpressPaymentMethodConfig'
+    );
+    const paymentMethodConfig = expressPaymentMethodCreator(
+        ExpressPaymentMethodConfig
+    );
+if (paymentMethodConfig instanceof ExpressPaymentMethodConfig ) {
+    expressPaymentMethods[ paymentMethodConfig.name ] = paymentMethodConfig;
+}
 };
 
 export const getPaymentMethods = () => {
-	return paymentMethods;
+    return paymentMethods;
 };
 
 export const getExpressPaymentMethods = () => {
-	return expressPaymentMethods;
+    return expressPaymentMethods;
 };

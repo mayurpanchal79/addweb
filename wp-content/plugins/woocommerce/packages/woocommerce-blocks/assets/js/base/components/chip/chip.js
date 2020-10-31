@@ -16,48 +16,48 @@ import './style.scss';
  * a wrapperElement.
  */
 const Chip = ( {
-	text,
-	screenReaderText = '',
-	element = 'li',
-	className = '',
-	radius = 'small',
-	children = null,
-	...props
+    text,
+    screenReaderText = '',
+    element = 'li',
+    className = '',
+    radius = 'small',
+    children = null,
+    ...props
 } ) => {
-	const Wrapper = element;
-	const wrapperClassName = classNames(
-		className,
-		'wc-block-components-chip',
-		'wc-block-components-chip--radius-' + radius
-	);
+    const Wrapper = element;
+    const wrapperClassName = classNames(
+        className,
+        'wc-block-components-chip',
+        'wc-block-components-chip--radius-' + radius
+    );
 
-	const showScreenReaderText = Boolean(
-		screenReaderText && screenReaderText !== text
-	);
+    const showScreenReaderText = Boolean(
+        screenReaderText && screenReaderText !== text
+    );
 
-	return (
-		// @ts-ignore
-		<Wrapper className={ wrapperClassName } { ...props }>
-			<span
-				aria-hidden={ showScreenReaderText }
-				className="wc-block-components-chip__text"
-			>
-				{ text }
-			</span>
-			{ showScreenReaderText && (
-				<span className="screen-reader-text">{ screenReaderText }</span>
-			) }
-			{ children }
-		</Wrapper>
-	);
+    return (
+        // @ts-ignore
+        <Wrapper className={ wrapperClassName } { ...props }>
+            <span
+                aria-hidden={ showScreenReaderText }
+                className="wc-block-components-chip__text"
+            >
+                { text }
+            </span>
+            { showScreenReaderText && (
+                <span className="screen-reader-text">{ screenReaderText }</span>
+            ) }
+    { children }
+    </Wrapper>
+    );
 };
 
 Chip.propTypes = {
-	text: PropTypes.node.isRequired,
-	screenReaderText: PropTypes.string,
-	element: PropTypes.elementType,
-	className: PropTypes.string,
-	radius: PropTypes.oneOf( [ 'none', 'small', 'medium', 'large' ] ),
+    text: PropTypes.node.isRequired,
+    screenReaderText: PropTypes.string,
+    element: PropTypes.elementType,
+    className: PropTypes.string,
+    radius: PropTypes.oneOf([ 'none', 'small', 'medium', 'large' ]),
 };
 
 export default Chip;

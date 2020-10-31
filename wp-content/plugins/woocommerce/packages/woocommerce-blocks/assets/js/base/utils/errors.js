@@ -7,24 +7,24 @@
  * @param  {string}   [error.type]    The context in which the error was triggered.
  * @return {Object}   Error object containing a message and type.
  */
-export const formatError = async ( error ) => {
-	if ( typeof error.json === 'function' ) {
-		try {
-			const parsedError = await error.json();
-			return {
-				message: parsedError.message,
-				type: parsedError.type || 'api',
-			};
-		} catch ( e ) {
-			return {
-				message: e.message,
-				type: 'general',
-			};
-		}
-	}
+export const formatError = async(error) => {
+    if (typeof error.json === 'function' ) {
+        try {
+            const parsedError = await error.json();
+            return {
+                message: parsedError.message,
+                type: parsedError.type || 'api',
+            };
+        } catch ( e ) {
+            return {
+                message: e.message,
+                type: 'general',
+            };
+        }
+    }
 
-	return {
-		message: error.message,
-		type: error.type || 'general',
-	};
+    return {
+        message: error.message,
+        type: error.type || 'general',
+    };
 };

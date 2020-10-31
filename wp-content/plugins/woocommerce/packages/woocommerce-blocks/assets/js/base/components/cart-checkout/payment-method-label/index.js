@@ -10,10 +10,10 @@ import { Icon, bank, bill, card, checkPayment } from '@woocommerce/icons';
 import './style.scss';
 
 const namedIcons = {
-	bank,
-	bill,
-	card,
-	checkPayment,
+    bank,
+    bill,
+    card,
+    checkPayment,
 };
 
 /**
@@ -26,19 +26,21 @@ const namedIcons = {
  * @param {string} props.text Text shown next to icon.
  */
 export const PaymentMethodLabel = ( { icon = '', text = '' } ) => {
-	const hasIcon = !! icon;
-	const hasNamedIcon =
-		hasIcon && typeof icon === 'string' && namedIcons[ icon ];
-	const className = classnames( 'wc-block-components-payment-method-label', {
-		'wc-block-components-payment-method-label--with-icon': hasIcon,
-	} );
+    const hasIcon = !! icon;
+    const hasNamedIcon =
+    hasIcon && typeof icon === 'string' && namedIcons[ icon ];
+    const className = classnames(
+        'wc-block-components-payment-method-label', {
+            'wc-block-components-payment-method-label--with-icon': hasIcon,
+        } 
+    );
 
-	return (
-		<span className={ className }>
-			{ hasNamedIcon ? <Icon srcElement={ namedIcons[ icon ] } /> : icon }
-			{ text }
-		</span>
-	);
+    return (
+        <span className={ className }>
+            { hasNamedIcon ? <Icon srcElement={ namedIcons[ icon ] } /> : icon }
+            { text }
+        </span>
+    );
 };
 
 export default PaymentMethodLabel;

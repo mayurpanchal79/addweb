@@ -32,9 +32,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $pk
-     * @param string $sk
-     * @param string $seed
+     * @param  string $pk
+     * @param  string $sk
+     * @param  string $seed
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -45,7 +45,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
             throw new RangeException('crypto_sign keypair seed must be 32 bytes long');
         }
 
-        /** @var string $pk */
+        /**
+ * @var string $pk 
+*/
         $pk = self::publickey_from_secretkey($seed);
         $sk = $seed . $pk;
         return $sk;
@@ -54,7 +56,7 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $keypair
+     * @param  string $keypair
      * @return string
      * @throws TypeError
      */
@@ -69,7 +71,7 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $keypair
+     * @param  string $keypair
      * @return string
      * @throws RangeException
      * @throws TypeError
@@ -85,14 +87,16 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $sk
+     * @param  string $sk
      * @return string
      * @throws SodiumException
      * @throws TypeError
      */
     public static function publickey_from_secretkey($sk)
     {
-        /** @var string $sk */
+        /**
+ * @var string $sk 
+*/
         $sk = hash('sha512', self::substr($sk, 0, 32), true);
         $sk[0] = self::intToChr(
             self::chrToInt($sk[0]) & 248
@@ -104,7 +108,7 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     }
 
     /**
-     * @param string $pk
+     * @param  string $pk
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -120,9 +124,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
             throw new SodiumException('Unexpected zero result');
         }
 
-        # fe_1(one_minus_y);
-        # fe_sub(one_minus_y, one_minus_y, A.Y);
-        # fe_invert(one_minus_y, one_minus_y);
+        // fe_1(one_minus_y);
+        // fe_sub(one_minus_y, one_minus_y, A.Y);
+        // fe_invert(one_minus_y, one_minus_y);
         $one_minux_y = self::fe_invert(
             self::fe_sub(
                 self::fe_1(),
@@ -131,22 +135,22 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
         );
 
 
-        # fe_1(x);
-        # fe_add(x, x, A.Y);
-        # fe_mul(x, x, one_minus_y);
+        // fe_1(x);
+        // fe_add(x, x, A.Y);
+        // fe_mul(x, x, one_minus_y);
         $x = self::fe_mul(
             self::fe_add(self::fe_1(), $A->Y),
             $one_minux_y
         );
 
-        # fe_tobytes(curve25519_pk, x);
+        // fe_tobytes(curve25519_pk, x);
         return self::fe_tobytes($x);
     }
 
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $sk
+     * @param  string $sk
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -163,15 +167,17 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $sk
+     * @param  string $message
+     * @param  string $sk
      * @return string
      * @throws SodiumException
      * @throws TypeError
      */
     public static function sign($message, $sk)
     {
-        /** @var string $signature */
+        /**
+ * @var string $signature 
+*/
         $signature = self::sign_detached($message, $sk);
         return $signature . $message;
     }
@@ -179,18 +185,22 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message A signed message
-     * @param string $pk      Public key
+     * @param  string $message A signed message
+     * @param  string $pk      Public key
      * @return string         Message (without signature)
      * @throws SodiumException
      * @throws TypeError
      */
     public static function sign_open($message, $pk)
     {
-        /** @var string $signature */
+        /**
+ * @var string $signature 
+*/
         $signature = self::substr($message, 0, 64);
 
-        /** @var string $message */
+        /**
+ * @var string $message 
+*/
         $message = self::substr($message, 64);
 
         if (self::verify_detached($signature, $message, $pk)) {
@@ -202,55 +212,55 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $sk
+     * @param  string $message
+     * @param  string $sk
      * @return string
      * @throws SodiumException
      * @throws TypeError
      */
     public static function sign_detached($message, $sk)
     {
-        # crypto_hash_sha512(az, sk, 32);
+        // crypto_hash_sha512(az, sk, 32);
         $az =  hash('sha512', self::substr($sk, 0, 32), true);
 
-        # az[0] &= 248;
-        # az[31] &= 63;
-        # az[31] |= 64;
+        // az[0] &= 248;
+        // az[31] &= 63;
+        // az[31] |= 64;
         $az[0] = self::intToChr(self::chrToInt($az[0]) & 248);
         $az[31] = self::intToChr((self::chrToInt($az[31]) & 63) | 64);
 
-        # crypto_hash_sha512_init(&hs);
-        # crypto_hash_sha512_update(&hs, az + 32, 32);
-        # crypto_hash_sha512_update(&hs, m, mlen);
-        # crypto_hash_sha512_final(&hs, nonce);
+        // crypto_hash_sha512_init(&hs);
+        // crypto_hash_sha512_update(&hs, az + 32, 32);
+        // crypto_hash_sha512_update(&hs, m, mlen);
+        // crypto_hash_sha512_final(&hs, nonce);
         $hs = hash_init('sha512');
         hash_update($hs, self::substr($az, 32, 32));
         hash_update($hs, $message);
         $nonceHash = hash_final($hs, true);
 
-        # memmove(sig + 32, sk + 32, 32);
+        // memmove(sig + 32, sk + 32, 32);
         $pk = self::substr($sk, 32, 32);
 
-        # sc_reduce(nonce);
-        # ge_scalarmult_base(&R, nonce);
-        # ge_p3_tobytes(sig, &R);
+        // sc_reduce(nonce);
+        // ge_scalarmult_base(&R, nonce);
+        // ge_p3_tobytes(sig, &R);
         $nonce = self::sc_reduce($nonceHash) . self::substr($nonceHash, 32);
         $sig = self::ge_p3_tobytes(
             self::ge_scalarmult_base($nonce)
         );
 
-        # crypto_hash_sha512_init(&hs);
-        # crypto_hash_sha512_update(&hs, sig, 64);
-        # crypto_hash_sha512_update(&hs, m, mlen);
-        # crypto_hash_sha512_final(&hs, hram);
+        // crypto_hash_sha512_init(&hs);
+        // crypto_hash_sha512_update(&hs, sig, 64);
+        // crypto_hash_sha512_update(&hs, m, mlen);
+        // crypto_hash_sha512_final(&hs, hram);
         $hs = hash_init('sha512');
         hash_update($hs, self::substr($sig, 0, 32));
         hash_update($hs, self::substr($pk, 0, 32));
         hash_update($hs, $message);
         $hramHash = hash_final($hs, true);
 
-        # sc_reduce(hram);
-        # sc_muladd(sig + 32, hram, az, nonce);
+        // sc_reduce(hram);
+        // sc_muladd(sig + 32, hram, az, nonce);
         $hram = self::sc_reduce($hramHash);
         $sigAfter = self::sc_muladd($hram, $az, $nonce);
         $sig = self::substr($sig, 0, 32) . self::substr($sigAfter, 0, 32);
@@ -266,9 +276,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $sig
-     * @param string $message
-     * @param string $pk
+     * @param  string $sig
+     * @param  string $message
+     * @param  string $pk
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -295,16 +305,22 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
             throw new SodiumException('All zero public key');
         }
 
-        /** @var bool The original value of ParagonIE_Sodium_Compat::$fastMult */
+        /**
+ * @var bool The original value of ParagonIE_Sodium_Compat::$fastMult 
+*/
         $orig = ParagonIE_Sodium_Compat::$fastMult;
 
         // Set ParagonIE_Sodium_Compat::$fastMult to true to speed up verification.
         ParagonIE_Sodium_Compat::$fastMult = true;
 
-        /** @var ParagonIE_Sodium_Core32_Curve25519_Ge_P3 $A */
+        /**
+ * @var ParagonIE_Sodium_Core32_Curve25519_Ge_P3 $A 
+*/
         $A = self::ge_frombytes_negate_vartime($pk);
 
-        /** @var string $hDigest */
+        /**
+ * @var string $hDigest 
+*/
         $hDigest = hash(
             'sha512',
             self::substr($sig, 0, 32) .
@@ -313,17 +329,23 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
             true
         );
 
-        /** @var string $h */
+        /**
+ * @var string $h 
+*/
         $h = self::sc_reduce($hDigest) . self::substr($hDigest, 32);
 
-        /** @var ParagonIE_Sodium_Core32_Curve25519_Ge_P2 $R */
+        /**
+ * @var ParagonIE_Sodium_Core32_Curve25519_Ge_P2 $R 
+*/
         $R = self::ge_double_scalarmult_vartime(
             $h,
             $A,
             self::substr($sig, 32)
         );
 
-        /** @var string $rcheck */
+        /**
+ * @var string $rcheck 
+*/
         $rcheck = self::ge_tobytes($R);
 
         // Reset ParagonIE_Sodium_Compat::$fastMult to what it was before.
@@ -335,7 +357,7 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $S
+     * @param  string $S
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -351,7 +373,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10
         );
-        /** @var array<int, int> $L */
+        /**
+ * @var array<int, int> $L 
+*/
         $c = 0;
         $n = 1;
         $i = 32;
@@ -371,7 +395,7 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
     }
 
     /**
-     * @param string $R
+     * @param  string $R
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -464,7 +488,9 @@ abstract class ParagonIE_Sodium_Core32_Ed25519 extends ParagonIE_Sodium_Core32_C
                 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
             )
         );
-        /** @var array<int, array<int, int>> $blacklist */
+        /**
+ * @var array<int, array<int, int>> $blacklist 
+*/
         $countBlacklist = count($blacklist);
 
         for ($i = 0; $i < $countBlacklist; ++$i) {

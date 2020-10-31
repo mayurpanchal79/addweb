@@ -25,7 +25,9 @@ use WPMailSMTP\Vendor\Psr\Http\Message\UriInterface;
  */
 class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
 {
-    /** @var array Default request options */
+    /**
+     * @var array Default request options 
+     */
     private $config;
     /**
      * Clients accept an array of constructor parameters.
@@ -180,7 +182,7 @@ class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
         return $option === null ? $this->config : (isset($this->config[$option]) ? $this->config[$option] : null);
     }
     /**
-     * @param  string|null $uri
+     * @param string|null $uri
      *
      * @return UriInterface
      */
@@ -200,7 +202,7 @@ class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
     /**
      * Configures the default options for a client.
      *
-     * @param array $config
+     * @param  array $config
      * @return void
      */
     private function configureDefaults(array $config)
@@ -296,7 +298,9 @@ class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
             unset($options['exceptions']);
         }
         $request = $this->applyOptions($request, $options);
-        /** @var HandlerStack $handler */
+        /**
+ * @var HandlerStack $handler 
+*/
         $handler = $options['handler'];
         try {
             return \WPMailSMTP\Vendor\GuzzleHttp\Promise\promise_for($handler($request, $options));
@@ -356,20 +360,20 @@ class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
             $value = $options['auth'];
             $type = isset($value[2]) ? \strtolower($value[2]) : 'basic';
             switch ($type) {
-                case 'basic':
-                    // Ensure that we don't have the header in different case and set the new value.
-                    $modify['set_headers'] = \WPMailSMTP\Vendor\GuzzleHttp\Psr7\_caseless_remove(['Authorization'], $modify['set_headers']);
-                    $modify['set_headers']['Authorization'] = 'Basic ' . \base64_encode("{$value[0]}:{$value[1]}");
-                    break;
-                case 'digest':
-                    // @todo: Do not rely on curl
-                    $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_DIGEST;
-                    $options['curl'][\CURLOPT_USERPWD] = "{$value[0]}:{$value[1]}";
-                    break;
-                case 'ntlm':
-                    $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_NTLM;
-                    $options['curl'][\CURLOPT_USERPWD] = "{$value[0]}:{$value[1]}";
-                    break;
+            case 'basic':
+                // Ensure that we don't have the header in different case and set the new value.
+                $modify['set_headers'] = \WPMailSMTP\Vendor\GuzzleHttp\Psr7\_caseless_remove(['Authorization'], $modify['set_headers']);
+                $modify['set_headers']['Authorization'] = 'Basic ' . \base64_encode("{$value[0]}:{$value[1]}");
+                break;
+            case 'digest':
+                // @todo: Do not rely on curl
+                $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_DIGEST;
+                $options['curl'][\CURLOPT_USERPWD] = "{$value[0]}:{$value[1]}";
+                break;
+            case 'ntlm':
+                $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_NTLM;
+                $options['curl'][\CURLOPT_USERPWD] = "{$value[0]}:{$value[1]}";
+                break;
             }
         }
         if (isset($options['query'])) {
@@ -414,6 +418,7 @@ class Client implements \WPMailSMTP\Vendor\GuzzleHttp\ClientInterface
     }
     /**
      * Throw Exception with pre-set message.
+     *
      * @return void
      * @throws \InvalidArgumentException Invalid body.
      */

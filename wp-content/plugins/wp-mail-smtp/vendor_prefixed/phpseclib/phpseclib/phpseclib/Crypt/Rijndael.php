@@ -70,44 +70,44 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      * or not for the current $block_size/$key_length.
      * In case of, $cipher_name_mcrypt will be set dynamically at run time accordingly.
      *
-     * @see \phpseclib\Crypt\Base::cipher_name_mcrypt
-     * @see \phpseclib\Crypt\Base::engine
-     * @see self::isValidEngine()
-     * @var string
+     * @see    \phpseclib\Crypt\Base::cipher_name_mcrypt
+     * @see    \phpseclib\Crypt\Base::engine
+     * @see    self::isValidEngine()
+     * @var    string
      * @access private
      */
     var $cipher_name_mcrypt = 'rijndael-128';
     /**
      * The default salt used by setPassword()
      *
-     * @see \phpseclib\Crypt\Base::password_default_salt
-     * @see \phpseclib\Crypt\Base::setPassword()
-     * @var string
+     * @see    \phpseclib\Crypt\Base::password_default_salt
+     * @see    \phpseclib\Crypt\Base::setPassword()
+     * @var    string
      * @access private
      */
     var $password_default_salt = 'phpseclib';
     /**
      * The Key Schedule
      *
-     * @see self::_setup()
-     * @var array
+     * @see    self::_setup()
+     * @var    array
      * @access private
      */
     var $w;
     /**
      * The Inverse Key Schedule
      *
-     * @see self::_setup()
-     * @var array
+     * @see    self::_setup()
+     * @var    array
      * @access private
      */
     var $dw;
     /**
      * The Block Length divided by 32
      *
-     * @see self::setBlockLength()
-     * @var int
-     * @access private
+     * @see      self::setBlockLength()
+     * @var      int
+     * @access   private
      * @internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4.  Exists in conjunction with $block_size
      *    because the encryption / decryption / key schedule creation requires this number and not $block_size.  We could
      *    derive this from $block_size or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
@@ -117,9 +117,9 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
     /**
      * The Key Length (in bytes)
      *
-     * @see self::setKeyLength()
-     * @var int
-     * @access private
+     * @see      self::setKeyLength()
+     * @var      int
+     * @access   private
      * @internal The max value is 256 / 8 = 32, the min value is 128 / 8 = 16.  Exists in conjunction with $Nk
      *    because the encryption / decryption / key schedule creation requires this number and not $key_length.  We could
      *    derive this from $key_length or vice versa, but that'd mean we'd have to do multiple shift operations, so in lieu
@@ -129,31 +129,31 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
     /**
      * The Key Length divided by 32
      *
-     * @see self::setKeyLength()
-     * @var int
-     * @access private
+     * @see      self::setKeyLength()
+     * @var      int
+     * @access   private
      * @internal The max value is 256 / 32 = 8, the min value is 128 / 32 = 4
      */
     var $Nk = 4;
     /**
      * The Number of Rounds
      *
-     * @var int
-     * @access private
+     * @var      int
+     * @access   private
      * @internal The max value is 14, the min value is 10.
      */
     var $Nr;
     /**
      * Shift offsets
      *
-     * @var array
+     * @var    array
      * @access private
      */
     var $c;
     /**
      * Holds the last used key- and block_size information
      *
-     * @var array
+     * @var    array
      * @access private
      */
     var $kl;
@@ -175,25 +175,25 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      *             This results then in slower encryption.
      *
      * @access public
-     * @param int $length
+     * @param  int $length
      */
     function setKeyLength($length)
     {
         switch (\true) {
-            case $length <= 128:
-                $this->key_length = 16;
-                break;
-            case $length <= 160:
-                $this->key_length = 20;
-                break;
-            case $length <= 192:
-                $this->key_length = 24;
-                break;
-            case $length <= 224:
-                $this->key_length = 28;
-                break;
-            default:
-                $this->key_length = 32;
+        case $length <= 128:
+            $this->key_length = 16;
+            break;
+        case $length <= 160:
+            $this->key_length = 20;
+            break;
+        case $length <= 192:
+            $this->key_length = 24;
+            break;
+        case $length <= 224:
+            $this->key_length = 28;
+            break;
+        default:
+            $this->key_length = 32;
         }
         parent::setKeyLength($length);
     }
@@ -204,7 +204,7 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      * 128.  If the length is greater than 128 and invalid, it will be rounded down to the closest valid amount.
      *
      * @access public
-     * @param int $length
+     * @param  int $length
      */
     function setBlockLength($length)
     {
@@ -224,28 +224,28 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      *
      * This is mainly just a wrapper to set things up for \phpseclib\Crypt\Base::isValidEngine()
      *
-     * @see \phpseclib\Crypt\Base::__construct()
-     * @param int $engine
+     * @see    \phpseclib\Crypt\Base::__construct()
+     * @param  int $engine
      * @access public
      * @return bool
      */
     function isValidEngine($engine)
     {
         switch ($engine) {
-            case self::ENGINE_OPENSSL:
-                if ($this->block_size != 16) {
-                    return \false;
-                }
-                $this->cipher_name_openssl_ecb = 'aes-' . ($this->key_length << 3) . '-ecb';
-                $this->cipher_name_openssl = 'aes-' . ($this->key_length << 3) . '-' . $this->_openssl_translate_mode();
-                break;
-            case self::ENGINE_MCRYPT:
-                $this->cipher_name_mcrypt = 'rijndael-' . ($this->block_size << 3);
-                if ($this->key_length % 8) {
-                    // is it a 160/224-bit key?
-                    // mcrypt is not usable for them, only for 128/192/256-bit keys
-                    return \false;
-                }
+        case self::ENGINE_OPENSSL:
+            if ($this->block_size != 16) {
+                return \false;
+            }
+            $this->cipher_name_openssl_ecb = 'aes-' . ($this->key_length << 3) . '-ecb';
+            $this->cipher_name_openssl = 'aes-' . ($this->key_length << 3) . '-' . $this->_openssl_translate_mode();
+            break;
+        case self::ENGINE_MCRYPT:
+            $this->cipher_name_mcrypt = 'rijndael-' . ($this->block_size << 3);
+            if ($this->key_length % 8) {
+                // is it a 160/224-bit key?
+                // mcrypt is not usable for them, only for 128/192/256-bit keys
+                return \false;
+            }
         }
         return parent::isValidEngine($engine);
     }
@@ -253,7 +253,7 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      * Encrypts a block
      *
      * @access private
-     * @param string $in
+     * @param  string $in
      * @return string
      */
     function _encryptBlock($in)
@@ -319,23 +319,23 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
             $l = ($l + 1) % $Nb;
         }
         switch ($Nb) {
-            case 8:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
-            case 7:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
-            case 6:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
-            case 5:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
-            default:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
+        case 8:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
+        case 7:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
+        case 6:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
+        case 5:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
+        default:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
         }
     }
     /**
      * Decrypts a block
      *
      * @access private
-     * @param string $in
+     * @param  string $in
      * @return string
      */
     function _decryptBlock($in)
@@ -391,22 +391,22 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
             $l = ($l + 1) % $Nb;
         }
         switch ($Nb) {
-            case 8:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
-            case 7:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
-            case 6:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
-            case 5:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
-            default:
-                return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
+        case 8:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6], $temp[7]);
+        case 7:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5], $temp[6]);
+        case 6:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
+        case 5:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
+        default:
+            return \pack('N*', $temp[0], $temp[1], $temp[2], $temp[3]);
         }
     }
     /**
      * Setup the key (expansion)
      *
-     * @see \phpseclib\Crypt\Base::_setupKey()
+     * @see    \phpseclib\Crypt\Base::_setupKey()
      * @access private
      */
     function _setupKey()
@@ -427,16 +427,16 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
         // shift offsets for Nb = 4, 6, 8 are defined in Rijndael-ammended.pdf#page=14,
         //     "Table 2: Shift offsets for different block lengths"
         switch ($this->Nb) {
-            case 4:
-            case 5:
-            case 6:
-                $this->c = array(0, 1, 2, 3);
-                break;
-            case 7:
-                $this->c = array(0, 1, 2, 4);
-                break;
-            case 8:
-                $this->c = array(0, 1, 3, 4);
+        case 4:
+        case 5:
+        case 6:
+            $this->c = array(0, 1, 2, 3);
+            break;
+        case 7:
+            $this->c = array(0, 1, 2, 4);
+            break;
+        case 8:
+            $this->c = array(0, 1, 3, 4);
         }
         $w = \array_values(\unpack('N*words', $this->key));
         $length = $this->Nb * ($this->Nr + 1);
@@ -501,7 +501,7 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
      * Performs S-Box substitutions
      *
      * @access private
-     * @param int $word
+     * @param  int $word
      */
     function _subWord($word)
     {
@@ -514,9 +514,9 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
     /**
      * Provides the mixColumns and sboxes tables
      *
-     * @see self::_encryptBlock()
-     * @see self::_setupInlineCrypt()
-     * @see self::_subWord()
+     * @see    self::_encryptBlock()
+     * @see    self::_setupInlineCrypt()
+     * @see    self::_subWord()
      * @access private
      * @return array &$tables
      */
@@ -527,7 +527,8 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
             // according to <http://csrc.nist.gov/archive/aes/rijndael/Rijndael-ammended.pdf#page=19> (section 5.2.1),
             // precomputed tables can be used in the mixColumns phase. in that example, they're assigned t0...t3, so
             // those are the names we'll use.
-            $t3 = \array_map('intval', array(
+            $t3 = \array_map(
+                'intval', array(
                 // with array_map('intval', ...) we ensure we have only int's and not
                 // some slower floats converted by php automatically on high values
                 0x6363a5c6,
@@ -786,7 +787,8 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
                 0x5454fca8,
                 0xbbbbd66d,
                 0x16163a2c,
-            ));
+                )
+            );
             foreach ($t3 as $t3i) {
                 $t0[] = $t3i << 24 & 0xff000000 | $t3i >> 8 & 0xffffff;
                 $t1[] = $t3i << 16 & 0xffff0000 | $t3i >> 16 & 0xffff;
@@ -807,9 +809,9 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
     /**
      * Provides the inverse mixColumns and inverse sboxes tables
      *
-     * @see self::_decryptBlock()
-     * @see self::_setupInlineCrypt()
-     * @see self::_setupKey()
+     * @see    self::_decryptBlock()
+     * @see    self::_setupInlineCrypt()
+     * @see    self::_setupKey()
      * @access private
      * @return array &$tables
      */
@@ -838,7 +840,7 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
     /**
      * Setup the performance-optimized function for de/encrypt()
      *
-     * @see \phpseclib\Crypt\Base::_setupInlineCrypt()
+     * @see    \phpseclib\Crypt\Base::_setupInlineCrypt()
      * @access private
      */
     function _setupInlineCrypt()
@@ -858,20 +860,20 @@ class Rijndael extends \WPMailSMTP\Vendor\phpseclib\Crypt\Base
         }
         if (!isset($lambda_functions[$code_hash])) {
             switch (\true) {
-                case $gen_hi_opt_code:
-                    // The hi-optimized $lambda_functions will use the key-words hardcoded for better performance.
-                    $w = $this->w;
-                    $dw = $this->dw;
-                    $init_encrypt = '';
-                    $init_decrypt = '';
-                    break;
-                default:
-                    for ($i = 0, $cw = \count($this->w); $i < $cw; ++$i) {
-                        $w[] = '$w[' . $i . ']';
-                        $dw[] = '$dw[' . $i . ']';
-                    }
-                    $init_encrypt = '$w  = $self->w;';
-                    $init_decrypt = '$dw = $self->dw;';
+            case $gen_hi_opt_code:
+                // The hi-optimized $lambda_functions will use the key-words hardcoded for better performance.
+                $w = $this->w;
+                $dw = $this->dw;
+                $init_encrypt = '';
+                $init_decrypt = '';
+                break;
+            default:
+                for ($i = 0, $cw = \count($this->w); $i < $cw; ++$i) {
+                    $w[] = '$w[' . $i . ']';
+                    $dw[] = '$dw[' . $i . ']';
+                }
+                $init_encrypt = '$w  = $self->w;';
+                $init_decrypt = '$dw = $self->dw;';
             }
             $Nr = $this->Nr;
             $Nb = $this->Nb;

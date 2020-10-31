@@ -10,7 +10,9 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
  */
 class AppendStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
 {
-    /** @var StreamInterface[] Streams being decorated */
+    /**
+     * @var StreamInterface[] Streams being decorated 
+     */
     private $streams = [];
     private $seekable = \true;
     private $current = 0;

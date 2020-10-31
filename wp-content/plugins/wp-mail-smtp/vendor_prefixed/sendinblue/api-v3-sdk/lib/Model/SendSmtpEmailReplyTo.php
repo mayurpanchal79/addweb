@@ -32,11 +32,11 @@ use WPMailSMTP\Vendor\SendinBlue\Client\ObjectSerializer;
 /**
  * SendSmtpEmailReplyTo Class Doc Comment
  *
- * @category Class
+ * @category    Class
  * @description Email (required), along with name (optional), on which transactional mail recipients will be able to reply back. For example, {&#39;email&#39;:&#39;ann6533@example.com&#39;, &#39;name&#39;:&#39;Ann&#39;}.
- * @package  SendinBlue\Client
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
+ * @package     SendinBlue\Client
+ * @author      Swagger Codegen team
+ * @link        https://github.com/swagger-api/swagger-codegen
  */
 class SendSmtpEmailReplyTo implements \WPMailSMTP\Vendor\SendinBlue\Client\Model\ModelInterface, \ArrayAccess
 {

@@ -10,18 +10,22 @@ if (class_exists('ParagonIE_Sodium_Core_Util', false)) {
 abstract class ParagonIE_Sodium_Core_Util
 {
     /**
-     * @param int $integer
-     * @param int $size (16, 32, 64)
+     * @param  int $integer
+     * @param  int $size    (16, 32, 64)
      * @return int
      */
     public static function abs($integer, $size = 0)
     {
-        /** @var int $realSize */
+        /**
+ * @var int $realSize 
+*/
         $realSize = (PHP_INT_SIZE << 3) - 1;
         if ($size) {
             --$size;
         } else {
-            /** @var int $size */
+            /**
+ * @var int $size 
+*/
             $size = $realSize;
         }
 
@@ -39,7 +43,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $binaryString (raw binary)
+     * @param  string $binaryString (raw binary)
      * @return string
      * @throws TypeError
      */
@@ -53,11 +57,17 @@ abstract class ParagonIE_Sodium_Core_Util
         $hex = '';
         $len = self::strlen($binaryString);
         for ($i = 0; $i < $len; ++$i) {
-            /** @var array<int, int> $chunk */
+            /**
+ * @var array<int, int> $chunk 
+*/
             $chunk = unpack('C', $binaryString[$i]);
-            /** @var int $c */
+            /**
+ * @var int $c 
+*/
             $c = $chunk[1] & 0xf;
-            /** @var int $b */
+            /**
+ * @var int $b 
+*/
             $b = $chunk[1] >> 4;
             $hex .= pack(
                 'CC',
@@ -74,7 +84,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $bin_string (raw binary)
+     * @param  string $bin_string (raw binary)
      * @return string
      * @throws TypeError
      */
@@ -83,7 +93,9 @@ abstract class ParagonIE_Sodium_Core_Util
         $hex = '';
         $len = self::strlen($bin_string);
         for ($i = 0; $i < $len; ++$i) {
-            /** @var array<int, int> $chunk */
+            /**
+ * @var array<int, int> $chunk 
+*/
             $chunk = unpack('C', $bin_string[$i]);
             /**
              * Lower 16 bits
@@ -94,6 +106,7 @@ abstract class ParagonIE_Sodium_Core_Util
 
             /**
              * Upper 16 bits
+             *
              * @var int $b
              */
             $b = $chunk[1] >> 4;
@@ -118,7 +131,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $chr
+     * @param  string $chr
      * @return int
      * @throws SodiumException
      * @throws TypeError
@@ -132,7 +145,9 @@ abstract class ParagonIE_Sodium_Core_Util
         if (self::strlen($chr) !== 1) {
             throw new SodiumException('chrToInt() expects a string that is exactly 1 character long');
         }
-        /** @var array<int, int> $chunk */
+        /**
+ * @var array<int, int> $chunk 
+*/
         $chunk = unpack('C', $chr);
         return (int) ($chunk[1]);
     }
@@ -142,9 +157,9 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $left
-     * @param string $right
-     * @param int $len
+     * @param  string $left
+     * @param  string $right
+     * @param  int    $len
      * @return int
      * @throws SodiumException
      * @throws TypeError
@@ -173,9 +188,9 @@ abstract class ParagonIE_Sodium_Core_Util
     /**
      * If a variable does not match a given type, throw a TypeError.
      *
-     * @param mixed $mixedVar
-     * @param string $type
-     * @param int $argumentIndex
+     * @param  mixed  $mixedVar
+     * @param  string $type
+     * @param  int    $argumentIndex
      * @throws TypeError
      * @throws SodiumException
      * @return void
@@ -192,67 +207,67 @@ abstract class ParagonIE_Sodium_Core_Util
         $realType = strtolower(gettype($mixedVar));
         $type = strtolower($type);
         switch ($type) {
-            case 'null':
-                if ($mixedVar !== null) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be null, ' . $realType . ' given.');
-                }
-                break;
-            case 'integer':
-            case 'int':
-                $allow = array('int', 'integer');
-                if (!in_array($type, $allow)) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be an integer, ' . $realType . ' given.');
-                }
-                $mixedVar = (int) $mixedVar;
-                break;
-            case 'boolean':
-            case 'bool':
-                $allow = array('bool', 'boolean');
-                if (!in_array($type, $allow)) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be a boolean, ' . $realType . ' given.');
-                }
-                $mixedVar = (bool) $mixedVar;
-                break;
-            case 'string':
-                if (!is_string($mixedVar)) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be a string, ' . $realType . ' given.');
-                }
-                $mixedVar = (string) $mixedVar;
-                break;
-            case 'decimal':
-            case 'double':
-            case 'float':
-                $allow = array('decimal', 'double', 'float');
-                if (!in_array($type, $allow)) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be a float, ' . $realType . ' given.');
-                }
-                $mixedVar = (float) $mixedVar;
-                break;
-            case 'object':
-                if (!is_object($mixedVar)) {
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be an object, ' . $realType . ' given.');
-                }
-                break;
-            case 'array':
-                if (!is_array($mixedVar)) {
-                    if (is_object($mixedVar)) {
-                        if ($mixedVar instanceof ArrayAccess) {
-                            return;
-                        }
+        case 'null':
+            if ($mixedVar !== null) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be null, ' . $realType . ' given.');
+            }
+            break;
+        case 'integer':
+        case 'int':
+            $allow = array('int', 'integer');
+            if (!in_array($type, $allow)) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be an integer, ' . $realType . ' given.');
+            }
+            $mixedVar = (int) $mixedVar;
+            break;
+        case 'boolean':
+        case 'bool':
+            $allow = array('bool', 'boolean');
+            if (!in_array($type, $allow)) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be a boolean, ' . $realType . ' given.');
+            }
+            $mixedVar = (bool) $mixedVar;
+            break;
+        case 'string':
+            if (!is_string($mixedVar)) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be a string, ' . $realType . ' given.');
+            }
+            $mixedVar = (string) $mixedVar;
+            break;
+        case 'decimal':
+        case 'double':
+        case 'float':
+            $allow = array('decimal', 'double', 'float');
+            if (!in_array($type, $allow)) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be a float, ' . $realType . ' given.');
+            }
+            $mixedVar = (float) $mixedVar;
+            break;
+        case 'object':
+            if (!is_object($mixedVar)) {
+                throw new TypeError('Argument ' . $argumentIndex . ' must be an object, ' . $realType . ' given.');
+            }
+            break;
+        case 'array':
+            if (!is_array($mixedVar)) {
+                if (is_object($mixedVar)) {
+                    if ($mixedVar instanceof ArrayAccess) {
+                        return;
                     }
-                    throw new TypeError('Argument ' . $argumentIndex . ' must be an array, ' . $realType . ' given.');
                 }
-                break;
-            default:
-                throw new SodiumException('Unknown type (' . $realType .') does not match expect type (' . $type . ')');
+                throw new TypeError('Argument ' . $argumentIndex . ' must be an array, ' . $realType . ' given.');
+            }
+            break;
+        default:
+            throw new SodiumException('Unknown type (' . $realType .') does not match expect type (' . $type . ')');
         }
     }
 
     /**
      * Evaluate whether or not two strings are equal (in constant-time)
      *
-     * @param string $left
-     * @param string $right
+     * @param  string $left
+     * @param  string $right
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -271,7 +286,9 @@ abstract class ParagonIE_Sodium_Core_Util
             return hash_equals($left, $right);
         }
         $d = 0;
-        /** @var int $len */
+        /**
+ * @var int $len 
+*/
         $len = self::strlen($left);
         if ($len !== self::strlen($right)) {
             return false;
@@ -292,8 +309,8 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $hexString
-     * @param bool $strictPadding
+     * @param  string $hexString
+     * @param  bool   $strictPadding
      * @return string (raw binary)
      * @throws RangeException
      * @throws TypeError
@@ -305,15 +322,25 @@ abstract class ParagonIE_Sodium_Core_Util
             throw new TypeError('Argument 1 must be a string, ' . gettype($hexString) . ' given.');
         }
 
-        /** @var int $hex_pos */
+        /**
+ * @var int $hex_pos 
+*/
         $hex_pos = 0;
-        /** @var string $bin */
+        /**
+ * @var string $bin 
+*/
         $bin = '';
-        /** @var int $c_acc */
+        /**
+ * @var int $c_acc 
+*/
         $c_acc = 0;
-        /** @var int $hex_len */
+        /**
+ * @var int $hex_len 
+*/
         $hex_len = self::strlen($hexString);
-        /** @var int $state */
+        /**
+ * @var int $state 
+*/
         $state = 0;
         if (($hex_len & 1) !== 0) {
             if ($strictPadding) {
@@ -329,22 +356,34 @@ abstract class ParagonIE_Sodium_Core_Util
         $chunk = unpack('C*', $hexString);
         while ($hex_pos < $hex_len) {
             ++$hex_pos;
-            /** @var int $c */
+            /**
+ * @var int $c 
+*/
             $c = $chunk[$hex_pos];
-            /** @var int $c_num */
+            /**
+ * @var int $c_num 
+*/
             $c_num = $c ^ 48;
-            /** @var int $c_num0 */
+            /**
+ * @var int $c_num0 
+*/
             $c_num0 = ($c_num - 10) >> 8;
-            /** @var int $c_alpha */
+            /**
+ * @var int $c_alpha 
+*/
             $c_alpha = ($c & ~32) - 55;
-            /** @var int $c_alpha0 */
+            /**
+ * @var int $c_alpha0 
+*/
             $c_alpha0 = (($c_alpha - 10) ^ ($c_alpha - 16)) >> 8;
             if (($c_num0 | $c_alpha0) === 0) {
                 throw new RangeException(
                     'hex2bin() only expects hexadecimal characters'
                 );
             }
-            /** @var int $c_val */
+            /**
+ * @var int $c_val 
+*/
             $c_val = ($c_num0 & $c_num) | ($c_alpha & $c_alpha0);
             if ($state === 0) {
                 $c_acc = $c_val * 16;
@@ -361,12 +400,14 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param array<int, int> $ints
+     * @param  array<int, int> $ints
      * @return string
      */
     public static function intArrayToString(array $ints)
     {
-        /** @var array<int, int> $args */
+        /**
+ * @var array<int, int> $args 
+*/
         $args = $ints;
         foreach ($args as $i => $v) {
             $args[$i] = (int) ($v & 0xff);
@@ -380,7 +421,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $int
+     * @param  int $int
      * @return string
      * @throws TypeError
      */
@@ -394,7 +435,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $string
+     * @param  string $string
      * @return int
      * @throws RangeException
      * @throws TypeError
@@ -412,7 +453,9 @@ abstract class ParagonIE_Sodium_Core_Util
                 'String must be 3 bytes or more; ' . self::strlen($string) . ' given.'
             );
         }
-        /** @var array<int, int> $unpacked */
+        /**
+ * @var array<int, int> $unpacked 
+*/
         $unpacked = unpack('V', $string . "\0");
         return (int) ($unpacked[1] & 0xffffff);
     }
@@ -422,7 +465,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $string
+     * @param  string $string
      * @return int
      * @throws RangeException
      * @throws TypeError
@@ -440,7 +483,9 @@ abstract class ParagonIE_Sodium_Core_Util
                 'String must be 4 bytes or more; ' . self::strlen($string) . ' given.'
             );
         }
-        /** @var array<int, int> $unpacked */
+        /**
+ * @var array<int, int> $unpacked 
+*/
         $unpacked = unpack('V', $string);
         return (int) ($unpacked[1] & 0xffffffff);
     }
@@ -450,7 +495,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $string
+     * @param  string $string
      * @return int
      * @throws RangeException
      * @throws SodiumException
@@ -470,12 +515,16 @@ abstract class ParagonIE_Sodium_Core_Util
             );
         }
         if (PHP_VERSION_ID >= 50603 && PHP_INT_SIZE === 8) {
-            /** @var array<int, int> $unpacked */
+            /**
+ * @var array<int, int> $unpacked 
+*/
             $unpacked = unpack('P', $string);
             return (int) $unpacked[1];
         }
 
-        /** @var int $result */
+        /**
+ * @var int $result 
+*/
         $result  = (self::chrToInt($string[0]) & 0xff);
         $result |= (self::chrToInt($string[1]) & 0xff) <<  8;
         $result |= (self::chrToInt($string[2]) & 0xff) << 16;
@@ -490,8 +539,8 @@ abstract class ParagonIE_Sodium_Core_Util
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $left
-     * @param string $right
+     * @param  string $left
+     * @param  string $right
      * @return int
      * @throws SodiumException
      * @throws TypeError
@@ -515,10 +564,10 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $a
-     * @param int $b
-     * @param int $size Limits the number of operations (useful for small,
-     *                  constant operands)
+     * @param  int $a
+     * @param  int $b
+     * @param  int $size Limits the number of operations (useful for small,
+     *                   constant operands)
      * @return int
      */
     public static function mul($a, $b, $size = 0)
@@ -528,16 +577,24 @@ abstract class ParagonIE_Sodium_Core_Util
         }
 
         static $defaultSize = null;
-        /** @var int $defaultSize */
+        /**
+ * @var int $defaultSize 
+*/
         if (!$defaultSize) {
-            /** @var int $defaultSize */
+            /**
+ * @var int $defaultSize 
+*/
             $defaultSize = (PHP_INT_SIZE << 3) - 1;
         }
         if ($size < 1) {
-            /** @var int $size */
+            /**
+ * @var int $size 
+*/
             $size = $defaultSize;
         }
-        /** @var int $size */
+        /**
+ * @var int $size 
+*/
 
         $c = 0;
 
@@ -589,21 +646,27 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int|float $num
+     * @param  int|float $num
      * @return array<int, int>
      */
     public static function numericTo64BitInteger($num)
     {
         $high = 0;
-        /** @var int $low */
+        /**
+ * @var int $low 
+*/
         $low = $num & 0xffffffff;
 
         if ((+(abs($num))) >= 1) {
             if ($num > 0) {
-                /** @var int $high */
+                /**
+ * @var int $high 
+*/
                 $high = min((+(floor($num/4294967296))), 4294967295);
             } else {
-                /** @var int $high */
+                /**
+ * @var int $high 
+*/
                 $high = ~~((+(ceil(($num - (+((~~($num)))))/4294967296))));
             }
         }
@@ -615,7 +678,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $int
+     * @param  int $int
      * @return string
      * @throws TypeError
      */
@@ -629,7 +692,9 @@ abstract class ParagonIE_Sodium_Core_Util
                 throw new TypeError('Argument 1 must be an integer, ' . gettype($int) . ' given.');
             }
         }
-        /** @var string $packed */
+        /**
+ * @var string $packed 
+*/
         $packed = pack('N', $int);
         return self::substr($packed, 1, 3);
     }
@@ -639,7 +704,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $int
+     * @param  int $int
      * @return string
      * @throws TypeError
      */
@@ -654,7 +719,9 @@ abstract class ParagonIE_Sodium_Core_Util
             }
         }
 
-        /** @var string $packed */
+        /**
+ * @var string $packed 
+*/
         $packed = pack('V', $int);
         return $packed;
     }
@@ -664,7 +731,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $int
+     * @param  int $int
      * @return string
      * @throws TypeError
      */
@@ -679,7 +746,9 @@ abstract class ParagonIE_Sodium_Core_Util
             }
         }
 
-        /** @var string $packed */
+        /**
+ * @var string $packed 
+*/
         $packed = pack('N', $int);
         return $packed;
     }
@@ -689,7 +758,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $int
+     * @param  int $int
      * @return string
      * @throws TypeError
      */
@@ -706,7 +775,9 @@ abstract class ParagonIE_Sodium_Core_Util
 
         if (PHP_INT_SIZE === 8) {
             if (PHP_VERSION_ID >= 50603) {
-                /** @var string $packed */
+                /**
+ * @var string $packed 
+*/
                 $packed = pack('P', $int);
                 return $packed;
             }
@@ -742,7 +813,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @ref mbstring.func_overload
      *
-     * @param string $str
+     * @param  string $str
      * @return int
      * @throws TypeError
      */
@@ -765,7 +836,7 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $string
+     * @param  string $string
      * @return array<int, int>
      * @throws TypeError
      */
@@ -790,9 +861,9 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @ref mbstring.func_overload
      *
-     * @param string $str
-     * @param int $start
-     * @param int $length
+     * @param  string $str
+     * @param  int    $start
+     * @param  int    $length
      * @return string
      * @throws TypeError
      */
@@ -828,8 +899,8 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $a
-     * @param string $b
+     * @param  string $a
+     * @param  string $b
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -854,8 +925,8 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $a
-     * @param string $b
+     * @param  string $a
+     * @param  string $b
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -880,8 +951,8 @@ abstract class ParagonIE_Sodium_Core_Util
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $a
-     * @param string $b
+     * @param  string $a
+     * @param  string $b
      * @return string
      * @throws TypeError
      */
@@ -914,7 +985,9 @@ abstract class ParagonIE_Sodium_Core_Util
                 &&
             ((int) (ini_get('mbstring.func_overload')) & MB_OVERLOAD_STRING);
         }
-        /** @var bool $mbstring */
+        /**
+ * @var bool $mbstring 
+*/
 
         return $mbstring;
     }

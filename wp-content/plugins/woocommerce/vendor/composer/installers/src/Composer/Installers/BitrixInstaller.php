@@ -74,7 +74,7 @@ class BitrixInstaller extends BaseInstaller
      * Duplicates search packages.
      *
      * @param string $path
-     * @param array $vars
+     * @param array  $vars
      */
     protected function checkDuplicates($path, array $vars = array())
     {
@@ -101,22 +101,24 @@ class BitrixInstaller extends BaseInstaller
 
             while (true) {
                 switch ($this->io->ask('    <info>Delete ' . $oldPath . ' [y,n,?]?</info> ', '?')) {
-                    case 'y':
-                        $fs = new Filesystem();
-                        $fs->removeDirectory($oldPath);
-                        break 2;
+                case 'y':
+                    $fs = new Filesystem();
+                    $fs->removeDirectory($oldPath);
+                    break 2;
 
-                    case 'n':
-                        break 2;
+                case 'n':
+                    break 2;
 
-                    case '?':
-                    default:
-                        $this->io->writeError(array(
-                            '    y - delete package ' . $oldPath . ' and to continue with the installation',
-                            '    n - don\'t delete and to continue with the installation',
-                        ));
-                        $this->io->writeError('    ? - print help');
-                        break;
+                case '?':
+                default:
+                    $this->io->writeError(
+                        array(
+                        '    y - delete package ' . $oldPath . ' and to continue with the installation',
+                        '    n - don\'t delete and to continue with the installation',
+                        )
+                    );
+                    $this->io->writeError('    ? - print help');
+                    break;
                 }
             }
         }

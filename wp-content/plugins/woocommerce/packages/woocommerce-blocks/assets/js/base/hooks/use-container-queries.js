@@ -18,30 +18,30 @@ import { useResizeObserver } from 'wordpress-compose';
  *
  * ```js
  * const App = () => {
- * 	const [ resizeListener, containerClassName ] = useContainerQueries();
+ *     const [ resizeListener, containerClassName ] = useContainerQueries();
  *
- * 	return (
- * 		<div className={ containerClassName }>
- * 			{ resizeListener }
- * 			Your content here
- * 		</div>
- * 	);
+ *     return (
+ *         <div className={ containerClassName }>
+ *             { resizeListener }
+ *             Your content here
+ *         </div>
+ *     );
  * };
  * ```
  */
 export const useContainerQueries = () => {
-	const [ resizeListener, { width } ] = useResizeObserver();
+    const [ resizeListener, { width } ] = useResizeObserver();
 
-	let className = '';
-	if ( width > 700 ) {
-		className = 'is-large';
-	} else if ( width > 520 ) {
-		className = 'is-medium';
-	} else if ( width > 400 ) {
-		className = 'is-small';
-	} else if ( width ) {
-		className = 'is-mobile';
-	}
+    let className = '';
+    if (width > 700 ) {
+        className = 'is-large';
+    } else if (width > 520 ) {
+        className = 'is-medium';
+    } else if (width > 400 ) {
+        className = 'is-small';
+    } else if (width ) {
+        className = 'is-mobile';
+    }
 
-	return [ resizeListener, className ];
+    return [ resizeListener, className ];
 };

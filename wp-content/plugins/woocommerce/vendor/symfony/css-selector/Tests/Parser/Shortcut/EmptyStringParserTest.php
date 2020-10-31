@@ -26,7 +26,9 @@ class EmptyStringParserTest extends TestCase
         $selectors = $parser->parse('');
         $this->assertCount(1, $selectors);
 
-        /** @var SelectorNode $selector */
+        /**
+ * @var SelectorNode $selector 
+*/
         $selector = $selectors[0];
         $this->assertEquals('Element[*]', (string) $selector->getTree());
 

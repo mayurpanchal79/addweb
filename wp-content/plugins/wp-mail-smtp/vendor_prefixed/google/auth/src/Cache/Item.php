@@ -116,7 +116,7 @@ final class Item implements \WPMailSMTP\Vendor\Psr\Cache\CacheItemInterface
     /**
      * Handles an error.
      *
-     * @param string $error
+     * @param  string $error
      * @throws \TypeError
      */
     private function handleError($error)
@@ -129,7 +129,7 @@ final class Item implements \WPMailSMTP\Vendor\Psr\Cache\CacheItemInterface
     /**
      * Determines if an expiration is valid based on the rules defined by PSR6.
      *
-     * @param mixed $expiration
+     * @param  mixed $expiration
      * @return bool
      */
     private function isValidExpiration($expiration)

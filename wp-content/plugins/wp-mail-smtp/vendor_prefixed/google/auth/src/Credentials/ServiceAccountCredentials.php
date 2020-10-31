@@ -83,13 +83,14 @@ class ServiceAccountCredentials extends \WPMailSMTP\Vendor\Google\Auth\Credentia
     /**
      * Create a new ServiceAccountCredentials.
      *
-     * @param string|array $scope the scope of the access request, expressed
-     *   either as an Array or as a space-delimited String.
-     * @param string|array $jsonKey JSON credential file path or JSON credentials
-     *   as an associative array
-     * @param string $sub an email address account to impersonate, in situations when
-     *   the service account has been delegated domain wide access.
-     * @param string $targetAudience The audience for the ID token.
+     * @param string|array $scope          the scope of the access request, expressed
+     *                                     either as an Array or as a space-delimited
+     *                                     String.
+     * @param string|array $jsonKey        JSON credential file path or JSON credentials
+     *                                     as an associative array
+     * @param string       $sub            an email address account to impersonate, in situations when
+     *                                     the service account has been delegated domain wide access.
+     * @param string       $targetAudience The audience for the ID token.
      */
     public function __construct($scope, $jsonKey, $sub = null, $targetAudience = null)
     {
@@ -159,7 +160,7 @@ class ServiceAccountCredentials extends \WPMailSMTP\Vendor\Google\Auth\Credentia
      *
      * Returns null if the project ID does not exist in the keyfile.
      *
-     * @param callable $httpHandler Not used by this credentials type.
+     * @param  callable $httpHandler Not used by this credentials type.
      * @return string|null
      */
     public function getProjectId(callable $httpHandler = null)
@@ -169,9 +170,9 @@ class ServiceAccountCredentials extends \WPMailSMTP\Vendor\Google\Auth\Credentia
     /**
      * Updates metadata with the authorization token.
      *
-     * @param array $metadata metadata hashmap
-     * @param string $authUri optional auth uri
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  array    $metadata    metadata hashmap
+     * @param  string   $authUri     optional auth uri
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array updated metadata hashmap
      */
     public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null)
@@ -192,7 +193,7 @@ class ServiceAccountCredentials extends \WPMailSMTP\Vendor\Google\Auth\Credentia
     }
     /**
      * @param string $sub an email address account to impersonate, in situations when
-     *   the service account has been delegated domain wide access.
+     *                    the service account has been delegated domain wide access.
      */
     public function setSub($sub)
     {
@@ -203,7 +204,7 @@ class ServiceAccountCredentials extends \WPMailSMTP\Vendor\Google\Auth\Credentia
      *
      * In this case, it returns the keyfile's client_email key.
      *
-     * @param callable $httpHandler Not used by this credentials type.
+     * @param  callable $httpHandler Not used by this credentials type.
      * @return string
      */
     public function getClientName(callable $httpHandler = null)

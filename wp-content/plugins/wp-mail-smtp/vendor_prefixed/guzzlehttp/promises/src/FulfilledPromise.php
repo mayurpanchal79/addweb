@@ -27,17 +27,19 @@ class FulfilledPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromiseI
         $queue = \WPMailSMTP\Vendor\GuzzleHttp\Promise\Utils::queue();
         $p = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise([$queue, 'run']);
         $value = $this->value;
-        $queue->add(static function () use($p, $value, $onFulfilled) {
-            if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::pending($p)) {
-                try {
-                    $p->resolve($onFulfilled($value));
-                } catch (\Throwable $e) {
-                    $p->reject($e);
-                } catch (\Exception $e) {
-                    $p->reject($e);
+        $queue->add(
+            static function () use ($p, $value, $onFulfilled) {
+                if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::pending($p)) {
+                    try {
+                        $p->resolve($onFulfilled($value));
+                    } catch (\Throwable $e) {
+                        $p->reject($e);
+                    } catch (\Exception $e) {
+                        $p->reject($e);
+                    }
                 }
             }
-        });
+        );
         return $p;
     }
     public function otherwise(callable $onRejected)

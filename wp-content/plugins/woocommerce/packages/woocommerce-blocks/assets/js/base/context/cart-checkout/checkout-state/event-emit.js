@@ -2,18 +2,18 @@
  * Internal dependencies
  */
 import {
-	emitterCallback,
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
+    emitterCallback,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
 } from '../../shared/event-emit';
 
 const EMIT_TYPES = {
-	CHECKOUT_BEFORE_PROCESSING: 'checkout_before_processing',
-	CHECKOUT_AFTER_PROCESSING_WITH_SUCCESS:
-		'checkout_after_processing_with_success',
-	CHECKOUT_AFTER_PROCESSING_WITH_ERROR:
-		'checkout_after_processing_with_error',
+    CHECKOUT_BEFORE_PROCESSING: 'checkout_before_processing',
+    CHECKOUT_AFTER_PROCESSING_WITH_SUCCESS:
+    'checkout_after_processing_with_success',
+    CHECKOUT_AFTER_PROCESSING_WITH_ERROR:
+    'checkout_after_processing_with_error',
 };
 
 /**
@@ -30,24 +30,24 @@ const EMIT_TYPES = {
  * @return {Object} An object with the checkout emmitter registration
  */
 const emitterSubscribers = ( dispatcher ) => ( {
-	onCheckoutAfterProcessingWithSuccess: emitterCallback(
-		EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_SUCCESS,
-		dispatcher
-	),
-	onCheckoutAfterProcessingWithError: emitterCallback(
-		EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_ERROR,
-		dispatcher
-	),
-	onCheckoutBeforeProcessing: emitterCallback(
-		EMIT_TYPES.CHECKOUT_BEFORE_PROCESSING,
-		dispatcher
-	),
+    onCheckoutAfterProcessingWithSuccess: emitterCallback(
+        EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_SUCCESS,
+        dispatcher
+    ),
+onCheckoutAfterProcessingWithError: emitterCallback(
+    EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_ERROR,
+    dispatcher
+),
+onCheckoutBeforeProcessing: emitterCallback(
+    EMIT_TYPES.CHECKOUT_BEFORE_PROCESSING,
+    dispatcher
+),
 } );
 
 export {
-	EMIT_TYPES,
-	emitterSubscribers,
-	reducer,
-	emitEvent,
-	emitEventWithAbort,
+    EMIT_TYPES,
+    emitterSubscribers,
+    reducer,
+    emitEvent,
+    emitEventWithAbort,
 };

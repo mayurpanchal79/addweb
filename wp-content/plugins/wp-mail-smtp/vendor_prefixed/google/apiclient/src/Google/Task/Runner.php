@@ -82,10 +82,10 @@ class Google_Task_Runner
     /**
      * Creates a new task runner with exponential backoff support.
      *
-     * @param array $config The task runner config
-     * @param string $name The name of the current task (used for logging)
-     * @param callable $action The task to run and possibly retry
-     * @param array $arguments The task arguments
+     * @param  array    $config    The task runner config
+     * @param  string   $name      The name of the current task (used for logging)
+     * @param  callable $action    The task to run and possibly retry
+     * @param  array    $arguments The task arguments
      * @throws Google_Task_Exception when misconfigured
      */
     public function __construct($config, $name, $action, array $arguments = array())

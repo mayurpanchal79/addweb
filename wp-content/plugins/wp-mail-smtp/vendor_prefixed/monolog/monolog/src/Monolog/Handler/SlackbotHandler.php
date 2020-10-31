@@ -24,25 +24,28 @@ class SlackbotHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcess
 {
     /**
      * The slug of the Slack team
+     *
      * @var string
      */
     private $slackTeam;
     /**
      * Slackbot token
+     *
      * @var string
      */
     private $token;
     /**
      * Slack channel name
+     *
      * @var string
      */
     private $channel;
     /**
-     * @param  string $slackTeam Slack team slug
-     * @param  string $token     Slackbot token
-     * @param  string $channel   Slack channel (encoded ID or name)
-     * @param  int    $level     The minimum logging level at which this handler will be triggered
-     * @param  bool   $bubble    Whether the messages that are handled can bubble up the stack or not
+     * @param string $slackTeam Slack team slug
+     * @param string $token     Slackbot token
+     * @param string $channel   Slack channel (encoded ID or name)
+     * @param int    $level     The minimum logging level at which this handler will be triggered
+     * @param bool   $bubble    Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($slackTeam, $token, $channel, $level = \WPMailSMTP\Vendor\Monolog\Logger::CRITICAL, $bubble = \true)
     {

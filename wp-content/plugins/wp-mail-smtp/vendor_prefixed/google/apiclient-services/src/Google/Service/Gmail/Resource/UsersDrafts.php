@@ -30,10 +30,10 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
     /**
      * Creates a new draft with the `DRAFT` label. (drafts.create)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Draft $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Draft $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Draft
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Draft $postBody, $optParams = array())
@@ -46,10 +46,10 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
      * Immediately and permanently deletes the specified draft. Does not simply
      * trash it. (drafts.delete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the draft to delete.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the draft to delete.
+     * @param array  $optParams Optional parameters.
      */
     public function delete($userId, $id, $optParams = array())
     {
@@ -60,13 +60,13 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
     /**
      * Gets the specified draft. (drafts.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the draft to retrieve.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the draft to retrieve.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string format The format to return the draft in.
-     * @return Google_Service_Gmail_Draft
+     * @return    Google_Service_Gmail_Draft
      */
     public function get($userId, $id, $optParams = array())
     {
@@ -77,9 +77,9 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
     /**
      * Lists the drafts in the user's mailbox. (drafts.listUsersDrafts)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param bool includeSpamTrash Include drafts from `SPAM` and `TRASH` in
      * the results.
@@ -89,7 +89,7 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
      * @opt_param string pageToken Page token to retrieve a specific page of results
      * in the list.
      * @opt_param string maxResults Maximum number of drafts to return.
-     * @return Google_Service_Gmail_ListDraftsResponse
+     * @return    Google_Service_Gmail_ListDraftsResponse
      */
     public function listUsersDrafts($userId, $optParams = array())
     {
@@ -101,10 +101,10 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
      * Sends the specified, existing draft to the recipients in the `To`, `Cc`, and
      * `Bcc` headers. (drafts.send)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Draft $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Draft $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Message
      */
     public function send($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Draft $postBody, $optParams = array())
@@ -116,11 +116,11 @@ class Google_Service_Gmail_Resource_UsersDrafts extends \WPMailSMTP\Vendor\Googl
     /**
      * Replaces a draft's content. (drafts.update)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the draft to update.
-     * @param Google_Service_Gmail_Draft $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  string                     $id        The ID of the draft to update.
+     * @param  Google_Service_Gmail_Draft $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Draft
      */
     public function update($userId, $id, \WPMailSMTP\Vendor\Google_Service_Gmail_Draft $postBody, $optParams = array())

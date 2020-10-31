@@ -13,12 +13,12 @@ import { ACTION_TYPES as types } from './action-types';
  * @return {Object} The action object.
  */
 export const setQueryValue = ( context, queryKey, value ) => {
-	return {
-		type: types.SET_QUERY_KEY_VALUE,
-		context,
-		queryKey,
-		value,
-	};
+    return {
+        type: types.SET_QUERY_KEY_VALUE,
+        context,
+        queryKey,
+        value,
+    };
 };
 
 /**
@@ -30,9 +30,9 @@ export const setQueryValue = ( context, queryKey, value ) => {
  * @return {Object} The action object.
  */
 export const setValueForQueryContext = ( context, value ) => {
-	return {
-		type: types.SET_QUERY_CONTEXT_VALUE,
-		context,
-		value,
-	};
+    return {
+        type: types.SET_QUERY_CONTEXT_VALUE,
+        context,
+        value,
+    };
 };

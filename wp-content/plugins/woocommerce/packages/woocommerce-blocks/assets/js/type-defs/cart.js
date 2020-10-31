@@ -117,7 +117,6 @@
  *                                                     applicable (in subunits).
  * @property {CartItemPriceRange|null} price_range     Price range, if
  *                                                     applicable.
- *
  */
 
 /**

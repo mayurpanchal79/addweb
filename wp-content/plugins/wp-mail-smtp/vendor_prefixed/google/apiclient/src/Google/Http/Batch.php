@@ -33,11 +33,17 @@ class Google_Http_Batch
 {
     const BATCH_PATH = 'batch';
     private static $CONNECTION_ESTABLISHED_HEADERS = array("HTTP/1.0 200 Connection established\r\n\r\n", "HTTP/1.1 200 Connection established\r\n\r\n");
-    /** @var string Multipart Boundary. */
+    /**
+     * @var string Multipart Boundary. 
+     */
     private $boundary;
-    /** @var array service requests to be executed. */
+    /**
+     * @var array service requests to be executed. 
+     */
     private $requests = array();
-    /** @var Google_Client */
+    /**
+     * @var Google_Client 
+     */
     private $client;
     private $rootUrl;
     private $batchPath;
@@ -71,7 +77,9 @@ Content-ID: %s
 
 
 EOF;
-        /** @var Google_Http_Request $req */
+        /**
+ * @var Google_Http_Request $req 
+*/
         foreach ($this->requests as $key => $request) {
             $firstLine = \sprintf('%s %s HTTP/%s', $request->getMethod(), $request->getRequestTarget(), $request->getProtocolVersion());
             $content = (string) $request->getBody();
@@ -153,8 +161,8 @@ EOF;
     /**
      * Used by the IO lib and also the batch processing.
      *
-     * @param $respData
-     * @param $headerSize
+     * @param  $respData
+     * @param  $headerSize
      * @return array
      */
     private function parseHttpResponse($respData, $headerSize)

@@ -31,12 +31,12 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAsSmimeInfo extends \WPMail
      * Deletes the specified S/MIME config for the specified send-as alias.
      * (smimeInfo.delete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string $userId      The user's email address. The special value `me` can be
+     *                            used to indicate the authenticated user.
      * @param string $sendAsEmail The email address that appears in the "From:"
-     * header for mail sent using this alias.
-     * @param string $id The immutable ID for the SmimeInfo.
-     * @param array $optParams Optional parameters.
+     *                            header for mail sent using this alias.
+     * @param string $id          The immutable ID for the SmimeInfo.
+     * @param array  $optParams   Optional parameters.
      */
     public function delete($userId, $sendAsEmail, $id, $optParams = array())
     {
@@ -48,12 +48,12 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAsSmimeInfo extends \WPMail
      * Gets the specified S/MIME config for the specified send-as alias.
      * (smimeInfo.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The email address that appears in the "From:"
-     * header for mail sent using this alias.
-     * @param string $id The immutable ID for the SmimeInfo.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId      The user's email address. The special value `me` can be
+     *                             used to indicate the authenticated user.
+     * @param  string $sendAsEmail The email address that appears in the "From:"
+     *                             header for mail sent using this alias.
+     * @param  string $id          The immutable ID for the SmimeInfo.
+     * @param  array  $optParams   Optional parameters.
      * @return Google_Service_Gmail_SmimeInfo
      */
     public function get($userId, $sendAsEmail, $id, $optParams = array())
@@ -66,12 +66,12 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAsSmimeInfo extends \WPMail
      * Insert (upload) the given S/MIME config for the specified send-as alias. Note
      * that pkcs12 format is required for the key. (smimeInfo.insert)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The email address that appears in the "From:"
-     * header for mail sent using this alias.
-     * @param Google_Service_Gmail_SmimeInfo $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                         $userId      The user's email address. The special value `me` can be
+     *                                                     used to indicate the authenticated user.
+     * @param  string                         $sendAsEmail The email address that appears in the "From:"
+     *                                                     header for mail sent using this alias.
+     * @param  Google_Service_Gmail_SmimeInfo $postBody
+     * @param  array                          $optParams   Optional parameters.
      * @return Google_Service_Gmail_SmimeInfo
      */
     public function insert($userId, $sendAsEmail, \WPMailSMTP\Vendor\Google_Service_Gmail_SmimeInfo $postBody, $optParams = array())
@@ -84,11 +84,11 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAsSmimeInfo extends \WPMail
      * Lists S/MIME configs for the specified send-as alias.
      * (smimeInfo.listUsersSettingsSendAsSmimeInfo)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $sendAsEmail The email address that appears in the "From:"
-     * header for mail sent using this alias.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId      The user's email address. The special value `me` can be
+     *                             used to indicate the authenticated user.
+     * @param  string $sendAsEmail The email address that appears in the "From:"
+     *                             header for mail sent using this alias.
+     * @param  array  $optParams   Optional parameters.
      * @return Google_Service_Gmail_ListSmimeInfoResponse
      */
     public function listUsersSettingsSendAsSmimeInfo($userId, $sendAsEmail, $optParams = array())
@@ -101,12 +101,12 @@ class Google_Service_Gmail_Resource_UsersSettingsSendAsSmimeInfo extends \WPMail
      * Sets the default S/MIME config for the specified send-as alias.
      * (smimeInfo.setDefault)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string $userId      The user's email address. The special value `me` can be
+     *                            used to indicate the authenticated user.
      * @param string $sendAsEmail The email address that appears in the "From:"
-     * header for mail sent using this alias.
-     * @param string $id The immutable ID for the SmimeInfo.
-     * @param array $optParams Optional parameters.
+     *                            header for mail sent using this alias.
+     * @param string $id          The immutable ID for the SmimeInfo.
+     * @param array  $optParams   Optional parameters.
      */
     public function setDefault($userId, $sendAsEmail, $id, $optParams = array())
     {

@@ -19,17 +19,19 @@ use WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface;
  */
 class Pool implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInterface
 {
-    /** @var EachPromise */
+    /**
+     * @var EachPromise 
+     */
     private $each;
     /**
      * @param ClientInterface $client   Client used to send the requests.
      * @param array|\Iterator $requests Requests or functions that return
      *                                  requests to send concurrently.
      * @param array           $config   Associative array of options
-     *     - concurrency: (int) Maximum number of requests to send concurrently
-     *     - options: Array of request options to apply to each request.
-     *     - fulfilled: (callable) Function to invoke when a request completes.
-     *     - rejected: (callable) Function to invoke when a request is rejected.
+     *                                  - concurrency: (int) Maximum number of requests to send concurrently
+     *                                  - options: Array of request options to apply to each request.
+     *                                  - fulfilled: (callable) Function to invoke when a request completes.
+     *                                  - rejected: (callable) Function to invoke when a request is rejected.
      */
     public function __construct(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface $client, $requests, array $config = [])
     {
@@ -46,7 +48,7 @@ class Pool implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInterface
             $opts = [];
         }
         $iterable = \WPMailSMTP\Vendor\GuzzleHttp\Promise\iter_for($requests);
-        $requests = function () use($iterable, $client, $opts) {
+        $requests = function () use ($iterable, $client, $opts) {
             foreach ($iterable as $key => $rfn) {
                 if ($rfn instanceof \WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface) {
                     (yield $key => $client->sendAsync($rfn, $opts));
@@ -103,12 +105,12 @@ class Pool implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInterface
     private static function cmpCallback(array &$options, $name, array &$results)
     {
         if (!isset($options[$name])) {
-            $options[$name] = function ($v, $k) use(&$results) {
+            $options[$name] = function ($v, $k) use (&$results) {
                 $results[$k] = $v;
             };
         } else {
             $currentFn = $options[$name];
-            $options[$name] = function ($v, $k) use(&$results, $currentFn) {
+            $options[$name] = function ($v, $k) use (&$results, $currentFn) {
                 $currentFn($v, $k);
                 $results[$k] = $v;
             };

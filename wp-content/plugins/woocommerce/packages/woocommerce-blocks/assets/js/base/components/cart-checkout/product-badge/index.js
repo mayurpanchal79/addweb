@@ -10,20 +10,20 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 const ProductBadge = ( { children, className } ) => {
-	return (
-		<div
-			className={ classNames(
-				'wc-block-components-product-badge',
-				className
-			) }
-		>
-			{ children }
-		</div>
-	);
+    return (
+    <div
+    className={ classNames(
+        'wc-block-components-product-badge',
+        className
+    ) }
+    >
+    { children }
+    </div>
+    );
 };
 
 ProductBadge.propTypes = {
-	className: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export default ProductBadge;

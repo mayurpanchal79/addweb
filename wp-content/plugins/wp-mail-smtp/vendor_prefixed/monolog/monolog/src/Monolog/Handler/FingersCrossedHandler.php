@@ -138,9 +138,11 @@ class FingersCrossedHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractH
     {
         if (null !== $this->passthruLevel) {
             $level = $this->passthruLevel;
-            $this->buffer = \array_filter($this->buffer, function ($record) use($level) {
-                return $record['level'] >= $level;
-            });
+            $this->buffer = \array_filter(
+                $this->buffer, function ($record) use ($level) {
+                    return $record['level'] >= $level;
+                }
+            );
             if (\count($this->buffer) > 0) {
                 $this->getHandler(\end($this->buffer) ?: null)->handleBatch($this->buffer);
             }

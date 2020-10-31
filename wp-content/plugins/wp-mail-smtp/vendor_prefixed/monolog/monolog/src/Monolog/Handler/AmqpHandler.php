@@ -78,7 +78,7 @@ class AmqpHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingH
     /**
      * Gets the routing key for the AMQP exchange
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     protected function getRoutingKey(array $record)
@@ -92,7 +92,7 @@ class AmqpHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractProcessingH
         return \strtolower($routingKey);
     }
     /**
-     * @param  string      $data
+     * @param  string $data
      * @return AMQPMessage
      */
     private function createAmqpMessage($data)

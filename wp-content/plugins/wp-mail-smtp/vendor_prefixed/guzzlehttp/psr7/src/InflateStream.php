@@ -29,8 +29,8 @@ class InflateStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterfa
         $this->stream = $stream->isSeekable() ? new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream($resource) : new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\NoSeekStream(new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Stream($resource));
     }
     /**
-     * @param StreamInterface $stream
-     * @param $header
+     * @param  StreamInterface $stream
+     * @param  $header
      * @return int
      */
     private function getLengthOfPossibleFilenameHeader(\WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface $stream, $header)

@@ -32,7 +32,7 @@ class InsecureCredentials implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTok
     /**
      * Fetches the auth token. In this case it returns an empty string.
      *
-     * @param callable $httpHandler
+     * @param  callable $httpHandler
      * @return array A set of auth related metadata, containing the following
      * keys:
      *   - access_token (string)

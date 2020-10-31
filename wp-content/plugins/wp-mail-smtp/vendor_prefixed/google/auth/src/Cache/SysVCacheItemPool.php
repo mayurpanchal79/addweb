@@ -32,7 +32,9 @@ class SysVCacheItemPool implements \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInt
     const DEFAULT_PROJ = 'A';
     const DEFAULT_MEMSIZE = 10000;
     const DEFAULT_PERM = 0600;
-    /** @var int */
+    /**
+     * @var int 
+     */
     private $sysvKey;
     /**
      * @var CacheItemInterface[]
@@ -53,15 +55,15 @@ class SysVCacheItemPool implements \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInt
     /**
      * Create a SystemV shared memory based CacheItemPool.
      *
-     * @param array $options [optional] Configuration options.
-     * @param int $options.variableKey The variable key for getting the data from
-     *        the shared memory. **Defaults to** 1.
-     * @param $options.proj string The project identifier for ftok. This needs to
-     *        be a one character string. **Defaults to** 'A'.
-     * @param $options.memsize int The memory size in bytes for shm_attach.
-     *        **Defaults to** 10000.
-     * @param $options.perm int The permission for shm_attach. **Defaults to**
-     *        0600.
+     * @param array $options             [optional] Configuration options.
+     * @param int   $options.variableKey The variable key for getting the data from
+     *                                   the shared memory. **Defaults to** 1.
+     * @param $options.proj        string The project identifier for ftok. This needs to
+     *                             be a one character string. **Defaults to** 'A'.
+     * @param $options.memsize     int The memory size in bytes for shm_attach.
+     *                             **Defaults to** 10000.
+     * @param $options.perm        int The permission for shm_attach. **Defaults to**
+     *                             0600.
      */
     public function __construct($options = [])
     {

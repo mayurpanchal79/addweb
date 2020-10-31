@@ -31,10 +31,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * Deletes many messages by message ID. Provides no guarantees that messages
      * were not already deleted or even existed at all. (messages.batchDelete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string                                          $userId    The user's email address. The special value `me` can be
+     *                                                                   used to indicate the authenticated user.
      * @param Google_Service_Gmail_BatchDeleteMessagesRequest $postBody
-     * @param array $optParams Optional parameters.
+     * @param array                                           $optParams Optional parameters.
      */
     public function batchDelete($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_BatchDeleteMessagesRequest $postBody, $optParams = array())
     {
@@ -45,10 +45,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Modifies the labels on the specified messages. (messages.batchModify)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string                                          $userId    The user's email address. The special value `me` can be
+     *                                                                   used to indicate the authenticated user.
      * @param Google_Service_Gmail_BatchModifyMessagesRequest $postBody
-     * @param array $optParams Optional parameters.
+     * @param array                                           $optParams Optional parameters.
      */
     public function batchModify($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_BatchModifyMessagesRequest $postBody, $optParams = array())
     {
@@ -60,10 +60,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * Immediately and permanently deletes the specified message. This operation
      * cannot be undone. Prefer `messages.trash` instead. (messages.delete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the message to delete.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the message to delete.
+     * @param array  $optParams Optional parameters.
      */
     public function delete($userId, $id, $optParams = array())
     {
@@ -74,15 +74,15 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Gets the specified message. (messages.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the message to retrieve.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the message to retrieve.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string metadataHeaders When given and format is `METADATA`, only
      * include headers specified.
      * @opt_param string format The format to return the message in.
-     * @return Google_Service_Gmail_Message
+     * @return    Google_Service_Gmail_Message
      */
     public function get($userId, $id, $optParams = array())
     {
@@ -96,10 +96,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * message. Note: This function doesn't trigger forwarding rules or filters set
      * up by the user. (messages.import)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string                       $userId    The user's email address. The special value `me` can be
+     *                                                used to indicate the authenticated user.
      * @param Google_Service_Gmail_Message $postBody
-     * @param array $optParams Optional parameters.
+     * @param array                        $optParams Optional parameters.
      *
      * @opt_param bool processForCalendar Process calendar invites in the email and
      * add any extracted meetings to the Google Calendar for this user.
@@ -110,7 +110,7 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * accounts.
      * @opt_param bool neverMarkSpam Ignore the Gmail spam classifier decision and
      * never mark this email as SPAM in the mailbox.
-     * @return Google_Service_Gmail_Message
+     * @return    Google_Service_Gmail_Message
      */
     public function import($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Message $postBody, $optParams = array())
     {
@@ -123,17 +123,17 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * APPEND`, bypassing most scanning and classification. Does not send a message.
      * (messages.insert)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
+     * @param string                       $userId    The user's email address. The special value `me` can be
+     *                                                used to indicate the authenticated user.
      * @param Google_Service_Gmail_Message $postBody
-     * @param array $optParams Optional parameters.
+     * @param array                        $optParams Optional parameters.
      *
      * @opt_param string internalDateSource Source for Gmail's internal date of the
      * message.
      * @opt_param bool deleted Mark the email as permanently deleted (not TRASH) and
      * only visible in Google Vault to a Vault administrator. Only used for G Suite
      * accounts.
-     * @return Google_Service_Gmail_Message
+     * @return    Google_Service_Gmail_Message
      */
     public function insert($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Message $postBody, $optParams = array())
     {
@@ -144,9 +144,9 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Lists the messages in the user's mailbox. (messages.listUsersMessages)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param array  $optParams Optional parameters.
      *
      * @opt_param string maxResults Maximum number of messages to return.
      * @opt_param string q Only return messages matching the specified query.
@@ -159,7 +159,7 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * in the list.
      * @opt_param bool includeSpamTrash Include messages from `SPAM` and `TRASH` in
      * the results.
-     * @return Google_Service_Gmail_ListMessagesResponse
+     * @return    Google_Service_Gmail_ListMessagesResponse
      */
     public function listUsersMessages($userId, $optParams = array())
     {
@@ -170,11 +170,11 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Modifies the labels on the specified message. (messages.modify)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the message to modify.
-     * @param Google_Service_Gmail_ModifyMessageRequest $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                                    $userId    The user's email address. The special value `me` can be
+     *                                                              used to indicate the authenticated user.
+     * @param  string                                    $id        The ID of the message to modify.
+     * @param  Google_Service_Gmail_ModifyMessageRequest $postBody
+     * @param  array                                     $optParams Optional parameters.
      * @return Google_Service_Gmail_Message
      */
     public function modify($userId, $id, \WPMailSMTP\Vendor\Google_Service_Gmail_ModifyMessageRequest $postBody, $optParams = array())
@@ -187,10 +187,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
      * Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc`
      * headers. (messages.send)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Message $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                       $userId    The user's email address. The special value `me` can be
+     *                                                 used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Message $postBody
+     * @param  array                        $optParams Optional parameters.
      * @return Google_Service_Gmail_Message
      */
     public function send($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Message $postBody, $optParams = array())
@@ -202,10 +202,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Moves the specified message to the trash. (messages.trash)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the message to Trash.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the message to Trash.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Message
      */
     public function trash($userId, $id, $optParams = array())
@@ -217,10 +217,10 @@ class Google_Service_Gmail_Resource_UsersMessages extends \WPMailSMTP\Vendor\Goo
     /**
      * Removes the specified message from the trash. (messages.untrash)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the message to remove from Trash.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the message to remove from Trash.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Message
      */
     public function untrash($userId, $id, $optParams = array())

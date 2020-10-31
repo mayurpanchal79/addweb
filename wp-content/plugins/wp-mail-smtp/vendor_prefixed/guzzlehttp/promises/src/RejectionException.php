@@ -9,7 +9,9 @@ namespace WPMailSMTP\Vendor\GuzzleHttp\Promise;
  */
 class RejectionException extends \RuntimeException
 {
-    /** @var mixed Rejection reason. */
+    /**
+     * @var mixed Rejection reason. 
+     */
     private $reason;
     /**
      * @param mixed  $reason      Rejection reason.

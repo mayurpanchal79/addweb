@@ -175,9 +175,9 @@ function try_fopen($filename, $mode)
  * Copy the contents of a stream into a string until the given number of
  * bytes have been read.
  *
- * @param StreamInterface $stream Stream to read
- * @param int             $maxLen Maximum number of bytes to read. Pass -1
- *                                to read the entire stream.
+ * @param  StreamInterface $stream Stream to read
+ * @param  int             $maxLen Maximum number of bytes to read. Pass -1
+ *                                 to read the entire stream.
  * @return string
  *
  * @throws \RuntimeException on error.
@@ -291,10 +291,10 @@ function parse_query($str, $urlEncoding = \true)
  * string. This function does not modify the provided keys when an array is
  * encountered (like `http_build_query()` would).
  *
- * @param array     $params   Query string parameters.
- * @param int|false $encoding Set to false to not encode, PHP_QUERY_RFC3986
- *                            to encode using RFC3986, or PHP_QUERY_RFC1738
- *                            to encode using RFC1738.
+ * @param  array     $params   Query string parameters.
+ * @param  int|false $encoding Set to false to not encode, PHP_QUERY_RFC3986
+ *                             to encode using RFC3986, or PHP_QUERY_RFC1738
+ *                             to encode using RFC1738.
  * @return string
  *
  * @deprecated build_query will be removed in guzzlehttp/psr7:2.0. Use Query::build instead.
@@ -323,7 +323,7 @@ function mimetype_from_filename($filename)
  *
  * @return string|null
  *
- * @link http://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/mime.types
+ * @link       http://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/mime.types
  * @deprecated mimetype_from_extension will be removed in guzzlehttp/psr7:2.0. Use MimeType::fromExtension instead.
  */
 function mimetype_from_extension($extension)

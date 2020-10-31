@@ -142,8 +142,8 @@ class ParagonIE_Sodium_Compat
      *
      * This mutates $val.
      *
-     * @param string $val
-     * @param string $addv
+     * @param  string $val
+     * @param  string $addv
      * @return void
      * @throws SodiumException
      */
@@ -167,9 +167,9 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $encoded
-     * @param int $variant
-     * @param string $ignore
+     * @param  string $encoded
+     * @param  int    $variant
+     * @param  string $ignore
      * @return string
      * @throws SodiumException
      */
@@ -178,7 +178,9 @@ class ParagonIE_Sodium_Compat
         /* Type checks: */
         ParagonIE_Sodium_Core_Util::declareScalarType($encoded, 'string', 1);
 
-        /** @var string $encoded */
+        /**
+ * @var string $encoded 
+*/
         $encoded = (string) $encoded;
         if (ParagonIE_Sodium_Core_Util::strlen($encoded) === 0) {
             return '';
@@ -191,16 +193,16 @@ class ParagonIE_Sodium_Compat
 
         try {
             switch ($variant) {
-                case self::BASE64_VARIANT_ORIGINAL:
-                    return ParagonIE_Sodium_Core_Base64_Original::decode($encoded, true);
-                case self::BASE64_VARIANT_ORIGINAL_NO_PADDING:
-                    return ParagonIE_Sodium_Core_Base64_Original::decode($encoded, false);
-                case self::BASE64_VARIANT_URLSAFE:
-                    return ParagonIE_Sodium_Core_Base64_UrlSafe::decode($encoded, true);
-                case self::BASE64_VARIANT_URLSAFE_NO_PADDING:
-                    return ParagonIE_Sodium_Core_Base64_UrlSafe::decode($encoded, false);
-                default:
-                    throw new SodiumException('invalid base64 variant identifier');
+            case self::BASE64_VARIANT_ORIGINAL:
+                return ParagonIE_Sodium_Core_Base64_Original::decode($encoded, true);
+            case self::BASE64_VARIANT_ORIGINAL_NO_PADDING:
+                return ParagonIE_Sodium_Core_Base64_Original::decode($encoded, false);
+            case self::BASE64_VARIANT_URLSAFE:
+                return ParagonIE_Sodium_Core_Base64_UrlSafe::decode($encoded, true);
+            case self::BASE64_VARIANT_URLSAFE_NO_PADDING:
+                return ParagonIE_Sodium_Core_Base64_UrlSafe::decode($encoded, false);
+            default:
+                throw new SodiumException('invalid base64 variant identifier');
             }
         } catch (Exception $ex) {
             if ($ex instanceof SodiumException) {
@@ -211,8 +213,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $decoded
-     * @param int $variant
+     * @param  string $decoded
+     * @param  int    $variant
      * @return string
      * @throws SodiumException
      */
@@ -220,33 +222,35 @@ class ParagonIE_Sodium_Compat
     {
         /* Type checks: */
         ParagonIE_Sodium_Core_Util::declareScalarType($decoded, 'string', 1);
-        /** @var string $decoded */
+        /**
+ * @var string $decoded 
+*/
         $decoded = (string) $decoded;
         if (ParagonIE_Sodium_Core_Util::strlen($decoded) === 0) {
             return '';
         }
 
         switch ($variant) {
-            case self::BASE64_VARIANT_ORIGINAL:
-                return ParagonIE_Sodium_Core_Base64_Original::encode($decoded);
-            case self::BASE64_VARIANT_ORIGINAL_NO_PADDING:
-                return ParagonIE_Sodium_Core_Base64_Original::encodeUnpadded($decoded);
-            case self::BASE64_VARIANT_URLSAFE:
-                return ParagonIE_Sodium_Core_Base64_UrlSafe::encode($decoded);
-            case self::BASE64_VARIANT_URLSAFE_NO_PADDING:
-                return ParagonIE_Sodium_Core_Base64_UrlSafe::encodeUnpadded($decoded);
-            default:
-                throw new SodiumException('invalid base64 variant identifier');
+        case self::BASE64_VARIANT_ORIGINAL:
+            return ParagonIE_Sodium_Core_Base64_Original::encode($decoded);
+        case self::BASE64_VARIANT_ORIGINAL_NO_PADDING:
+            return ParagonIE_Sodium_Core_Base64_Original::encodeUnpadded($decoded);
+        case self::BASE64_VARIANT_URLSAFE:
+            return ParagonIE_Sodium_Core_Base64_UrlSafe::encode($decoded);
+        case self::BASE64_VARIANT_URLSAFE_NO_PADDING:
+            return ParagonIE_Sodium_Core_Base64_UrlSafe::encodeUnpadded($decoded);
+        default:
+            throw new SodiumException('invalid base64 variant identifier');
         }
     }
 
     /**
      * Cache-timing-safe implementation of bin2hex().
      *
-     * @param string $string A string (probably raw binary)
-     * @return string        A hexadecimal-encoded string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $string A string (probably raw binary)
+     * @return         string        A hexadecimal-encoded string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function bin2hex($string)
@@ -267,13 +271,13 @@ class ParagonIE_Sodium_Compat
      * Compare two strings, in constant-time.
      * Compared to memcmp(), compare() is more useful for sorting.
      *
-     * @param string $left  The left operand; must be a string
-     * @param string $right The right operand; must be a string
-     * @return int          If < 0 if the left operand is less than the right
+     * @param          string $left  The left operand; must be a string
+     * @param          string $right The right operand; must be a string
+     * @return         int          If < 0 if the left operand is less than the right
      *                      If = 0 if both strings are equal
      *                      If > 0 if the right operand is less than the left
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function compare($left, $right)
@@ -294,7 +298,7 @@ class ParagonIE_Sodium_Compat
     /**
      * Is AES-256-GCM even available to use?
      *
-     * @return bool
+     * @return         bool
      * @psalm-suppress UndefinedFunction
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -332,9 +336,9 @@ class ParagonIE_Sodium_Compat
      * @param string $nonce      Number to be used only Once; must be 8 bytes
      * @param string $key        Encryption key
      *
-     * @return string|bool       The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @return         string|bool       The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -367,9 +371,13 @@ class ParagonIE_Sodium_Compat
             throw new SodiumException('The OpenSSL extension is not installed, or openssl_decrypt() is not available');
         }
 
-        /** @var string $ctext */
+        /**
+ * @var string $ctext 
+*/
         $ctext = ParagonIE_Sodium_Core_Util::substr($ciphertext, 0, -self::CRYPTO_AEAD_AES256GCM_ABYTES);
-        /** @var string $authTag */
+        /**
+ * @var string $authTag 
+*/
         $authTag = ParagonIE_Sodium_Core_Util::substr($ciphertext, -self::CRYPTO_AEAD_AES256GCM_ABYTES, 16);
         return openssl_decrypt(
             $ctext,
@@ -393,10 +401,10 @@ class ParagonIE_Sodium_Compat
      * @param string $nonce     Number to be used only Once; must be 8 bytes
      * @param string $key       Encryption key
      *
-     * @return string           Ciphertext with a 16-byte GCM message
+     * @return         string           Ciphertext with a 16-byte GCM message
      *                          authentication code appended
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_aead_aes256gcm_encrypt(
@@ -465,9 +473,9 @@ class ParagonIE_Sodium_Compat
      * @param string $nonce      Number to be used only Once; must be 8 bytes
      * @param string $key        Encryption key
      *
-     * @return string            The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @return         string            The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -546,10 +554,10 @@ class ParagonIE_Sodium_Compat
      * @param string $nonce     Number to be used only Once; must be 8 bytes
      * @param string $key       Encryption key
      *
-     * @return string           Ciphertext with a 16-byte Poly1305 message
+     * @return         string           Ciphertext with a 16-byte Poly1305 message
      *                          authentication code appended
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_aead_chacha20poly1305_encrypt(
@@ -619,9 +627,9 @@ class ParagonIE_Sodium_Compat
      * @param string $nonce      Number to be used only Once; must be 12 bytes
      * @param string $key        Encryption key
      *
-     * @return string            The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @return         string            The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -710,13 +718,13 @@ class ParagonIE_Sodium_Compat
      *
      * @param string $plaintext Message to be encrypted
      * @param string $assocData Authenticated Associated Data (unencrypted)
-     * @param string $nonce Number to be used only Once; must be 8 bytes
-     * @param string $key Encryption key
+     * @param string $nonce     Number to be used only Once; must be 8 bytes
+     * @param string $key       Encryption key
      *
-     * @return string           Ciphertext with a 16-byte Poly1305 message
+     * @return         string           Ciphertext with a 16-byte Poly1305 message
      *                          authentication code appended
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_aead_chacha20poly1305_ietf_encrypt(
@@ -800,9 +808,9 @@ class ParagonIE_Sodium_Compat
      * @param string $key          Encryption key
      * @param bool   $dontFallback Don't fallback to ext/sodium
      *
-     * @return string|bool         The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @return         string|bool         The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_aead_xchacha20poly1305_ietf_decrypt(
@@ -870,10 +878,10 @@ class ParagonIE_Sodium_Compat
      * @param string $key          Encryption key
      * @param bool   $dontFallback Don't fallback to ext/sodium
      *
-     * @return string           Ciphertext with a 16-byte Poly1305 message
+     * @return         string           Ciphertext with a 16-byte Poly1305 message
      *                          authentication code appended
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_aead_xchacha20poly1305_ietf_encrypt(
@@ -946,11 +954,11 @@ class ParagonIE_Sodium_Compat
      *     but still truncates to 256 bits to sidestep length-extension
      *     attacks).
      *
-     * @param string $message Message to be authenticated
-     * @param string $key Symmetric authentication key
-     * @return string         Message authentication code
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $message Message to be authenticated
+     * @param          string $key     Symmetric authentication key
+     * @return         string         Message authentication code
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_auth($message, $key)
@@ -989,13 +997,13 @@ class ParagonIE_Sodium_Compat
     /**
      * Verify the MAC of a message previously authenticated with crypto_auth.
      *
-     * @param string $mac Message authentication code
-     * @param string $message Message whose authenticity you are attempting to
-     *                        verify (with a given MAC and key)
-     * @param string $key Symmetric authentication key
-     * @return bool           TRUE if authenticated, FALSE otherwise
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $mac     Message authentication code
+     * @param          string $message Message whose authenticity you are attempting to
+     *                                 verify (with a given MAC and key)
+     * @param          string $key     Symmetric authentication key
+     * @return         bool           TRUE if authenticated, FALSE otherwise
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_auth_verify($mac, $message, $key)
@@ -1034,12 +1042,12 @@ class ParagonIE_Sodium_Compat
      *     XSalsa20: Extended-nonce variant of salsa20.
      *     Poyl1305: Polynomial MAC for one-time message authentication.
      *
-     * @param string $plaintext The message to be encrypted
-     * @param string $nonce A Number to only be used Once; must be 24 bytes
-     * @param string $keypair Your secret key and your recipient's public key
-     * @return string           Ciphertext with 16-byte Poly1305 MAC
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $plaintext The message to be encrypted
+     * @param          string $nonce     A Number to only be used Once; must be 24 bytes
+     * @param          string $keypair   Your secret key and your recipient's public key
+     * @return         string           Ciphertext with 16-byte Poly1305 MAC
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box($plaintext, $nonce, $keypair)
@@ -1078,12 +1086,12 @@ class ParagonIE_Sodium_Compat
      *
      * This provides ciphertext integrity.
      *
-     * @param string $plaintext Message to be sealed
-     * @param string $publicKey Your recipient's public key
-     * @return string           Sealed message that only your recipient can
+     * @param          string $plaintext Message to be sealed
+     * @param          string $publicKey Your recipient's public key
+     * @return         string           Sealed message that only your recipient can
      *                          decrypt
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_seal($plaintext, $publicKey)
@@ -1115,11 +1123,11 @@ class ParagonIE_Sodium_Compat
      *
      * This validates ciphertext integrity.
      *
-     * @param string $ciphertext Sealed message to be opened
-     * @param string $keypair    Your crypto_box keypair
-     * @return string            The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ciphertext Sealed message to be opened
+     * @param          string $keypair    Your crypto_box keypair
+     * @return         string            The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -1154,12 +1162,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Generate a new random X25519 keypair.
      *
-     * @return string A 64-byte string; the first 32 are your secret key, while
+     * @return         string A 64-byte string; the first 32 are your secret key, while
      *                the last 32 are your public key. crypto_box_secretkey()
      *                and crypto_box_publickey() exist to separate them so you
      *                don't accidentally get them mixed up!
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_keypair()
@@ -1180,11 +1188,11 @@ class ParagonIE_Sodium_Compat
      * Combine two keys into a keypair for use in library methods that expect
      * a keypair. This doesn't necessarily have to be the same person's keys.
      *
-     * @param string $secretKey Secret key
-     * @param string $publicKey Public key
-     * @return string    Keypair
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $secretKey Secret key
+     * @param          string $publicKey Public key
+     * @return         string    Keypair
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_keypair_from_secretkey_and_publickey($secretKey, $publicKey)
@@ -1216,12 +1224,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Decrypt a message previously encrypted with crypto_box().
      *
-     * @param string $ciphertext Encrypted message
-     * @param string $nonce      Number to only be used Once; must be 24 bytes
-     * @param string $keypair    Your secret key and the sender's public key
-     * @return string            The original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ciphertext Encrypted message
+     * @param          string $nonce      Number to only be used Once; must be 24 bytes
+     * @param          string $keypair    Your secret key and the sender's public key
+     * @return         string            The original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -1263,10 +1271,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Extract the public key from a crypto_box keypair.
      *
-     * @param string $keypair Keypair containing secret and public key
-     * @return string         Your crypto_box public key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $keypair Keypair containing secret and public key
+     * @return         string         Your crypto_box public key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_publickey($keypair)
@@ -1294,10 +1302,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Calculate the X25519 public key from a given X25519 secret key.
      *
-     * @param string $secretKey Any X25519 secret key
-     * @return string           The corresponding X25519 public key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $secretKey Any X25519 secret key
+     * @return         string           The corresponding X25519 public key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_publickey_from_secretkey($secretKey)
@@ -1325,10 +1333,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Extract the secret key from a crypto_box keypair.
      *
-     * @param string $keypair
-     * @return string         Your crypto_box secret key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $keypair
+     * @return         string         Your crypto_box secret key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_box_secretkey($keypair)
@@ -1356,10 +1364,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Generate an X25519 keypair from a seed.
      *
-     * @param string $seed
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $seed
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress UndefinedFunction
      */
@@ -1383,14 +1391,14 @@ class ParagonIE_Sodium_Compat
     /**
      * Calculates a BLAKE2b hash, with an optional key.
      *
-     * @param string      $message The message to be hashed
-     * @param string|null $key     If specified, must be a string between 16
-     *                             and 64 bytes long
-     * @param int         $length  Output length in bytes; must be between 16
-     *                             and 64 (default = 32)
-     * @return string              Raw binary
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string      $message The message to be hashed
+     * @param          string|null $key     If specified, must be a string between 16
+     *                                      and 64 bytes long
+     * @param          int         $length  Output length in bytes; must be between 16
+     *                                      and 64 (default = 32)
+     * @return         string              Raw binary
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_generichash($message, $key = '', $length = self::CRYPTO_GENERICHASH_BYTES)
@@ -1428,11 +1436,11 @@ class ParagonIE_Sodium_Compat
     /**
      * Get the final BLAKE2b hash output for a given context.
      *
-     * @param string $ctx BLAKE2 hashing context. Generated by crypto_generichash_init().
-     * @param int $length Hash output size.
-     * @return string     Final BLAKE2b hash.
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ctx    BLAKE2 hashing context. Generated by crypto_generichash_init().
+     * @param          int    $length Hash output size.
+     * @return         string     Final BLAKE2b hash.
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress ReferenceConstraintViolation
      * @psalm-suppress ConflictingReferenceConstraint
@@ -1474,12 +1482,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Initialize a BLAKE2b hashing context, for use in a streaming interface.
      *
-     * @param string|null $key If specified must be a string between 16 and 64 bytes
-     * @param int $length      The size of the desired hash output
-     * @return string          A BLAKE2 hashing context, encoded as a string
+     * @param          string|null $key    If specified must be a string between 16 and 64 bytes
+     * @param          int         $length The size of the desired hash output
+     * @return         string          A BLAKE2 hashing context, encoded as a string
      *                         (To be 100% compatible with ext/libsodium)
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_generichash_init($key = '', $length = self::CRYPTO_GENERICHASH_BYTES)
@@ -1516,14 +1524,14 @@ class ParagonIE_Sodium_Compat
     /**
      * Initialize a BLAKE2b hashing context, for use in a streaming interface.
      *
-     * @param string|null $key If specified must be a string between 16 and 64 bytes
-     * @param int $length      The size of the desired hash output
-     * @param string $salt     Salt (up to 16 bytes)
-     * @param string $personal Personalization string (up to 16 bytes)
-     * @return string          A BLAKE2 hashing context, encoded as a string
+     * @param          string|null $key      If specified must be a string between 16 and 64 bytes
+     * @param          int         $length   The size of the desired hash output
+     * @param          string      $salt     Salt (up to 16 bytes)
+     * @param          string      $personal Personalization string (up to 16 bytes)
+     * @return         string          A BLAKE2 hashing context, encoded as a string
      *                         (To be 100% compatible with ext/libsodium)
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_generichash_init_salt_personal(
@@ -1563,13 +1571,13 @@ class ParagonIE_Sodium_Compat
     /**
      * Update a BLAKE2b hashing context with additional data.
      *
-     * @param string $ctx    BLAKE2 hashing context. Generated by crypto_generichash_init().
-     *                       $ctx is passed by reference and gets updated in-place.
-     * @param-out string $ctx
-     * @param string $message The message to append to the existing hash state.
-     * @return void
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ctx     BLAKE2 hashing context. Generated by crypto_generichash_init().
+     *                                 $ctx is passed by reference and gets updated in-place.
+     * @param-out      string $ctx
+     * @param          string $message The message to append to the existing hash state.
+     * @return         void
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress ReferenceConstraintViolation
      */
@@ -1606,10 +1614,10 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param int $subkey_len
-     * @param int $subkey_id
-     * @param string $context
-     * @param string $key
+     * @param  int    $subkey_len
+     * @param  int    $subkey_id
+     * @param  string $context
+     * @param  string $key
      * @return string
      * @throws SodiumException
      */
@@ -1684,13 +1692,13 @@ class ParagonIE_Sodium_Compat
      * They are used along with the scalarmult product to generate a 256-bit
      * BLAKE2b hash unique to the client and server keys.
      *
-     * @param string $my_secret
-     * @param string $their_public
-     * @param string $client_public
-     * @param string $server_public
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $my_secret
+     * @param          string $their_public
+     * @param          string $client_public
+     * @param          string $server_public
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_kx($my_secret, $their_public, $client_public, $server_public)
@@ -1751,7 +1759,7 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $seed
+     * @param  string $seed
      * @return string
      * @throws SodiumException
      */
@@ -1782,8 +1790,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $keypair
-     * @param string $serverPublicKey
+     * @param  string $keypair
+     * @param  string $serverPublicKey
      * @return array{0: string, 1: string}
      * @throws SodiumException
      */
@@ -1824,8 +1832,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $keypair
-     * @param string $clientPublicKey
+     * @param  string $keypair
+     * @param  string $clientPublicKey
      * @return array{0: string, 1: string}
      * @throws SodiumException
      */
@@ -1866,7 +1874,7 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $kp
+     * @param  string $kp
      * @return string
      * @throws SodiumException
      */
@@ -1880,7 +1888,7 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $kp
+     * @param  string $kp
      * @return string
      * @throws SodiumException
      */
@@ -1894,15 +1902,15 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param int $outlen
-     * @param string $passwd
-     * @param string $salt
-     * @param int $opslimit
-     * @param int $memlimit
-     * @param int|null $alg
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          int      $outlen
+     * @param          string   $passwd
+     * @param          string   $salt
+     * @param          int      $opslimit
+     * @param          int      $memlimit
+     * @param          int|null $alg
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_pwhash($outlen, $passwd, $salt, $opslimit, $memlimit, $alg = null)
@@ -1949,12 +1957,12 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $passwd
-     * @param int $opslimit
-     * @param int $memlimit
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $passwd
+     * @param          int    $opslimit
+     * @param          int    $memlimit
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_pwhash_str($passwd, $opslimit, $memlimit)
@@ -1978,9 +1986,9 @@ class ParagonIE_Sodium_Compat
     /**
      * Do we need to rehash this password?
      *
-     * @param string $hash
-     * @param int $opslimit
-     * @param int $memlimit
+     * @param  string $hash
+     * @param  int    $opslimit
+     * @param  int    $memlimit
      * @return bool
      * @throws SodiumException
      */
@@ -1995,9 +2003,13 @@ class ParagonIE_Sodium_Compat
         $prefix = implode('$', array_slice($pieces, 0, 4));
 
         // Rebuild the expected header.
-        /** @var int $ops */
+        /**
+ * @var int $ops 
+*/
         $ops = (int) $opslimit;
-        /** @var int $mem */
+        /**
+ * @var int $mem 
+*/
         $mem = (int) $memlimit >> 10;
         $encoded = self::CRYPTO_PWHASH_STRPREFIX . 'v=19$m=' . $mem . ',t=' . $ops . ',p=1';
 
@@ -2006,11 +2018,11 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $passwd
-     * @param string $hash
-     * @return bool
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $passwd
+     * @param          string $hash
+     * @return         bool
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_pwhash_str_verify($passwd, $hash)
@@ -2031,11 +2043,11 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param int $outlen
-     * @param string $passwd
-     * @param string $salt
-     * @param int $opslimit
-     * @param int $memlimit
+     * @param  int    $outlen
+     * @param  string $passwd
+     * @param  string $salt
+     * @param  int    $opslimit
+     * @param  int    $memlimit
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -2093,9 +2105,9 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $passwd
-     * @param int $opslimit
-     * @param int $memlimit
+     * @param  string $passwd
+     * @param  int    $opslimit
+     * @param  int    $memlimit
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -2128,8 +2140,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $passwd
-     * @param string $hash
+     * @param  string $passwd
+     * @param  string $hash
      * @return bool
      * @throws SodiumException
      * @throws TypeError
@@ -2164,11 +2176,11 @@ class ParagonIE_Sodium_Compat
      *
      * Algorithm: X25519 (ECDH over Curve25519)
      *
-     * @param string $secretKey
-     * @param string $publicKey
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $secretKey
+     * @param          string $publicKey
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_scalarmult($secretKey, $publicKey)
@@ -2208,10 +2220,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Calculate an X25519 public key from an X25519 secret key.
      *
-     * @param string $secretKey
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $secretKey
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress TooFewArguments
      * @psalm-suppress MixedArgument
      */
@@ -2245,12 +2257,12 @@ class ParagonIE_Sodium_Compat
      *
      * Algorithm: XSalsa20-Poly1305
      *
-     * @param string $plaintext The message you're encrypting
-     * @param string $nonce A Number to be used Once; must be 24 bytes
-     * @param string $key Symmetric encryption key
-     * @return string           Ciphertext with Poly1305 MAC
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $plaintext The message you're encrypting
+     * @param          string $nonce     A Number to be used Once; must be 24 bytes
+     * @param          string $key       Symmetric encryption key
+     * @return         string           Ciphertext with Poly1305 MAC
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_secretbox($plaintext, $nonce, $key)
@@ -2283,12 +2295,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Decrypts a message previously encrypted with crypto_secretbox().
      *
-     * @param string $ciphertext Ciphertext with Poly1305 MAC
-     * @param string $nonce      A Number to be used Once; must be 24 bytes
-     * @param string $key        Symmetric encryption key
-     * @return string            Original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ciphertext Ciphertext with Poly1305 MAC
+     * @param          string $nonce      A Number to be used Once; must be 24 bytes
+     * @param          string $key        Symmetric encryption key
+     * @return         string            Original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -2341,12 +2353,12 @@ class ParagonIE_Sodium_Compat
      *
      * Algorithm: XChaCha20-Poly1305
      *
-     * @param string $plaintext The message you're encrypting
-     * @param string $nonce     A Number to be used Once; must be 24 bytes
-     * @param string $key       Symmetric encryption key
-     * @return string           Ciphertext with Poly1305 MAC
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $plaintext The message you're encrypting
+     * @param          string $nonce     A Number to be used Once; must be 24 bytes
+     * @param          string $key       Symmetric encryption key
+     * @return         string           Ciphertext with Poly1305 MAC
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_secretbox_xchacha20poly1305($plaintext, $nonce, $key)
@@ -2371,12 +2383,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Decrypts a message previously encrypted with crypto_secretbox_xchacha20poly1305().
      *
-     * @param string $ciphertext Ciphertext with Poly1305 MAC
-     * @param string $nonce      A Number to be used Once; must be 24 bytes
-     * @param string $key        Symmetric encryption key
-     * @return string            Original plaintext message
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $ciphertext Ciphertext with Poly1305 MAC
+     * @param          string $nonce      A Number to be used Once; must be 24 bytes
+     * @param          string $key        Symmetric encryption key
+     * @return         string            Original plaintext message
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_secretbox_xchacha20poly1305_open($ciphertext, $nonce, $key)
@@ -2401,7 +2413,7 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return array<int, string> Returns a state and a header.
      * @throws Exception
      * @throws SodiumException
@@ -2415,8 +2427,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $header
-     * @param string $key
+     * @param  string $header
+     * @param  string $key
      * @return string Returns a state.
      * @throws Exception
      */
@@ -2434,10 +2446,10 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $state
-     * @param string $msg
-     * @param string $aad
-     * @param int $tag
+     * @param  string $state
+     * @param  string $msg
+     * @param  string $aad
+     * @param  int    $tag
      * @return string
      * @throws SodiumException
      */
@@ -2460,9 +2472,9 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $state
-     * @param string $msg
-     * @param string $aad
+     * @param  string $state
+     * @param  string $msg
+     * @param  string $aad
      * @return bool|array{0: string, 1: int}
      * @throws SodiumException
      */
@@ -2492,7 +2504,7 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $state
+     * @param  string $state
      * @return void
      * @throws SodiumException
      */
@@ -2508,11 +2520,11 @@ class ParagonIE_Sodium_Compat
     /**
      * Calculates a SipHash-2-4 hash of a message for a given key.
      *
-     * @param string $message Input message
-     * @param string $key SipHash-2-4 key
-     * @return string         Hash
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $message Input message
+     * @param          string $key     SipHash-2-4 key
+     * @return         string         Hash
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -2558,11 +2570,11 @@ class ParagonIE_Sodium_Compat
      *
      * Algorithm: Ed25519 (EdDSA over Curve25519)
      *
-     * @param string $message Message to be signed.
-     * @param string $secretKey Secret signing key.
-     * @return string           Signed message (signature is prefixed).
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $message   Message to be signed.
+     * @param          string $secretKey Secret signing key.
+     * @return         string           Signed message (signature is prefixed).
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -2593,12 +2605,12 @@ class ParagonIE_Sodium_Compat
     /**
      * Validates a signed message then returns the message.
      *
-     * @param string $signedMessage A signed message
-     * @param string $publicKey A public key
-     * @return string               The original message (if the signature is
+     * @param          string $signedMessage A signed message
+     * @param          string $publicKey     A public key
+     * @return         string               The original message (if the signature is
      *                              valid for this public key)
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MixedReturnStatement
@@ -2655,8 +2667,8 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $sk
-     * @param string $pk
+     * @param  string $sk
+     * @param  string $pk
      * @return string
      * @throws SodiumException
      */
@@ -2683,10 +2695,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Generate an Ed25519 keypair from a seed.
      *
-     * @param string $seed Input seed
-     * @return string      Keypair
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $seed Input seed
+     * @return         string      Keypair
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_seed_keypair($seed)
@@ -2712,10 +2724,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Extract an Ed25519 public key from an Ed25519 keypair.
      *
-     * @param string $keypair Keypair
-     * @return string         Public key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $keypair Keypair
+     * @return         string         Public key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_publickey($keypair)
@@ -2743,10 +2755,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Calculate an Ed25519 public key from an Ed25519 secret key.
      *
-     * @param string $secretKey Your Ed25519 secret key
-     * @return string           The corresponding Ed25519 public key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $secretKey Your Ed25519 secret key
+     * @return         string           The corresponding Ed25519 public key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_publickey_from_secretkey($secretKey)
@@ -2774,10 +2786,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Extract an Ed25519 secret key from an Ed25519 keypair.
      *
-     * @param string $keypair Keypair
-     * @return string         Secret key
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $keypair Keypair
+     * @return         string         Secret key
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_secretkey($keypair)
@@ -2807,11 +2819,11 @@ class ParagonIE_Sodium_Compat
      *
      * Algorithm: Ed25519 (EdDSA over Curve25519)
      *
-     * @param string $message Message to be signed
-     * @param string $secretKey Secret signing key
-     * @return string           Digital signature
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $message   Message to be signed
+     * @param          string $secretKey Secret signing key
+     * @return         string           Digital signature
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_detached($message, $secretKey)
@@ -2840,13 +2852,13 @@ class ParagonIE_Sodium_Compat
     /**
      * Verify the Ed25519 signature of a message.
      *
-     * @param string $signature Digital sginature
-     * @param string $message Message to be verified
-     * @param string $publicKey Public key
-     * @return bool             TRUE if this signature is good for this public key;
+     * @param          string $signature Digital sginature
+     * @param          string $message   Message to be verified
+     * @param          string $publicKey Public key
+     * @return         bool             TRUE if this signature is good for this public key;
      *                          FALSE otherwise
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_verify_detached($signature, $message, $publicKey)
@@ -2884,10 +2896,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Convert an Ed25519 public key to a Curve25519 public key
      *
-     * @param string $pk
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $pk
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_ed25519_pk_to_curve25519($pk)
@@ -2916,10 +2928,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Convert an Ed25519 secret key to a Curve25519 secret key
      *
-     * @param string $sk
-     * @return string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $sk
+     * @return         string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_sign_ed25519_sk_to_curve25519($sk)
@@ -2953,15 +2965,15 @@ class ParagonIE_Sodium_Compat
     /**
      * Expand a key and nonce into a keystream of pseudorandom bytes.
      *
-     * @param int $len Number of bytes desired
-     * @param string $nonce Number to be used Once; must be 24 bytes
-     * @param string $key XSalsa20 key
-     * @return string       Pseudorandom stream that can be XORed with messages
+     * @param          int    $len   Number of bytes desired
+     * @param          string $nonce Number to be used Once; must be 24 bytes
+     * @param          string $key   XSalsa20 key
+     * @return         string       Pseudorandom stream that can be XORed with messages
      *                      to provide encryption (but not authentication; see
      *                      Poly1305 or crypto_auth() for that, which is not
      *                      optional for security)
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_stream($len, $nonce, $key)
@@ -3000,15 +3012,15 @@ class ParagonIE_Sodium_Compat
      *
      * This DOES NOT provide ciphertext integrity.
      *
-     * @param string $message Plaintext message
-     * @param string $nonce Number to be used Once; must be 24 bytes
-     * @param string $key Encryption key
-     * @return string         Encrypted text which is vulnerable to chosen-
+     * @param          string $message Plaintext message
+     * @param          string $nonce   Number to be used Once; must be 24 bytes
+     * @param          string $key     Encryption key
+     * @return         string         Encrypted text which is vulnerable to chosen-
      *                        ciphertext attacks unless you implement some
      *                        other mitigation to the ciphertext (i.e.
      *                        Encrypt then MAC)
-     * @throws SodiumException
-     * @throws TypeError
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function crypto_stream_xor($message, $nonce, $key)
@@ -3053,10 +3065,10 @@ class ParagonIE_Sodium_Compat
     /**
      * Cache-timing-safe implementation of hex2bin().
      *
-     * @param string $string Hexadecimal string
-     * @return string        Raw binary string
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $string Hexadecimal string
+     * @return         string        Raw binary string
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress TooFewArguments
      * @psalm-suppress MixedArgument
      */
@@ -3081,9 +3093,9 @@ class ParagonIE_Sodium_Compat
      *
      * @param string $var
      *
-     * @return void
-     * @throws SodiumException
-     * @throws TypeError
+     * @return         void
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function increment(&$var)
@@ -3126,7 +3138,9 @@ class ParagonIE_Sodium_Compat
             return SODIUM_LIBRARY_MAJOR_VERSION;
         }
         if (self::use_fallback('library_version_major')) {
-            /** @psalm-suppress UndefinedFunction */
+            /**
+ * @psalm-suppress UndefinedFunction 
+*/
             return (int) call_user_func('\\Sodium\\library_version_major');
         }
         return self::LIBRARY_VERSION_MAJOR;
@@ -3144,7 +3158,9 @@ class ParagonIE_Sodium_Compat
             return SODIUM_LIBRARY_MINOR_VERSION;
         }
         if (self::use_fallback('library_version_minor')) {
-            /** @psalm-suppress UndefinedFunction */
+            /**
+ * @psalm-suppress UndefinedFunction 
+*/
             return (int) call_user_func('\\Sodium\\library_version_minor');
         }
         return self::LIBRARY_VERSION_MINOR;
@@ -3153,11 +3169,11 @@ class ParagonIE_Sodium_Compat
     /**
      * Compare two strings.
      *
-     * @param string $left
-     * @param string $right
-     * @return int
-     * @throws SodiumException
-     * @throws TypeError
+     * @param          string $left
+     * @param          string $right
+     * @return         int
+     * @throws         SodiumException
+     * @throws         TypeError
      * @psalm-suppress MixedArgument
      */
     public static function memcmp($left, $right)
@@ -3172,8 +3188,12 @@ class ParagonIE_Sodium_Compat
         if (self::use_fallback('memcmp')) {
             return (int) call_user_func('\\Sodium\\memcmp', $left, $right);
         }
-        /** @var string $left */
-        /** @var string $right */
+        /**
+ * @var string $left 
+*/
+        /**
+ * @var string $right 
+*/
         return ParagonIE_Sodium_Core_Util::memcmp($left, $right);
     }
 
@@ -3181,12 +3201,12 @@ class ParagonIE_Sodium_Compat
      * It's actually not possible to zero memory buffers in PHP. You need the
      * native library for that.
      *
-     * @param string|null $var
+     * @param     string|null $var
      * @param-out string|null $var
      *
-     * @return void
-     * @throws SodiumException (Unless libsodium is installed)
-     * @throws TypeError
+     * @return         void
+     * @throws         SodiumException (Unless libsodium is installed)
+     * @throws         TypeError
      * @psalm-suppress TooFewArguments
      */
     public static function memzero(&$var)
@@ -3195,7 +3215,9 @@ class ParagonIE_Sodium_Compat
         ParagonIE_Sodium_Core_Util::declareScalarType($var, 'string', 1);
 
         if (self::useNewSodiumAPI()) {
-            /** @psalm-suppress MixedArgument */
+            /**
+ * @psalm-suppress MixedArgument 
+*/
             sodium_memzero($var);
             return;
         }
@@ -3214,9 +3236,9 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
-     * @param string $unpadded
-     * @param int $blockSize
-     * @param bool $dontFallback
+     * @param  string $unpadded
+     * @param  int    $blockSize
+     * @param  bool   $dontFallback
      * @return string
      * @throws SodiumException
      */
@@ -3261,7 +3283,9 @@ class ParagonIE_Sodium_Compat
                 } else {
                     $padded[$j] = $unpadded[$j];
                 }
-                /** @var int $k */
+                /**
+ * @var int $k 
+*/
                 $k -= $st;
                 $st = (int) (~(
                             (
@@ -3284,25 +3308,25 @@ class ParagonIE_Sodium_Compat
         $mask = 0;
         $tail = $xpadded_len;
         for ($i = 0; $i < $blockSize; ++$i) {
-            # barrier_mask = (unsigned char)
-            #     (((i ^ xpadlen) - 1U) >> ((sizeof(size_t) - 1U) * CHAR_BIT));
+            // barrier_mask = (unsigned char)
+            // (((i ^ xpadlen) - 1U) >> ((sizeof(size_t) - 1U) * CHAR_BIT));
             $barrier_mask = (($i ^ $xpadlen) -1) >> ((PHP_INT_SIZE << 3) - 1);
-            # tail[-i] = (tail[-i] & mask) | (0x80 & barrier_mask);
+            // tail[-i] = (tail[-i] & mask) | (0x80 & barrier_mask);
             $padded[$tail - $i] = ParagonIE_Sodium_Core_Util::intToChr(
                 (ParagonIE_Sodium_Core_Util::chrToInt($padded[$tail - $i]) & $mask)
                     |
                 (0x80 & $barrier_mask)
             );
-            # mask |= barrier_mask;
+            // mask |= barrier_mask;
             $mask |= $barrier_mask;
         }
         return $padded;
     }
 
     /**
-     * @param string $padded
-     * @param int $blockSize
-     * @param bool $dontFallback
+     * @param  string $padded
+     * @param  int    $blockSize
+     * @param  bool   $dontFallback
      * @return string
      * @throws SodiumException
      */
@@ -3326,7 +3350,7 @@ class ParagonIE_Sodium_Compat
             throw new SodiumException('invalid padding');
         }
 
-        # tail = &padded[padded_len - 1U];
+        // tail = &padded[padded_len - 1U];
         $tail = $padded_len - 1;
 
         $acc = 0;
@@ -3335,11 +3359,11 @@ class ParagonIE_Sodium_Compat
 
         $found = 0;
         for ($i = 0; $i < $blockSize; ++$i) {
-            # c = tail[-i];
+            // c = tail[-i];
             $c = ParagonIE_Sodium_Core_Util::chrToInt($padded[$tail - $i]);
 
-            # is_barrier =
-            #     (( (acc - 1U) & (pad_len - 1U) & ((c ^ 0x80) - 1U) ) >> 8) & 1U;
+            // is_barrier =
+            // (( (acc - 1U) & (pad_len - 1U) & ((c ^ 0x80) - 1U) ) >> 8) & 1U;
             $is_barrier = (
                 (
                     ($acc - 1) & ($pad_len - 1) & (($c ^ 80) - 1)
@@ -3348,16 +3372,16 @@ class ParagonIE_Sodium_Compat
             $is_barrier &= ~$found;
             $found |= $is_barrier;
 
-            # acc |= c;
+            // acc |= c;
             $acc |= $c;
 
-            # pad_len |= i & (1U + ~is_barrier);
+            // pad_len |= i & (1U + ~is_barrier);
             $pad_len |= $i & (1 + ~$is_barrier);
 
-            # valid |= (unsigned char) is_barrier;
+            // valid |= (unsigned char) is_barrier;
             $valid |= ($is_barrier & 0xff);
         }
-        # unpadded_len = padded_len - 1U - pad_len;
+        // unpadded_len = padded_len - 1U - pad_len;
         $unpadded_len = $padded_len - 1 - $pad_len;
         if ($valid !== 1) {
             throw new SodiumException('invalid padding');
@@ -3385,7 +3409,7 @@ class ParagonIE_Sodium_Compat
      * Generate a string of bytes from the kernel's CSPRNG.
      * Proudly uses /dev/urandom (if getrandom(2) is not available).
      *
-     * @param int $numBytes
+     * @param  int $numBytes
      * @return string
      * @throws Exception
      * @throws TypeError
@@ -3411,7 +3435,7 @@ class ParagonIE_Sodium_Compat
     /**
      * Generate an integer between 0 and $range (non-inclusive).
      *
-     * @param int $range
+     * @param  int $range
      * @return int
      * @throws Exception
      * @throws Error
@@ -3459,8 +3483,8 @@ class ParagonIE_Sodium_Compat
      *        If this happens, install sodium from PECL to get acceptable
      *        performance.
      *
-     * @param int $iterations Number of multiplications to attempt
-     * @param int $maxTimeout Milliseconds
+     * @param  int $iterations Number of multiplications to attempt
+     * @param  int $maxTimeout Milliseconds
      * @return bool           TRUE if we're fast enough, FALSE is not
      * @throws SodiumException
      */
@@ -3469,20 +3493,32 @@ class ParagonIE_Sodium_Compat
         if (self::polyfill_is_fast()) {
             return true;
         }
-        /** @var float $end */
+        /**
+ * @var float $end 
+*/
         $end = 0.0;
-        /** @var float $start */
+        /**
+ * @var float $start 
+*/
         $start = microtime(true);
-        /** @var ParagonIE_Sodium_Core32_Int64 $a */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int64 $a 
+*/
         $a = ParagonIE_Sodium_Core32_Int64::fromInt(random_int(3, 1 << 16));
         for ($i = 0; $i < $iterations; ++$i) {
-            /** @var ParagonIE_Sodium_Core32_Int64 $b */
+            /**
+ * @var ParagonIE_Sodium_Core32_Int64 $b 
+*/
             $b = ParagonIE_Sodium_Core32_Int64::fromInt(random_int(3, 1 << 16));
             $a->mulInt64($b);
         }
-        /** @var float $end */
+        /**
+ * @var float $end 
+*/
         $end = microtime(true);
-        /** @var int $diff */
+        /**
+ * @var int $diff 
+*/
         $diff = (int) ceil(($end - $start) * 1000);
         return $diff < $maxTimeout;
     }
@@ -3491,7 +3527,7 @@ class ParagonIE_Sodium_Compat
      * This emulates libsodium's version_string() function, except ours is
      * prefixed with 'polyfill-'.
      *
-     * @return string
+     * @return         string
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress UndefinedFunction
      */
@@ -3542,7 +3578,7 @@ class ParagonIE_Sodium_Compat
      * Libsodium as implemented in PHP 7.2
      * and/or ext/sodium (via PECL)
      *
-     * @ref https://wiki.php.net/rfc/libsodium
+     * @ref    https://wiki.php.net/rfc/libsodium
      * @return bool
      */
     protected static function useNewSodiumAPI()

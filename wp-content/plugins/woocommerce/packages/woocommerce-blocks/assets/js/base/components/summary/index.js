@@ -18,16 +18,18 @@ import { generateSummary } from './utils';
  * @param {string} props.className Class name for rendered component.
  */
 export const Summary = ( {
-	source,
-	maxLength = 15,
-	countType = 'words',
-	className = '',
+    source,
+    maxLength = 15,
+    countType = 'words',
+    className = '',
 } ) => {
-	const summaryText = useMemo( () => {
-		return generateSummary( source, maxLength, countType );
-	}, [ source, maxLength, countType ] );
+    const summaryText = useMemo(
+        () => {
+            return generateSummary(source, maxLength, countType);
+        }, [ source, maxLength, countType ] 
+    );
 
-	return <RawHTML className={ className }>{ summaryText }</RawHTML>;
+    return <RawHTML className={ className }>{ summaryText }</RawHTML>;
 };
 
 export default Summary;

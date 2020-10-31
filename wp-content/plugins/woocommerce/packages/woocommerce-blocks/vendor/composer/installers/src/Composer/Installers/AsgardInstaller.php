@@ -14,7 +14,6 @@ class AsgardInstaller extends BaseInstaller
      * For package type asgard-module, cut off a trailing '-plugin' if present.
      *
      * For package type asgard-theme, cut off a trailing '-theme' if present.
-     *
      */
     public function inflectPackageVars($vars)
     {

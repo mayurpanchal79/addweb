@@ -11,9 +11,11 @@ import { useState } from '@wordpress/element';
  * @return {function(Object)} A function receiving the error that will be thrown.
  */
 export const useThrowError = () => {
-	const [ , setState ] = useState();
-	return ( error ) =>
-		setState( () => {
-			throw error;
-		} );
+    const [ , setState ] = useState();
+    return ( error ) =>
+    setState(
+        () => {
+            throw error;
+        } 
+    );
 };

@@ -8,13 +8,21 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
  */
 trait MessageTrait
 {
-    /** @var array Map of all registered headers, as original name => array of values */
+    /**
+     * @var array Map of all registered headers, as original name => array of values 
+     */
     private $headers = [];
-    /** @var array Map of lowercase header name => original name at registration */
+    /**
+     * @var array Map of lowercase header name => original name at registration 
+     */
     private $headerNames = [];
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $protocol = '1.1';
-    /** @var StreamInterface|null */
+    /**
+     * @var StreamInterface|null 
+     */
     private $stream;
     public function getProtocolVersion()
     {
@@ -152,12 +160,14 @@ trait MessageTrait
      */
     private function trimHeaderValues(array $values)
     {
-        return \array_map(function ($value) {
-            if (!\is_scalar($value) && null !== $value) {
-                throw new \InvalidArgumentException(\sprintf('Header value must be scalar or null but %s provided.', \is_object($value) ? \get_class($value) : \gettype($value)));
-            }
-            return \trim((string) $value, " \t");
-        }, \array_values($values));
+        return \array_map(
+            function ($value) {
+                if (!\is_scalar($value) && null !== $value) {
+                    throw new \InvalidArgumentException(\sprintf('Header value must be scalar or null but %s provided.', \is_object($value) ? \get_class($value) : \gettype($value)));
+                }
+                return \trim((string) $value, " \t");
+            }, \array_values($values)
+        );
     }
     private function assertHeader($header)
     {

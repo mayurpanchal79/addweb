@@ -62,9 +62,15 @@ class Parser implements ParserInterface
             }
         }
 
-        $joined = trim(implode('', array_map(function (Token $token) {
-            return $token->getValue();
-        }, $tokens)));
+        $joined = trim(
+            implode(
+                '', array_map(
+                    function (Token $token) {
+                        return $token->getValue();
+                    }, $tokens
+                )
+            )
+        );
 
         $int = function ($string) {
             if (!is_numeric($string)) {
@@ -75,14 +81,14 @@ class Parser implements ParserInterface
         };
 
         switch (true) {
-            case 'odd' === $joined:
-                return [2, 1];
-            case 'even' === $joined:
-                return [2, 0];
-            case 'n' === $joined:
-                return [1, 0];
-            case false === strpos($joined, 'n'):
-                return [0, $int($joined)];
+        case 'odd' === $joined:
+            return [2, 1];
+        case 'even' === $joined:
+            return [2, 0];
+        case 'n' === $joined:
+            return [1, 0];
+        case false === strpos($joined, 'n'):
+            return [0, $int($joined)];
         }
 
         $split = explode('n', $joined);

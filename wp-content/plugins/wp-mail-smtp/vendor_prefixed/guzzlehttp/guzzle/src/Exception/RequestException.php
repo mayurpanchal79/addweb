@@ -11,11 +11,17 @@ use WPMailSMTP\Vendor\Psr\Http\Message\UriInterface;
  */
 class RequestException extends \WPMailSMTP\Vendor\GuzzleHttp\Exception\TransferException
 {
-    /** @var RequestInterface */
+    /**
+     * @var RequestInterface 
+     */
     private $request;
-    /** @var ResponseInterface|null */
+    /**
+     * @var ResponseInterface|null 
+     */
     private $response;
-    /** @var array */
+    /**
+     * @var array 
+     */
     private $handlerContext;
     public function __construct($message, \WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, \WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface $response = null, \Exception $previous = null, array $handlerContext = [])
     {

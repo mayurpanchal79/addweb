@@ -9,56 +9,58 @@ import { Icon, comment } from '@woocommerce/icons';
 import { withProduct } from '@woocommerce/block-hocs';
 
 const NoReviewsPlaceholder = ( { error, getProduct, isLoading, product } ) => {
-	const renderApiError = () => (
-		<ErrorPlaceholder
-			className="wc-block-featured-product-error"
-			error={ error }
-			isLoading={ isLoading }
-			onRetry={ getProduct }
-		/>
-	);
+    const renderApiError = () => (
+    <ErrorPlaceholder
+    className="wc-block-featured-product-error"
+    error={ error }
+    isLoading={ isLoading }
+    onRetry={ getProduct }
+    />
+    );
 
-	if ( error ) {
-		return renderApiError();
-	}
+if (error ) {
+    return renderApiError();
+}
 
-	const content =
-		! product || isLoading ? (
-			<Spinner />
-		) : (
-			sprintf(
-				__(
-					"This block lists reviews for a selected product. %s doesn't have any reviews yet, but they will show up here when it does.",
-					'woocommerce'
-				),
-				product.name
-			)
-		);
+    const content =
+        ! product || isLoading ? (
+            <Spinner />
+        ) : (
+            sprintf(
+                __(
+                    "This block lists reviews for a selected product. %s doesn't have any reviews yet, but they will show up here when it does.",
+                    'woocommerce'
+                ),
+                product.name
+            )
+        );
 
-	return (
-		<Placeholder
-			className="wc-block-reviews-by-product"
-			icon={
-				<Icon
-					srcElement={ comment }
-					className="block-editor-block-icon"
-				/>
-			}
-			label={ __( 'Reviews by Product', 'woocommerce' ) }
-		>
-			{ content }
-		</Placeholder>
-	);
+    return (
+        <Placeholder
+            className="wc-block-reviews-by-product"
+            icon={
+                <Icon
+                srcElement={ comment }
+                className="block-editor-block-icon"
+                />
+    }
+    label={ __('Reviews by Product', 'woocommerce') }
+    >
+    { content }
+    </Placeholder>
+    );
 };
 
 NoReviewsPlaceholder.propTypes = {
-	// from withProduct
-	error: PropTypes.object,
-	isLoading: PropTypes.bool,
-	product: PropTypes.shape( {
-		name: PropTypes.node,
-		review_count: PropTypes.number,
-	} ),
+    // from withProduct
+    error: PropTypes.object,
+    isLoading: PropTypes.bool,
+    product: PropTypes.shape(
+        {
+            name: PropTypes.node,
+            review_count: PropTypes.number,
+        } 
+    ),
 };
 
-export default withProduct( NoReviewsPlaceholder );
+export default withProduct(NoReviewsPlaceholder);

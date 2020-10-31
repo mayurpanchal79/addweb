@@ -27,7 +27,6 @@ use WPMailSMTP\Vendor\Stash\Driver\FileSystem;
 use WPMailSMTP\Vendor\Stash\Pool;
 /**
  * Wrapper around Google Access Tokens which provides convenience functions
- *
  */
 class Google_AccessToken_Verify
 {
@@ -64,8 +63,8 @@ class Google_AccessToken_Verify
      * The audience parameter can be used to control which id tokens are
      * accepted.  By default, the id token must have been issued to this OAuth2 client.
      *
-     * @param string $idToken the ID token in JWT format
-     * @param string $audience Optional. The audience to verify against JWt "aud"
+     * @param  string $idToken  the ID token in JWT format
+     * @param  string $audience Optional. The audience to verify against JWt "aud"
      * @return array the token payload, if successful
      */
     public function verifyIdToken($idToken, $audience = null)
@@ -117,7 +116,7 @@ class Google_AccessToken_Verify
     /**
      * Retrieve and cache a certificates file.
      *
-     * @param $url string location
+     * @param  $url string location
      * @throws Google_Exception
      * @return array certificates
      */

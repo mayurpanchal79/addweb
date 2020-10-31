@@ -51,13 +51,15 @@ class ElasticSearchHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractPr
     {
         parent::__construct($level, $bubble);
         $this->client = $client;
-        $this->options = \array_merge(array(
+        $this->options = \array_merge(
+            array(
             'index' => 'monolog',
             // Elastic index name
             'type' => 'record',
             // Elastic document type
             'ignore_error' => \false,
-        ), $options);
+            ), $options
+        );
     }
     /**
      * {@inheritDoc}
@@ -78,6 +80,7 @@ class ElasticSearchHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractPr
     }
     /**
      * Getter options
+     *
      * @return array
      */
     public function getOptions()
@@ -101,7 +104,8 @@ class ElasticSearchHandler extends \WPMailSMTP\Vendor\Monolog\Handler\AbstractPr
     }
     /**
      * Use Elasticsearch bulk API to send list of documents
-     * @param  array             $documents
+     *
+     * @param  array $documents
      * @throws \RuntimeException
      */
     protected function bulkSend(array $documents)

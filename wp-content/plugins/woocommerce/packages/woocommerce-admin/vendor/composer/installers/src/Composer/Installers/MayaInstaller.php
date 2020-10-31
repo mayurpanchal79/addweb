@@ -11,7 +11,6 @@ class MayaInstaller extends BaseInstaller
      * Format package name.
      *
      * For package type maya-module, cut off a trailing '-module' if present.
-     *
      */
     public function inflectPackageVars($vars)
     {

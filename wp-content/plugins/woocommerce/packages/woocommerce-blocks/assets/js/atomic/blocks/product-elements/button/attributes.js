@@ -1,8 +1,8 @@
 export const blockAttributes = {
-	productId: {
-		type: 'number',
-		default: 0,
-	},
-};
+    productId: {
+        type: 'number',
+        default: 0,
+            },
+            };
 
-export default blockAttributes;
+            export default blockAttributes;

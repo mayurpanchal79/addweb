@@ -17,7 +17,7 @@ use WPMailSMTP\Vendor\Monolog\Logger;
  *
  * You'll need a Fleep.io account to use this handler.
  *
- * @see https://fleep.io/integrations/webhooks/ Fleep Webhooks Documentation
+ * @see    https://fleep.io/integrations/webhooks/ Fleep Webhooks Documentation
  * @author Ando Roots <ando@sqroot.eu>
  */
 class FleepHookHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
@@ -34,9 +34,9 @@ class FleepHookHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
      * For instructions on how to create a new web hook in your conversations
      * see https://fleep.io/integrations/webhooks/
      *
-     * @param  string                    $token  Webhook token
-     * @param  bool|int                  $level  The minimum logging level at which this handler will be triggered
-     * @param  bool                      $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param  string   $token  Webhook token
+     * @param  bool|int $level  The minimum logging level at which this handler will be triggered
+     * @param  bool     $bubble Whether the messages that are handled can bubble up the stack or not
      * @throws MissingExtensionException
      */
     public function __construct($token, $level = \WPMailSMTP\Vendor\Monolog\Logger::DEBUG, $bubble = \true)
@@ -72,7 +72,7 @@ class FleepHookHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
     /**
      * {@inheritdoc}
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     protected function generateDataStream($record)
@@ -98,7 +98,7 @@ class FleepHookHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
     /**
      * Builds the body of API call
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     private function buildContent($record)

@@ -18,15 +18,17 @@ class TaskQueue implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\TaskQueueInterf
     public function __construct($withShutdown = \true)
     {
         if ($withShutdown) {
-            \register_shutdown_function(function () {
-                if ($this->enableShutdown) {
-                    // Only run the tasks if an E_ERROR didn't occur.
-                    $err = \error_get_last();
-                    if (!$err || $err['type'] ^ \E_ERROR) {
-                        $this->run();
+            \register_shutdown_function(
+                function () {
+                    if ($this->enableShutdown) {
+                        // Only run the tasks if an E_ERROR didn't occur.
+                        $err = \error_get_last();
+                        if (!$err || $err['type'] ^ \E_ERROR) {
+                            $this->run();
+                        }
                     }
                 }
-            });
+            );
         }
     }
     public function isEmpty()
@@ -40,7 +42,9 @@ class TaskQueue implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\TaskQueueInterf
     public function run()
     {
         while ($task = \array_shift($this->queue)) {
-            /** @var callable $task */
+            /**
+ * @var callable $task 
+*/
             $task();
         }
     }

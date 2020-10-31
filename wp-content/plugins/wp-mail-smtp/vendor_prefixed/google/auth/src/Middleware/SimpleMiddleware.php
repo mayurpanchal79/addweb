@@ -66,12 +66,12 @@ class SimpleMiddleware
      *
      *   $res = $client->get('drive/v2/rest');
      *
-     * @param callable $handler
+     * @param  callable $handler
      * @return \Closure
      */
     public function __invoke(callable $handler)
     {
-        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use($handler) {
+        return function (\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $request, array $options) use ($handler) {
             // Requests using "auth"="scoped" will be authorized.
             if (!isset($options['auth']) || $options['auth'] !== 'simple') {
                 return $handler($request, $options);

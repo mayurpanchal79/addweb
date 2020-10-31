@@ -1,4 +1,6 @@
-/** @typedef { import('@woocommerce/type-defs/hooks').StoreCartCoupon } StoreCartCoupon */
+/**
+ * @typedef { import('@woocommerce/type-defs/hooks').StoreCartCoupon } StoreCartCoupon 
+ */
 
 /**
  * External dependencies
@@ -24,93 +26,102 @@ import { useStoreNotices } from '../use-store-notices';
  * store api /cart/coupons endpoint.
  */
 export const useStoreCartCoupons = () => {
-	const { cartCoupons, cartIsLoading } = useStoreCart();
-	const { addErrorNotice, addSnackbarNotice } = useStoreNotices();
-	const { setValidationErrors } = useValidationContext();
+    const { cartCoupons, cartIsLoading } = useStoreCart();
+    const { addErrorNotice, addSnackbarNotice } = useStoreNotices();
+    const { setValidationErrors } = useValidationContext();
 
-	const results = useSelect(
-		( select, { dispatch } ) => {
-			const store = select( storeKey );
-			const isApplyingCoupon = store.isApplyingCoupon();
-			const isRemovingCoupon = store.isRemovingCoupon();
-			const {
-				applyCoupon,
-				removeCoupon,
-				receiveApplyingCoupon,
-			} = dispatch( storeKey );
+    const results = useSelect(
+        ( select, { dispatch } ) => {
+        const store = select(storeKey);
+        const isApplyingCoupon = store.isApplyingCoupon();
+        const isRemovingCoupon = store.isRemovingCoupon();
+        const {
+                applyCoupon,
+                removeCoupon,
+                receiveApplyingCoupon,
+            } = dispatch(storeKey);
+        const applyCouponWithNotices = ( couponCode ) => {
+        applyCoupon(couponCode)
+                .then(
+                    ( result ) => {
+                    if (result === true ) {
+                        addSnackbarNotice(
+                        sprintf(
+                        // translators: %s coupon code.
+                        __(
+                        'Coupon code "%s" has been applied to your cart.',
+                        'woocommerce'
+                        ),
+                        couponCode
+                        ),
+                        {
+                            id: 'coupon-form',
+                            }
+                            );
+                    }
+                    } 
+                )
+            .catch(
+                ( error ) => {
+                setValidationErrors(
+                        {
+                        coupon: {
+                            message: decodeEntities(error.message),
+                            hidden: false,
+                        },
+                        } 
+                    );
+                // Finished handling the coupon.
+                receiveApplyingCoupon('');
+                } 
+            );
+        };
+        const removeCouponWithNotices = ( couponCode ) => {
+                removeCoupon(couponCode)
+                .then(
+                    ( result ) => {
+                    if (result === true ) {
+                        addSnackbarNotice(
+                        sprintf(
+                        // translators: %s coupon code.
+                        __(
+                        'Coupon code "%s" has been removed from your cart.',
+                        'woocommerce'
+                        ),
+                        couponCode
+                        ),
+                        {
+                            id: 'coupon-form',
+                            }
+                            );
+                    }
+                    } 
+                )
+            .catch(
+                ( error ) => {
+                addErrorNotice(
+                        error.message, {
+                        id: 'coupon-form',
+                        } 
+                    );
+                // Finished handling the coupon.
+                receiveApplyingCoupon('');
+                } 
+            );
+        };
+        return {
+                applyCoupon: applyCouponWithNotices,
+                removeCoupon: removeCouponWithNotices,
+                isApplyingCoupon,
+                isRemovingCoupon,
+            };
+        },
+        [ addErrorNotice, addSnackbarNotice ]
+    );
 
-			const applyCouponWithNotices = ( couponCode ) => {
-				applyCoupon( couponCode )
-					.then( ( result ) => {
-						if ( result === true ) {
-							addSnackbarNotice(
-								sprintf(
-									// translators: %s coupon code.
-									__(
-										'Coupon code "%s" has been applied to your cart.',
-										'woocommerce'
-									),
-									couponCode
-								),
-								{
-									id: 'coupon-form',
-								}
-							);
-						}
-					} )
-					.catch( ( error ) => {
-						setValidationErrors( {
-							coupon: {
-								message: decodeEntities( error.message ),
-								hidden: false,
-							},
-						} );
-						// Finished handling the coupon.
-						receiveApplyingCoupon( '' );
-					} );
-			};
-
-			const removeCouponWithNotices = ( couponCode ) => {
-				removeCoupon( couponCode )
-					.then( ( result ) => {
-						if ( result === true ) {
-							addSnackbarNotice(
-								sprintf(
-									// translators: %s coupon code.
-									__(
-										'Coupon code "%s" has been removed from your cart.',
-										'woocommerce'
-									),
-									couponCode
-								),
-								{
-									id: 'coupon-form',
-								}
-							);
-						}
-					} )
-					.catch( ( error ) => {
-						addErrorNotice( error.message, {
-							id: 'coupon-form',
-						} );
-						// Finished handling the coupon.
-						receiveApplyingCoupon( '' );
-					} );
-			};
-
-			return {
-				applyCoupon: applyCouponWithNotices,
-				removeCoupon: removeCouponWithNotices,
-				isApplyingCoupon,
-				isRemovingCoupon,
-			};
-		},
-		[ addErrorNotice, addSnackbarNotice ]
-	);
-
-	return {
-		appliedCoupons: cartCoupons,
-		isLoading: cartIsLoading,
-		...results,
-	};
+    return {
+        appliedCoupons: cartCoupons,
+        isLoading: cartIsLoading,
+        ...results,
+    };
 };

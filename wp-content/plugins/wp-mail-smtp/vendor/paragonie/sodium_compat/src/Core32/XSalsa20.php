@@ -14,9 +14,9 @@ abstract class ParagonIE_Sodium_Core32_XSalsa20 extends ParagonIE_Sodium_Core32_
      *
      * @internal You should not use this directly from another application
      *
-     * @param int $len
-     * @param string $nonce
-     * @param string $key
+     * @param  int    $len
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -36,9 +36,9 @@ abstract class ParagonIE_Sodium_Core32_XSalsa20 extends ParagonIE_Sodium_Core32_
      *
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $nonce
-     * @param string $key
+     * @param  string $message
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError

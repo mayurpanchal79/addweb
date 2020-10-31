@@ -9,30 +9,30 @@ import { getSetting } from '@woocommerce/settings';
  * Returns an element containing a summary of the product.
  */
 const ProductSummary = ( {
-	className,
-	shortDescription = '',
-	fullDescription = '',
+    className,
+    shortDescription = '',
+    fullDescription = '',
 } ) => {
-	const source = shortDescription ? shortDescription : fullDescription;
+    const source = shortDescription ? shortDescription : fullDescription;
 
-	if ( ! source ) {
-		return null;
-	}
+    if (! source ) {
+        return null;
+    }
 
-	return (
-		<Summary
-			className={ className }
-			source={ source }
-			maxLength={ 15 }
-			countType={ getSetting( 'wordCountType', 'words' ) }
-		/>
-	);
+    return (
+    <Summary
+    className={ className }
+    source={ source }
+    maxLength={ 15 }
+    countType={ getSetting('wordCountType', 'words') }
+    />
+    );
 };
 
 ProductSummary.propTypes = {
-	className: PropTypes.string,
-	shortDescription: PropTypes.string,
-	fullDescription: PropTypes.string,
+    className: PropTypes.string,
+    shortDescription: PropTypes.string,
+    fullDescription: PropTypes.string,
 };
 
 export default ProductSummary;

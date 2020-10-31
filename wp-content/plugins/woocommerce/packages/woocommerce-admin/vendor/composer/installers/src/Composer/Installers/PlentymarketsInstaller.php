@@ -9,6 +9,7 @@ class PlentymarketsInstaller extends BaseInstaller
 
     /**
      * Remove hyphen, "plugin" and format to camelcase
+     *
      * @param array $vars
      *
      * @return array
@@ -22,7 +23,7 @@ class PlentymarketsInstaller extends BaseInstaller
                 unset($vars['name'][$key]);
             }
         }
-        $vars['name'] = implode("",$vars['name']);
+        $vars['name'] = implode("", $vars['name']);
 
         return $vars;
     }

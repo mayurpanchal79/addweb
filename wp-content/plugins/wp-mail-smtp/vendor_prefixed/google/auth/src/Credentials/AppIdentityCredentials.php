@@ -104,7 +104,7 @@ class AppIdentityCredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsL
      * As the AppIdentityService uses protobufs to fetch the access token,
      * the GuzzleHttp\ClientInterface instance passed in will not be used.
      *
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array A set of auth related metadata, containing the following
      *     keys:
      *         - access_token (string)
@@ -126,9 +126,9 @@ class AppIdentityCredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsL
     /**
      * Sign a string using AppIdentityService.
      *
-     * @param string $stringToSign The string to sign.
-     * @param bool $forceOpenSsl [optional] Does not apply to this credentials
-     *        type.
+     * @param  string $stringToSign The string to sign.
+     * @param  bool   $forceOpenSsl [optional] Does not apply to this credentials
+     *                              type.
      * @return string The signature, base64-encoded.
      * @throws \Exception If AppEngine SDK or mock is not available.
      */
@@ -142,7 +142,7 @@ class AppIdentityCredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsL
      *
      * Returns null if AppIdentityService is unavailable.
      *
-     * @param callable $httpHandler Not used by this type.
+     * @param  callable $httpHandler Not used by this type.
      * @return string|null
      */
     public function getProjectId(callable $httpHander = null)
@@ -159,7 +159,7 @@ class AppIdentityCredentials extends \WPMailSMTP\Vendor\Google\Auth\CredentialsL
      *
      * Subsequent calls to this method will return a cached value.
      *
-     * @param callable $httpHandler Not used in this implementation.
+     * @param  callable $httpHandler Not used in this implementation.
      * @return string
      * @throws \Exception If AppEngine SDK or mock is not available.
      */

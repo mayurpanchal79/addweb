@@ -10,9 +10,9 @@ if (class_exists('ParagonIE_Sodium_Core32_HChaCha20', false)) {
 class ParagonIE_Sodium_Core32_HChaCha20 extends ParagonIE_Sodium_Core32_ChaCha20
 {
     /**
-     * @param string $in
-     * @param string $key
-     * @param string|null $c
+     * @param  string      $in
+     * @param  string      $key
+     * @param  string|null $c
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -49,69 +49,101 @@ class ParagonIE_Sodium_Core32_HChaCha20 extends ParagonIE_Sodium_Core32_ChaCha20
     }
 
     /**
-     * @param array $ctx
+     * @param  array $ctx
      * @return string
      * @throws SodiumException
      * @throws TypeError
      */
     protected static function hChaCha20Bytes(array $ctx)
     {
-        /** @var ParagonIE_Sodium_Core32_Int32 $x0 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x0 
+*/
         $x0  = $ctx[0];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x1 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x1 
+*/
         $x1  = $ctx[1];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x2 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x2 
+*/
         $x2  = $ctx[2];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x3 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x3 
+*/
         $x3  = $ctx[3];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x4 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x4 
+*/
         $x4  = $ctx[4];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x5 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x5 
+*/
         $x5  = $ctx[5];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x6 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x6 
+*/
         $x6  = $ctx[6];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x7 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x7 
+*/
         $x7  = $ctx[7];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x8 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x8 
+*/
         $x8  = $ctx[8];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x9 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x9 
+*/
         $x9  = $ctx[9];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x10 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x10 
+*/
         $x10 = $ctx[10];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x11 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x11 
+*/
         $x11 = $ctx[11];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x12 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x12 
+*/
         $x12 = $ctx[12];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x13 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x13 
+*/
         $x13 = $ctx[13];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x14 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x14 
+*/
         $x14 = $ctx[14];
-        /** @var ParagonIE_Sodium_Core32_Int32 $x15 */
+        /**
+ * @var ParagonIE_Sodium_Core32_Int32 $x15 
+*/
         $x15 = $ctx[15];
 
         for ($i = 0; $i < 10; ++$i) {
-            # QUARTERROUND( x0,  x4,  x8,  x12)
+            // QUARTERROUND( x0,  x4,  x8,  x12)
             list($x0, $x4, $x8, $x12) = self::quarterRound($x0, $x4, $x8, $x12);
 
-            # QUARTERROUND( x1,  x5,  x9,  x13)
+            // QUARTERROUND( x1,  x5,  x9,  x13)
             list($x1, $x5, $x9, $x13) = self::quarterRound($x1, $x5, $x9, $x13);
 
-            # QUARTERROUND( x2,  x6,  x10,  x14)
+            // QUARTERROUND( x2,  x6,  x10,  x14)
             list($x2, $x6, $x10, $x14) = self::quarterRound($x2, $x6, $x10, $x14);
 
-            # QUARTERROUND( x3,  x7,  x11,  x15)
+            // QUARTERROUND( x3,  x7,  x11,  x15)
             list($x3, $x7, $x11, $x15) = self::quarterRound($x3, $x7, $x11, $x15);
 
-            # QUARTERROUND( x0,  x5,  x10,  x15)
+            // QUARTERROUND( x0,  x5,  x10,  x15)
             list($x0, $x5, $x10, $x15) = self::quarterRound($x0, $x5, $x10, $x15);
 
-            # QUARTERROUND( x1,  x6,  x11,  x12)
+            // QUARTERROUND( x1,  x6,  x11,  x12)
             list($x1, $x6, $x11, $x12) = self::quarterRound($x1, $x6, $x11, $x12);
 
-            # QUARTERROUND( x2,  x7,  x8,  x13)
+            // QUARTERROUND( x2,  x7,  x8,  x13)
             list($x2, $x7, $x8, $x13) = self::quarterRound($x2, $x7, $x8, $x13);
 
-            # QUARTERROUND( x3,  x4,  x9,  x14)
+            // QUARTERROUND( x3,  x4,  x9,  x14)
             list($x3, $x4, $x9, $x14) = self::quarterRound($x3, $x4, $x9, $x14);
         }
 

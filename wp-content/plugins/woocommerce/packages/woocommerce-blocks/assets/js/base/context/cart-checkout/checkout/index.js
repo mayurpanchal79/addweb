@@ -19,16 +19,16 @@ import CheckoutProcessor from './processor';
  *                                      submit.
  */
 export const CheckoutProvider = ( { children, redirectUrl } ) => {
-	return (
-		<CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ false }>
-			<BillingDataProvider>
-				<ShippingDataProvider>
-					<PaymentMethodDataProvider>
-						{ children }
-						<CheckoutProcessor />
-					</PaymentMethodDataProvider>
-				</ShippingDataProvider>
-			</BillingDataProvider>
-		</CheckoutStateProvider>
-	);
+    return (
+    <CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ false }>
+    <BillingDataProvider>
+                <ShippingDataProvider>
+                    <PaymentMethodDataProvider>
+                        { children }
+                        <CheckoutProcessor />
+                    </PaymentMethodDataProvider>
+                </ShippingDataProvider>
+    </BillingDataProvider>
+    </CheckoutStateProvider>
+    );
 };

@@ -30,10 +30,10 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
     /**
      * Creates a new label. (labels.create)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Label $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Label $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Label
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Label $postBody, $optParams = array())
@@ -46,10 +46,10 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
      * Immediately and permanently deletes the specified label and removes it from
      * any messages and threads that it is applied to. (labels.delete)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the label to delete.
-     * @param array $optParams Optional parameters.
+     * @param string $userId    The user's email address. The special value `me` can be
+     *                          used to indicate the authenticated user.
+     * @param string $id        The ID of the label to delete.
+     * @param array  $optParams Optional parameters.
      */
     public function delete($userId, $id, $optParams = array())
     {
@@ -60,10 +60,10 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
     /**
      * Gets the specified label. (labels.get)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the label to retrieve.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  string $id        The ID of the label to retrieve.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_Label
      */
     public function get($userId, $id, $optParams = array())
@@ -75,9 +75,9 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
     /**
      * Lists all labels in the user's mailbox. (labels.listUsersLabels)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    The user's email address. The special value `me` can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ListLabelsResponse
      */
     public function listUsersLabels($userId, $optParams = array())
@@ -89,11 +89,11 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
     /**
      * Patch the specified label. (labels.patch)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the label to update.
-     * @param Google_Service_Gmail_Label $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  string                     $id        The ID of the label to update.
+     * @param  Google_Service_Gmail_Label $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Label
      */
     public function patch($userId, $id, \WPMailSMTP\Vendor\Google_Service_Gmail_Label $postBody, $optParams = array())
@@ -105,11 +105,11 @@ class Google_Service_Gmail_Resource_UsersLabels extends \WPMailSMTP\Vendor\Googl
     /**
      * Updates the specified label. (labels.update)
      *
-     * @param string $userId The user's email address. The special value `me` can be
-     * used to indicate the authenticated user.
-     * @param string $id The ID of the label to update.
-     * @param Google_Service_Gmail_Label $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                     $userId    The user's email address. The special value `me` can be
+     *                                               used to indicate the authenticated user.
+     * @param  string                     $id        The ID of the label to update.
+     * @param  Google_Service_Gmail_Label $postBody
+     * @param  array                      $optParams Optional parameters.
      * @return Google_Service_Gmail_Label
      */
     public function update($userId, $id, \WPMailSMTP\Vendor\Google_Service_Gmail_Label $postBody, $optParams = array())

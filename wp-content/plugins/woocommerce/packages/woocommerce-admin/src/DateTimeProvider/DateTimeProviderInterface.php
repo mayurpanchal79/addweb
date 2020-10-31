@@ -6,16 +6,17 @@
 
 namespace Automattic\WooCommerce\Admin\DateTimeProvider;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * DateTime Provider Interface.
  */
-interface DateTimeProviderInterface {
-	/**
-	 * Returns the current DateTime.
-	 *
-	 * @return DateTime
-	 */
-	public function get_now();
+interface DateTimeProviderInterface
+{
+    /**
+     * Returns the current DateTime.
+     *
+     * @return DateTime
+     */
+    public function get_now();
 }

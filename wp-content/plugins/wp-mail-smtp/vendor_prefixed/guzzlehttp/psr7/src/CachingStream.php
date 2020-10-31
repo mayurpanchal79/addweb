@@ -10,9 +10,13 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
 class CachingStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
 {
     use StreamDecoratorTrait;
-    /** @var StreamInterface Stream being wrapped */
+    /**
+     * @var StreamInterface Stream being wrapped 
+     */
     private $remoteStream;
-    /** @var int Number of bytes to skip reading due to a write on the buffer */
+    /**
+     * @var int Number of bytes to skip reading due to a write on the buffer 
+     */
     private $skipReadBytes = 0;
     /**
      * We will treat the buffer object as the body of the stream

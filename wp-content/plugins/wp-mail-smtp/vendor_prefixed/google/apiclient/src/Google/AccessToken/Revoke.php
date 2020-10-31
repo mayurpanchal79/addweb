@@ -23,7 +23,6 @@ use WPMailSMTP\Vendor\GuzzleHttp\Psr7;
 use WPMailSMTP\Vendor\GuzzleHttp\Psr7\Request;
 /**
  * Wrapper around Google Access Tokens which provides convenience functions
- *
  */
 class Google_AccessToken_Revoke
 {
@@ -43,7 +42,7 @@ class Google_AccessToken_Revoke
      * Revoke an OAuth2 access token or refresh token. This method will revoke the current access
      * token, if a token isn't provided.
      *
-     * @param string|array $token The token (access token or a refresh token) that should be revoked.
+     * @param  string|array $token The token (access token or a refresh token) that should be revoked.
      * @return boolean Returns True if the revocation was successful, otherwise False.
      */
     public function revokeToken($token)

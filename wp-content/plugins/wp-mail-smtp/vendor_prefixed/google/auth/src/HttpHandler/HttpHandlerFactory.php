@@ -24,7 +24,7 @@ class HttpHandlerFactory
     /**
      * Builds out a default http handler for the installed version of guzzle.
      *
-     * @param ClientInterface $client
+     * @param  ClientInterface $client
      * @return Guzzle5HttpHandler|Guzzle6HttpHandler|Guzzle7HttpHandler
      * @throws \Exception
      */
@@ -38,14 +38,14 @@ class HttpHandlerFactory
             $version = (int) \substr(\WPMailSMTP\Vendor\GuzzleHttp\ClientInterface::VERSION, 0, 1);
         }
         switch ($version) {
-            case 5:
-                return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle5HttpHandler($client);
-            case 6:
-                return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle6HttpHandler($client);
-            case 7:
-                return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle7HttpHandler($client);
-            default:
-                throw new \Exception('Version not supported');
+        case 5:
+            return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle5HttpHandler($client);
+        case 6:
+            return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle6HttpHandler($client);
+        case 7:
+            return new \WPMailSMTP\Vendor\Google\Auth\HttpHandler\Guzzle7HttpHandler($client);
+        default:
+            throw new \Exception('Version not supported');
         }
     }
 }

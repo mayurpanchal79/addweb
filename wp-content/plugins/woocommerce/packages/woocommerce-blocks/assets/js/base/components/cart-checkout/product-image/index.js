@@ -9,19 +9,21 @@ import PropTypes from 'prop-types';
  * Formats and returns an image element.
  */
 const ProductImage = ( { image = {} } ) => {
-	const imageProps = {
-		src: image.thumbnail || PLACEHOLDER_IMG_SRC,
-		alt: decodeEntities( image.alt ) || '',
-	};
+    const imageProps = {
+        src: image.thumbnail || PLACEHOLDER_IMG_SRC,
+        alt: decodeEntities(image.alt) || '',
+    };
 
-	return <img { ...imageProps } alt={ imageProps.alt } />;
+    return <img { ...imageProps } alt={ imageProps.alt } />;
 };
 
 ProductImage.propTypes = {
-	image: PropTypes.shape( {
-		alt: PropTypes.string,
-		thumbnail: PropTypes.string,
-	} ),
+    image: PropTypes.shape(
+        {
+            alt: PropTypes.string,
+            thumbnail: PropTypes.string,
+        } 
+    ),
 };
 
 export default ProductImage;

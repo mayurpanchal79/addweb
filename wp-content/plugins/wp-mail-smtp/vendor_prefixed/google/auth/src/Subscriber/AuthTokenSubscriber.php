@@ -50,9 +50,9 @@ class AuthTokenSubscriber implements \WPMailSMTP\Vendor\GuzzleHttp\Event\Subscri
     /**
      * Creates a new AuthTokenSubscriber.
      *
-     * @param FetchAuthTokenInterface $fetcher is used to fetch the auth token
-     * @param callable $httpHandler (optional) http client to fetch the token.
-     * @param callable $tokenCallback (optional) function to be called when a new token is fetched.
+     * @param FetchAuthTokenInterface $fetcher       is used to fetch the auth token
+     * @param callable                $httpHandler   (optional) http client to fetch the token.
+     * @param callable                $tokenCallback (optional) function to be called when a new token is fetched.
      */
     public function __construct(\WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface $fetcher, callable $httpHandler = null, callable $tokenCallback = null)
     {

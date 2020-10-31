@@ -2,16 +2,16 @@
  * External dependencies
  */
 import {
-	withRestApiHydration,
-	withStoreCartApiHydration,
+    withRestApiHydration,
+    withStoreCartApiHydration,
 } from '@woocommerce/block-hocs';
 import { __ } from '@wordpress/i18n';
 import { StoreNoticesProvider } from '@woocommerce/base-context';
 import { CURRENT_USER_IS_ADMIN } from '@woocommerce/block-settings';
 import { __experimentalCreateInterpolateElement } from 'wordpress-element';
 import {
-	renderFrontend,
-	getValidBlockAttributes,
+    renderFrontend,
+    getValidBlockAttributes,
 } from '@woocommerce/base-utils';
 
 /**
@@ -20,51 +20,53 @@ import {
 import Block from './block.js';
 import blockAttributes from './attributes';
 
-const reloadPage = () => void window.location.reload( true );
+const reloadPage = () => void window.location.reload(true);
 /**
  * Wrapper component to supply API data and show empty cart view as needed.
  *
  * @param {*} props
  */
 const CartFrontend = ( props ) => {
-	return (
-		<StoreNoticesProvider context="wc/cart">
-			<Block { ...props } />
-		</StoreNoticesProvider>
-	);
+    return (
+    <StoreNoticesProvider context="wc/cart">
+    <Block { ...props } />
+    </StoreNoticesProvider>
+    );
 };
 
 const getProps = ( el ) => {
-	return {
-		emptyCart: el.innerHTML,
-		attributes: getValidBlockAttributes( blockAttributes, el.dataset ),
-	};
+    return {
+        emptyCart: el.innerHTML,
+        attributes: getValidBlockAttributes(blockAttributes, el.dataset),
+    };
 };
 
 const getErrorBoundaryProps = () => {
-	return {
-		header: __( 'Something went wrong…', 'woocommerce' ),
-		text: __experimentalCreateInterpolateElement(
-			__(
-				'The cart has encountered an unexpected error. <button>Try reloading the page</button>. If the error persists, please get in touch with us so we can assist.',
-				'woocommerce'
-			),
-			{
-				button: (
-					<button
-						className="wc-block-link-button"
-						onClick={ reloadPage }
-					/>
-				),
-			}
-		),
-		showErrorMessage: CURRENT_USER_IS_ADMIN,
-	};
+    return {
+        header: __('Something went wrong…', 'woocommerce'),
+        text: __experimentalCreateInterpolateElement(
+            __(
+                'The cart has encountered an unexpected error. <button>Try reloading the page</button>. If the error persists, please get in touch with us so we can assist.',
+                'woocommerce'
+            ),
+            {
+                button: (
+                <button
+                className="wc-block-link-button"
+                onClick={ reloadPage }
+                />
+            ),
+            }
+        ),
+    showErrorMessage: CURRENT_USER_IS_ADMIN,
+    };
 };
 
-renderFrontend( {
-	selector: '.wp-block-woocommerce-cart',
-	Block: withStoreCartApiHydration( withRestApiHydration( CartFrontend ) ),
-	getProps,
-	getErrorBoundaryProps,
-} );
+renderFrontend(
+    {
+        selector: '.wp-block-woocommerce-cart',
+        Block: withStoreCartApiHydration(withRestApiHydration(CartFrontend)),
+            getProps,
+            getErrorBoundaryProps,
+    } 
+);

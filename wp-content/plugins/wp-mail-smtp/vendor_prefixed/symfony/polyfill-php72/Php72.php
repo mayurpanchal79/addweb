@@ -25,17 +25,17 @@ final class Php72
         $len = \strlen($s);
         for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
             switch (\true) {
-                case $s[$i] < "€":
-                    $s[$j] = $s[$i];
-                    break;
-                case $s[$i] < "À":
-                    $s[$j] = "Â";
-                    $s[++$j] = $s[$i];
-                    break;
-                default:
-                    $s[$j] = "Ã";
-                    $s[++$j] = \chr(\ord($s[$i]) - 64);
-                    break;
+            case $s[$i] < "€":
+                $s[$j] = $s[$i];
+                break;
+            case $s[$i] < "À":
+                $s[$j] = "Â";
+                $s[++$j] = $s[$i];
+                break;
+            default:
+                $s[$j] = "Ã";
+                $s[++$j] = \chr(\ord($s[$i]) - 64);
+                break;
             }
         }
         return \substr($s, 0, $j);
@@ -46,20 +46,20 @@ final class Php72
         $len = \strlen($s);
         for ($i = 0, $j = 0; $i < $len; ++$i, ++$j) {
             switch ($s[$i] & "ð") {
-                case "À":
-                case "Ð":
-                    $c = \ord($s[$i] & "\37") << 6 | \ord($s[++$i] & "?");
-                    $s[$j] = $c < 256 ? \chr($c) : '?';
-                    break;
-                case "ð":
-                    ++$i;
+            case "À":
+            case "Ð":
+                $c = \ord($s[$i] & "\37") << 6 | \ord($s[++$i] & "?");
+                $s[$j] = $c < 256 ? \chr($c) : '?';
+                break;
+            case "ð":
+                ++$i;
                 // no break
-                case "à":
-                    $s[$j] = '?';
-                    $i += 2;
-                    break;
-                default:
-                    $s[$j] = $s[$i];
+            case "à":
+                $s[$j] = '?';
+                $i += 2;
+                break;
+            default:
+                $s[$j] = $s[$i];
             }
         }
         return \substr($s, 0, $j);

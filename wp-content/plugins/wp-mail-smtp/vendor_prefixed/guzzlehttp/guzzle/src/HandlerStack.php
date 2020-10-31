@@ -11,11 +11,17 @@ use WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface;
  */
 class HandlerStack
 {
-    /** @var callable|null */
+    /**
+     * @var callable|null 
+     */
     private $handler;
-    /** @var array */
+    /**
+     * @var array 
+     */
     private $stack = [];
-    /** @var callable|null */
+    /**
+     * @var callable|null 
+     */
     private $cached;
     /**
      * Creates a default handler stack that can be used by clients.
@@ -161,9 +167,13 @@ class HandlerStack
     {
         $this->cached = null;
         $idx = \is_callable($remove) ? 0 : 1;
-        $this->stack = \array_values(\array_filter($this->stack, function ($tuple) use($idx, $remove) {
-            return $tuple[$idx] !== $remove;
-        }));
+        $this->stack = \array_values(
+            \array_filter(
+                $this->stack, function ($tuple) use ($idx, $remove) {
+                    return $tuple[$idx] !== $remove;
+                }
+            )
+        );
     }
     /**
      * Compose the middleware and handler into a single callable function.
@@ -184,7 +194,7 @@ class HandlerStack
         return $this->cached;
     }
     /**
-     * @param string $name
+     * @param  string $name
      * @return int
      */
     private function findByName($name)

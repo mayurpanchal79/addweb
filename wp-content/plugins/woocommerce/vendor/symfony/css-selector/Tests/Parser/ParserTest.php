@@ -20,17 +20,25 @@ use Symfony\Component\CssSelector\Parser\Token;
 
 class ParserTest extends TestCase
 {
-    /** @dataProvider getParserTestData */
+    /**
+     * @dataProvider getParserTestData 
+     */
     public function testParser($source, $representation)
     {
         $parser = new Parser();
 
-        $this->assertEquals($representation, array_map(function (SelectorNode $node) {
-            return (string) $node->getTree();
-        }, $parser->parse($source)));
+        $this->assertEquals(
+            $representation, array_map(
+                function (SelectorNode $node) {
+                    return (string) $node->getTree();
+                }, $parser->parse($source)
+            )
+        );
     }
 
-    /** @dataProvider getParserExceptionTestData */
+    /**
+     * @dataProvider getParserExceptionTestData 
+     */
     public function testParserException($source, $message)
     {
         $parser = new Parser();
@@ -43,51 +51,67 @@ class ParserTest extends TestCase
         }
     }
 
-    /** @dataProvider getPseudoElementsTestData */
+    /**
+     * @dataProvider getPseudoElementsTestData 
+     */
     public function testPseudoElements($source, $element, $pseudo)
     {
         $parser = new Parser();
         $selectors = $parser->parse($source);
         $this->assertCount(1, $selectors);
 
-        /** @var SelectorNode $selector */
+        /**
+ * @var SelectorNode $selector 
+*/
         $selector = $selectors[0];
         $this->assertEquals($element, (string) $selector->getTree());
         $this->assertEquals($pseudo, (string) $selector->getPseudoElement());
     }
 
-    /** @dataProvider getSpecificityTestData */
+    /**
+     * @dataProvider getSpecificityTestData 
+     */
     public function testSpecificity($source, $value)
     {
         $parser = new Parser();
         $selectors = $parser->parse($source);
         $this->assertCount(1, $selectors);
 
-        /** @var SelectorNode $selector */
+        /**
+ * @var SelectorNode $selector 
+*/
         $selector = $selectors[0];
         $this->assertEquals($value, $selector->getSpecificity()->getValue());
     }
 
-    /** @dataProvider getParseSeriesTestData */
+    /**
+     * @dataProvider getParseSeriesTestData 
+     */
     public function testParseSeries($series, $a, $b)
     {
         $parser = new Parser();
         $selectors = $parser->parse(sprintf(':nth-child(%s)', $series));
         $this->assertCount(1, $selectors);
 
-        /** @var FunctionNode $function */
+        /**
+ * @var FunctionNode $function 
+*/
         $function = $selectors[0]->getTree();
         $this->assertEquals([$a, $b], Parser::parseSeries($function->getArguments()));
     }
 
-    /** @dataProvider getParseSeriesExceptionTestData */
+    /**
+     * @dataProvider getParseSeriesExceptionTestData 
+     */
     public function testParseSeriesException($series)
     {
         $parser = new Parser();
         $selectors = $parser->parse(sprintf(':nth-child(%s)', $series));
         $this->assertCount(1, $selectors);
 
-        /** @var FunctionNode $function */
+        /**
+ * @var FunctionNode $function 
+*/
         $function = $selectors[0]->getTree();
         $this->expectException('Symfony\Component\CssSelector\Exception\SyntaxErrorException');
         Parser::parseSeries($function->getArguments());

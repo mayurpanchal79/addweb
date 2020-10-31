@@ -1,7 +1,7 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+if (! defined('ABSPATH') ) {
+    exit; // Exit if accessed directly.
 }
 
 /**
@@ -13,52 +13,56 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param string $class The fully-qualified class name.
  */
-spl_autoload_register( function ( $class ) {
+spl_autoload_register(
+    function ( $class ) {
 
-	list( $plugin_space ) = explode( '\\', $class );
-	if ( $plugin_space !== 'WPMailSMTP' ) {
-		return;
-	}
+        list( $plugin_space ) = explode('\\', $class);
+        if ($plugin_space !== 'WPMailSMTP' ) {
+            return;
+        }
 
-	/*
-	 * This folder can be both "wp-mail-smtp" and "wp-mail-smtp-pro".
-	 */
-	$plugin_dir = basename( __DIR__ );
+        /*
+            * This folder can be both "wp-mail-smtp" and "wp-mail-smtp-pro".
+            */
+        $plugin_dir = basename(__DIR__);
 
-	// Default directory for all code is plugin's /src/.
-	$base_dir = plugin_dir_path( __DIR__ ) . '/' . $plugin_dir . '/src/';
+        // Default directory for all code is plugin's /src/.
+        $base_dir = plugin_dir_path(__DIR__) . '/' . $plugin_dir . '/src/';
 
-	// Get the relative class name.
-	$relative_class = substr( $class, strlen( $plugin_space ) + 1 );
+        // Get the relative class name.
+        $relative_class = substr($class, strlen($plugin_space) + 1);
 
-	/**
-	 * Normalize a filesystem path.
-	 * Copy of the `wp_normalize_path()` from WordPress 3.9.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param string $path
-	 *
-	 * @return string
-	 */
-	$normalize = function( $path ) {
-		$path = str_replace( '\\', '/', $path );
-		$path = preg_replace( '|(?<=.)/+|', '/', $path );
-		if ( ':' === substr( $path, 1, 1 ) ) {
-			$path = ucfirst( $path );
-		}
-		return $path;
-	};
+        /**
+         * Normalize a filesystem path.
+         * Copy of the `wp_normalize_path()` from WordPress 3.9.
+         *
+         * @since 1.2.0
+         *
+         * @param string $path
+         *
+         * @return string
+         */
+        $normalize = function ( $path ) {
+            $path = str_replace('\\', '/', $path);
+            $path = preg_replace('|(?<=.)/+|', '/', $path);
+            if (':' === substr($path, 1, 1) ) {
+                $path = ucfirst($path);
+            }
+            return $path;
+        };
 
-	// Prepare a path to a file.
-	$file = $normalize( $base_dir . $relative_class . '.php' );
+        // Prepare a path to a file.
+        $file = $normalize($base_dir . $relative_class . '.php');
 
-	// If the file exists, require it.
-	if ( is_readable( $file ) ) {
-		/** @noinspection PhpIncludeInspection */
-		require_once $file;
-	}
-} );
+        // If the file exists, require it.
+        if (is_readable($file) ) {
+            /**
+        * @noinspection PhpIncludeInspection 
+      */
+            include_once $file;
+        }
+    } 
+);
 
 /**
  * Global function-holder. Works similar to a singleton's instance().
@@ -67,17 +71,18 @@ spl_autoload_register( function ( $class ) {
  *
  * @return WPMailSMTP\Core
  */
-function wp_mail_smtp() {
-	/**
-	 * @var \WPMailSMTP\Core
-	 */
-	static $core;
+function wp_mail_smtp()
+{
+    /**
+     * @var \WPMailSMTP\Core
+     */
+    static $core;
 
-	if ( ! isset( $core ) ) {
-		$core = new \WPMailSMTP\Core();
-	}
+    if (! isset($core) ) {
+        $core = new \WPMailSMTP\Core();
+    }
 
-	return $core;
+    return $core;
 }
 
 wp_mail_smtp();

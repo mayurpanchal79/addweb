@@ -11,12 +11,12 @@ import { decodeEntities } from '@wordpress/html-entities';
  */
 import { PAYMENT_METHOD_NAME } from './constants';
 
-const settings = getSetting( 'bacs_data', {} );
+const settings = getSetting('bacs_data', {});
 const defaultLabel = __(
-	'Direct bank transfer',
-	'woocommerce'
+    'Direct bank transfer',
+    'woocommerce'
 );
-const label = decodeEntities( settings.title ) || defaultLabel;
+const label = decodeEntities(settings.title) || defaultLabel;
 
 /**
  * @typedef {import('@woocommerce/type-defs/registered-payment-method-props').RegisteredPaymentMethodProps} RegisteredPaymentMethodProps
@@ -26,7 +26,7 @@ const label = decodeEntities( settings.title ) || defaultLabel;
  * Content component
  */
 const Content = () => {
-	return <div>{ decodeEntities( settings.description || '' ) }</div>;
+    return <div>{ decodeEntities(settings.description || '') }</div>;
 };
 
 /**
@@ -35,21 +35,21 @@ const Content = () => {
  * @param {*} props Props from payment API.
  */
 const Label = ( props ) => {
-	const { PaymentMethodLabel } = props.components;
-	return <PaymentMethodLabel text={ label } />;
+    const { PaymentMethodLabel } = props.components;
+    return <PaymentMethodLabel text={ label } />;
 };
 
 /**
  * Bank transfer (BACS) payment method config object.
  */
 const bankTransferPaymentMethod = {
-	name: PAYMENT_METHOD_NAME,
-	label: <Label />,
-	content: <Content />,
-	edit: <Content />,
-	icons: null,
-	canMakePayment: () => true,
-	ariaLabel: label,
+    name: PAYMENT_METHOD_NAME,
+    label: <Label />,
+    content: <Content />,
+    edit: <Content />,
+    icons: null,
+    canMakePayment: () => true,
+    ariaLabel: label,
 };
 
-registerPaymentMethod( ( Config ) => new Config( bankTransferPaymentMethod ) );
+registerPaymentMethod(( Config ) => new Config(bankTransferPaymentMethod));

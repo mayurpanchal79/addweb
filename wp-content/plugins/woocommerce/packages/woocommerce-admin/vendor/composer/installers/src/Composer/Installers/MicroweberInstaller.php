@@ -18,7 +18,6 @@ class MicroweberInstaller extends BaseInstaller
      * For package type microweber-module, cut off a trailing '-module' if present
      *
      * For package type microweber-template, cut off a trailing '-template' if present.
-     *
      */
     public function inflectPackageVars($vars)
     {

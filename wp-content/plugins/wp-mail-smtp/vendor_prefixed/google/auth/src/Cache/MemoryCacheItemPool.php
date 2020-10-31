@@ -115,7 +115,7 @@ final class MemoryCacheItemPool implements \WPMailSMTP\Vendor\Psr\Cache\CacheIte
     /**
      * Determines if the provided key is valid.
      *
-     * @param string $key
+     * @param  string $key
      * @return bool
      * @throws InvalidArgumentException
      */

@@ -14,4 +14,4 @@ import '../blocks/component-init';
  * @param {string} blockName Name of the parent block.
  */
 export const getBlockMap = ( blockName ) =>
-	getRegisteredBlockComponents( blockName );
+    getRegisteredBlockComponents(blockName);

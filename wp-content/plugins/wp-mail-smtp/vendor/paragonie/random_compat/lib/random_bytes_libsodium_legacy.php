@@ -32,6 +32,7 @@ if (!is_callable('random_bytes')) {
      * solution.
      *
      * libsodium-php project:
+     *
      * @ref https://github.com/jedisct1/libsodium-php
      *
      * @param int $bytes
@@ -43,7 +44,9 @@ if (!is_callable('random_bytes')) {
     function random_bytes($bytes)
     {
         try {
-            /** @var int $bytes */
+            /**
+ * @var int $bytes 
+*/
             $bytes = RandomCompat_intval($bytes);
         } catch (TypeError $ex) {
             throw new TypeError(

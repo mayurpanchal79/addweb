@@ -16,34 +16,37 @@
 
 namespace Automattic\WooCommerce\Admin\API\Reports\Products;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 use \Automattic\WooCommerce\Admin\API\Reports\Query as ReportsQuery;
 
 /**
  * API\Reports\Products\Query
  */
-class Query extends ReportsQuery {
+class Query extends ReportsQuery
+{
 
-	/**
-	 * Valid fields for Products report.
-	 *
-	 * @return array
-	 */
-	protected function get_default_query_vars() {
-		return array();
-	}
+    /**
+     * Valid fields for Products report.
+     *
+     * @return array
+     */
+    protected function get_default_query_vars()
+    {
+        return array();
+    }
 
-	/**
-	 * Get product data based on the current query vars.
-	 *
-	 * @return array
-	 */
-	public function get_data() {
-		$args = apply_filters( 'woocommerce_analytics_products_query_args', $this->get_query_vars() );
+    /**
+     * Get product data based on the current query vars.
+     *
+     * @return array
+     */
+    public function get_data()
+    {
+        $args = apply_filters('woocommerce_analytics_products_query_args', $this->get_query_vars());
 
-		$data_store = \WC_Data_Store::load( 'report-products' );
-		$results    = $data_store->get_data( $args );
-		return apply_filters( 'woocommerce_analytics_products_select_query', $results, $args );
-	}
+        $data_store = \WC_Data_Store::load('report-products');
+        $results    = $data_store->get_data($args);
+        return apply_filters('woocommerce_analytics_products_select_query', $results, $args);
+    }
 }

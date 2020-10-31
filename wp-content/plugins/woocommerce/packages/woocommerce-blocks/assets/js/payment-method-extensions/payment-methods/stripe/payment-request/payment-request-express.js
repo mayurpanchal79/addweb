@@ -32,69 +32,73 @@ import { useCheckoutSubscriptions } from './use-checkout-subscriptions';
  * @param {StripeRegisteredPaymentMethodProps} props Incoming props
  */
 const PaymentRequestExpressComponent = ( {
-	shippingData,
-	billing,
-	eventRegistration,
-	onSubmit,
-	setExpressPaymentError,
-	emitResponse,
-	onClick,
-	onClose,
+    shippingData,
+    billing,
+    eventRegistration,
+    onSubmit,
+    setExpressPaymentError,
+    emitResponse,
+    onClick,
+    onClose,
 } ) => {
-	const {
-		paymentRequest,
-		paymentRequestEventHandlers,
-		clearPaymentRequestEventHandler,
-		isProcessing,
-		canMakePayment,
-		onButtonClick,
-		abortPayment,
-		completePayment,
-		paymentRequestType,
-	} = useInitialization( {
-		billing,
-		shippingData,
-		setExpressPaymentError,
-		onClick,
-		onClose,
-		onSubmit,
-	} );
-	useCheckoutSubscriptions( {
-		canMakePayment,
-		isProcessing,
-		eventRegistration,
-		paymentRequestEventHandlers,
-		clearPaymentRequestEventHandler,
-		billing,
-		shippingData,
-		emitResponse,
-		paymentRequestType,
-		completePayment,
-		abortPayment,
-	} );
+    const {
+        paymentRequest,
+        paymentRequestEventHandlers,
+        clearPaymentRequestEventHandler,
+        isProcessing,
+        canMakePayment,
+        onButtonClick,
+        abortPayment,
+        completePayment,
+        paymentRequestType,
+    } = useInitialization(
+        {
+            billing,
+            shippingData,
+            setExpressPaymentError,
+            onClick,
+            onClose,
+            onSubmit,
+        } 
+    );
+    useCheckoutSubscriptions(
+        {
+            canMakePayment,
+            isProcessing,
+            eventRegistration,
+            paymentRequestEventHandlers,
+            clearPaymentRequestEventHandler,
+            billing,
+            shippingData,
+            emitResponse,
+            paymentRequestType,
+            completePayment,
+            abortPayment,
+        } 
+    );
 
-	// locale is not a valid value for the paymentRequestButton style.
-	const { theme } = getStripeServerData().button;
+    // locale is not a valid value for the paymentRequestButton style.
+    const { theme } = getStripeServerData().button;
 
-	const paymentRequestButtonStyle = {
-		paymentRequestButton: {
-			type: 'default',
-			theme,
-			height: '48px',
-		},
-	};
+    const paymentRequestButtonStyle = {
+        paymentRequestButton: {
+            type: 'default',
+            theme,
+            height: '48px',
+        },
+    };
 
-	return canMakePayment && paymentRequest ? (
-		<PaymentRequestButtonElement
-			onClick={ onButtonClick }
-			options={ {
-				// @ts-ignore
-				style: paymentRequestButtonStyle,
-				// @ts-ignore
-				paymentRequest,
-			} }
-		/>
-	) : null;
+    return canMakePayment && paymentRequest ? (
+    <PaymentRequestButtonElement
+    onClick={ onButtonClick }
+    options={ {
+        // @ts-ignore
+        style: paymentRequestButtonStyle,
+        // @ts-ignore
+        paymentRequest,
+        } }
+    />
+    ) : null;
 };
 
 /**
@@ -103,11 +107,11 @@ const PaymentRequestExpressComponent = ( {
  * @param {StripeRegisteredPaymentMethodProps} props
  */
 export const PaymentRequestExpress = ( props ) => {
-	const { locale } = getStripeServerData().button;
-	const { stripe } = props;
-	return (
-		<Elements stripe={ stripe } locale={ locale }>
-			<PaymentRequestExpressComponent { ...props } />
-		</Elements>
-	);
+    const { locale } = getStripeServerData().button;
+    const { stripe } = props;
+    return (
+    <Elements stripe={ stripe } locale={ locale }>
+    <PaymentRequestExpressComponent { ...props } />
+    </Elements>
+    );
 };

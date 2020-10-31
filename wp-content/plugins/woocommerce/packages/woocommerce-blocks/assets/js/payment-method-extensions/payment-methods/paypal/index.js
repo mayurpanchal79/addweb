@@ -11,7 +11,7 @@ import { decodeEntities } from '@wordpress/html-entities';
  */
 import { PAYMENT_METHOD_NAME } from './constants';
 
-const settings = getSetting( 'paypal_data', {} );
+const settings = getSetting('paypal_data', {});
 
 /**
  * @typedef {import('@woocommerce/type-defs/registered-payment-method-props').RegisteredPaymentMethodProps} RegisteredPaymentMethodProps
@@ -21,31 +21,31 @@ const settings = getSetting( 'paypal_data', {} );
  * Content component
  */
 const Content = () => {
-	return <div>{ decodeEntities( settings.description || '' ) }</div>;
+    return <div>{ decodeEntities(settings.description || '') }</div>;
 };
 
 const paypalPaymentMethod = {
-	name: PAYMENT_METHOD_NAME,
-	label: (
-		<img
-			src={ `${ WC_ASSET_URL }/images/paypal.png` }
-			alt={ decodeEntities(
-				settings.title || __( 'PayPal', 'woocommerce' )
-			) }
-		/>
-	),
-	placeOrderButtonLabel: __(
-		'Proceed to PayPal',
-		'woocommerce'
-	),
-	content: <Content />,
-	edit: <Content />,
-	icons: null,
-	canMakePayment: () => true,
-	ariaLabel: decodeEntities(
-		settings.title ||
-			__( 'Payment via PayPal', 'woocommerce' )
-	),
+    name: PAYMENT_METHOD_NAME,
+    label: (
+    <img
+    src={ `${ WC_ASSET_URL }/images/paypal.png` }
+    alt={ decodeEntities(
+        settings.title || __('PayPal', 'woocommerce')
+    ) }
+    />
+    ),
+placeOrderButtonLabel: __(
+    'Proceed to PayPal',
+    'woocommerce'
+),
+content: <Content />,
+edit: <Content />,
+icons: null,
+canMakePayment: () => true,
+ariaLabel: decodeEntities(
+    settings.title ||
+            __('Payment via PayPal', 'woocommerce')
+),
 };
 
-registerPaymentMethod( ( Config ) => new Config( paypalPaymentMethod ) );
+registerPaymentMethod(( Config ) => new Config(paypalPaymentMethod));

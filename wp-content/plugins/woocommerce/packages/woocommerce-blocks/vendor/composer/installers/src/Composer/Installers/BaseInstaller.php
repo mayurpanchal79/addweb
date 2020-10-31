@@ -123,7 +123,7 @@ abstract class BaseInstaller
      * @param  string $vendor = NULL
      * @return string
      */
-    protected function mapCustomInstallPaths(array $paths, $name, $type, $vendor = NULL)
+    protected function mapCustomInstallPaths(array $paths, $name, $type, $vendor = null)
     {
         foreach ($paths as $path => $names) {
             if (in_array($name, $names) || in_array('type:' . $type, $names) || in_array('vendor:' . $vendor, $names)) {

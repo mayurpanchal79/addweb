@@ -17,79 +17,89 @@ import Select from './index';
 import './style.scss';
 
 const ValidatedSelect = ( {
-	className,
-	id,
-	value,
-	instanceId,
-	required,
-	errorId,
-	errorMessage = __(
-		'Please select a value.',
-		'woocommerce'
-	),
-	...rest
+    className,
+    id,
+    value,
+    instanceId,
+    required,
+    errorId,
+    errorMessage = __(
+        'Please select a value.',
+        'woocommerce'
+    ),
+    ...rest
 } ) => {
-	const selectId = id || 'select-' + instanceId;
-	errorId = errorId || selectId;
+    const selectId = id || 'select-' + instanceId;
+    errorId = errorId || selectId;
 
-	// Prevents re-renders when value is an object, e.g. {key: "NY", name: "New York"}
-	const currentValue = useShallowEqual( value );
+    // Prevents re-renders when value is an object, e.g. {key: "NY", name: "New York"}
+    const currentValue = useShallowEqual(value);
 
-	const {
-		getValidationError,
-		setValidationErrors,
-		clearValidationError,
-	} = useValidationContext();
+    const {
+        getValidationError,
+        setValidationErrors,
+        clearValidationError,
+    } = useValidationContext();
 
-	const validateSelect = () => {
-		if ( ! required || currentValue ) {
-			clearValidationError( errorId );
-		} else {
-			setValidationErrors( {
-				[ errorId ]: {
-					message: errorMessage,
-					hidden: true,
-				},
-			} );
-		}
-	};
+    const validateSelect = () => {
+        if (! required || currentValue ) {
+            clearValidationError(errorId);
+        } else {
+            setValidationErrors(
+                {
+                    [ errorId ]: {
+                        message: errorMessage,
+                        hidden: true,
+                    },
+                } 
+            );
+        }
+    };
 
-	useEffect( () => {
-		validateSelect();
-	}, [ currentValue ] );
+    useEffect(
+        () => {
+            validateSelect();
+        }, [ currentValue ] 
+    );
 
-	// Remove validation errors when unmounted.
-	useEffect( () => {
-		return () => {
-			clearValidationError( errorId );
-		};
-	}, [ errorId ] );
+    // Remove validation errors when unmounted.
+    useEffect(
+        () => {
+        return () => {
+                clearValidationError(errorId);
+        };
+        }, [ errorId ] 
+    );
 
-	const error = getValidationError( errorId ) || {};
+    const error = getValidationError(errorId) || {};
 
-	return (
-		<Select
-			id={ selectId }
-			className={ classnames( className, {
-				'has-error': error.message && ! error.hidden,
-			} ) }
-			feedback={ <ValidationInputError propertyName={ errorId } /> }
-			value={ currentValue }
-			{ ...rest }
-		/>
-	);
+    return (
+        <Select
+            id={ selectId }
+            className={ classnames(
+                className, {
+                    'has-error': error.message && ! error.hidden,
+                } 
+            ) }
+    feedback={ <ValidationInputError propertyName={ errorId } /> }
+    value={ currentValue }
+    { ...rest }
+    />
+    );
 };
 
 ValidatedSelect.propTypes = {
-	className: PropTypes.string,
-	errorId: PropTypes.string,
-	errorMessage: PropTypes.string,
-	id: PropTypes.string,
-	required: PropTypes.bool,
-	value: PropTypes.shape( {
-		key: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-	} ),
+    className: PropTypes.string,
+    errorId: PropTypes.string,
+    errorMessage: PropTypes.string,
+    id: PropTypes.string,
+    required: PropTypes.bool,
+    value: PropTypes.shape(
+        {
+            key: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+        } 
+    ),
 };
 
-export default withInstanceId( ValidatedSelect );
+export default withInstanceId(ValidatedSelect);

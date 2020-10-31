@@ -11,29 +11,29 @@ import ProductSummary from '../product-summary';
 import './style.scss';
 
 const ProductMetadata = ( {
-	shortDescription = '',
-	fullDescription = '',
-	variation = [],
+    shortDescription = '',
+    fullDescription = '',
+    variation = [],
 } ) => {
-	return (
-		<div className="wc-block-components-product-metadata">
-			<ProductSummary
-				className="wc-block-components-product-metadata__description"
-				shortDescription={ shortDescription }
-				fullDescription={ fullDescription }
-			/>
-			<ProductVariationData
-				className="wc-block-components-product-metadata__variation-data"
-				variation={ variation }
-			/>
-		</div>
-	);
+    return (
+    <div className="wc-block-components-product-metadata">
+    <ProductSummary
+                className="wc-block-components-product-metadata__description"
+                shortDescription={ shortDescription }
+                fullDescription={ fullDescription }
+    />
+    <ProductVariationData
+                className="wc-block-components-product-metadata__variation-data"
+                variation={ variation }
+    />
+    </div>
+    );
 };
 
 ProductMetadata.propTypes = {
-	shortDescription: PropTypes.string,
-	fullDescription: PropTypes.string,
-	variation: PropTypes.array,
+    shortDescription: PropTypes.string,
+    fullDescription: PropTypes.string,
+    variation: PropTypes.array,
 };
 
 export default ProductMetadata;

@@ -32,6 +32,7 @@ class Google_Service
     }
     /**
      * Return the associated Google_Client class.
+     *
      * @return Google_Client
      */
     public function getClient()

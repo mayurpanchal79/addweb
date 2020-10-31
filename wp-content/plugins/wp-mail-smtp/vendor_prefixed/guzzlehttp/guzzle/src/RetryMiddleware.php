@@ -13,11 +13,17 @@ use WPMailSMTP\Vendor\Psr\Http\Message\ResponseInterface;
  */
 class RetryMiddleware
 {
-    /** @var callable  */
+    /**
+     * @var callable  
+     */
     private $nextHandler;
-    /** @var callable */
+    /**
+     * @var callable 
+     */
     private $decider;
-    /** @var callable */
+    /**
+     * @var callable 
+     */
     private $delay;
     /**
      * @param callable $decider     Function that accepts the number of retries,
@@ -67,7 +73,7 @@ class RetryMiddleware
      */
     private function onFulfilled(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $req, array $options)
     {
-        return function ($value) use($req, $options) {
+        return function ($value) use ($req, $options) {
             if (!\call_user_func($this->decider, $options['retries'], $req, $value, null)) {
                 return $value;
             }
@@ -81,7 +87,7 @@ class RetryMiddleware
      */
     private function onRejected(\WPMailSMTP\Vendor\Psr\Http\Message\RequestInterface $req, array $options)
     {
-        return function ($reason) use($req, $options) {
+        return function ($reason) use ($req, $options) {
             if (!\call_user_func($this->decider, $options['retries'], $req, null, $reason)) {
                 return \WPMailSMTP\Vendor\GuzzleHttp\Promise\rejection_for($reason);
             }

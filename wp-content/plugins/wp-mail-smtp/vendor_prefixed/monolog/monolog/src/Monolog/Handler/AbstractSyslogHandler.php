@@ -28,8 +28,8 @@ abstract class AbstractSyslogHandler extends \WPMailSMTP\Vendor\Monolog\Handler\
     protected $facilities = array('auth' => \LOG_AUTH, 'authpriv' => \LOG_AUTHPRIV, 'cron' => \LOG_CRON, 'daemon' => \LOG_DAEMON, 'kern' => \LOG_KERN, 'lpr' => \LOG_LPR, 'mail' => \LOG_MAIL, 'news' => \LOG_NEWS, 'syslog' => \LOG_SYSLOG, 'user' => \LOG_USER, 'uucp' => \LOG_UUCP);
     /**
      * @param mixed $facility
-     * @param int   $level The minimum logging level at which this handler will be triggered
-     * @param bool  $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param int   $level    The minimum logging level at which this handler will be triggered
+     * @param bool  $bubble   Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($facility = \LOG_USER, $level = \WPMailSMTP\Vendor\Monolog\Logger::DEBUG, $bubble = \true)
     {

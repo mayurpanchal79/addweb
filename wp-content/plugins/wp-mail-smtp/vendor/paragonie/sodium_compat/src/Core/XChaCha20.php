@@ -12,9 +12,9 @@ class ParagonIE_Sodium_Core_XChaCha20 extends ParagonIE_Sodium_Core_HChaCha20
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $len
-     * @param string $nonce
-     * @param string $key
+     * @param  int    $len
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -39,9 +39,9 @@ class ParagonIE_Sodium_Core_XChaCha20 extends ParagonIE_Sodium_Core_HChaCha20
     /**
      * @internal You should not use this directly from another application
      *
-     * @param int $len
-     * @param string $nonce
-     * @param string $key
+     * @param  int    $len
+     * @param  string $nonce
+     * @param  string $key
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -66,10 +66,10 @@ class ParagonIE_Sodium_Core_XChaCha20 extends ParagonIE_Sodium_Core_HChaCha20
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $nonce
-     * @param string $key
-     * @param string $ic
+     * @param  string $message
+     * @param  string $nonce
+     * @param  string $key
+     * @param  string $ic
      * @return string
      * @throws SodiumException
      * @throws TypeError
@@ -92,10 +92,10 @@ class ParagonIE_Sodium_Core_XChaCha20 extends ParagonIE_Sodium_Core_HChaCha20
     /**
      * @internal You should not use this directly from another application
      *
-     * @param string $message
-     * @param string $nonce
-     * @param string $key
-     * @param string $ic
+     * @param  string $message
+     * @param  string $nonce
+     * @param  string $key
+     * @param  string $ic
      * @return string
      * @throws SodiumException
      * @throws TypeError

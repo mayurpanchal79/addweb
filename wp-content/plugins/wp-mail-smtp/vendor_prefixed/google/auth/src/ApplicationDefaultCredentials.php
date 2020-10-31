@@ -74,12 +74,13 @@ class ApplicationDefaultCredentials
      * If supplied, $scope is used to in creating the credentials instance if
      * this does not fallback to the compute engine defaults.
      *
-     * @param string|array scope the scope of the access request, expressed
+     * @param  string|array scope the scope of the access request, expressed
      *        either as an Array or as a space-delimited String.
-     * @param callable $httpHandler callback which delivers psr7 request
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache A cache implementation, may be
-     *        provided if you have one already available for use.
+     * @param  callable                                                      $httpHandler callback which delivers psr7 request
+     * @param  array                                                         $cacheConfig configuration for the cache when it's present
+     * @param  CacheItemPoolInterface                                        $cache       A cache implementation, may be
+     *                                                                                    provided if you have one
+     *                                                                                    already available for use.
      * @return AuthTokenSubscriber
      * @throws DomainException if no implementation can be obtained.
      */
@@ -95,14 +96,15 @@ class ApplicationDefaultCredentials
      * If supplied, $scope is used to in creating the credentials instance if
      * this does not fallback to the compute engine defaults.
      *
-     * @param string|array scope the scope of the access request, expressed
+     * @param  string|array scope the scope of the access request, expressed
      *        either as an Array or as a space-delimited String.
-     * @param callable $httpHandler callback which delivers psr7 request
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache A cache implementation, may be
-     *        provided if you have one already available for use.
-     * @param string $quotaProject specifies a project to bill for access
-     *   charges associated with the request.
+     * @param  callable                                                      $httpHandler  callback which delivers psr7 request
+     * @param  array                                                         $cacheConfig  configuration for the cache when it's present
+     * @param  CacheItemPoolInterface                                        $cache        A cache implementation, may be
+     *                                                                                     provided if you have one
+     *                                                                                     already available for use.
+     * @param  string                                                        $quotaProject specifies a project to bill for access
+     *                                                                                     charges associated with the request.
      * @return AuthTokenMiddleware
      * @throws DomainException if no implementation can be obtained.
      */
@@ -119,17 +121,21 @@ class ApplicationDefaultCredentials
      * If supplied, $scope is used to in creating the credentials instance if
      * this does not fallback to the Compute Engine defaults.
      *
-     * @param string|array $scope the scope of the access request, expressed
-     *        either as an Array or as a space-delimited String.
-     * @param callable $httpHandler callback which delivers psr7 request
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache A cache implementation, may be
-     *        provided if you have one already available for use.
-     * @param string $quotaProject specifies a project to bill for access
-     *   charges associated with the request.
-     * @param string|array $defaultScope The default scope to use if no
-     *   user-defined scopes exist, expressed either as an Array or as a
-     *   space-delimited string.
+     * @param string|array           $scope        the scope of the access request, expressed
+     *                                             either as an Array or as a space-delimited
+     *                                             String.
+     * @param callable               $httpHandler  callback which delivers psr7 request
+     * @param array                  $cacheConfig  configuration for the cache when it's present
+     * @param CacheItemPoolInterface $cache        A cache implementation, may be
+     *                                             provided if you have one
+     *                                             already available for use.
+     * @param string                 $quotaProject specifies a project to bill for access
+     *                                             charges associated with the request.
+     * @param string|array           $defaultScope The default scope to use if no
+     *                                             user-defined scopes exist,
+     *                                             expressed either as an Array
+     *                                             or as a space-delimited
+     *                                             string.
      *
      * @return CredentialsLoader
      * @throws DomainException if no implementation can be obtained.
@@ -172,11 +178,12 @@ class ApplicationDefaultCredentials
      * If supplied, $targetAudience is used to set the "aud" on the resulting
      * ID token.
      *
-     * @param string $targetAudience The audience for the ID token.
-     * @param callable $httpHandler callback which delivers psr7 request
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache A cache implementation, may be
-     *        provided if you have one already available for use.
+     * @param  string                 $targetAudience The audience for the ID token.
+     * @param  callable               $httpHandler    callback which delivers psr7 request
+     * @param  array                  $cacheConfig    configuration for the cache when it's present
+     * @param  CacheItemPoolInterface $cache          A cache implementation, may be
+     *                                                provided if you have one
+     *                                                already available for use.
      * @return AuthTokenMiddleware
      * @throws DomainException if no implementation can be obtained.
      */
@@ -190,11 +197,12 @@ class ApplicationDefaultCredentials
      * in this environment, configured with a $targetAudience for fetching an ID
      * token.
      *
-     * @param string $targetAudience The audience for the ID token.
-     * @param callable $httpHandler callback which delivers psr7 request
-     * @param array $cacheConfig configuration for the cache when it's present
-     * @param CacheItemPoolInterface $cache A cache implementation, may be
-     *        provided if you have one already available for use.
+     * @param  string                 $targetAudience The audience for the ID token.
+     * @param  callable               $httpHandler    callback which delivers psr7 request
+     * @param  array                  $cacheConfig    configuration for the cache when it's present
+     * @param  CacheItemPoolInterface $cache          A cache implementation, may be
+     *                                                provided if you have one
+     *                                                already available for use.
      * @return CredentialsLoader
      * @throws DomainException if no implementation can be obtained.
      * @throws InvalidArgumentException if JSON "type" key is invalid

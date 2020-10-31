@@ -105,11 +105,13 @@ final class Mbstring
     {
         $vars = array(&$a, &$b, &$c, &$d, &$e, &$f);
         $ok = \true;
-        \array_walk_recursive($vars, function (&$v) use(&$ok, $toEncoding, $fromEncoding) {
-            if (\false === ($v = \WPMailSMTP\Vendor\Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding($v, $toEncoding, $fromEncoding))) {
-                $ok = \false;
+        \array_walk_recursive(
+            $vars, function (&$v) use (&$ok, $toEncoding, $fromEncoding) {
+                if (\false === ($v = \WPMailSMTP\Vendor\Symfony\Polyfill\Mbstring\Mbstring::mb_convert_encoding($v, $toEncoding, $fromEncoding))) {
+                    $ok = \false;
+                }
             }
-        });
+        );
         return $ok ? $fromEncoding : \false;
     }
     public static function mb_decode_mimeheader($s)
@@ -153,15 +155,17 @@ final class Mbstring
             $convmap[$i] += $convmap[$i + 2];
             $convmap[$i + 1] += $convmap[$i + 2];
         }
-        $s = \preg_replace_callback('/&#(?:0*([0-9]+)|x0*([0-9a-fA-F]+))(?!&);?/', function (array $m) use($cnt, $convmap) {
-            $c = isset($m[2]) ? (int) \hexdec($m[2]) : $m[1];
-            for ($i = 0; $i < $cnt; $i += 4) {
-                if ($c >= $convmap[$i] && $c <= $convmap[$i + 1]) {
-                    return \WPMailSMTP\Vendor\Symfony\Polyfill\Mbstring\Mbstring::mb_chr($c - $convmap[$i + 2]);
+        $s = \preg_replace_callback(
+            '/&#(?:0*([0-9]+)|x0*([0-9a-fA-F]+))(?!&);?/', function (array $m) use ($cnt, $convmap) {
+                $c = isset($m[2]) ? (int) \hexdec($m[2]) : $m[1];
+                for ($i = 0; $i < $cnt; $i += 4) {
+                    if ($c >= $convmap[$i] && $c <= $convmap[$i + 1]) {
+                        return \WPMailSMTP\Vendor\Symfony\Polyfill\Mbstring\Mbstring::mb_chr($c - $convmap[$i + 2]);
+                    }
                 }
-            }
-            return $m[0];
-        }, $s);
+                return $m[0];
+            }, $s
+        );
         if (null === $encoding) {
             return $s;
         }
@@ -306,10 +310,10 @@ final class Mbstring
             return self::$language;
         }
         switch ($lang = \strtolower($lang)) {
-            case 'uni':
-            case 'neutral':
-                self::$language = $lang;
-                return \true;
+        case 'uni':
+        case 'neutral':
+            self::$language = $lang;
+            return \true;
         }
         return \false;
     }
@@ -320,9 +324,9 @@ final class Mbstring
     public static function mb_encoding_aliases($encoding)
     {
         switch (\strtoupper($encoding)) {
-            case 'UTF8':
-            case 'UTF-8':
-                return array('utf8');
+        case 'UTF8':
+        case 'UTF-8':
+            return array('utf8');
         }
         return \false;
     }
@@ -348,21 +352,21 @@ final class Mbstring
         }
         foreach ($encodingList as $enc) {
             switch ($enc) {
-                case 'ASCII':
-                    if (!\preg_match('/[\\x80-\\xFF]/', $str)) {
-                        return $enc;
-                    }
-                    break;
-                case 'UTF8':
-                case 'UTF-8':
-                    if (\preg_match('//u', $str)) {
-                        return 'UTF-8';
-                    }
-                    break;
-                default:
-                    if (0 === \strncmp($enc, 'ISO-8859-', 9)) {
-                        return $enc;
-                    }
+            case 'ASCII':
+                if (!\preg_match('/[\\x80-\\xFF]/', $str)) {
+                    return $enc;
+                }
+                break;
+            case 'UTF8':
+            case 'UTF-8':
+                if (\preg_match('//u', $str)) {
+                    return 'UTF-8';
+                }
+                break;
+            default:
+                if (0 === \strncmp($enc, 'ISO-8859-', 9)) {
+                    return $enc;
+                }
             }
         }
         return \false;
@@ -378,14 +382,14 @@ final class Mbstring
         $encodingList = \array_map('strtoupper', $encodingList);
         foreach ($encodingList as $enc) {
             switch ($enc) {
-                default:
-                    if (\strncmp($enc, 'ISO-8859-', 9)) {
-                        return \false;
-                    }
+            default:
+                if (\strncmp($enc, 'ISO-8859-', 9)) {
+                    return \false;
+                }
                 // no break
-                case 'ASCII':
-                case 'UTF8':
-                case 'UTF-8':
+            case 'ASCII':
+            case 'UTF8':
+            case 'UTF-8':
             }
         }
         self::$encodingList = $encodingList;
@@ -654,7 +658,7 @@ final class Mbstring
     private static function getData($file)
     {
         if (\file_exists($file = __DIR__ . '/Resources/unidata/' . $file . '.php')) {
-            return require $file;
+            return include $file;
         }
         return \false;
     }

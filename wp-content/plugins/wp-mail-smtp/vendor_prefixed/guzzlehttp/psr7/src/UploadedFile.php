@@ -42,10 +42,10 @@ class UploadedFile implements \WPMailSMTP\Vendor\Psr\Http\Message\UploadedFileIn
     private $stream;
     /**
      * @param StreamInterface|string|resource $streamOrFile
-     * @param int $size
-     * @param int $errorStatus
-     * @param string|null $clientFilename
-     * @param string|null $clientMediaType
+     * @param int                             $size
+     * @param int                             $errorStatus
+     * @param string|null                     $clientFilename
+     * @param string|null                     $clientMediaType
      */
     public function __construct($streamOrFile, $size, $errorStatus, $clientFilename = null, $clientMediaType = null)
     {
@@ -104,7 +104,7 @@ class UploadedFile implements \WPMailSMTP\Vendor\Psr\Http\Message\UploadedFileIn
         $this->size = $size;
     }
     /**
-     * @param mixed $param
+     * @param  mixed $param
      * @return boolean
      */
     private function isStringOrNull($param)
@@ -112,7 +112,7 @@ class UploadedFile implements \WPMailSMTP\Vendor\Psr\Http\Message\UploadedFileIn
         return \in_array(\gettype($param), ['string', 'NULL']);
     }
     /**
-     * @param mixed $param
+     * @param  mixed $param
      * @return boolean
      */
     private function isStringNotEmpty($param)
@@ -225,7 +225,7 @@ class UploadedFile implements \WPMailSMTP\Vendor\Psr\Http\Message\UploadedFileIn
     /**
      * {@inheritdoc}
      *
-     * @see http://php.net/manual/en/features.file-upload.errors.php
+     * @see    http://php.net/manual/en/features.file-upload.errors.php
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError()

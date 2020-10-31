@@ -9,17 +9,29 @@ namespace WPMailSMTP\Vendor\GuzzleHttp\Promise;
 class EachPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInterface
 {
     private $pending = [];
-    /** @var \Iterator|null */
+    /**
+     * @var \Iterator|null 
+     */
     private $iterable;
-    /** @var callable|int|null */
+    /**
+     * @var callable|int|null 
+     */
     private $concurrency;
-    /** @var callable|null */
+    /**
+     * @var callable|null 
+     */
     private $onFulfilled;
-    /** @var callable|null */
+    /**
+     * @var callable|null 
+     */
     private $onRejected;
-    /** @var Promise|null */
+    /**
+     * @var Promise|null 
+     */
     private $aggregate;
-    /** @var bool|null */
+    /**
+     * @var bool|null 
+     */
     private $mutex;
     /**
      * Configuration hash can include the following key value pairs:
@@ -55,7 +67,9 @@ class EachPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInter
             $this->onRejected = $config['rejected'];
         }
     }
-    /** @psalm-suppress InvalidNullableReturnType */
+    /**
+     * @psalm-suppress InvalidNullableReturnType 
+     */
     public function promise()
     {
         if ($this->aggregate) {
@@ -63,26 +77,28 @@ class EachPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInter
         }
         try {
             $this->createPromise();
-            /** @psalm-assert Promise $this->aggregate */
+            /**
+ * @psalm-assert Promise $this->aggregate 
+*/
             $this->iterable->rewind();
             if (!$this->checkIfFinished()) {
                 $this->refillPending();
             }
         } catch (\Throwable $e) {
             /**
-             * @psalm-suppress NullReference
+             * @psalm-suppress           NullReference
              * @phpstan-ignore-next-line
              */
             $this->aggregate->reject($e);
         } catch (\Exception $e) {
             /**
-             * @psalm-suppress NullReference
+             * @psalm-suppress           NullReference
              * @phpstan-ignore-next-line
              */
             $this->aggregate->reject($e);
         }
         /**
-         * @psalm-suppress NullableReturnStatement
+         * @psalm-suppress           NullableReturnStatement
          * @phpstan-ignore-next-line
          */
         return $this->aggregate;
@@ -90,18 +106,20 @@ class EachPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInter
     private function createPromise()
     {
         $this->mutex = \false;
-        $this->aggregate = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(function () {
-            \reset($this->pending);
-            // Consume a potentially fluctuating list of promises while
-            // ensuring that indexes are maintained (precluding array_shift).
-            while ($promise = \current($this->pending)) {
-                \next($this->pending);
-                $promise->wait();
-                if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::settled($this->aggregate)) {
-                    return;
+        $this->aggregate = new \WPMailSMTP\Vendor\GuzzleHttp\Promise\Promise(
+            function () {
+                \reset($this->pending);
+                // Consume a potentially fluctuating list of promises while
+                // ensuring that indexes are maintained (precluding array_shift).
+                while ($promise = \current($this->pending)) {
+                    \next($this->pending);
+                    $promise->wait();
+                    if (\WPMailSMTP\Vendor\GuzzleHttp\Promise\Is::settled($this->aggregate)) {
+                        return;
+                    }
                 }
             }
-        });
+        );
         // Clear the references when the promise is resolved.
         $clearFn = function () {
             $this->iterable = $this->concurrency = $this->pending = null;
@@ -145,17 +163,19 @@ class EachPromise implements \WPMailSMTP\Vendor\GuzzleHttp\Promise\PromisorInter
         $this->pending[] = null;
         \end($this->pending);
         $idx = \key($this->pending);
-        $this->pending[$idx] = $promise->then(function ($value) use($idx, $key) {
-            if ($this->onFulfilled) {
-                \call_user_func($this->onFulfilled, $value, $key, $this->aggregate);
+        $this->pending[$idx] = $promise->then(
+            function ($value) use ($idx, $key) {
+                if ($this->onFulfilled) {
+                    \call_user_func($this->onFulfilled, $value, $key, $this->aggregate);
+                }
+                $this->step($idx);
+            }, function ($reason) use ($idx, $key) {
+                if ($this->onRejected) {
+                    \call_user_func($this->onRejected, $reason, $key, $this->aggregate);
+                }
+                $this->step($idx);
             }
-            $this->step($idx);
-        }, function ($reason) use($idx, $key) {
-            if ($this->onRejected) {
-                \call_user_func($this->onRejected, $reason, $key, $this->aggregate);
-            }
-            $this->step($idx);
-        });
+        );
         return \true;
     }
     private function advanceIterator()

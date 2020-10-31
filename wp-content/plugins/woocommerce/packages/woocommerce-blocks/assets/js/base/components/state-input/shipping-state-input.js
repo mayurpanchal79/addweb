@@ -10,14 +10,14 @@ import { SHIPPING_STATES } from '@woocommerce/block-settings';
 import StateInput from './state-input.js';
 
 const ShippingStateInput = ( props ) => {
-	return <StateInput states={ SHIPPING_STATES } { ...props } />;
+    return <StateInput states={ SHIPPING_STATES } { ...props } />;
 };
 
 ShippingStateInput.propTypes = {
-	onChange: PropTypes.func.isRequired,
-	className: PropTypes.string,
-	label: PropTypes.string,
-	value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    label: PropTypes.string,
+    value: PropTypes.string,
 };
 
 export default ShippingStateInput;

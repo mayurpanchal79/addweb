@@ -40,10 +40,10 @@ class Google_Service_Gmail_Resource_UsersSettingsDelegates extends \WPMailSMTP\V
      * This method is only available to service account clients that have been
      * delegated domain-wide authority. (delegates.create)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_Delegate $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                        $userId    User's email address. The special value "me" can be
+     *                                                  used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_Delegate $postBody
+     * @param  array                         $optParams Optional parameters.
      * @return Google_Service_Gmail_Delegate
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_Delegate $postBody, $optParams = array())
@@ -59,11 +59,11 @@ class Google_Service_Gmail_Resource_UsersSettingsDelegates extends \WPMailSMTP\V
      * an email alias. This method is only available to service account clients that
      * have been delegated domain-wide authority. (delegates.delete)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
+     * @param string $userId        User's email address. The special value "me" can be
+     *                              used to indicate the authenticated user.
      * @param string $delegateEmail The email address of the user to be removed as a
-     * delegate.
-     * @param array $optParams Optional parameters.
+     *                              delegate.
+     * @param array  $optParams     Optional parameters.
      */
     public function delete($userId, $delegateEmail, $optParams = array())
     {
@@ -77,11 +77,11 @@ class Google_Service_Gmail_Resource_UsersSettingsDelegates extends \WPMailSMTP\V
      * available to service account clients that have been delegated domain-wide
      * authority. (delegates.get)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $delegateEmail The email address of the user whose delegate
-     * relationship is to be retrieved.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId        User's email address. The special value "me" can be
+     *                               used to indicate the authenticated user.
+     * @param  string $delegateEmail The email address of the user whose delegate
+     *                               relationship is to be retrieved.
+     * @param  array  $optParams     Optional parameters.
      * @return Google_Service_Gmail_Delegate
      */
     public function get($userId, $delegateEmail, $optParams = array())
@@ -95,9 +95,9 @@ class Google_Service_Gmail_Resource_UsersSettingsDelegates extends \WPMailSMTP\V
      * to service account clients that have been delegated domain-wide authority.
      * (delegates.listUsersSettingsDelegates)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ListDelegatesResponse
      */
     public function listUsersSettingsDelegates($userId, $optParams = array())

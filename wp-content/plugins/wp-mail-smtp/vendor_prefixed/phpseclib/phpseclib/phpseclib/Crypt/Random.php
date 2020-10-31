@@ -39,7 +39,7 @@ class Random
      * microoptimizations because this function has the potential of being called a huge number of times.
      * eg. for RSA key generation.
      *
-     * @param int $length
+     * @param  int $length
      * @return string
      */
     static function string($length)
@@ -175,27 +175,27 @@ class Random
             //
             // http://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator#Designs_based_on_cryptographic_primitives
             switch (\true) {
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\AES'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\AES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
-                    break;
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\Twofish'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\Twofish(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
-                    break;
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\Blowfish'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\Blowfish(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
-                    break;
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\TripleDES'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\TripleDES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
-                    break;
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\DES'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\DES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
-                    break;
-                case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\RC4'):
-                    $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\RC4();
-                    break;
-                default:
-                    \user_error(__CLASS__ . ' requires at least one symmetric cipher be loaded');
-                    return \false;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\AES'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\AES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
+                break;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\Twofish'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\Twofish(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
+                break;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\Blowfish'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\Blowfish(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
+                break;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\TripleDES'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\TripleDES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
+                break;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\DES'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\DES(\WPMailSMTP\Vendor\phpseclib\Crypt\Base::MODE_CTR);
+                break;
+            case \class_exists('WPMailSMTP\\Vendor\\phpseclib\\Crypt\\RC4'):
+                $crypto = new \WPMailSMTP\Vendor\phpseclib\Crypt\RC4();
+                break;
+            default:
+                \user_error(__CLASS__ . ' requires at least one symmetric cipher be loaded');
+                return \false;
             }
             $crypto->setKey($key);
             $crypto->setIV($iv);
@@ -230,7 +230,7 @@ if (!\function_exists('WPMailSMTP\\Vendor\\phpseclib_safe_serialize')) {
      * If a class has a private __sleep() method it'll give a fatal error on PHP 5.2 and earlier.
      * PHP 5.3 will emit a warning.
      *
-     * @param mixed $arr
+     * @param  mixed $arr
      * @access public
      */
     function phpseclib_safe_serialize(&$arr)

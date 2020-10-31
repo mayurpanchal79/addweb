@@ -30,12 +30,14 @@ class PushoverHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
     private $useFormattedMessage = \false;
     /**
      * All parameters that can be sent to Pushover
+     *
      * @see https://pushover.net/api
      * @var array
      */
     private $parameterNames = array('token' => \true, 'user' => \true, 'message' => \true, 'device' => \true, 'title' => \true, 'url' => \true, 'url_title' => \true, 'priority' => \true, 'timestamp' => \true, 'sound' => \true, 'retry' => \true, 'expire' => \true, 'callback' => \true);
     /**
      * Sounds the api supports by default
+     *
      * @see https://pushover.net/api#sounds
      * @var array
      */
@@ -126,6 +128,7 @@ class PushoverHandler extends \WPMailSMTP\Vendor\Monolog\Handler\SocketHandler
     }
     /**
      * Use the formatted message?
+     *
      * @param bool $value
      */
     public function useFormattedMessage($value)

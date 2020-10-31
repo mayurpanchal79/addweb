@@ -48,12 +48,12 @@ class Iam
      * `iam.serviceAccounts.signBlob` permission, part of the "Service Account
      * Token Creator" IAM role.
      *
-     * @param string $email The service account email.
-     * @param string $accessToken An access token from the service account.
-     * @param string $stringToSign The string to be signed.
-     * @param array $delegates [optional] A list of service account emails to
-     *        add to the delegate chain. If omitted, the value of `$email` will
-     *        be used.
+     * @param  string $email        The service account email.
+     * @param  string $accessToken  An access token from the service account.
+     * @param  string $stringToSign The string to be signed.
+     * @param  array  $delegates    [optional] A list of service account emails to
+     *                              add to the delegate chain. If omitted, the
+     *                              value of `$email` will be used.
      * @return string The signed string, base64-encoded.
      */
     public function signBlob($email, $accessToken, $stringToSign, array $delegates = [])

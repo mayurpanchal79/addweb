@@ -8,11 +8,17 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
  */
 class StreamWrapper
 {
-    /** @var resource */
+    /**
+     * @var resource 
+     */
     public $context;
-    /** @var StreamInterface */
+    /**
+     * @var StreamInterface 
+     */
     private $stream;
-    /** @var string r, r+, or w */
+    /**
+     * @var string r, r+, or w 
+     */
     private $mode;
     /**
      * Returns a resource representing the stream.

@@ -3,7 +3,7 @@
 namespace WPMailSMTP\Vendor;
 
 if (!\class_exists('WPMailSMTP\\Vendor\\Google_Client')) {
-    require_once __DIR__ . '/autoload.php';
+    include_once __DIR__ . '/autoload.php';
 }
 /**
  * Extension to the regular Google_Model that automatically

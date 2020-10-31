@@ -27,10 +27,9 @@
  */
 
 if (!is_callable('RandomCompat_strlen')) {
-    if (
-        defined('MB_OVERLOAD_STRING')
-            &&
-        ((int) ini_get('mbstring.func_overload')) & MB_OVERLOAD_STRING
+    if (defined('MB_OVERLOAD_STRING')
+        
+        && ((int) ini_get('mbstring.func_overload')) & MB_OVERLOAD_STRING
     ) {
         /**
          * strlen() implementation that isn't brittle to mbstring.func_overload
@@ -81,10 +80,9 @@ if (!is_callable('RandomCompat_strlen')) {
 
 if (!is_callable('RandomCompat_substr')) {
 
-    if (
-        defined('MB_OVERLOAD_STRING')
-            &&
-        ((int) ini_get('mbstring.func_overload')) & MB_OVERLOAD_STRING
+    if (defined('MB_OVERLOAD_STRING')
+        
+        && ((int) ini_get('mbstring.func_overload')) & MB_OVERLOAD_STRING
     ) {
         /**
          * substr() implementation that isn't brittle to mbstring.func_overload
@@ -92,9 +90,9 @@ if (!is_callable('RandomCompat_substr')) {
          * This version uses mb_substr() in '8bit' mode to treat strings as raw
          * binary rather than UTF-8, ISO-8859-1, etc
          *
-         * @param string $binary_string
-         * @param int $start
-         * @param int|null $length (optional)
+         * @param string   $binary_string
+         * @param int      $start
+         * @param int|null $length        (optional)
          *
          * @throws TypeError
          *
@@ -119,7 +117,9 @@ if (!is_callable('RandomCompat_substr')) {
                  * mb_substr($str, 0, NULL, '8bit') returns an empty string on
                  * PHP 5.3, so we have to find the length ourselves.
                  */
-                /** @var int $length */
+                /**
+ * @var int $length 
+*/
                 $length = RandomCompat_strlen($binary_string) - $start;
             } elseif (!is_int($length)) {
                 throw new TypeError(
@@ -150,9 +150,9 @@ if (!is_callable('RandomCompat_substr')) {
          *
          * This version just uses the default substr()
          *
-         * @param string $binary_string
-         * @param int $start
-         * @param int|null $length (optional)
+         * @param string   $binary_string
+         * @param int      $start
+         * @param int|null $length        (optional)
          *
          * @throws TypeError
          *

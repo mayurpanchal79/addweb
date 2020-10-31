@@ -318,8 +318,8 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
      * newer versions, if a public key is not given, this method will throw an
      * `\InvalidArgumentException`.
      *
-     * @param string $publicKey The public key to use to authenticate the token
-     * @param array $allowed_algs List of supported verification algorithms
+     * @param  string $publicKey    The public key to use to authenticate the token
+     * @param  array  $allowed_algs List of supported verification algorithms
      * @throws \DomainException if the token is missing an audience.
      * @throws \DomainException if the audience does not match the one set in
      *         the OAuth2 class instance.
@@ -347,7 +347,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * Obtains the encoded jwt from the instance data.
      *
-     * @param array $config array optional configuration parameters
+     * @param  array $config array optional configuration parameters
      * @return string
      */
     public function toJwt(array $config = [])
@@ -389,34 +389,34 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
         $grantType = $this->getGrantType();
         $params = array('grant_type' => $grantType);
         switch ($grantType) {
-            case 'authorization_code':
-                $params['code'] = $this->getCode();
-                $params['redirect_uri'] = $this->getRedirectUri();
-                $this->addClientCredentials($params);
-                break;
-            case 'password':
-                $params['username'] = $this->getUsername();
-                $params['password'] = $this->getPassword();
-                $this->addClientCredentials($params);
-                break;
-            case 'refresh_token':
-                $params['refresh_token'] = $this->getRefreshToken();
-                $this->addClientCredentials($params);
-                break;
-            case self::JWT_URN:
-                $params['assertion'] = $this->toJwt();
-                break;
-            default:
-                if (!\is_null($this->getRedirectUri())) {
-                    # Grant type was supposed to be 'authorization_code', as there
-                    # is a redirect URI.
-                    throw new \DomainException('Missing authorization code');
-                }
-                unset($params['grant_type']);
-                if (!\is_null($grantType)) {
-                    $params['grant_type'] = $grantType;
-                }
-                $params = \array_merge($params, $this->getExtensionParams());
+        case 'authorization_code':
+            $params['code'] = $this->getCode();
+            $params['redirect_uri'] = $this->getRedirectUri();
+            $this->addClientCredentials($params);
+            break;
+        case 'password':
+            $params['username'] = $this->getUsername();
+            $params['password'] = $this->getPassword();
+            $this->addClientCredentials($params);
+            break;
+        case 'refresh_token':
+            $params['refresh_token'] = $this->getRefreshToken();
+            $this->addClientCredentials($params);
+            break;
+        case self::JWT_URN:
+            $params['assertion'] = $this->toJwt();
+            break;
+        default:
+            if (!\is_null($this->getRedirectUri())) {
+                // Grant type was supposed to be 'authorization_code', as there
+                // is a redirect URI.
+                throw new \DomainException('Missing authorization code');
+            }
+            unset($params['grant_type']);
+            if (!\is_null($grantType)) {
+                $params['grant_type'] = $grantType;
+            }
+            $params = \array_merge($params, $this->getExtensionParams());
         }
         $headers = ['Cache-Control' => 'no-store', 'Content-Type' => 'application/x-www-form-urlencoded'];
         return new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Request('POST', $uri, $headers, \WPMailSMTP\Vendor\GuzzleHttp\Psr7\build_query($params));
@@ -424,7 +424,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * Fetches the auth tokens based on the current state.
      *
-     * @param callable $httpHandler callback which delivers psr7 request
+     * @param  callable $httpHandler callback which delivers psr7 request
      * @return array the response
      */
     public function fetchAuthToken(callable $httpHandler = null)
@@ -458,7 +458,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * Parses the fetched tokens.
      *
-     * @param ResponseInterface $resp the response.
+     * @param  ResponseInterface $resp the response.
      * @return array the tokens parsed from the response body.
      * @throws \Exception
      */
@@ -532,7 +532,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * Builds the authorization Uri that the user should be redirected to.
      *
-     * @param array $config configuration options that customize the return url
+     * @param  array $config configuration options that customize the return url
      * @return UriInterface the authorization Url.
      * @throws InvalidArgumentException
      */
@@ -647,7 +647,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
      * Sets the scope of the access request, expressed either as an Array or as
      * a space-delimited String.
      *
-     * @param string|array $scope
+     * @param  string|array $scope
      * @throws InvalidArgumentException
      */
     public function setScope($scope)
@@ -697,7 +697,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * Sets the current grant type.
      *
-     * @param $grantType
+     * @param  $grantType
      * @throws InvalidArgumentException
      */
     public function setGrantType($grantType)
@@ -1124,7 +1124,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
      *
      * Alias of {@see Google\Auth\OAuth2::getClientId()}.
      *
-     * @param callable $httpHandler
+     * @param  callable $httpHandler
      * @return string
      * @access private
      */
@@ -1135,7 +1135,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
     /**
      * @todo handle uri as array
      *
-     * @param string $uri
+     * @param  string $uri
      * @return null|UriInterface
      */
     private function coerceUri($uri)
@@ -1146,9 +1146,9 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
         return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\uri_for($uri);
     }
     /**
-     * @param string $idToken
-     * @param string|array|null $publicKey
-     * @param array $allowedAlgs
+     * @param  string            $idToken
+     * @param  string|array|null $publicKey
+     * @param  array             $allowedAlgs
      * @return object
      */
     private function jwtDecode($idToken, $publicKey, $allowedAlgs)
@@ -1169,7 +1169,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
      * Determines if the URI is absolute based on its scheme and host or path
      * (RFC 3986).
      *
-     * @param string $uri
+     * @param  string $uri
      * @return bool
      */
     private function isAbsoluteUri($uri)
@@ -1178,7 +1178,7 @@ class OAuth2 implements \WPMailSMTP\Vendor\Google\Auth\FetchAuthTokenInterface
         return $uri->getScheme() && ($uri->getHost() || $uri->getPath());
     }
     /**
-     * @param array $params
+     * @param  array $params
      * @return array
      */
     private function addClientCredentials(&$params)

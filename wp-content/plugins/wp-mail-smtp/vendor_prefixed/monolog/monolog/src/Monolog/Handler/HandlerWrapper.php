@@ -37,6 +37,7 @@ class HandlerWrapper implements \WPMailSMTP\Vendor\Monolog\Handler\HandlerInterf
     protected $handler;
     /**
      * HandlerWrapper constructor.
+     *
      * @param HandlerInterface $handler
      */
     public function __construct(\WPMailSMTP\Vendor\Monolog\Handler\HandlerInterface $handler)

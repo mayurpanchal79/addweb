@@ -11,9 +11,13 @@ use WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface;
  */
 class FnStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
 {
-    /** @var array */
+    /**
+     * @var array 
+     */
     private $methods;
-    /** @var array Methods that must be implemented in the given array */
+    /**
+     * @var array Methods that must be implemented in the given array 
+     */
     private static $slots = ['__toString', 'close', 'detach', 'rewind', 'getSize', 'tell', 'eof', 'isSeekable', 'seek', 'isWritable', 'write', 'isReadable', 'read', 'getContents', 'getMetadata'];
     /**
      * @param array $methods Hash of method name to a callable.
@@ -46,6 +50,7 @@ class FnStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
     }
     /**
      * An unserialize would allow the __destruct to run when the unserialized value goes out of scope.
+     *
      * @throws \LogicException
      */
     public function __wakeup()

@@ -15,7 +15,6 @@ class DokuWikiInstaller extends BaseInstaller
      * or leading dokuwiki_ if present.
      * 
      * For package type dokuwiki-template, cut off a trailing '-template' if present.
-     *
      */
     public function inflectPackageVars($vars)
     {

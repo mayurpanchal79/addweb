@@ -9,15 +9,25 @@ namespace WPMailSMTP\Vendor\GuzzleHttp;
  */
 class UriTemplate
 {
-    /** @var string URI template */
+    /**
+     * @var string URI template 
+     */
     private $template;
-    /** @var array Variables to use in the template expansion */
+    /**
+     * @var array Variables to use in the template expansion 
+     */
     private $variables;
-    /** @var array Hash for quick operator lookups */
+    /**
+     * @var array Hash for quick operator lookups 
+     */
     private static $operatorHash = ['' => ['prefix' => '', 'joiner' => ',', 'query' => \false], '+' => ['prefix' => '', 'joiner' => ',', 'query' => \false], '#' => ['prefix' => '#', 'joiner' => ',', 'query' => \false], '.' => ['prefix' => '.', 'joiner' => '.', 'query' => \false], '/' => ['prefix' => '/', 'joiner' => '/', 'query' => \false], ';' => ['prefix' => ';', 'joiner' => ';', 'query' => \true], '?' => ['prefix' => '?', 'joiner' => '&', 'query' => \true], '&' => ['prefix' => '&', 'joiner' => '&', 'query' => \true]];
-    /** @var array Delimiters */
+    /**
+     * @var array Delimiters 
+     */
     private static $delims = [':', '/', '?', '#', '[', ']', '@', '!', '$', '&', '\'', '(', ')', '*', '+', ',', ';', '='];
-    /** @var array Percent encoded delimiters */
+    /**
+     * @var array Percent encoded delimiters 
+     */
     private static $delimsPct = ['%3A', '%2F', '%3F', '%23', '%5B', '%5D', '%40', '%21', '%24', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C', '%3B', '%3D'];
     public function expand($template, array $variables)
     {

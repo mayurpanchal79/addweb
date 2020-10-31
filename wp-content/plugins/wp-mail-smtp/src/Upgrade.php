@@ -8,66 +8,70 @@ namespace WPMailSMTP;
  *
  * @since 1.1.0
  */
-class Upgrade {
+class Upgrade
+{
 
-	/**
-	 * Upgrade constructor.
-	 *
-	 * @since 1.1.0
-	 */
-	public function __construct() {
+    /**
+     * Upgrade constructor.
+     *
+     * @since 1.1.0
+     */
+    public function __construct()
+    {
 
-		$upgrades = $this->upgrades();
+        $upgrades = $this->upgrades();
 
-		if ( empty( $upgrades ) ) {
-			return;
-		}
+        if (empty($upgrades) ) {
+            return;
+        }
 
-		// Run any available upgrades.
-		foreach ( $upgrades as $upgrade ) {
-			$this->{$upgrade}();
-		}
+        // Run any available upgrades.
+        foreach ( $upgrades as $upgrade ) {
+            $this->{$upgrade}();
+        }
 
-		// Update version post upgrade(s).
-		update_option( 'wp_mail_smtp_version', WPMS_PLUGIN_VER );
-	}
+        // Update version post upgrade(s).
+        update_option('wp_mail_smtp_version', WPMS_PLUGIN_VER);
+    }
 
-	/**
-	 * Whether we need to perform an upgrade.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return array
-	 */
-	protected function upgrades() {
+    /**
+     * Whether we need to perform an upgrade.
+     *
+     * @since 1.1.0
+     *
+     * @return array
+     */
+    protected function upgrades()
+    {
 
-		$version  = get_option( 'wp_mail_smtp_version' );
-		$upgrades = array();
+        $version  = get_option('wp_mail_smtp_version');
+        $upgrades = array();
 
-		// Version 1.1.0 upgrade; prior to this the option was not available.
-		if ( empty( $version ) ) {
-			$upgrades[] = 'v110_upgrade';
-		}
+        // Version 1.1.0 upgrade; prior to this the option was not available.
+        if (empty($version) ) {
+            $upgrades[] = 'v110_upgrade';
+        }
 
-		return $upgrades;
-	}
+        return $upgrades;
+    }
 
-	/**
-	 * Upgrade routine for v1.1.0.
-	 *
-	 * Set SMTPAutoTLS to true.
-	 *
-	 * @since 1.1.0
-	 */
-	public function v110_upgrade() {
+    /**
+     * Upgrade routine for v1.1.0.
+     *
+     * Set SMTPAutoTLS to true.
+     *
+     * @since 1.1.0
+     */
+    public function v110_upgrade()
+    {
 
-		// Enable SMTPAutoTLS option.
-		$values = [
-			'smtp' => [
-				'autotls' => true,
-			],
-		];
+        // Enable SMTPAutoTLS option.
+        $values = [
+        'smtp' => [
+        'autotls' => true,
+        ],
+        ];
 
-		Options::init()->set( $values, false, false );
-	}
+        Options::init()->set($values, false, false);
+    }
 }

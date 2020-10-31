@@ -43,7 +43,9 @@ class CssSelectorConverterTest extends TestCase
         $converter->toXPath('h1:');
     }
 
-    /** @dataProvider getCssToXPathWithoutPrefixTestData */
+    /**
+     * @dataProvider getCssToXPathWithoutPrefixTestData 
+     */
     public function testCssToXPathWithoutPrefix($css, $xpath)
     {
         $converter = new CssSelectorConverter();

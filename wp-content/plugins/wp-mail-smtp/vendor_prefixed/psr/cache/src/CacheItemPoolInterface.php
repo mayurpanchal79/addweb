@@ -89,7 +89,7 @@ interface CacheItemPoolInterface
     /**
      * Removes multiple items from the pool.
      *
-     * @param string[] $keys
+     * @param  string[] $keys
      *   An array of keys that should be removed from the pool.
      * @throws InvalidArgumentException
      *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException

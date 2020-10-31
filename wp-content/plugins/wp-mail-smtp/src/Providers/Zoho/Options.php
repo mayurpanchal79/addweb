@@ -9,38 +9,41 @@ use WPMailSMTP\Providers\OptionsAbstract;
  *
  * @since 2.3.0
  */
-class Options extends OptionsAbstract {
+class Options extends OptionsAbstract
+{
 
-	/**
-	 * Zoho Options constructor.
-	 *
-	 * @since 2.3.0
-	 */
-	public function __construct() {
+    /**
+     * Zoho Options constructor.
+     *
+     * @since 2.3.0
+     */
+    public function __construct()
+    {
 
-		parent::__construct(
-			array(
-				'logo_url' => wp_mail_smtp()->assets_url . '/images/providers/zoho.svg',
-				'slug'     => 'zoho',
-				'title'    => esc_html__( 'Zoho Mail', 'wp-mail-smtp' ),
-				'disabled' => true,
-			)
-		);
-	}
+        parent::__construct(
+            array(
+            'logo_url' => wp_mail_smtp()->assets_url . '/images/providers/zoho.svg',
+            'slug'     => 'zoho',
+            'title'    => esc_html__('Zoho Mail', 'wp-mail-smtp'),
+            'disabled' => true,
+            )
+        );
+    }
 
-	/**
-	 * {@inheritdoc}
-	 *
-	 * @since 2.3.0
-	 */
-	public function display_options() {
+    /**
+     * {@inheritdoc}
+     *
+     * @since 2.3.0
+     */
+    public function display_options()
+    {
 
-		?>
+        ?>
 
-		<p>
-			<?php esc_html_e( 'We\'re sorry, the Zoho Mail mailer is not available on your plan. Please upgrade to the PRO plan to unlock all these awesome features.', 'wp-mail-smtp' ); ?>
-		</p>
+        <p>
+        <?php esc_html_e('We\'re sorry, the Zoho Mail mailer is not available on your plan. Please upgrade to the PRO plan to unlock all these awesome features.', 'wp-mail-smtp'); ?>
+        </p>
 
-		<?php
-	}
+        <?php
+    }
 }

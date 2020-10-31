@@ -35,10 +35,10 @@ class Google_Service_Gmail_Resource_UsersSettingsForwardingAddresses extends \WP
      * service account clients that have been delegated domain-wide authority.
      * (forwardingAddresses.create)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param Google_Service_Gmail_ForwardingAddress $postBody
-     * @param array $optParams Optional parameters.
+     * @param  string                                 $userId    User's email address. The special value "me" can be
+     *                                                           used to indicate the authenticated user.
+     * @param  Google_Service_Gmail_ForwardingAddress $postBody
+     * @param  array                                  $optParams Optional parameters.
      * @return Google_Service_Gmail_ForwardingAddress
      */
     public function create($userId, \WPMailSMTP\Vendor\Google_Service_Gmail_ForwardingAddress $postBody, $optParams = array())
@@ -53,10 +53,10 @@ class Google_Service_Gmail_Resource_UsersSettingsForwardingAddresses extends \WP
      * clients that have been delegated domain-wide authority.
      * (forwardingAddresses.delete)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
+     * @param string $userId          User's email address. The special value "me" can be
+     *                                used to indicate the authenticated user.
      * @param string $forwardingEmail The forwarding address to be deleted.
-     * @param array $optParams Optional parameters.
+     * @param array  $optParams       Optional parameters.
      */
     public function delete($userId, $forwardingEmail, $optParams = array())
     {
@@ -67,10 +67,10 @@ class Google_Service_Gmail_Resource_UsersSettingsForwardingAddresses extends \WP
     /**
      * Gets the specified forwarding address. (forwardingAddresses.get)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param string $forwardingEmail The forwarding address to be retrieved.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId          User's email address. The special value "me" can be
+     *                                 used to indicate the authenticated user.
+     * @param  string $forwardingEmail The forwarding address to be retrieved.
+     * @param  array  $optParams       Optional parameters.
      * @return Google_Service_Gmail_ForwardingAddress
      */
     public function get($userId, $forwardingEmail, $optParams = array())
@@ -83,9 +83,9 @@ class Google_Service_Gmail_Resource_UsersSettingsForwardingAddresses extends \WP
      * Lists the forwarding addresses for the specified account.
      * (forwardingAddresses.listUsersSettingsForwardingAddresses)
      *
-     * @param string $userId User's email address. The special value "me" can be
-     * used to indicate the authenticated user.
-     * @param array $optParams Optional parameters.
+     * @param  string $userId    User's email address. The special value "me" can be
+     *                           used to indicate the authenticated user.
+     * @param  array  $optParams Optional parameters.
      * @return Google_Service_Gmail_ListForwardingAddressesResponse
      */
     public function listUsersSettingsForwardingAddresses($userId, $optParams = array())

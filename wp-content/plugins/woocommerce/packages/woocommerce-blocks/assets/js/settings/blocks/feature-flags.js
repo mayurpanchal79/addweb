@@ -20,9 +20,9 @@ import { WOOCOMMERCE_BLOCKS_PHASE } from './constants';
  *                    otherwise `undefined`.
  */
 export const registerExperimentalBlockType = ( name, settings ) => {
-	if ( WOOCOMMERCE_BLOCKS_PHASE > 2 ) {
-		return registerBlockType( name, settings );
-	}
+    if (WOOCOMMERCE_BLOCKS_PHASE > 2 ) {
+        return registerBlockType(name, settings);
+    }
 };
 
 /**
@@ -37,9 +37,9 @@ export const registerExperimentalBlockType = ( name, settings ) => {
  *                    otherwise `undefined`.
  */
 export const registerFeaturePluginBlockType = ( name, settings ) => {
-	if ( WOOCOMMERCE_BLOCKS_PHASE > 1 ) {
-		return registerBlockType( name, settings );
-	}
+    if (WOOCOMMERCE_BLOCKS_PHASE > 1 ) {
+        return registerBlockType(name, settings);
+    }
 };
 
 /**

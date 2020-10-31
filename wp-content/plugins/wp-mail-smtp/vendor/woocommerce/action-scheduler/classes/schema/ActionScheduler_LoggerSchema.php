@@ -7,29 +7,32 @@
  *
  * Creates a custom table for storing action logs
  */
-class ActionScheduler_LoggerSchema extends ActionScheduler_Abstract_Schema {
-	const LOG_TABLE = 'actionscheduler_logs';
+class ActionScheduler_LoggerSchema extends ActionScheduler_Abstract_Schema
+{
+    const LOG_TABLE = 'actionscheduler_logs';
 
-	/**
-	 * @var int Increment this value to trigger a schema update.
-	 */
-	protected $schema_version = 2;
+    /**
+     * @var int Increment this value to trigger a schema update.
+     */
+    protected $schema_version = 2;
 
-	public function __construct() {
-		$this->tables = [
-			self::LOG_TABLE,
-		];
-	}
+    public function __construct()
+    {
+        $this->tables = [
+        self::LOG_TABLE,
+        ];
+    }
 
-	protected function get_table_definition( $table ) {
-		global $wpdb;
-		$table_name       = $wpdb->$table;
-		$charset_collate  = $wpdb->get_charset_collate();
-		switch ( $table ) {
+    protected function get_table_definition( $table )
+    {
+        global $wpdb;
+        $table_name       = $wpdb->$table;
+        $charset_collate  = $wpdb->get_charset_collate();
+        switch ( $table ) {
 
-			case self::LOG_TABLE:
+        case self::LOG_TABLE:
 
-				return "CREATE TABLE {$table_name} (
+            return "CREATE TABLE {$table_name} (
 				        log_id bigint(20) unsigned NOT NULL auto_increment,
 				        action_id bigint(20) unsigned NOT NULL,
 				        message text NOT NULL,
@@ -40,8 +43,8 @@ class ActionScheduler_LoggerSchema extends ActionScheduler_Abstract_Schema {
 				        KEY log_date_gmt (log_date_gmt)
 				        ) $charset_collate";
 
-			default:
-				return '';
-		}
-	}
+        default:
+            return '';
+        }
+    }
 }

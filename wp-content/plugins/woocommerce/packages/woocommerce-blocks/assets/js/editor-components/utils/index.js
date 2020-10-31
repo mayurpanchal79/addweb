@@ -15,32 +15,34 @@ import { IS_LARGE_CATALOG, LIMIT_TAGS } from '@woocommerce/block-settings';
  * @param {Array} request.queryArgs Query args to pass in.
  */
 const getProductsRequests = ( {
-	selected = [],
-	search = '',
-	queryArgs = [],
+    selected = [],
+    search = '',
+    queryArgs = [],
 } ) => {
-	const defaultArgs = {
-		per_page: IS_LARGE_CATALOG ? 100 : 0,
-		catalog_visibility: 'any',
-		search,
-		orderby: 'title',
-		order: 'asc',
-	};
-	const requests = [
-		addQueryArgs( '/wc/store/products', { ...defaultArgs, ...queryArgs } ),
-	];
+    const defaultArgs = {
+        per_page: IS_LARGE_CATALOG ? 100 : 0,
+        catalog_visibility: 'any',
+        search,
+        orderby: 'title',
+        order: 'asc',
+    };
+    const requests = [
+    addQueryArgs('/wc/store/products', { ...defaultArgs, ...queryArgs }),
+    ];
 
-	// If we have a large catalog, we might not get all selected products in the first page.
-	if ( IS_LARGE_CATALOG && selected.length ) {
-		requests.push(
-			addQueryArgs( '/wc/store/products', {
-				catalog_visibility: 'any',
-				include: selected,
-			} )
-		);
-	}
+    // If we have a large catalog, we might not get all selected products in the first page.
+    if (IS_LARGE_CATALOG && selected.length ) {
+        requests.push(
+            addQueryArgs(
+                '/wc/store/products', {
+                    catalog_visibility: 'any',
+                    include: selected,
+                } 
+            )
+        );
+    }
 
-	return requests;
+    return requests;
 };
 
 /**
@@ -52,24 +54,30 @@ const getProductsRequests = ( {
  * @param {Array} request.queryArgs Query args to pass in.
  */
 export const getProducts = ( {
-	selected = [],
-	search = '',
-	queryArgs = [],
+    selected = [],
+    search = '',
+    queryArgs = [],
 } ) => {
-	const requests = getProductsRequests( { selected, search, queryArgs } );
+    const requests = getProductsRequests({ selected, search, queryArgs });
 
-	return Promise.all( requests.map( ( path ) => apiFetch( { path } ) ) )
-		.then( ( data ) => {
-			const products = uniqBy( flatten( data ), 'id' );
-			const list = products.map( ( product ) => ( {
-				...product,
-				parent: 0,
-			} ) );
-			return list;
-		} )
-		.catch( ( e ) => {
-			throw e;
-		} );
+    return Promise.all(requests.map(( path ) => apiFetch({ path })))
+    .then(
+        ( data ) => {
+            const products = uniqBy(flatten(data), 'id');
+            const list = products.map(
+            ( product ) => ( {
+                    ...product,
+                    parent: 0,
+            } ) 
+        );
+        return list;
+        } 
+    )
+        .catch(
+            ( e ) => {
+            throw e;
+            } 
+        );
 };
 
 /**
@@ -78,18 +86,22 @@ export const getProducts = ( {
  * @param {number} productId Id of the product to retrieve.
  */
 export const getProduct = ( productId ) => {
-	return apiFetch( {
-		path: `/wc/store/products/${ productId }`,
-	} );
+    return apiFetch(
+        {
+            path: `/wc/store/products/${ productId }`,
+        } 
+    );
 };
 
 /**
  * Get a promise that resolves to a list of attribute objects from the Store API.
  */
 export const getAttributes = () => {
-	return apiFetch( {
-		path: `wc/store/products/attributes`,
-	} );
+    return apiFetch(
+        {
+            path: `wc/store/products/attributes`,
+        } 
+    );
 };
 
 /**
@@ -98,9 +110,11 @@ export const getAttributes = () => {
  * @param {number} attribute Id of the attribute to retrieve terms for.
  */
 export const getTerms = ( attribute ) => {
-	return apiFetch( {
-		path: `wc/store/products/attributes/${ attribute }/terms`,
-	} );
+    return apiFetch(
+        {
+            path: `wc/store/products/attributes/${ attribute }/terms`,
+        } 
+    );
 };
 
 /**
@@ -111,25 +125,29 @@ export const getTerms = ( attribute ) => {
  * @param {string} request.search Search string.
  */
 const getProductTagsRequests = ( { selected = [], search } ) => {
-	const requests = [
-		addQueryArgs( `wc/store/products/tags`, {
-			per_page: LIMIT_TAGS ? 100 : 0,
-			orderby: LIMIT_TAGS ? 'count' : 'name',
-			order: LIMIT_TAGS ? 'desc' : 'asc',
-			search,
-		} ),
-	];
+    const requests = [
+    addQueryArgs(
+        `wc/store/products/tags`, {
+            per_page: LIMIT_TAGS ? 100 : 0,
+            orderby: LIMIT_TAGS ? 'count' : 'name',
+            order: LIMIT_TAGS ? 'desc' : 'asc',
+            search,
+        } 
+    ),
+    ];
 
-	// If we have a large catalog, we might not get all selected products in the first page.
-	if ( LIMIT_TAGS && selected.length ) {
-		requests.push(
-			addQueryArgs( `wc/store/products/tags`, {
-				include: selected,
-			} )
-		);
-	}
+    // If we have a large catalog, we might not get all selected products in the first page.
+if (LIMIT_TAGS && selected.length ) {
+    requests.push(
+        addQueryArgs(
+            `wc/store/products/tags`, {
+                include: selected,
+            } 
+        )
+    );
+}
 
-	return requests;
+    return requests;
 };
 
 /**
@@ -138,13 +156,13 @@ const getProductTagsRequests = ( { selected = [], search } ) => {
  * @param {Object} - A query object with the list of selected products and search term.
  */
 export const getProductTags = ( { selected = [], search } ) => {
-	const requests = getProductTagsRequests( { selected, search } );
+    const requests = getProductTagsRequests({ selected, search });
 
-	return Promise.all( requests.map( ( path ) => apiFetch( { path } ) ) ).then(
-		( data ) => {
-			return uniqBy( flatten( data ), 'id' );
-		}
-	);
+    return Promise.all(requests.map(( path ) => apiFetch({ path }))).then(
+        ( data ) => {
+        return uniqBy(flatten(data), 'id');
+        }
+    );
 };
 
 /**
@@ -153,12 +171,16 @@ export const getProductTags = ( { selected = [], search } ) => {
  * @param {Object} queryArgs Query args to pass in.
  */
 export const getCategories = ( queryArgs ) => {
-	return apiFetch( {
-		path: addQueryArgs( `wc/store/products/categories`, {
-			per_page: 0,
-			...queryArgs,
-		} ),
-	} );
+    return apiFetch(
+        {
+            path: addQueryArgs(
+                `wc/store/products/categories`, {
+                    per_page: 0,
+                    ...queryArgs,
+                } 
+            ),
+        } 
+    );
 };
 
 /**
@@ -167,9 +189,11 @@ export const getCategories = ( queryArgs ) => {
  * @param {number} categoryId Id of the product to retrieve.
  */
 export const getCategory = ( categoryId ) => {
-	return apiFetch( {
-		path: `wc/store/products/categories/${ categoryId }`,
-	} );
+    return apiFetch(
+        {
+            path: `wc/store/products/categories/${ categoryId }`,
+        } 
+    );
 };
 
 /**
@@ -178,13 +202,17 @@ export const getCategory = ( categoryId ) => {
  * @param {number} product Product ID.
  */
 export const getProductVariations = ( product ) => {
-	return apiFetch( {
-		path: addQueryArgs( `wc/store/products`, {
-			per_page: 0,
-			type: 'variation',
-			parent: product,
-		} ),
-	} );
+    return apiFetch(
+        {
+            path: addQueryArgs(
+                `wc/store/products`, {
+                    per_page: 0,
+                    type: 'variation',
+                    parent: product,
+                } 
+            ),
+        } 
+    );
 };
 
 /**
@@ -198,10 +226,10 @@ export const getProductVariations = ( product ) => {
  * @return {string}                Formatted page title to display.
  */
 export const formatTitle = ( page, pages ) => {
-	if ( ! page.title.raw ) {
-		return page.slug;
-	}
-	const isUnique =
-		pages.filter( ( p ) => p.title.raw === page.title.raw ).length === 1;
-	return page.title.raw + ( ! isUnique ? ` - ${ page.slug }` : '' );
+    if (! page.title.raw ) {
+        return page.slug;
+    }
+    const isUnique =
+    pages.filter(( p ) => p.title.raw === page.title.raw).length === 1;
+    return page.title.raw + ( ! isUnique ? ` - ${ page.slug }` : '' );
 };

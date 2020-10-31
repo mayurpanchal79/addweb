@@ -3,8 +3,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	useCheckoutContext,
-	usePaymentMethodDataContext,
+    useCheckoutContext,
+    usePaymentMethodDataContext,
 } from '@woocommerce/base-context';
 import { usePaymentMethods } from '@woocommerce/base-hooks';
 
@@ -13,27 +13,27 @@ import { usePaymentMethods } from '@woocommerce/base-hooks';
  * and an indication of submission status.
  */
 export const useCheckoutSubmit = () => {
-	const {
-		onSubmit,
-		isCalculating,
-		isBeforeProcessing,
-		isProcessing,
-		isAfterProcessing,
-		isComplete,
-		hasError,
-	} = useCheckoutContext();
-	const { paymentMethods } = usePaymentMethods();
-	const { activePaymentMethod } = usePaymentMethodDataContext();
-	const paymentMethod = paymentMethods[ activePaymentMethod ] || {};
+    const {
+        onSubmit,
+        isCalculating,
+        isBeforeProcessing,
+        isProcessing,
+        isAfterProcessing,
+        isComplete,
+        hasError,
+    } = useCheckoutContext();
+    const { paymentMethods } = usePaymentMethods();
+    const { activePaymentMethod } = usePaymentMethodDataContext();
+    const paymentMethod = paymentMethods[ activePaymentMethod ] || {};
 
-	return {
-		submitButtonText:
-			paymentMethod?.placeOrderButtonLabel ||
-			__( 'Place Order', 'woocommerce' ),
-		onSubmit,
-		isCalculating,
-		waitingForProcessing:
-			isProcessing || isAfterProcessing || isBeforeProcessing,
-		waitingForRedirect: isComplete && ! hasError,
-	};
+    return {
+        submitButtonText:
+        paymentMethod?.placeOrderButtonLabel ||
+        __('Place Order', 'woocommerce'),
+        onSubmit,
+        isCalculating,
+        waitingForProcessing:
+        isProcessing || isAfterProcessing || isBeforeProcessing,
+        waitingForRedirect: isComplete && ! hasError,
+    };
 };

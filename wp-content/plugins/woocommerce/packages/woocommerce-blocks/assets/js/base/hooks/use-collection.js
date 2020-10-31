@@ -17,7 +17,7 @@ import { useShallowEqual } from './use-shallow-equal';
  * kept up to date with the collection matching that query in the store state.
  *
  * @throws {Object} Throws an exception object if there was a problem with the
- * 					API request, to be picked up by BlockErrorBoundry.
+ *                     API request, to be picked up by BlockErrorBoundry.
  *
  * @param {Object} options                  An object declaring the various
  *                                          collection arguments.
@@ -44,62 +44,60 @@ import { useShallowEqual } from './use-shallow-equal';
  *                              loading (true) or not.
  */
 export const useCollection = ( options ) => {
-	const {
-		namespace,
-		resourceName,
-		resourceValues = [],
-		query = {},
-		shouldSelect = true,
-	} = options;
-	if ( ! namespace || ! resourceName ) {
-		throw new Error(
-			'The options object must have valid values for the namespace and ' +
-				'the resource properties.'
-		);
-	}
-	const currentResults = useRef( { results: [], isLoading: true } );
-	// ensure we feed the previous reference if it's equivalent
-	const currentQuery = useShallowEqual( query );
-	const currentResourceValues = useShallowEqual( resourceValues );
-	const throwError = useThrowError();
-	const results = useSelect(
-		( select ) => {
-			if ( ! shouldSelect ) {
-				return null;
-			}
-			const store = select( storeKey );
-			const args = [
-				namespace,
-				resourceName,
-				currentQuery,
-				currentResourceValues,
-			];
-			const error = store.getCollectionError( ...args );
-
-			if ( error ) {
-				throwError( error );
-			}
-
-			return {
-				results: store.getCollection( ...args ),
-				isLoading: ! store.hasFinishedResolution(
-					'getCollection',
-					args
-				),
-			};
-		},
-		[
-			namespace,
-			resourceName,
-			currentResourceValues,
-			currentQuery,
-			shouldSelect,
-		]
-	);
-	// if selector was not bailed, then update current results. Otherwise return
-	// previous results
-	if ( results !== null ) {
-		currentResults.current = results;
-	}
-	return currentResults.current;
+    const {
+        namespace,
+        resourceName,
+        resourceValues = [],
+        query = {},
+        shouldSelect = true,
+    } = options;
+    if (! namespace || ! resourceName ) {
+        throw new Error(
+            'The options object must have valid values for the namespace and ' +
+            'the resource properties.'
+        );
+    }
+    const currentResults = useRef({ results: [], isLoading: true });
+    // ensure we feed the previous reference if it's equivalent
+    const currentQuery = useShallowEqual(query);
+    const currentResourceValues = useShallowEqual(resourceValues);
+    const throwError = useThrowError();
+    const results = useSelect(
+        ( select ) => {
+        if (! shouldSelect ) {
+            return null;
+        }
+        const store = select(storeKey);
+        const args = [
+            namespace,
+            resourceName,
+            currentQuery,
+            currentResourceValues,
+            ];
+        const error = store.getCollectionError(...args);
+            if (error ) {
+                throwError(error);
+            }
+            return {
+                results: store.getCollection(...args),
+                isLoading: ! store.hasFinishedResolution(
+                    'getCollection',
+                    args
+                ),
+            };
+        },
+        [
+        namespace,
+        resourceName,
+        currentResourceValues,
+        currentQuery,
+        shouldSelect,
+        ]
+    );
+    // if selector was not bailed, then update current results. Otherwise return
+    // previous results
+if (results !== null ) {
+    currentResults.current = results;
+}
+    return currentResults.current;
 };
